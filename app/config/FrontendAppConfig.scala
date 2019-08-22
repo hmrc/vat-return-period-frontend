@@ -16,9 +16,12 @@
 
 package config
 
+import java.util.Base64
+
 import common.ConfigKeys
 import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
+import play.api.mvc.Call
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.config.ServicesConfig
 
@@ -29,6 +32,10 @@ trait AppConfig extends ServicesConfig {
   val reportAProblemNonJSUrl: String
   val betaFeedbackUrl: String
   val betaFeedbackUnauthenticatedUrl: String
+  val whitelistedIps: Seq[String]
+  val whitelistEnabled: Boolean
+  val whitelistExcludedPaths: Seq[Call]
+  val whitelistShutterPage: String
 }
 
 @Singleton
@@ -46,5 +53,16 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
   override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
+
+  // Whitelist config
+  private def whitelistConfig(key: String): Seq[String] = Some(new String(Base64.getDecoder
+    .decode(getString(key)), "UTF-8"))
+    .map(_.split(",")).getOrElse(Array.empty).toSeq
+
+  override lazy val whitelistEnabled: Boolean = getBoolean(ConfigKeys.whitelistEnabled)
+  override lazy val whitelistedIps: Seq[String] = whitelistConfig(ConfigKeys.whitelistedIps)
+  override lazy val whitelistExcludedPaths: Seq[Call] = whitelistConfig(ConfigKeys.whitelistExcludedPaths) map
+    (path => Call("GET", path))
+  override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
 }
