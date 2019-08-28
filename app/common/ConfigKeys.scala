@@ -27,4 +27,9 @@ object ConfigKeys {
   val contactFrontendService: String = "contact-frontend.host"
   val appName: String = "appName"
 
+  val whitelistEnabled: String = "whitelist.enabled"
+  val whitelistedIps: String = "whitelist.allowedIps"
+  val whitelistExcludedPaths: String = "whitelist.excludedPaths"
+  val whitelistShutterPage: String = "whitelist.shutter-page-url"
+
 }
