@@ -35,7 +35,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
     ".*govuk_wrapper*.*",
     ".*main_template*.*",
     "uk.gov.hmrc.BuildInfo",
-    "testOnlyDoNotUseInAppConf.*",
+    "testOnly.*",
     "app.*",
     "common.*",
     "config.*",
