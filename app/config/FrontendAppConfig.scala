@@ -36,6 +36,8 @@ trait AppConfig extends ServicesConfig {
   val whitelistEnabled: Boolean
   val whitelistExcludedPaths: Seq[Call]
   val whitelistShutterPage: String
+  val accessibilityReportEnabled : Boolean
+  val accessibilityReportUrl : String
 }
 
 @Singleton
@@ -65,4 +67,6 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
+  override val accessibilityReportEnabled : Boolean = getBoolean(ConfigKeys.accessibilityReportEnabled)
+  override val accessibilityReportUrl : String = getString(ConfigKeys.accessibilityReportUrl)
 }
