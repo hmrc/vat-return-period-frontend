@@ -19,6 +19,7 @@ package config
 import java.util.Base64
 
 import common.ConfigKeys
+import config.features.Features
 import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
 import play.api.mvc.Call
@@ -36,7 +37,9 @@ trait AppConfig extends ServicesConfig {
   val whitelistEnabled: Boolean
   val whitelistExcludedPaths: Seq[Call]
   val whitelistShutterPage: String
-  val accessibilityReportEnabled : Boolean
+
+  val features: Features
+
   val accessibilityReportUrl : String
 }
 
@@ -67,6 +70,8 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
-  override val accessibilityReportEnabled : Boolean = getBoolean(ConfigKeys.accessibilityReportEnabled)
-  override val accessibilityReportUrl : String = getString(ConfigKeys.accessibilityReportUrl)
+  override val features = new Features
+
+  private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
+  override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
 }

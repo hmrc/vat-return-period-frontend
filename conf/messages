@@ -1,5 +1,9 @@
 common.service-name = Business tax account
 
+featureSwitch.title = Feature switches
+featureSwitch.heading = Features
+featureSwitch.submit = Submit
+
 error.browser.title.prefix = Error:
 error.boolean = Please give an answer
 error.required = Please enter a value

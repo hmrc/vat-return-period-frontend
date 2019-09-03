@@ -32,6 +32,7 @@ object ConfigKeys {
   val whitelistExcludedPaths: String = "whitelist.excludedPaths"
   val whitelistShutterPage: String = "whitelist.shutter-page-url"
 
-  val accessibilityReportEnabled: String = "features.accessibilityReport.enabled"
+  val accessibilityReportFeature: String = "config.features.accessibilityReport.enabled"
   val accessibilityReportUrl: String = "accessibilityReport.url"
+  val accessibilityReportHost: String = "accessibilityReport.host"
 }
