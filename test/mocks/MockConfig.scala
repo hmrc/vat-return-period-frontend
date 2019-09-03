@@ -35,5 +35,5 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val whitelistExcludedPaths: Seq[Call] = Nil
   override val whitelistShutterPage: String = "https://www.tax.service.gov.uk/shutter/vat-through-software"
   implicit lazy val accessibilityReportEnabled : Boolean = true
-  implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-report"
+  implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
 }

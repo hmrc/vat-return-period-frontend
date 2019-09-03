@@ -30,7 +30,7 @@ class govuk_wrapperSpec extends BaseSpec {
       elementText("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a") shouldBe "Accessibility"
     }
     "render the report link with the correct url" in {
-      element("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a").attr ("href") shouldBe "/vat-through-software/accessibility-report"
+      element("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a").attr ("href") shouldBe "/vat-through-software/accessibility-statement"
     }
   }
 
