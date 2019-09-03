@@ -20,6 +20,7 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import config.ErrorHandler
 import mocks.MockConfig
+import org.jsoup.nodes.{Document, Element}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
 import org.scalatestplus.play.guice._
@@ -30,7 +31,9 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
+import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with MockFactory with UnitSpec {
@@ -54,4 +57,18 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
 
+
+  def element(cssSelector: String)(implicit document: Document): Element = {
+    val elements = document.select(cssSelector)
+
+    if (elements.size == 0) {
+      fail(s"No element exists with the selector '$cssSelector'")
+    }
+
+    elements.first()
+  }
+
+  def elementText(selector: String)(implicit document: Document): String = {
+    element(selector).text()
+  }
 }
