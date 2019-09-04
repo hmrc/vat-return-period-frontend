@@ -16,47 +16,35 @@
 
 package testOnly.controllers
 
-import javax.inject.{Inject,Singleton}
 import config.AppConfig
-import testOnly.models.FeatureSwitchModel
-import testOnly.views.html.featureSwitch
-import testOnly.forms.FeatureSwitchForm
-import play.api.Logger
+import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, Result}
-import testOnly.connector.VatReturnPeriodFeaturesConnector
-import uk.gov.hmrc.http.HeaderCarrier
+import testOnly.forms.FeatureSwitchForm
+import testOnly.models.FeatureSwitchModel
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
-import scala.concurrent.Future
-
-@Singleton
-class FeatureSwitchController @Inject()(vatReturnPeriodFeaturesConnector: VatReturnPeriodFeaturesConnector,
-                                        val messagesApi: MessagesApi, implicit val appConfig: AppConfig)
+class FeatureSwitchController @Inject()(val messagesApi: MessagesApi,
+                                        implicit val appConfig: AppConfig)
   extends FrontendController with I18nSupport {
 
-  val featureSwitch: Action[AnyContent] = Action.async { implicit request =>
-
-    vatReturnPeriodFeaturesConnector.getFeatures.map {
-      vatSubFeatures =>
-        Logger.debug(s"[FeatureSwitchController][featureSwitch] vatSubFeatures: $vatSubFeatures")
-        val form = FeatureSwitchForm.form.fill(FeatureSwitchModel(
-            accessibilityReportFeature = appConfig.features.accessibilityReportFeature()
-          )
-        )
-        Logger.debug(s"[FeatureSwitchController][featureSwitch] form: $form")
-        Ok(testOnly.views.html.featureSwitch(form))
-    }
+  def featureSwitch: Action[AnyContent] = Action { implicit request =>
+    Ok(testOnly.views.html.featureSwitch(FeatureSwitchForm.form.fill(
+      FeatureSwitchModel(
+        accessibilityReportFeature = appConfig.features.accessibilityReportFeature()
+      )
+    )))
   }
 
-  val submitFeatureSwitch: Action[AnyContent] = Action.async { implicit request =>
+  def submitFeatureSwitch: Action[AnyContent] = Action { implicit request =>
     FeatureSwitchForm.form.bindFromRequest().fold(
-      _ => Future.successful(Redirect(routes.FeatureSwitchController.featureSwitch())),
+      _ => Redirect(routes.FeatureSwitchController.featureSwitch()),
       success = handleSuccess
     )
   }
 
-  def handleSuccess(model: FeatureSwitchModel)(implicit hc: HeaderCarrier): Future[Result] = {
+  def handleSuccess(model: FeatureSwitchModel): Result = {
     appConfig.features.accessibilityReportFeature(model.accessibilityReportFeature)
+    Redirect(routes.FeatureSwitchController.featureSwitch())
   }
 }

@@ -17,6 +17,7 @@
 package mocks
 
 import config.AppConfig
+import config.features.Features
 import play.api.Mode.Mode
 import play.api.mvc.Call
 import play.api.{Configuration, Mode}
@@ -36,4 +37,6 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val whitelistShutterPage: String = "https://www.tax.service.gov.uk/shutter/vat-through-software"
   implicit lazy val accessibilityReportEnabled : Boolean = true
   implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
+  override val features: Features = new Features()
+  override val vatReturnPeriodUrl: String = "/testUrl"
 }
