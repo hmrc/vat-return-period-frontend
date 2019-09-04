@@ -22,6 +22,8 @@ import play.api.{Configuration, Environment}
 
 class TestOnlyAppConfig @Inject()(env: Environment,
                                   config: Configuration)
-  extends FrontendAppConfig(env, config){
+  extends FrontendAppConfig(config,env){
+
+  lazy val dynamicStubUrl: String = baseUrl("vat-subscription-dynamic-stub")
 
 }

@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package config.features
+package testOnly.models
 
-import common.ConfigKeys
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+import play.api.libs.json.{Format, Json}
 
-@Singleton
-class Features @Inject()(implicit config: Configuration) {
+case class VatReturnPeriodFeatureSwitchModel()
 
-  val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
+object VatReturnPeriodFeatureSwitchModel {
+  implicit val format: Format[VatReturnPeriodFeatureSwitchModel] = Json.format[VatReturnPeriodFeatureSwitchModel]
 }
+

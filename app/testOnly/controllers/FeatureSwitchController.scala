@@ -16,7 +16,7 @@
 
 package testOnly.controllers
 
-import javax.inject.Inject
+import javax.inject.{Inject,Singleton}
 import config.AppConfig
 import testOnly.models.FeatureSwitchModel
 import testOnly.views.html.featureSwitch

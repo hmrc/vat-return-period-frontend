@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package config.features
+@(field: play.api.data.Field, label: String, formClass: String, hasErrors: Boolean)(implicit messages: Messages)
 
-import common.ConfigKeys
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
+<label for="@field.name" class="form-group form-group-@formClass">
 
-@Singleton
-class Features @Inject()(implicit config: Configuration) {
+    <span>@label</span>
 
-  val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
-}
+    <input type="number" class="form-control input--xsmall input--no-spinner @if(hasErrors){error-field}" name="@field.name" id="@field.name" value="@field.value"/>
+
+</label>

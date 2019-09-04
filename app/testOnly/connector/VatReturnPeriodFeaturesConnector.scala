@@ -20,21 +20,21 @@ import javax.inject.Inject
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import testOnly.TestOnlyAppConfig
-import testOnly.models.FeatureSwitchModel
+import testOnly.models.{FeatureSwitchModel, VatReturnPeriodFeatureSwitchModel}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class VatReturnPeriodFeaturesConnector @Inject()(val http: HttpClient,
                                                  val appConfig: TestOnlyAppConfig) {
 
-  def getFeatures(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[FeatureSwitchModel] = {
-    lazy val url = s"${appConfig.VatReturnPeriodUrl}/vat-subscription/test-only/feature-switch"
-    http.GET[FeatureSwitchModel](url)
+  def getFeatures(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[VatReturnPeriodFeatureSwitchModel] = {
+    lazy val url = s"${appConfig.vatReturnPeriodUrl}/test-only/feature-switch"
+    http.GET[VatReturnPeriodFeatureSwitchModel](url)
   }
 
-  def postFeatures(VatReturnPeriodFeatures: FeatureSwitchModel)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
-    lazy val url = s"${appConfig.VatReturnPeriodUrl}/vat-subscription/test-only/feature-switch"
-    http.POST[FeatureSwitchModel, HttpResponse](url, VatReturnPeriodFeatures)
+  def postFeatures(VatReturnPeriodFeatures: VatReturnPeriodFeatureSwitchModel)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    lazy val url = s"${appConfig.vatReturnPeriodUrl}/test-only/feature-switch"
+    http.POST[VatReturnPeriodFeatureSwitchModel, HttpResponse](url, VatReturnPeriodFeatures : VatReturnPeriodFeatureSwitchModel)
   }
 
 }
