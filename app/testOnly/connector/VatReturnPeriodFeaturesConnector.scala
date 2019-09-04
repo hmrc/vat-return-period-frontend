@@ -20,7 +20,7 @@ import javax.inject.Inject
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import testOnly.TestOnlyAppConfig
-import testOnly.models.{FeatureSwitchModel, VatReturnPeriodFeatureSwitchModel}
+import testOnly.models.VatReturnPeriodFeatureSwitchModel
 
 import scala.concurrent.{ExecutionContext, Future}
 

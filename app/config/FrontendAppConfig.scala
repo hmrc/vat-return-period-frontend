@@ -70,10 +70,9 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
-  //override val features = new Features
-
   override lazy val vatReturnPeriodUrl: String = baseUrl(ConfigKeys.vatReturnPeriodUrl)
 
   private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
   override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+  override val features: Features = new Features(runModeConfiguration)
 }
