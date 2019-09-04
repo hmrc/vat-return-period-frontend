@@ -21,7 +21,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 
 @Singleton
-class Features @Inject()(val config: Configuration) {
+class Features @Inject()(implicit config: Configuration) {
 
-  val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)(config)
+  val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
 }

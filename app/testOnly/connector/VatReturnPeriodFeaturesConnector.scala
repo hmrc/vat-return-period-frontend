@@ -32,9 +32,9 @@ class VatReturnPeriodFeaturesConnector @Inject()(val http: HttpClient,
     http.GET[VatReturnPeriodFeatureSwitchModel](url)
   }
 
-  def postFeatures(VatReturnPeriodFeatures: VatReturnPeriodFeatureSwitchModel)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  def postFeatures(vatReturnPeriodFeatures: VatReturnPeriodFeatureSwitchModel)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
     lazy val url = s"${appConfig.vatReturnPeriodUrl}/test-only/feature-switch"
-    http.POST[VatReturnPeriodFeatureSwitchModel, HttpResponse](url, VatReturnPeriodFeatures : VatReturnPeriodFeatureSwitchModel)
+    http.POST[VatReturnPeriodFeatureSwitchModel, HttpResponse](url, vatReturnPeriodFeatures)
   }
 
 }

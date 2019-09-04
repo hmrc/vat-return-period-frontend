@@ -18,7 +18,7 @@ package testOnly.models
 
 import play.api.libs.json.{Format, Json}
 
-case class VatReturnPeriodFeatureSwitchModel()
+case class VatReturnPeriodFeatureSwitchModel(stubDes: Boolean)
 
 object VatReturnPeriodFeatureSwitchModel {
   implicit val format: Format[VatReturnPeriodFeatureSwitchModel] = Json.format[VatReturnPeriodFeatureSwitchModel]

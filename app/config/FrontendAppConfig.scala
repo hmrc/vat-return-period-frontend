@@ -44,7 +44,7 @@ trait AppConfig extends ServicesConfig {
 }
 
 @Singleton
-class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, environment: Environment) extends AppConfig {
+class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeConfiguration: Configuration) extends AppConfig {
   override protected def mode: Mode = environment.mode
 
   lazy val appName: String = getString(ConfigKeys.appName)
@@ -74,5 +74,5 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
 
   private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
   override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
-  override val features: Features = new Features(runModeConfiguration)
+  override val features: Features = new Features
 }
