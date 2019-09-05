@@ -20,6 +20,7 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import config.ErrorHandler
 import mocks.MockConfig
+import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
@@ -31,8 +32,8 @@ import play.api.test.FakeRequest
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.twirl.api.Html
 
-import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with MockFactory with UnitSpec {
@@ -70,4 +71,7 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   def elementText(selector: String)(implicit document: Document): String = {
     element(selector).text()
   }
+
+  def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
+
 }

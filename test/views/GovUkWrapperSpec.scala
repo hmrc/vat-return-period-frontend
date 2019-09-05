@@ -20,7 +20,7 @@ import base.BaseSpec
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
-class govuk_wrapperSpec extends BaseSpec {
+class GovUkWrapperSpec extends BaseSpec {
 
   "creating a page with a footer" should {
     lazy val view = views.html.govuk_wrapper(mockAppConfig, "title")(fakeRequest, messages)
