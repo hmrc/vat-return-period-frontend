@@ -38,5 +38,4 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   implicit lazy val accessibilityReportEnabled : Boolean = true
   implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
   override val features: Features = new Features()
-  override val vatReturnPeriodUrl: String = "/testUrl"
 }

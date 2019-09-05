@@ -35,6 +35,4 @@ object ConfigKeys {
   val accessibilityReportFeature: String = "features.accessibilityReport.enabled"
   val accessibilityReportUrl: String = "accessibilityReport.url"
   val accessibilityReportHost: String = "accessibilityReport.host"
-
-  val vatReturnPeriodUrl: String = "vat-return-period"
 }

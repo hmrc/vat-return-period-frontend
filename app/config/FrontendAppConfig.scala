@@ -40,7 +40,6 @@ trait AppConfig extends ServicesConfig {
 
   val features: Features
   val accessibilityReportUrl : String
-  val vatReturnPeriodUrl: String
 }
 
 @Singleton
@@ -69,8 +68,6 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
   override lazy val whitelistExcludedPaths: Seq[Call] = whitelistConfig(ConfigKeys.whitelistExcludedPaths) map
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
-
-  override lazy val vatReturnPeriodUrl: String = baseUrl(ConfigKeys.vatReturnPeriodUrl)
 
   private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
   override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
