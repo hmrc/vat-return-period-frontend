@@ -23,7 +23,6 @@ import mocks.MockConfig
 import org.jsoup.nodes.{Document, Element}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatestplus.play.guice._
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
