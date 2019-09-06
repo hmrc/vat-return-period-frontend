@@ -19,6 +19,7 @@ package config
 import java.util.Base64
 
 import common.ConfigKeys
+import config.features.Features
 import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
 import play.api.mvc.Call
@@ -36,10 +37,13 @@ trait AppConfig extends ServicesConfig {
   val whitelistEnabled: Boolean
   val whitelistExcludedPaths: Seq[Call]
   val whitelistShutterPage: String
+
+  val features: Features
+  val accessibilityReportUrl : String
 }
 
 @Singleton
-class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, environment: Environment) extends AppConfig {
+class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeConfiguration: Configuration) extends AppConfig {
   override protected def mode: Mode = environment.mode
 
   lazy val appName: String = getString(ConfigKeys.appName)
@@ -65,4 +69,7 @@ class FrontendAppConfig @Inject()(val runModeConfiguration: Configuration, envir
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
+  private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
+  override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+  override val features: Features = new Features
 }

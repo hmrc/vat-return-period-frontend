@@ -20,9 +20,10 @@ import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import config.ErrorHandler
 import mocks.MockConfig
+import org.jsoup.Jsoup
+import org.jsoup.nodes.{Document, Element}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
-import org.scalatestplus.play.guice._
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
@@ -30,6 +31,8 @@ import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import play.twirl.api.Html
 
 import scala.concurrent.ExecutionContext
 
@@ -53,5 +56,22 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   implicit val materializer: Materializer = ActorMaterializer()
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
+
+
+  def element(cssSelector: String)(implicit document: Document): Element = {
+    val elements = document.select(cssSelector)
+
+    if (elements.size == 0) {
+      fail(s"No element exists with the selector '$cssSelector'")
+    }
+
+    elements.first()
+  }
+
+  def elementText(selector: String)(implicit document: Document): String = {
+    element(selector).text()
+  }
+
+  def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
 
 }
