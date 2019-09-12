@@ -1,5 +1,5 @@
 
-# vat-return-period-frontend
+# VAT Return Period Frontend
 
 This is a placeholder README.md for a new repository.
 
