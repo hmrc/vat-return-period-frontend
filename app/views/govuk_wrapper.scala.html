@@ -30,9 +30,14 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   scriptElem: Option[Html] = None)(implicit request: Request[_], messages: Messages)
 
+@linkElem = {
+  <link rel="stylesheet" type="text/css" href='@routes.Assets.at("palette.css")'>
+  <link rel="stylesheet" type="text/css" href='@routes.Assets.at("focus.css")'>
+}
+
 @head = {
     @uiLayouts.head(
-      linkElem = None,
+      linkElem = Some(linkElem),
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
 }
