@@ -4,4 +4,7 @@
 GET         /assets/*file                                    controllers.Assets.at(path="/public", file)
 
 # Pages
-GET        /hello-world             controllers.HelloWorldController.helloWorld
+GET         /hello-world                                     controllers.HelloWorldController.helloWorld
+
+GET        /sign-out                      controllers.SignOutController.signOut(feedbackOnSignOut: Boolean)
+
