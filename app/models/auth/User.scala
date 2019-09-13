@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package models
+package models.auth
 
 import play.api.mvc.{Request, WrappedRequest}
 

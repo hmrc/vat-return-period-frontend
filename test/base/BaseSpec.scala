@@ -21,7 +21,7 @@ import akka.stream.{ActorMaterializer, Materializer}
 import common.AuthKeys
 import config.ErrorHandler
 import mocks.MockConfig
-import models.User
+import models.auth.User
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite

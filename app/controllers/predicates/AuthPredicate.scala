@@ -20,7 +20,7 @@ import common.AuthKeys
 import common.AuthKeys._
 import config.{AppConfig, ErrorHandler}
 import javax.inject.{Inject, Singleton}
-import models.User
+import models.auth.User
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._

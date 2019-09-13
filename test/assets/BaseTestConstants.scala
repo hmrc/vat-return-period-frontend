@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package models
+package assets
 
-import common.AuthKeys
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.{Enrolment, EnrolmentIdentifier, Enrolments, InternalError}
+object BaseTestConstants {
 
-case class AgentUser[A](arn: String) (implicit request: Request[A]) extends WrappedRequest[A](request)
+  val agentEmail = "agentEmail@test.com"
 
-object AgentUser {
-  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): AgentUser[A] =
-    enrolments.enrolments.collectFirst {
-      case Enrolment(AuthKeys.agentEnrolmentId, EnrolmentIdentifier(_, arn) :: _, _, _) => AgentUser(arn)
-    }.getOrElse(throw InternalError("Agent Service Enrolment Missing"))
 }
