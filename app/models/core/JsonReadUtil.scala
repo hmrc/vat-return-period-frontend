@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package assets
+package models.core
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+import play.api.libs.json.{JsPath, Reads}
 
-object BaseTestConstants {
+trait JsonReadUtil {
 
-  val agentEmail = "agentEmail@test.com"
+  implicit class JsonReadUtil(jsPath: JsPath) {
+    def readOpt[T](implicit reads: Reads[T]): Reads[Option[T]] = jsPath.readNullable[T].orElse(Reads.pure(None))
+  }
 
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
 }

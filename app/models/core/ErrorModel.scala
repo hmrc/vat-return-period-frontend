@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package assets
+package models.core
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+import play.api.libs.json.{Format, Json}
 
-object BaseTestConstants {
+case class ErrorModel(status: Int, message: String)
 
-  val agentEmail = "agentEmail@test.com"
-
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
+object ErrorModel {
+  implicit val format: Format[ErrorModel] = Json.format[ErrorModel]
 }

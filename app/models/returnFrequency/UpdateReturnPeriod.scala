@@ -30,5 +30,5 @@ object UpdateReturnPeriod {
   implicit val writes: Writes[UpdateReturnPeriod] = (
     returnPeriodPath.write[String] and
       transactorOrCapacitorEmailPath.writeNullable[String]
-    )(unlift(UpdateReturnPeriod.unapply))
+    ) (unlift(UpdateReturnPeriod.unapply))
 }

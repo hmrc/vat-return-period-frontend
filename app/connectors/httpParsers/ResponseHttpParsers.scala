@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package assets
+package connectors.httpParsers
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+import models.errors.HttpError
 
-object BaseTestConstants {
-
-  val agentEmail = "agentEmail@test.com"
-
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
+object ResponseHttpParsers {
+  type HttpGetResult[T] = Either[HttpError, T]
+  type HttpPutResult[T] = Either[HttpError, T]
 }

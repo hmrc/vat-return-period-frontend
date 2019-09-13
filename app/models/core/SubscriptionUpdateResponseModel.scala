@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package assets
+package models.core
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+import play.api.libs.json.{Format, Json}
 
-object BaseTestConstants {
+case class SubscriptionUpdateResponseModel(formBundle: String)
 
-  val agentEmail = "agentEmail@test.com"
-
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
+object SubscriptionUpdateResponseModel {
+  implicit val formats: Format[SubscriptionUpdateResponseModel] = Json.format[SubscriptionUpdateResponseModel]
 }

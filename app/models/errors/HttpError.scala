@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package assets
+package models.errors
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+sealed trait HttpError {
+  def message: String
+}
 
-object BaseTestConstants {
+object UnexpectedJsonFormat extends HttpError {
+  override val message: String = "The server you are connecting to returned unexpected JSON."
+}
 
-  val agentEmail = "agentEmail@test.com"
 
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
+case class ServerSideError(code: String, errorResponse: String) extends HttpError {
+  override val message: String = s"The server you are connecting to returned an error. " +
+    s"[ServerSideError]- RESPONSE status: $code, body: $errorResponse"
 }

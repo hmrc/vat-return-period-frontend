@@ -14,17 +14,28 @@
  * limitations under the License.
  */
 
-package models.auth
+package models.core
 
-import common.AuthKeys
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.{Enrolment, EnrolmentIdentifier, Enrolments, InternalError}
+import base.BaseSpec
+import play.api.libs.json.{JsObject, Json}
 
-case class AgentUser[A](arn: String) (implicit request: Request[A]) extends WrappedRequest[A](request)
+class ErrorModelSpec extends BaseSpec {
 
-object AgentUser {
-  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): AgentUser[A] =
-    enrolments.enrolments.collectFirst {
-      case Enrolment(AuthKeys.agentEnrolmentId, EnrolmentIdentifier(_, arn) :: _, _, _) => AgentUser(arn)
-    }.getOrElse(throw InternalError("Agent Service Enrolment Missing"))
+  val correctErrorJson: JsObject = Json.obj(
+    "status" -> 500,
+    "message" -> "Internal server error"
+  )
+
+  val correctErrorModel: ErrorModel = ErrorModel(500, "Internal server error")
+
+  "Formats" should {
+
+    "parse correctly from json" in {
+      correctErrorJson.as[ErrorModel] shouldBe correctErrorModel
+    }
+
+    "parse correctly to json" in {
+      Json.toJson(correctErrorModel) shouldBe correctErrorJson
+    }
+  }
 }
