@@ -17,7 +17,7 @@
 package stubs
 
 import base.BaseISpec
-import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails}
+import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.Monthly
 import play.api.libs.json.{JsValue, Json}
 
@@ -42,7 +42,7 @@ object VatSubscriptionStub extends BaseISpec {
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       Some(Monthly),
-      Some(ChangeIndicators(true)),
+      Some(true),
       Some(partyType)
     )
 

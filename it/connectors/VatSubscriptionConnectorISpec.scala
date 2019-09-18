@@ -21,7 +21,7 @@ import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails}
 import models.core.SubscriptionUpdateResponseModel
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
-import models.returnFrequency.{Jan, ReturnPeriod, UpdateReturnPeriod}
+import models.returnFrequency.{Jan, UpdateReturnPeriod}
 import play.api.http.Status._
 import play.api.libs.json.{JsObject, Json}
 import stubs.VatSubscriptionStub._
@@ -43,12 +43,6 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
         "response JSON is valid" should {
 
           "return a CustomerDetails model" in {
-
-            val expectedModel = CircumstanceDetails(
-              returnPeriod = ReturnPeriod("Monthly"),
-              changeIndicators = Some(ChangeIndicators(true)),
-              partyType = Some("2")
-            )
 
             stubGet(s"/vat-subscription/$vrn/full-information", circumstanceDetailsJsonMax.toString(), OK)
 
