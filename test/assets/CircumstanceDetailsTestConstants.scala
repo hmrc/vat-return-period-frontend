@@ -26,6 +26,9 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsJsonMax: JsValue = Json.obj(
     "returnPeriod" -> Monthly,
+    "changeIndicators" -> Json.obj(
+      "returnPeriod" -> true
+    ),
     "partyType" -> Some(partyType)
   )
 
@@ -34,11 +37,13 @@ object CircumstanceDetailsTestConstants {
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       Some(Monthly),
+      Some(true),
       Some(partyType)
     )
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
+      None,
       None,
       None
     )

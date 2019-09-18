@@ -19,48 +19,35 @@ package stubs
 import base.BaseISpec
 import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.Monthly
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsValue, Json}
 
 object VatSubscriptionStub extends BaseISpec {
 
-  val orgName = "Test Organisation Name"
-  val tradingName = "Test Trading Name"
-  val firstName = "Test"
-  val lastName = "Name"
-
   val partyType = "2"
 
-  val customerDetailsJsonMax: JsObject = Json.obj(
-    "organisationName" -> orgName,
-    "firstName" -> firstName,
-    "lastName" -> lastName,
-    "tradingName" -> tradingName
-  )
-
-  val customerDetailsJsonMin: JsObject = Json.obj()
-
   val circumstanceDetailsJsonMax: JsValue = Json.obj(
-    "customerDetails" -> customerDetailsJsonMax,
     "returnPeriod" -> Monthly,
-    "partyType" -> Some(partyType)
+    "changeIndicators" -> Json.obj(
+      "returnPeriod" -> true
+    ),
+    "partyType" -> Some("2")
   )
 
-  val circumstanceDetailsJsonMin: JsValue = Json.obj(
-    "customerDetails" -> customerDetailsJsonMin
-  )
+  val circumstanceDetailsJsonMin: JsValue = Json.obj()
 
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       Some(Monthly),
+      Some(true),
       Some(partyType)
     )
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
       None,
+      None,
       None
     )
-
 
 
 }

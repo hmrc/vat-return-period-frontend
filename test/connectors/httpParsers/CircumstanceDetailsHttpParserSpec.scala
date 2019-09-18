@@ -19,7 +19,7 @@ package connectors.httpParsers
 import assets.CircumstanceDetailsTestConstants._
 import base.BaseSpec
 import connectors.httpParsers.CircumstanceDetailsHttpParser.CircumstanceDetailsReads
-import models.errors.{ServerSideError, UnexpectedJsonFormat}
+import models.errors.ServerSideError
 import play.api.http.Status
 import play.api.libs.json.Json
 import uk.gov.hmrc.http.HttpResponse
@@ -33,7 +33,8 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
     "the http response status is OK and with valid Json" should {
 
       "return a CustomerDetailsModel" in {
-        CircumstanceDetailsReads.read("", "", HttpResponse(Status.OK, Some(circumstanceDetailsJsonMax))) shouldBe Right(circumstanceDetailsModelMax)
+        CircumstanceDetailsReads.read("", "", HttpResponse(Status.OK, Some(circumstanceDetailsJsonMax))) shouldBe
+          Right(circumstanceDetailsModelMax)
       }
     }
 
