@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package models.core
+package models.returnFrequency
 
 import base.BaseSpec
+import models.core.SubscriptionUpdateResponseModel
 import play.api.libs.json.{JsObject, Json}
 
 class SubscriptionUpdateResponseModelSpec extends BaseSpec {
