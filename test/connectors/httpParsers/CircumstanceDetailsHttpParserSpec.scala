@@ -26,7 +26,7 @@ import uk.gov.hmrc.http.HttpResponse
 
 class CircumstanceDetailsHttpParserSpec extends BaseSpec {
 
-  val successBadJson = Some(Json.obj("firstName" -> 1))
+  val successBadJson = Some(Json.obj("returnPeriod" -> 1, "returnPeriods" -> 2))
 
   "The CustomerDetailsHttpParser" when {
 
@@ -39,9 +39,9 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
 
     "the http response status is OK with invalid Json" should {
 
-      "return an ErrorModel" in {
+      "return an empty model" in {
         CircumstanceDetailsReads.read("", "", HttpResponse(Status.OK, successBadJson)) shouldBe
-          Left(UnexpectedJsonFormat)
+          Right(circumstanceDetailsModelMin)
       }
     }
 

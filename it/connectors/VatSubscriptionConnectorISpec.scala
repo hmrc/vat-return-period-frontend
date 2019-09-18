@@ -18,7 +18,7 @@ package connectors
 
 import base.BaseISpec
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
-import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
+import models.circumstanceInfo.CircumstanceDetails
 import models.core.SubscriptionUpdateResponseModel
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
 import models.returnFrequency.{Jan, ReturnPeriod, UpdateReturnPeriod}
@@ -45,15 +45,8 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
           "return a CustomerDetails model" in {
 
             val expectedModel = CircumstanceDetails(
-              customerDetails = CustomerDetails(
-                firstName = Some("Test"),
-                lastName = Some("Name"),
-                organisationName = Some("Test Organisation Name"),
-                tradingName = Some("Test Trading Name")
-              ),
               returnPeriod = ReturnPeriod("Monthly"),
               partyType = Some("2")
-
             )
 
             stubGet(s"/vat-subscription/$vrn/full-information", circumstanceDetailsJsonMax.toString(), OK)
@@ -65,14 +58,14 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
         "response JSON is invalid" should {
 
-          "return an error model" in {
+          "return an empty model" in {
 
             val invalidJson: JsObject = Json.obj("invalid" -> "data")
 
             stubGet(s"/vat-subscription/$vrn/full-information", invalidJson.toString(), OK)
 
             val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
-            result shouldBe Left(UnexpectedJsonFormat)
+            result shouldBe Right(circumstanceDetailsModelMin)
           }
         }
       }

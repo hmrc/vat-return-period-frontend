@@ -21,25 +21,21 @@ import models.returnFrequency.ReturnPeriod
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Reads, Writes, __}
 
-case class CircumstanceDetails(customerDetails: CustomerDetails,
-                               returnPeriod: Option[ReturnPeriod],
+case class CircumstanceDetails(returnPeriod: Option[ReturnPeriod],
                                partyType: Option[String])
 
 object CircumstanceDetails extends JsonReadUtil {
 
-  private val customerDetailsPath = __ \ "customerDetails"
   private val returnPeriodPath = __ \ "returnPeriod"
   private val partyTypePath = __ \ "partyType"
 
   implicit val reads: Reads[CircumstanceDetails] = (
-    customerDetailsPath.read[CustomerDetails] and
-      returnPeriodPath.readOpt[ReturnPeriod] and
+    returnPeriodPath.readOpt[ReturnPeriod] and
       partyTypePath.readOpt[String]
     ) (CircumstanceDetails.apply _)
 
   implicit val writes: Writes[CircumstanceDetails] = (
-    customerDetailsPath.write[CustomerDetails] and
-      returnPeriodPath.writeNullable[ReturnPeriod] and
+    returnPeriodPath.writeNullable[ReturnPeriod] and
       partyTypePath.writeNullable[String]
     ) (unlift(CircumstanceDetails.unapply))
 

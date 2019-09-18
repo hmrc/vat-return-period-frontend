@@ -17,7 +17,7 @@
 package stubs
 
 import base.BaseISpec
-import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
+import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.Monthly
 import play.api.libs.json.{JsObject, JsValue, Json}
 
@@ -27,20 +27,6 @@ object VatSubscriptionStub extends BaseISpec {
   val tradingName = "Test Trading Name"
   val firstName = "Test"
   val lastName = "Name"
-
-  val customerDetailsMax = CustomerDetails(
-    Some(firstName),
-    Some(lastName),
-    Some(orgName),
-    Some(tradingName)
-  )
-
-  val customerDetailsMin = CustomerDetails(
-    None,
-    None,
-    None,
-    None
-  )
 
   val partyType = "2"
 
@@ -65,14 +51,12 @@ object VatSubscriptionStub extends BaseISpec {
 
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
-      customerDetailsMax,
       Some(Monthly),
       Some(partyType)
     )
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
-      customerDetailsMin,
       None,
       None
     )
