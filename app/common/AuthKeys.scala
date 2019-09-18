@@ -20,8 +20,6 @@ object AuthKeys {
   val vatEnrolmentId: String = "HMRC-MTD-VAT"
   val vatIdentifierId: String = "VRN"
   val agentEnrolmentId: String = "HMRC-AS-AGENT"
-  val agentIdentifierId: String = "AgentReferenceNumber"
-  val agentAffinityGroup: String = "Agent"
   val delegatedAuthRule: String = "mtd-vat-auth"
   val agentSessionVrn: String = "CLIENT_VRN"
   val activated: String = "Activated"

@@ -100,5 +100,6 @@ trait MockAuth extends BaseSpec {
   val otherEnrolment: Enrolments = createEnrolment("OTHER-ENROLMENT", "BLAH", "12345")
   val mtdVatAuthorisedResponse: Future[~[Option[AffinityGroup], Enrolments]] = Future.successful(new ~(Some(Individual), mtdVatEnrolment))
   val agentAuthorisedResponse: Future[~[Option[AffinityGroup], Enrolments]] = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
+  val agentServicesEnrolmentWithoutDelegatedAuth: Enrolments = createEnrolment("HMRC-AS-AGENT", "AgentReferenceNumber", "XAIT1234567", None)
 
 }
