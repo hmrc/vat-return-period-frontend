@@ -62,7 +62,7 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
 
   lazy val user: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn)(fakeRequest)
-  lazy val agentUser: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn, Some(arn))(fakeRequestWithClientsVRN)
+  lazy val agentUser: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn, true, Some(arn))(fakeRequestWithClientsVRN)
 
   override def beforeEach(): Unit = {
     super.beforeEach()

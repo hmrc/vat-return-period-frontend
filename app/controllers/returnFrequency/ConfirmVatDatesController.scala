@@ -16,6 +16,8 @@
 
 package controllers.returnFrequency
 
+import audit.AuditService
+import audit.models.UpdateReturnFrequencyAuditModel
 import cats.data.EitherT
 import cats.instances.future._
 import common.SessionKeys
@@ -37,7 +39,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
                                           val serviceErrorHandler: ServiceErrorHandler,
                                           returnFrequencyService: ReturnFrequencyService,
                                           val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
-//                                          val auditService: AuditService,
+                                          val auditService: AuditService,
                                           val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
                                           implicit val appConfig: AppConfig,
                                           implicit val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
@@ -48,7 +50,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
       Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
     } { newReturnFrequency =>
       ReturnPeriod(newReturnFrequency) match {
-        case Some(newFrequency) => Ok("")   //(views.html.returnFrequency.confirm_dates(newFrequency))
+        case Some(newFrequency) => Ok("")   //TODO (views.html.returnFrequency.confirm_dates(newFrequency))
         case None => serviceErrorHandler.showInternalServerError
       }
     }
@@ -77,11 +79,11 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
 
         circumstanceDetails.value.map {
           case Right(details) =>
-            //TODO once auditing is added    auditService.extendedAudit(
-              //TODO once auditing is added   UpdateReturnFrequencyAuditModel(user, currentPeriod, newPeriod, details.partyType),
+            auditService.extendedAudit(
+              UpdateReturnFrequencyAuditModel(user, currentPeriod, newPeriod, details.partyType),
               Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url)
-            //)
-            Redirect(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show(if (user.isAgent) "agent" else "non-agent"))
+            )
+            Redirect(appConfig.manageClientUrl)  //TODO controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show(if (user.isAgent) "agent" else "non-agent"))
               .removingFromSession(SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY)
           case _ => serviceErrorHandler.showInternalServerError
         }

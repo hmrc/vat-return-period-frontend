@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package models.auth
+package models
 
 import play.api.mvc.{Request, WrappedRequest}
 import uk.gov.hmrc.auth.core.{Enrolment, EnrolmentIdentifier, Enrolments, InternalError}
 
-case class User[A](vrn: String, active: Boolean = true, arn: Option[String] = None) (implicit request: Request[A]) extends WrappedRequest[A](request) {
-  val isAgent: Boolean = arn.isDefined
-  val redirectSuffix: String = if(isAgent) "agent" else "non-agent"
-}
-object User {
-  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): User[A] =
+case class AgentUser[A](arn: String) (implicit request: Request[A]) extends WrappedRequest[A](request)
+
+object AgentUser {
+  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): AgentUser[A] =
     enrolments.enrolments.collectFirst {
-      case Enrolment("HMRC-MTD-VAT", EnrolmentIdentifier(_, vatId) :: _, _, _) => User(vatId)
-    }.getOrElse(throw InternalError("VRN Missing"))
+      case Enrolment("HMRC-AS-AGENT", EnrolmentIdentifier(_, arn) :: _, _, _) => AgentUser(arn)
+    }.getOrElse(throw InternalError("Agent Service Enrolment Missing"))
 }

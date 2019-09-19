@@ -16,13 +16,15 @@
 
 package controllers.returnFrequency
 
-//TODO import audit.{AuditService, ContactPreferenceAuditKeys}
-//TODO import audit.models.ContactPreferenceAuditModel
+import java.util.concurrent.Future
+
 import config.{AppConfig, ServiceErrorHandler}
 import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
 import common.SessionKeys
 import models.auth.User
+import audit.{AuditService, ContactPreferenceAuditKeys}
+import audit.models.ContactPreferenceAuditModel
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import services.{ContactPreferenceService, CustomerCircumstanceDetailsService}
@@ -39,33 +41,32 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
                                                   val auditService: AuditService,
                                                   implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
-  val show: String => Action[AnyContent] = _ => authenticate.async { implicit user =>
-    if(user.isAgent) {
-      val email = user.session.get(SessionKeys.verifiedAgentEmail)
-      customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
-        case Right(details) =>
-          //TODO once views are added val entityName = details.customerDetails.clientName
-          Ok("")  //TODO (views.html.returnFrequency.change_return_frequency_confirmation(clientName = entityName, agentEmail = email))
-        case Left(_) =>
-          Ok("")  //TODO (views.html.returnFrequency.change_return_frequency_confirmation(agentEmail = email))
-      }
-    } else {
-      Ok("")
-      //TODO nonAgentConfirmation
-    }
-  }
+//  val show: String => Action[AnyContent] = _ => authenticate.async { implicit user =>
+//    if(user.isAgent) {
+//      val email = user.session.get(SessionKeys.verifiedAgentEmail)
+//      customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
+//        case Right(details) =>
+//          //TODO once views are added val entityName = details.customerDetails.clientName
+//          Ok("")  //TODO (views.html.returnFrequency.change_return_frequency_confirmation(clientName = entityName, agentEmail = email))
+//        case Left(_) =>
+//          Ok("")  //TODO (views.html.returnFrequency.change_return_frequency_confirmation(agentEmail = email))
+//      }
+//    } else {
+//      nonAgentConfirmation
+//    }
+//  }
 
 //  private def nonAgentConfirmation(implicit user: User[AnyContent]): Future[Result] = {
-//    TODO add once Auth is in  contactPreferenceService.getContactPreference(user.vrn).map {
+//    contactPreferenceService.getContactPreference(user.vrn).map {
 //        case Right(cPref) =>
-//          TODO add once auth is in  auditService.extendedAudit(
-//            TODO add once auth is in   ContactPreferenceAuditModel(user.vrn, cPref.preference, ContactPreferenceAuditKeys.changeFrequencyAction),
-//            Some(Redirect(appConfig.manageVatChangeNameUrl))
-//          )
 //
-//          Ok("")    TODO (views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(cPref.preference)))
+//          auditService.extendedAudit(
+//            ContactPreferenceAuditModel(user.vrn, cPref.preference, ContactPreferenceAuditKeys.changeFrequencyAction),
+//            Some(appConfig.manageVatChangeNameUrl)
+//          )
+//          Ok("")   // TODO (views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(cPref.preference)))
 //        case Left(_) =>
-//          Ok("")     TODO (views.html.returnFrequency.change_return_frequency_confirmation())
+//          Ok("")    // TODO (views.html.returnFrequency.change_return_frequency_confirmation())
 //      }
 //    }
 }

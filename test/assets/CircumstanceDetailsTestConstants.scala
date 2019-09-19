@@ -37,7 +37,7 @@ object CircumstanceDetailsTestConstants {
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       Some(Monthly),
-      Some(true),
+      Some(ChangeIndicators(true)),
       Some(partyType)
     )
 

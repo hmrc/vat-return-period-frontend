@@ -18,6 +18,7 @@ package services
 
 import assets.BaseTestConstants._
 import base.BaseSpec
+import mocks.connectors.MockSubscriptionConnector
 import models.circumstanceInfo.CircumstanceDetails
 import models.core.ErrorModel
 

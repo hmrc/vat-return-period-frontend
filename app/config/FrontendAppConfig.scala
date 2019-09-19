@@ -53,6 +53,7 @@ trait AppConfig extends ServicesConfig {
   val govUkGuidanceAgentServices: String
   val manageVatUrl: String
   val manageVatChangeNameUrl: String
+  val agentClientLookupUrl: String
 }
 
 @Singleton
@@ -127,6 +128,15 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
   //Features
   override val features: Features = new Features
 
-  override val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
+  override lazy val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
+
+  override lazy val manageVatChangeNameUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatChangeNameUrl)
+
+  override lazy val agentClientLookupUrl: String = ""
+//TODO     if (features.stubAgentClientLookup()) {
+//      testOnly.controllers.routes.StubAgentClientLookupController.show(controllers.routes.CustomerCircumstanceDetailsController.redirect().url).url
+//    } else {
+//      vatAgentClientLookupHandoff(controllers.routes.CustomerCircumstanceDetailsController.redirect().url)
+//    }
 
 }

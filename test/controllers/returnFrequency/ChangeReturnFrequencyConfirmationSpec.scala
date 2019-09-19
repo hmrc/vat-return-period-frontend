@@ -35,7 +35,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec with MockContactPre
     mockContactPreferenceService,
     app.injector.instanceOf[ServiceErrorHandler],
     mockAuditingService,
-    mockConfig
+    mockAppConfig
   )
 
   "Calling the .show action" when {

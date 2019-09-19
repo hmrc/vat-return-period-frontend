@@ -17,12 +17,14 @@
 package controllers.returnFrequency
 
 import assets.CircumstanceDetailsTestConstants._
+import audit.models.UpdateReturnFrequencyAuditModel
 import base.BaseSpec
 import common.SessionKeys
 import config.ServiceErrorHandler
 import mocks.services.MockReturnFrequencyService
 import models.returnFrequency.{Jan, Monthly}
 import org.jsoup.Jsoup
+import org.mockito.ArgumentMatchers
 import play.api.http.Status
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
