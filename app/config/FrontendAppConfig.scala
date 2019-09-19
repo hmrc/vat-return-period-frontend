@@ -129,5 +129,4 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
 
   override val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
 
-  override val manageVatChangeNameUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatChangeNameUrl)
 }

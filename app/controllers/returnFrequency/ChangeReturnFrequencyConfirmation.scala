@@ -36,7 +36,7 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
                                                   customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                                                   val contactPreferenceService: ContactPreferenceService,
                                                   val serviceErrorHandler: ServiceErrorHandler,
-//TODO                                                  val auditService: AuditService,
+                                                  val auditService: AuditService,
                                                   implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
   val show: String => Action[AnyContent] = _ => authenticate.async { implicit user =>
