@@ -16,12 +16,12 @@
 
 package views.templates.input
 
-import base.BaseSpec
 import play.api.data.Field
 import play.twirl.api.Html
 import testOnly.forms.FeatureSwitchForm
+import views.ViewBaseSpec
 
-class SingeCheckBoxSpec extends BaseSpec {
+class SingeCheckBoxSpec extends ViewBaseSpec {
 
   "Rendering the single check box" when {
 

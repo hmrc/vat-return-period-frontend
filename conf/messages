@@ -1,4 +1,5 @@
 common.service-name = Business tax account
+common.fullStop = .
 
 featureSwitch.title = Feature switches
 featureSwitch.heading = Features
@@ -8,6 +9,15 @@ error.browser.title.prefix = Error:
 error.boolean = Please give an answer
 error.required = Please enter a value
 error.summary.title = There is a problem
+
+unauthorised_agent.title = You can’t use this service yet
+unauthorised_agent.useThisService = To use this service, you need to
+unauthorised_agent.setUpAccount = set up an agent services account
+
+unauthorised_non_agent.title = You can’t use this service yet
+unauthorised_non_agent.heading = You can’t use this service yet
+unauthorised_non_agent.text = You need to
+unauthorised_non_agent.link = sign up to use software to submit your VAT returns
 
 session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset

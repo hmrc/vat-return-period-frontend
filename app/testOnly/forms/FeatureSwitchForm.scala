@@ -25,7 +25,8 @@ object FeatureSwitchForm {
 
   val form: Form[FeatureSwitchModel] = Form(
     mapping(
-      ConfigKeys.accessibilityReportFeature -> boolean
+      ConfigKeys.accessibilityReportFeature -> boolean,
+      ConfigKeys.stubContactPreferencesFeature -> boolean
     )(FeatureSwitchModel.apply)(FeatureSwitchModel.unapply)
   )
 }

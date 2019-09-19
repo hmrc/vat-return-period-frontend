@@ -31,7 +31,8 @@ class FeatureSwitchController @Inject()(val messagesApi: MessagesApi,
   def featureSwitch: Action[AnyContent] = Action { implicit request =>
     Ok(testOnly.views.html.featureSwitch(FeatureSwitchForm.form.fill(
       FeatureSwitchModel(
-        accessibilityReportFeature = appConfig.features.accessibilityReportFeature()
+        accessibilityReportFeature = appConfig.features.accessibilityReportFeature(),
+        stubContactPreferencesFeature = appConfig.features.stubContactPreferencesFeature()
       )
     )))
   }
@@ -45,6 +46,7 @@ class FeatureSwitchController @Inject()(val messagesApi: MessagesApi,
 
   def handleSuccess(model: FeatureSwitchModel): Result = {
     appConfig.features.accessibilityReportFeature(model.accessibilityReportFeature)
+    appConfig.features.stubContactPreferencesFeature(model.accessibilityReportFeature)
     Redirect(routes.FeatureSwitchController.featureSwitch())
   }
 }

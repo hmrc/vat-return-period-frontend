@@ -24,6 +24,7 @@ import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
 import play.api.mvc.Call
 import play.api.{Configuration, Environment}
+import uk.gov.hmrc.play.binders.ContinueUrl
 import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig extends ServicesConfig {
@@ -37,9 +38,19 @@ trait AppConfig extends ServicesConfig {
   val whitelistEnabled: Boolean
   val whitelistExcludedPaths: Seq[Call]
   val whitelistShutterPage: String
-
   val features: Features
   val accessibilityReportUrl : String
+  val signInUrl: String
+  def signOutUrl(identifier: String): String
+  def exitSurveyUrl(identifier: String): String
+  val unauthorisedSignOutUrl: String
+  val agentClientLookupStartUrl: String => String
+  val agentClientUnauthorisedUrl: String => String
+  val manageClientUrl: String
+  val changeClientUrl: String
+  val agentActionUrl: String
+  val govUkGuidanceMtdVat: String
+  val govUkGuidanceAgentServices: String
 }
 
 @Singleton
@@ -69,7 +80,49 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
     (path => Call("GET", path))
   override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
+  // Gov.uk guidance
+  override lazy val govUkGuidanceMtdVat: String = getString(ConfigKeys.govUkGuidanceMtdVat)
+  override lazy val govUkGuidanceAgentServices: String = getString(ConfigKeys.govUkGuidanceAgentServices)
+
+  // Sign-in
+  private lazy val signInBaseUrl: String = getString(ConfigKeys.signInBaseUrl)
+  private lazy val signInContinueBaseUrl: String = getString(ConfigKeys.signInContinueBaseUrl)
+  private lazy val signInContinueUrl: String = signInContinueBaseUrl + getString(ConfigKeys.signInContinueUrl)
+  private lazy val signInOrigin = getString(ConfigKeys.appName)
+  override lazy val signInUrl: String = s"$signInBaseUrl?continue=$signInContinueUrl&origin=$signInOrigin"
+
+  // Sign-out
+  private lazy val feedbackSurveyBaseUrl =getString(ConfigKeys.feedbackSurveyHost) + getString(ConfigKeys.feedbackSurveyUrl)
+  override def exitSurveyUrl(identifier: String): String = s"$feedbackSurveyBaseUrl/$identifier"
+  private lazy val governmentGatewayHost: String = getString(ConfigKeys.governmentGatewayHost)
+  override lazy val unauthorisedSignOutUrl: String = s"$governmentGatewayHost/gg/sign-out?continue=$signInContinueUrl"
+  override def signOutUrl(identifier: String): String =
+    s"$governmentGatewayHost/gg/sign-out?continue=${exitSurveyUrl(identifier)}"
+
+  // Agent Client Lookup
+  private lazy val platformHost = getString(ConfigKeys.platformHost)
+  private lazy val agentClientLookupRedirectUrl: String => String = uri => ContinueUrl(platformHost + uri).encodedUrl
+  private lazy val agentClientLookupHost = getString(ConfigKeys.vatAgentClientLookupFrontendHost)
+  override lazy val agentClientLookupStartUrl: String => String = uri =>
+    agentClientLookupHost +
+      getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl) +
+      s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
+  override lazy val agentClientUnauthorisedUrl: String => String = uri =>
+    agentClientLookupHost +
+      getString(ConfigKeys.vatAgentClientLookupFrontendUnauthorisedUrl) +
+      s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
+
+  override lazy val manageClientUrl: String =
+    getString(ConfigKeys.vatAgentClientLookupFrontendNonStubHost) + getString(ConfigKeys.manageClientUrl)
+  override lazy val changeClientUrl: String =
+    getString(ConfigKeys.vatAgentClientLookupFrontendHost) + getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
+  override lazy val agentActionUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendAgentActionUrl)
+
+  //Accessibility statement
   private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
   override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+
+  //Features
   override val features: Features = new Features
+
 }

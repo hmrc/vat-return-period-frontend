@@ -38,4 +38,15 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   implicit lazy val accessibilityReportEnabled : Boolean = true
   implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
   override val features: Features = new Features()
+  override val signInUrl: String = "sign-in-url"
+  override def signOutUrl(identifier: String): String = s"/some-gg-signout-url/$identifier"
+  override def exitSurveyUrl(identifier: String): String = s"/some-survey-url/$identifier"
+  override val unauthorisedSignOutUrl: String = "/unauth-signout-url"
+  override val agentClientLookupStartUrl: String => String = uri => s"agent-client-lookup-start-url/$uri"
+  override val agentClientUnauthorisedUrl: String => String = uri => s"agent-client-unauthorised-url/$uri"
+  override val manageClientUrl: String = "/agent-action"
+  override val changeClientUrl: String = "/change-client"
+  override val agentActionUrl: String = "/agent-action"
+  override val govUkGuidanceMtdVat: String = "mtd-vat"
+  override val govUkGuidanceAgentServices: String = "agent-services"
 }
