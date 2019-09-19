@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
-package testOnly.models
+package assets
 
-case class FeatureSwitchModel(
-                               accessibilityReportFeature: Boolean,
-                               stubContactPreferencesFeature: Boolean
-                             )
+import models.contactPreferences.ContactPreference
+import play.api.libs.json.{JsObject, Json}
+
+object ContactPreferenceTestConstants {
+
+  val digitalContactPreferenceModel = ContactPreference("digital")
+  val paperContactPreferenceModel = ContactPreference("paper")
+
+  val digitalContactPreferenceJson: JsObject = Json.obj("contactPreference" -> "digital")
+  val paperContactPreferenceJson: JsObject = Json.obj("contactPreference" -> "paper")
+
+}

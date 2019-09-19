@@ -33,7 +33,9 @@ object ConfigKeys {
   val whitelistExcludedPaths: String = "whitelist.excludedPaths"
   val whitelistShutterPage: String = "whitelist.shutter-page-url"
 
+  val stubContactPreferencesFeature: String = "features.stubContactPreferences.enabled"
   val accessibilityReportFeature: String = "features.accessibilityReport.enabled"
+
   val accessibilityReportUrl: String = "accessibilityReport.url"
   val accessibilityReportHost: String = "accessibilityReport.host"
 

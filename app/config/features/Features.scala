@@ -24,4 +24,5 @@ import play.api.Configuration
 class Features @Inject()(implicit config: Configuration) {
 
   val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
+  val stubContactPreferencesFeature = new Feature(ConfigKeys.stubContactPreferencesFeature)
 }

@@ -118,7 +118,11 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
     getString(ConfigKeys.vatAgentClientLookupFrontendHost) + getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
   override lazy val agentActionUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendAgentActionUrl)
 
+  //Accessibility statement
   private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
   override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+
+  //Features
   override val features: Features = new Features
+
 }

@@ -24,7 +24,6 @@ object UnexpectedJsonFormat extends HttpError {
   override val message: String = "The server you are connecting to returned unexpected JSON."
 }
 
-
 case class ServerSideError(code: String, errorResponse: String) extends HttpError {
   override val message: String = s"The server you are connecting to returned an error. " +
     s"[ServerSideError]- RESPONSE status: $code, body: $errorResponse"

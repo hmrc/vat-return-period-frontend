@@ -40,7 +40,10 @@ trait BaseISpec extends WordSpec with WireMockHelper with Matchers with
     "microservice.services.vat-subscription.host" -> WireMockHelper.wireMockHost,
     "microservice.services.vat-subscription.port" -> WireMockHelper.wireMockPort.toString,
     "microservice.services.auth.host" -> WireMockHelper.wireMockHost,
-    "microservice.services.auth.port" -> WireMockHelper.wireMockPort.toString
+    "microservice.services.auth.port" -> WireMockHelper.wireMockPort.toString,
+    "microservice.services.contact-preferences.host" -> WireMockHelper.wireMockHost,
+    "microservice.services.contact-preferences.port" -> WireMockHelper.wireMockPort.toString,
+    "features.stubContactPreferences.enabled" -> "false"
   )
 
   override implicit lazy val app: Application = new GuiceApplicationBuilder()
@@ -53,7 +56,7 @@ trait BaseISpec extends WordSpec with WireMockHelper with Matchers with
   lazy val appConfig: AppConfig = app.injector.instanceOf[AppConfig]
   lazy val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
   implicit lazy val messages: Messages = Messages(Lang("en-GB"), messagesApi)
-  val appRouteContext: String = "/vat-through-software/submit-vat-return"
+  val appRouteContext: String = "/vat-through-software/account/returns"
 
   implicit val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
