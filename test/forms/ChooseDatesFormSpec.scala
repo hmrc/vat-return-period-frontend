@@ -60,6 +60,7 @@ class ChooseDatesFormSpec extends UnitSpec {
     "generate the correct mapping" in {
       val model = ReturnDatesModel("January")
       val form = ChooseDatesForm.datesForm.fill(model)
+
       form.data shouldBe Map("period-option" -> "January")
     }
   }

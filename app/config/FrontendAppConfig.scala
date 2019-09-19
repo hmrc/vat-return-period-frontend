@@ -51,6 +51,8 @@ trait AppConfig extends ServicesConfig {
   val agentActionUrl: String
   val govUkGuidanceMtdVat: String
   val govUkGuidanceAgentServices: String
+  val manageVatUrl: String
+  val manageVatChangeNameUrl: String
 }
 
 @Singleton
@@ -125,4 +127,7 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
   //Features
   override val features: Features = new Features
 
+  override val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
+
+  override val manageVatChangeNameUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatChangeNameUrl)
 }
