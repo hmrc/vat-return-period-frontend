@@ -33,11 +33,11 @@ class UnauthorisedAgentViewSpec extends ViewBaseSpec {
       val button = "#content .button"
     }
 
-    lazy val view = views.html.errors.unauthorised_agent()(fakeRequest, messages, mockAppConfig, user = Some(user))
+    lazy val view = views.html.errors.unauthorised_agent()(fakeRequestWithClientsVRN, messages, mockAppConfig, user = Some(agentUser))
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "have the correct document title" in {
-      document.title shouldBe AuthMessages.unauthorisedTitle
+      document.title shouldBe AuthMessages.unauthorisedHeading + AuthMessages.mtdfvTitleSuffix
     }
 
     "have a the correct page heading" in {

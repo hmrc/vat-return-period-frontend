@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
-package assets.messages
+package forms
 
-trait BaseMessages {
+import models.returnFrequency.ReturnDatesModel
+import play.api.data.Form
+import play.api.data.Forms._
 
-  val continue = "Continue"
-  val back = "Back"
-  val confirmAndContinue = "Confirm and continue"
-  val finish = "Finish"
-  val errorHeading = "There is a problem"
+object ChooseDatesForm {
 
-  val titleSuffix = " - Business tax account - GOV.UK"
-  val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
-  val mtdfvTitleSuffix = " - VAT - GOV.UK"
+  val datesForm: Form[ReturnDatesModel] = Form(
+    mapping(
+      "period-option" -> default(text, "")
+        .verifying("chooseDatesForm.frequency.missing", dates => dates.nonEmpty)
+    )(ReturnDatesModel.apply)(ReturnDatesModel.unapply)
 
-  val problemWithService = "Sorry, there is a problem with the service"
-
+  )
 }

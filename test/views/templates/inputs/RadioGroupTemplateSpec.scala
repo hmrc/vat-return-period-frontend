@@ -18,6 +18,7 @@ package views.templates.inputs
 
 import play.api.data.{Field, FormError}
 import play.twirl.api.Html
+import testOnly.forms.TextInputForm
 import views.ViewBaseSpec
 import views.html.templates.inputs.radioGroup
 

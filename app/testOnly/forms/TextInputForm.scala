@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package assets.messages
+package testOnly.forms
 
-trait BaseMessages {
+import play.api.data.Form
+import play.api.data.Forms._
+import testOnly.models.TextInputModel
 
-  val continue = "Continue"
-  val back = "Back"
-  val confirmAndContinue = "Confirm and continue"
-  val finish = "Finish"
-  val errorHeading = "There is a problem"
+object TextInputForm {
 
-  val titleSuffix = " - Business tax account - GOV.UK"
-  val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
-  val mtdfvTitleSuffix = " - VAT - GOV.UK"
-
-  val problemWithService = "Sorry, there is a problem with the service"
-
+  val form: Form[TextInputModel] = Form(
+    mapping(
+      "text" -> nonEmptyText
+    )(TextInputModel.apply)(TextInputModel.unapply)
+  )
 }
