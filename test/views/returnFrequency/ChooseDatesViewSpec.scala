@@ -74,8 +74,8 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     lazy val view = views.html.returnFrequency.chooseDates(form,Monthly)(user, messages, mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
-    s"have the correct document title of '${viewMessages.ChoosePage.title}'" in {
-      document.title shouldBe viewMessages.ChoosePage.title
+    s"have the correct document title of '${viewMessages.ChoosePage.errorTitle}'" in {
+      document.title shouldBe viewMessages.ChoosePage.errorTitle
     }
 
     s"have a the correct page heading of '${viewMessages.ChoosePage.heading}'" in {

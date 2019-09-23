@@ -25,6 +25,7 @@ object ReturnFrequencyMessages extends BaseMessages {
 
   object ChoosePage {
     val title: String = "Choose the new VAT Return dates" + titleSuffix
+    val errorTitle: String =  "Error: Choose the new VAT Return dates" + titleSuffix
     val heading = "Choose the new VAT Return dates"
     val question = "The VAT Return dates are currently"
     val error = "Select the new VAT Return dates"

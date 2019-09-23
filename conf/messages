@@ -12,7 +12,7 @@ featureSwitch.title = Feature switches
 featureSwitch.heading = Features
 featureSwitch.submit = Submit
 
-error.browser.title.prefix = Error:
+common.error.prefixTitle = Error: {0}
 error.boolean = Please give an answer
 error.required = Please enter a value
 error.summary.title = There is a problem
