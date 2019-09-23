@@ -17,15 +17,8 @@
 package models.auth
 
 import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.{Enrolment, EnrolmentIdentifier, Enrolments, InternalError}
 
 case class User[A](vrn: String, active: Boolean = true, arn: Option[String] = None) (implicit request: Request[A]) extends WrappedRequest[A](request) {
   val isAgent: Boolean = arn.isDefined
   val redirectSuffix: String = if(isAgent) "agent" else "non-agent"
-}
-object User {
-  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): User[A] =
-    enrolments.enrolments.collectFirst {
-      case Enrolment("HMRC-MTD-VAT", EnrolmentIdentifier(_, vatId) :: _, _, _) => User(vatId)
-    }.getOrElse(throw InternalError("VRN Missing"))
 }

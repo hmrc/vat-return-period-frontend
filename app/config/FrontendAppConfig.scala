@@ -17,8 +17,6 @@
 package config
 
 import java.util.Base64
-
-import common.ConfigKeys
 import config.features.Features
 import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
@@ -52,8 +50,6 @@ trait AppConfig extends ServicesConfig {
   val govUkGuidanceMtdVat: String
   val govUkGuidanceAgentServices: String
   val manageVatUrl: String
-  val manageVatChangeNameUrl: String
-  val agentClientLookupUrl: String
 }
 
 @Singleton
@@ -61,12 +57,17 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
   override protected def mode: Mode = environment.mode
 
   lazy val appName: String = getString(ConfigKeys.appName)
+  private lazy val platformHost = getString(ConfigKeys.platformHost)
 
+  // Contact frontend
   private val contactHost = getString(ConfigKeys.contactFrontendService)
   private val contactFormServiceIdentifier = "VATC"
 
+  // GA
   override lazy val analyticsToken: String = getString(ConfigKeys.googleAnalyticsToken)
   override lazy val analyticsHost: String = getString(ConfigKeys.googleAnalyticsHost)
+
+  // Feedback
   lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   lazy val reportAProblemNonJSUrl = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl = s"$contactHost/contact/beta-feedback"
@@ -103,40 +104,38 @@ class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeC
     s"$governmentGatewayHost/gg/sign-out?continue=${exitSurveyUrl(identifier)}"
 
   // Agent Client Lookup
-  private lazy val platformHost = getString(ConfigKeys.platformHost)
   private lazy val agentClientLookupRedirectUrl: String => String = uri => ContinueUrl(platformHost + uri).encodedUrl
-  private lazy val agentClientLookupHost = getString(ConfigKeys.vatAgentClientLookupFrontendHost)
-  override lazy val agentClientLookupStartUrl: String => String = uri =>
-    agentClientLookupHost +
-      getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl) +
-      s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
-  override lazy val agentClientUnauthorisedUrl: String => String = uri =>
-    agentClientLookupHost +
-      getString(ConfigKeys.vatAgentClientLookupFrontendUnauthorisedUrl) +
-      s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
+  private lazy val agentClientLookupHost: String = getString(ConfigKeys.vatAgentClientLookupFrontendHost)
 
-  override lazy val manageClientUrl: String =
-    getString(ConfigKeys.vatAgentClientLookupFrontendNonStubHost) + getString(ConfigKeys.manageClientUrl)
-  override lazy val changeClientUrl: String =
-    getString(ConfigKeys.vatAgentClientLookupFrontendHost) + getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
+  override lazy val agentClientLookupStartUrl: String => String = uri =>
+    if(features.stubAgentClientLookup()) {
+      testOnly.controllers.routes.StubAgentClientLookupController.show(uri).url
+    } else {
+      agentClientLookupHost +
+        getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl) +
+        s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
+    }
+
+  override lazy val agentClientUnauthorisedUrl: String => String = uri =>
+    if(features.stubAgentClientLookup()) {
+      testOnly.controllers.routes.StubAgentClientLookupController.unauth(uri).url
+    } else {
+      agentClientLookupHost +
+        getString(ConfigKeys.vatAgentClientLookupFrontendUnauthorisedUrl) +
+        s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
+    }
+
+  override lazy val manageClientUrl: String = agentClientLookupHost + getString(ConfigKeys.manageClientUrl)
+  override lazy val changeClientUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
   override lazy val agentActionUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendAgentActionUrl)
 
   //Accessibility statement
-  private lazy val accessibilityReportHost : String = getString(ConfigKeys.accessibilityReportHost)
-  override val accessibilityReportUrl : String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+  private lazy val accessibilityReportHost: String = getString(ConfigKeys.accessibilityReportHost)
+  override val accessibilityReportUrl: String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
 
   //Features
   override val features: Features = new Features
 
+  // Manage VAT Subscription Frontend
   override lazy val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
-
-  override lazy val manageVatChangeNameUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatChangeNameUrl)
-
-  override lazy val agentClientLookupUrl: String = ""
-//TODO     if (features.stubAgentClientLookup()) {
-//      testOnly.controllers.routes.StubAgentClientLookupController.show(controllers.routes.CustomerCircumstanceDetailsController.redirect().url).url
-//    } else {
-//      vatAgentClientLookupHandoff(controllers.routes.CustomerCircumstanceDetailsController.redirect().url)
-//    }
-
 }

@@ -64,5 +64,4 @@ class ChooseDatesFormSpec extends UnitSpec {
       form.data shouldBe Map("period-option" -> "January")
     }
   }
-
 }

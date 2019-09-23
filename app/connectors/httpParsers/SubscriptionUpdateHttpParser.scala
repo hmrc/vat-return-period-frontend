@@ -17,8 +17,8 @@
 package connectors.httpParsers
 
 import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
-import models.core.SubscriptionUpdateResponseModel
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
+import models.returnFrequency.SubscriptionUpdateResponseModel
 import play.api.Logger
 import play.api.http.Status
 import uk.gov.hmrc.http.{HttpReads, HttpResponse}

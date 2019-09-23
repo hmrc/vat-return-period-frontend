@@ -16,7 +16,7 @@
 
 package testOnly.forms
 
-import common.ConfigKeys
+import config.ConfigKeys
 import play.api.data.Form
 import play.api.data.Forms._
 import testOnly.models.FeatureSwitchModel
@@ -26,7 +26,8 @@ object FeatureSwitchForm {
   val form: Form[FeatureSwitchModel] = Form(
     mapping(
       ConfigKeys.accessibilityReportFeature -> boolean,
-      ConfigKeys.stubContactPreferencesFeature -> boolean
+      ConfigKeys.stubContactPreferencesFeature -> boolean,
+      ConfigKeys.stubAgentClientLookupFeature -> boolean
     )(FeatureSwitchModel.apply)(FeatureSwitchModel.unapply)
   )
 }

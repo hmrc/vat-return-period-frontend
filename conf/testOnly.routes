@@ -10,7 +10,11 @@
 # Failing to follow this rule may result in test routes deployed in production.
 
 # Add all the application routes to the prod.routes file
-GET        /vat-through-software/account/returns/test-only/feature-switch            testOnly.controllers.FeatureSwitchController.featureSwitch
-POST       /vat-through-software/account/returns/test-only/feature-switch            testOnly.controllers.FeatureSwitchController.submitFeatureSwitch
+GET        /vat-through-software/account/returns/test-only/feature-switch    testOnly.controllers.FeatureSwitchController.featureSwitch
+POST       /vat-through-software/account/returns/test-only/feature-switch    testOnly.controllers.FeatureSwitchController.submitFeatureSwitch
 
-->         /                          prod.Routes
+GET        /vat-through-software/account/returns/test-only/vaclf-stub        testOnly.controllers.StubAgentClientLookupController.show(redirectUrl: String)
+GET        /vat-through-software/account/returns/test-only/vaclf-stub-unauth testOnly.controllers.StubAgentClientLookupController.unauth(redirectUrl: String)
+POST       /vat-through-software/account/returns/test-only/vaclf-stub        testOnly.controllers.StubAgentClientLookupController.post
+
+->         /                                                                 prod.Routes

@@ -17,8 +17,5 @@
 package audit
 
 object ContactPreferenceAuditKeys {
-
-  val changeBusinessAddressAction = "ChangePPOBContactPreference"
   val changeFrequencyAction = "ChangeReturnFrequencyContactPreference"
-
 }

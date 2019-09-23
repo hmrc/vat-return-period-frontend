@@ -21,8 +21,7 @@ import connectors.VatSubscriptionConnector
 import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
 import javax.inject.{Inject, Singleton}
 import models.auth.User
-import models.core.{ErrorModel, SubscriptionUpdateResponseModel}
-import models.returnFrequency.{ReturnPeriod, UpdateReturnPeriod}
+import models.returnFrequency.{ReturnPeriod, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -31,9 +30,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class ReturnFrequencyService @Inject()(subscriptionConnector: VatSubscriptionConnector) {
 
   def updateReturnFrequency(vrn: String, frequency: ReturnPeriod)
-                           (implicit headerCarrier: HeaderCarrier,
-                            ec: ExecutionContext,
-                            user: User[_]): Future[HttpPutResult[SubscriptionUpdateResponseModel]] = {
+                           (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext, user: User[_])
+  : Future[HttpPutResult[SubscriptionUpdateResponseModel]] = {
 
     val updateReturnPeriod = UpdateReturnPeriod(frequency.internalId, user.session.get(SessionKeys.verifiedAgentEmail))
     subscriptionConnector.updateReturnFrequency(vrn, updateReturnPeriod)

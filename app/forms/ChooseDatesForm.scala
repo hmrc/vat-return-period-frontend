@@ -27,6 +27,5 @@ object ChooseDatesForm {
       "period-option" -> default(text, "")
         .verifying("chooseDatesForm.frequency.missing", dates => dates.nonEmpty)
     )(ReturnDatesModel.apply)(ReturnDatesModel.unapply)
-
   )
 }

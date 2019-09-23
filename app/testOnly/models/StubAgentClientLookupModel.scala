@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-package models.core
+package testOnly.models
 
-import play.api.libs.json.{Format, Json}
-
-case class ErrorModel(status: Int, message: String)
-
-object ErrorModel {
-  implicit val format: Format[ErrorModel] = Json.format[ErrorModel]
-}
+case class StubAgentClientLookupModel(vrn: String, redirectUrl: String)

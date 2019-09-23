@@ -18,8 +18,7 @@ package services
 
 import base.BaseSpec
 import mocks.connectors.MockSubscriptionConnector
-import models.core.SubscriptionUpdateResponseModel
-import models.returnFrequency.Jan
+import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel}
 
 class ReturnFrequencyServiceSpec extends BaseSpec with MockSubscriptionConnector {
 

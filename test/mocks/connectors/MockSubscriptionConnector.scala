@@ -18,7 +18,8 @@ package mocks.connectors
 
 import connectors.VatSubscriptionConnector
 import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
-import models.core.{ErrorModel, SubscriptionUpdateResponseModel}
+import models.errors.ErrorModel
+import models.returnFrequency.SubscriptionUpdateResponseModel
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito._
 import org.scalatest.BeforeAndAfterEach

@@ -17,13 +17,11 @@
 package models.returnFrequency
 
 import base.BaseSpec
-import models.core.SubscriptionUpdateResponseModel
 import play.api.libs.json.{JsObject, Json}
 
 class SubscriptionUpdateResponseModelSpec extends BaseSpec {
 
   val correctSubscriptionUpdateResponseJson: JsObject = Json.obj("formBundle" -> "123456789")
-
   val correctSubscriptionUpdateResponseModel: SubscriptionUpdateResponseModel = SubscriptionUpdateResponseModel("123456789")
 
   "Formats" should {
@@ -36,5 +34,4 @@ class SubscriptionUpdateResponseModelSpec extends BaseSpec {
       Json.toJson(correctSubscriptionUpdateResponseModel) shouldBe correctSubscriptionUpdateResponseJson
     }
   }
-
 }

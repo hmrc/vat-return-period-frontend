@@ -27,7 +27,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class CustomerCircumstanceDetailsService @Inject()(val subscriptionConnector: VatSubscriptionConnector) {
 
-  def getCustomerCircumstanceDetails(vrn: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext)
-  : Future[HttpGetResult[CircumstanceDetails]] =
+  def getCustomerCircumstanceDetails(vrn: String)
+                                    (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[CircumstanceDetails]] =
     subscriptionConnector.getCustomerCircumstanceDetails(vrn)
 }

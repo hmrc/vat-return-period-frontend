@@ -29,9 +29,8 @@ import scala.concurrent.{ExecutionContext, Future}
 class ContactPreferenceService @Inject()(connector: ContactPreferenceConnector,
                                          appConfig: AppConfig) {
 
-  def getContactPreference(vrn: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext)
-  : Future[HttpGetResult[ContactPreference]] = {
+  def getContactPreference(vrn: String)
+                          (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[ContactPreference]] = {
     connector.getContactPreference(vrn)
   }
-
 }

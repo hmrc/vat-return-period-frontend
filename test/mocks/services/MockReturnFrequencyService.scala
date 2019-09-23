@@ -16,7 +16,6 @@
 
 package mocks.services
 
-import models.core.{ErrorModel, SubscriptionUpdateResponseModel}
 import org.mockito.ArgumentMatchers._
 import org.mockito.Mockito.{reset, _}
 import org.mockito.stubbing.OngoingStubbing
@@ -25,6 +24,8 @@ import org.scalatest.mockito.MockitoSugar
 import services.ReturnFrequencyService
 import uk.gov.hmrc.play.test.UnitSpec
 import assets.BaseTestConstants.formBundle
+import models.errors.ErrorModel
+import models.returnFrequency.SubscriptionUpdateResponseModel
 
 import scala.concurrent.Future
 

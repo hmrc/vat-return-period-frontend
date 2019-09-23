@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package controllers.predicates
+package models.returnFrequency
 
-import common.EnrolmentKeys
-import uk.gov.hmrc.auth.core.AffinityGroup
+import play.api.libs.json.{Format, Json}
 
-trait AuthBasePredicate {
+case class SubscriptionUpdateResponseModel(formBundle: String)
 
-  def isAgent(group: AffinityGroup): Boolean = group.toString.contains(EnrolmentKeys.agentAffinityGroup)
-
+object SubscriptionUpdateResponseModel {
+  implicit val formats: Format[SubscriptionUpdateResponseModel] = Json.format[SubscriptionUpdateResponseModel]
 }

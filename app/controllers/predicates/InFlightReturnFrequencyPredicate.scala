@@ -51,7 +51,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
   private def getCustomerCircumstanceDetails[A](implicit user: User[A], hc: HeaderCarrier): Future[Either[Result, User[A]]] = {
     customerCircumstancesService.getCustomerCircumstanceDetails(user.vrn).map {
 
-      case Right(circumstanceDetails) if circumstanceDetails.changeIndicators.fold(false)(_.returnPeriod) =>
+      case Right(circumstanceDetails) if circumstanceDetails.pendingReturnPeriod.getOrElse(false) =>
         Left(Redirect(appConfig.manageVatUrl))
       case Right(circumstanceDetails) =>
         circumstanceDetails.returnPeriod match {

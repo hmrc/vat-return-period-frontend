@@ -23,8 +23,7 @@ import config.FrontendAppConfig
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import mocks.MockHttp
 import models.circumstanceInfo.CircumstanceDetails
-import models.core.SubscriptionUpdateResponseModel
-import models.returnFrequency.{Jan, UpdateReturnPeriod}
+import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import play.api.{Configuration, Environment}
 
 import scala.concurrent.Future

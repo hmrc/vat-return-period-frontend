@@ -22,6 +22,7 @@ import common.AuthKeys
 import config.ErrorHandler
 import mocks.MockConfig
 import models.auth.User
+import org.jsoup.Jsoup
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -30,6 +31,7 @@ import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
+import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
 
@@ -71,5 +73,7 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   override def afterEach(): Unit = {
     super.afterEach()
   }
+
+  def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
 
 }

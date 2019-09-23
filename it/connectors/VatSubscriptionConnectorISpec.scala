@@ -18,10 +18,9 @@ package connectors
 
 import base.BaseISpec
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
-import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails}
-import models.core.SubscriptionUpdateResponseModel
+import models.circumstanceInfo.CircumstanceDetails
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
-import models.returnFrequency.{Jan, UpdateReturnPeriod}
+import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import play.api.http.Status._
 import play.api.libs.json.{JsObject, Json}
 import stubs.VatSubscriptionStub._

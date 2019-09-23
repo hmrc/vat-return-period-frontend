@@ -16,7 +16,7 @@
 
 package assets
 
-import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails}
+import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
 import models.returnFrequency.Monthly
 import play.api.libs.json.{JsValue, Json}
 
@@ -36,13 +36,15 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(Monthly),
-      Some(ChangeIndicators(true)),
+      Some(true),
       Some(partyType)
     )
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
+      CustomerDetails(None, None, None, None),
       None,
       None,
       None

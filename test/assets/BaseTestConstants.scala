@@ -16,7 +16,10 @@
 
 package assets
 
+import common.EnrolmentKeys
+import models.errors.ErrorModel
 import play.api.http.Status
+import uk.gov.hmrc.auth.core.Enrolment
 import uk.gov.hmrc.http.HttpResponse
 
 object BaseTestConstants {
@@ -24,4 +27,11 @@ object BaseTestConstants {
   val agentEmail = "agentEmail@test.com"
 
   val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
+
+  val arn = "ABCD12345678901"
+  val vrn: String = "999999999"
+  val testMtdVatEnrolment: Enrolment = Enrolment(EnrolmentKeys.vatEnrolmentId).withIdentifier(EnrolmentKeys.vatIdentifierId, vrn)
+  val formBundle = "XA1234567"
+  val internalServerErrorTitle = "There is a problem with the service - VAT - GOV.UK"
+
 }

@@ -31,7 +31,6 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, ReturnFrequencyService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-
 import scala.concurrent.Future
 
 @Singleton
@@ -50,7 +49,9 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
       Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
     } { newReturnFrequency =>
       ReturnPeriod(newReturnFrequency) match {
-        case Some(newFrequency) => Ok("")   //TODO (views.html.returnFrequency.confirm_dates(newFrequency))
+        case Some(newFrequency) =>
+          //TODO Ok(views.html.returnFrequency.confirm_dates(newFrequency))
+          Ok("")
         case None => serviceErrorHandler.showInternalServerError
       }
     }
@@ -83,7 +84,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
               UpdateReturnFrequencyAuditModel(user, currentPeriod, newPeriod, details.partyType),
               Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url)
             )
-            Redirect(appConfig.manageClientUrl)  //TODO controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show(if (user.isAgent) "agent" else "non-agent"))
+            Redirect(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show(if (user.isAgent) "agent" else "non-agent"))
               .removingFromSession(SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY)
           case _ => serviceErrorHandler.showInternalServerError
         }

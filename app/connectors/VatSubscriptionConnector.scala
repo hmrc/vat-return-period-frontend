@@ -21,8 +21,7 @@ import config.AppConfig
 import connectors.httpParsers.CircumstanceDetailsHttpParser.CircumstanceDetailsReads
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import models.circumstanceInfo.CircumstanceDetails
-import models.core.SubscriptionUpdateResponseModel
-import models.returnFrequency.UpdateReturnPeriod
+import models.returnFrequency.{SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import play.api.Logger
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.bootstrap.http.HttpClient

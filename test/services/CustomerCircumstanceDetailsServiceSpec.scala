@@ -20,7 +20,7 @@ import assets.BaseTestConstants._
 import base.BaseSpec
 import mocks.connectors.MockSubscriptionConnector
 import models.circumstanceInfo.CircumstanceDetails
-import models.core.ErrorModel
+import models.errors.ErrorModel
 
 import scala.concurrent.Future
 
@@ -45,7 +45,7 @@ class CustomerCircumstanceDetailsServiceSpec extends BaseSpec with MockSubscript
       "given an error should" should {
 
         "return an Left with an ErrorModel" in {
-          setupMockUserDetails(vrn)(Left(errorModel))
+          setupMockUserDetails(vrn)
           await(result) shouldBe Left(errorModel)
         }
       }

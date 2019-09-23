@@ -44,14 +44,15 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
       serviceErrorHandler.showInternalServerError
     } { currentReturnFrequency =>
 
-        val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
-          case Some(value) => datesForm.fill(ReturnDatesModel(value))
-          case _ => datesForm
-        }
+      val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
+        case Some(value) => datesForm.fill(ReturnDatesModel(value))
+        case _ => datesForm
+      }
 
-        ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
-          Ok("")  //TODO (views.html.returnFrequency.chooseDates(form, returnFrequency))
-        }
+      ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
+        //TODO Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
+        Ok("")
+      }
     }
   }
 
@@ -64,7 +65,8 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
         datesForm.bindFromRequest().fold(
           errors =>
             ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
-              BadRequest("")    //TODO (views.html.returnFrequency.chooseDates(errors, returnFrequency))
+              //TODO BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
+              BadRequest("")
             ),
           success =>
             Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)

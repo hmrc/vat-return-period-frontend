@@ -16,7 +16,7 @@
 
 package config.features
 
-import common.ConfigKeys
+import config.ConfigKeys
 import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 
@@ -24,5 +24,6 @@ import play.api.Configuration
 class Features @Inject()(implicit config: Configuration) {
 
   val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
+  val stubAgentClientLookup = new Feature(ConfigKeys.stubAgentClientLookupFeature)
   val stubContactPreferencesFeature = new Feature(ConfigKeys.stubContactPreferencesFeature)
 }

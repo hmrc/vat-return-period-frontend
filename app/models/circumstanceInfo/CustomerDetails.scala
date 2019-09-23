@@ -16,25 +16,21 @@
 
 package models.circumstanceInfo
 
-import models.core.JsonReadUtil
+import play.api.libs.functional.syntax._
 import play.api.libs.json._
-import utils.JsonObjectSugar
+import utils.{JsonObjectSugar, JsonReadUtil}
 
 case class CustomerDetails(firstName: Option[String],
                            lastName: Option[String],
                            organisationName: Option[String],
-                           tradingName: Option[String],
-                           welshIndicator: Option[Boolean],
-                           hasFlatRateScheme: Boolean = false,
-                           overseasIndicator: Boolean) {
+                           tradingName: Option[String]) {
 
-  val isOrg: Boolean = organisationName.isDefined
-  val isInd: Boolean = firstName.isDefined || lastName.isDefined
+  val isOrganisation: Boolean = organisationName.isDefined
   val userName: Option[String] = {
     val name = s"${firstName.getOrElse("")} ${lastName.getOrElse("")}".trim
     if (name.isEmpty) None else Some(name)
   }
-  val businessName: Option[String] = if (isOrg) organisationName else userName
+  val businessName: Option[String] = if (isOrganisation) organisationName else userName
   val clientName: Option[String] = if (tradingName.isDefined) tradingName else businessName
 }
 
@@ -44,57 +40,21 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
   private val lastNamePath = __ \ "lastName"
   private val organisationNamePath = __ \ "organisationName"
   private val tradingNamePath = __ \ "tradingName"
-  private val hasFrsPath = __ \ "hasFlatRateScheme"
-  private val welshIndicatorPath = __ \ "welshIndicator"
-  private val overseasIndicatorPath = __ \ "overseasIndicator"
 
-  implicit val reads: Boolean => Reads[CustomerDetails] = isRelease10 =>
-    if(isRelease10) {
-      for {
-        firstName <- firstNamePath.readOpt[String]
-        lastname <- lastNamePath.readOpt[String]
-        orgName <- organisationNamePath.readOpt[String]
-        tradingName <- tradingNamePath.readOpt[String]
-        welshIndicator <- welshIndicatorPath.readOpt[Boolean]
-        hasFlatRateScheme <- hasFrsPath.read[Boolean]
-        overseasIndicator <- overseasIndicatorPath.read[Boolean]
-      } yield CustomerDetails(
-        firstName,
-        lastname,
-        orgName,
-        tradingName,
-        welshIndicator,
-        hasFlatRateScheme,
-        overseasIndicator
-      )
-    } else {
-      for {
-        firstName <- firstNamePath.readOpt[String]
-        lastname <- lastNamePath.readOpt[String]
-        orgName <- organisationNamePath.readOpt[String]
-        tradingName <- tradingNamePath.readOpt[String]
-        welshIndicator <- welshIndicatorPath.readOpt[Boolean]
-        hasFlatRateScheme <- hasFrsPath.read[Boolean]
-      } yield CustomerDetails(
-        firstName,
-        lastname,
-        orgName,
-        tradingName,
-        welshIndicator,
-        hasFlatRateScheme,
-        overseasIndicator = false
-      )
-    }
+  implicit val reads: Reads[CustomerDetails] = (
+    firstNamePath.readOpt[String] and
+    lastNamePath.readOpt[String] and
+    organisationNamePath.readOpt[String] and
+    tradingNamePath.readOpt[String]
+  ) (CustomerDetails.apply _)
 
-  implicit val writes: Boolean => Writes[CustomerDetails] = isRelease10 => Writes {
+  implicit val writes: Writes[CustomerDetails] = Writes {
     model =>
       jsonObjNoNulls(
         "firstName" -> model.firstName,
         "lastName" -> model.lastName,
         "organisationName" -> model.organisationName,
-        "tradingName" -> model.tradingName,
-        "welshIndicator" -> model.welshIndicator,
-        "hasFlatRateScheme" -> model.hasFlatRateScheme
-      ) ++ (if(isRelease10) Json.obj("overseasIndicator" -> model.overseasIndicator) else Json.obj())
+        "tradingName" -> model.tradingName
+      )
   }
 }

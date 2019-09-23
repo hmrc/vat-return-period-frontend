@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package models
+package utils
 
-import play.api.mvc.{Request, WrappedRequest}
-import uk.gov.hmrc.auth.core.{Enrolment, EnrolmentIdentifier, Enrolments, InternalError}
+import play.api.libs.json.{JsPath, Reads}
 
-case class AgentUser[A](arn: String) (implicit request: Request[A]) extends WrappedRequest[A](request)
+trait JsonReadUtil {
 
-object AgentUser {
-  def apply[A](enrolments: Enrolments)(implicit request: Request[A]): AgentUser[A] =
-    enrolments.enrolments.collectFirst {
-      case Enrolment("HMRC-AS-AGENT", EnrolmentIdentifier(_, arn) :: _, _, _) => AgentUser(arn)
-    }.getOrElse(throw InternalError("Agent Service Enrolment Missing"))
+  implicit class JsonReadUtil(jsPath: JsPath) {
+    def readOpt[T](implicit reads: Reads[T]): Reads[Option[T]] = jsPath.readNullable[T].orElse(Reads.pure(None))
+  }
+
 }

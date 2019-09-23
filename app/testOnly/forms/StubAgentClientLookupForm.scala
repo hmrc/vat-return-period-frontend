@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package models.core
+package testOnly.forms
 
-import play.api.libs.json.{Format, Json}
+import play.api.data.Form
+import play.api.data.Forms._
+import testOnly.models.StubAgentClientLookupModel
 
-case class SubscriptionUpdateResponseModel(formBundle: String)
+object StubAgentClientLookupForm {
 
-object SubscriptionUpdateResponseModel {
-  implicit val formats: Format[SubscriptionUpdateResponseModel] = Json.format[SubscriptionUpdateResponseModel]
+  val form: Form[StubAgentClientLookupModel] = Form(
+    mapping("vrn" -> text,
+      "redirectUrl" -> text
+    )
+    (StubAgentClientLookupModel.apply)(StubAgentClientLookupModel.unapply)
+  )
+
 }

@@ -18,7 +18,7 @@ package mocks.services
 
 import assets.BaseTestConstants.errorModel
 import models.contactPreferences.ContactPreference
-import models.core.ErrorModel
+import models.errors.ErrorModel
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.mockito.MockitoSugar
 import services.ContactPreferenceService

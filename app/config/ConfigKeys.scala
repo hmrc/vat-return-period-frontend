@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 
-package common
+package config
 
 object ConfigKeys {
-
-  val assetsUrl: String = "assets.url"
-  val assetsVersion: String = "assets.version"
 
   val googleAnalyticsToken: String = "google-analytics.token"
   val googleAnalyticsHost: String = "google-analytics.host"
@@ -34,6 +31,7 @@ object ConfigKeys {
   val whitelistShutterPage: String = "whitelist.shutter-page-url"
 
   val stubContactPreferencesFeature: String = "features.stubContactPreferences.enabled"
+  val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup"
   val accessibilityReportFeature: String = "features.accessibilityReport.enabled"
 
   val accessibilityReportUrl: String = "accessibilityReport.url"
@@ -48,7 +46,6 @@ object ConfigKeys {
   val governmentGatewayHost: String = "government-gateway.host"
 
   val vatAgentClientLookupFrontendHost: String = "vat-agent-client-lookup-frontend.host"
-  val vatAgentClientLookupFrontendNonStubHost: String = "vat-agent-client-lookup-frontend.nonStubHost"
   val vatAgentClientLookupFrontendStartUrl: String = "vat-agent-client-lookup-frontend.startUrl"
   val vatAgentClientLookupFrontendUnauthorisedUrl: String = "vat-agent-client-lookup-frontend.unauthorisedUrl"
   val vatAgentClientLookupFrontendAgentActionUrl: String = "vat-agent-client-lookup-frontend.agentActionUrl"
@@ -59,5 +56,5 @@ object ConfigKeys {
 
   val manageVatUrl: String = "manage-vat-subscription-frontend.url"
   val manageVatHost: String = "manage-vat-subscription-frontend.host"
-  val manageVatChangeNameUrl: String = "manage-vat-subscription-frontend.changeNameUrl"
+
 }

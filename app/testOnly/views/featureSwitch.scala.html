@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import common.ConfigKeys
+@import config.ConfigKeys
 @import helper.CSRF
 @import testOnly.models._
 @import testOnly.forms.FeatureSwitchForm
@@ -35,6 +35,7 @@
                 </legend>
                 @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.accessibilityReportFeature), "Accessibility Link In Footer")
                 @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.stubContactPreferencesFeature), "Stub Contact Preferences")
+                @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.stubAgentClientLookupFeature), "Stub Agent Client Lookup")
             </fieldset>
         </div>
 
