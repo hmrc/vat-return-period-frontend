@@ -23,7 +23,6 @@
 @changeClientLink = {
         <p id="change-client-text">
             <a id="change-client-link"
-            onclick="sendGAEvent('select-client','change','confirmation-vat-return-dates', true)"
             href="@controllers.routes.HelloWorldController.helloWorld()">
             @messages("common.agent.changeClient")</a>
         </p>
@@ -35,7 +34,7 @@
   appConfig = appConfig,
   user = Some(user)) {
 
-    <div data-metrics="return-frequency:view:confirmation-vat-return-dates;@user.isAgent" class="govuk-box-highlight">
+    <div class="govuk-box-highlight">
         <h1 id="page-heading" class="heading-xlarge">@messages("received_frequency.heading")</h1>
     </div>
 
@@ -73,7 +72,6 @@
 
     @*TODO: Route back to business overview page. Will need to get appConfig for this*@
     <a  id="finish"
-        onclick="sendGAEvent('return-frequency','finish','confirmation-vat-return-dates', @user.isAgent)"
         href='@controllers.routes.HelloWorldController.helloWorld()'
         class="button"
         role="button"
