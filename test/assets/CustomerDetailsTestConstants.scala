@@ -28,72 +28,48 @@ object CustomerDetailsTestConstants {
 
   val individualJson: JsObject = Json.obj(
     "firstName" -> firstName,
-    "lastName" -> lastName,
-    "hasFlatRateScheme" -> false,
-    "overseasIndicator" -> false
+    "lastName" -> lastName
   )
 
   val organisationJson: JsObject = Json.obj(
     "organisationName" -> orgName,
-    "tradingName" -> tradingName,
-    "hasFlatRateScheme" -> false,
-    "overseasIndicator" -> false
+    "tradingName" -> tradingName
   )
 
   val customerDetailsJsonMax: JsObject = Json.obj(
     "organisationName" -> orgName,
     "firstName" -> firstName,
     "lastName" -> lastName,
-    "tradingName" -> tradingName,
-    "hasFlatRateScheme" -> false,
-    "welshIndicator" -> false,
-    "overseasIndicator" -> false
+    "tradingName" -> tradingName
   )
 
-  val customerDetailsJsonMin: JsObject = Json.obj(
-    "hasFlatRateScheme" -> false,
-    "overseasIndicator" -> false
-  )
-
-  val organisationJsonR8: JsObject = Json.obj(
-    "organisationName" -> orgName,
-    "tradingName" -> tradingName,
-    "hasFlatRateScheme" -> false
-  )
-
-  val customerDetailsJsonMinR8: JsObject = Json.obj(
-    "hasFlatRateScheme" -> false
-  )
-
-  val customerDetailsJsonMaxR8: JsObject = Json.obj(
-    "organisationName" -> orgName,
-    "firstName" -> firstName,
-    "lastName" -> lastName,
-    "tradingName" -> tradingName,
-    "hasFlatRateScheme" -> false,
-    "welshIndicator" -> false
-  )
+  val customerDetailsJsonMin: JsObject = Json.obj()
 
   val customerDetailsMax = CustomerDetails(
     Some(firstName),
     Some(lastName),
     Some(orgName),
-    Some(tradingName),
-    Some(false),
-    overseasIndicator = false
+    Some(tradingName)
   )
 
   val customerDetailsMin = CustomerDetails(
     None,
     None,
     None,
-    None,
-    None,
-    overseasIndicator = false
+    None
   )
 
-  val customerDetailsJsonMinWithTrueOverseas: JsObject = Json.obj(
-    "hasFlatRateScheme" -> false,
-    "overseasIndicator" -> true
+  val organisation = CustomerDetails(
+    None,
+    None,
+    Some("org name"),
+    None
+  )
+
+  val individual = CustomerDetails(
+    Some(firstName),
+    Some(lastName),
+    None,
+    None
   )
 }

@@ -19,27 +19,22 @@ package audit
 import audit.models.TestExtendedAuditModel
 import base.BaseSpec
 import config.FrontendAppConfig
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito._
-import org.scalatest.mockito.MockitoSugar
 import play.api.http.HeaderNames
-import play.api.test.FakeRequest
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.AuditResult.Success
+import uk.gov.hmrc.play.audit.model.ExtendedDataEvent
+import scala.concurrent.ExecutionContext
 
-import scala.concurrent.{ExecutionContext, Future}
+class AuditingServiceSpec extends BaseSpec {
 
-class AuditingServiceSpec extends BaseSpec with MockitoSugar {
-
-  val mockAuditConnector: FrontendAuditConnector = mock[FrontendAuditConnector]
   val mockConfiguration: FrontendAppConfig = mock[FrontendAppConfig]
+  val mockAuditConnector: FrontendAuditConnector = mock[FrontendAuditConnector]
 
-  val testAuditingService = new AuditService(mockConfiguration, mockAuditConnector)
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    reset(mockAuditConnector, mockConfiguration)
+  def setupSendExtendedEvent()(implicit hc: HeaderCarrier, ec: ExecutionContext): Unit = {
+    (mockAuditConnector.sendExtendedEvent(_: ExtendedDataEvent)(_: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *)
   }
+
+  val mockAuditService = new AuditService(mockConfiguration, mockAuditConnector)
 
   "AuditService" should {
 
@@ -47,11 +42,11 @@ class AuditingServiceSpec extends BaseSpec with MockitoSugar {
 
       "extract the referer if there is one" in {
         val testPath = "/test/path"
-        testAuditingService.referrer(HeaderCarrier().withExtraHeaders(HeaderNames.REFERER -> testPath)) shouldBe testPath
+        mockAuditService.referrer(HeaderCarrier().withExtraHeaders(HeaderNames.REFERER -> testPath)) shouldBe testPath
       }
 
       "default to hyphen '-' if there is no referrer" in {
-        testAuditingService.referrer(HeaderCarrier()) shouldBe "-"
+        mockAuditService.referrer(HeaderCarrier()) shouldBe "-"
       }
     }
 
@@ -61,24 +56,11 @@ class AuditingServiceSpec extends BaseSpec with MockitoSugar {
 
         val testModel = new TestExtendedAuditModel("foo", "bar")
         val testPath = "/test/path"
-        val expectedData = testAuditingService.toExtendedDataEvent(mockConfiguration.appName, testModel, testPath)
+//        val expectedData = mockAuditService.toExtendedDataEvent(mockConfiguration.appName, testModel, testPath)
 
-        when(mockAuditConnector.sendExtendedEvent(
-          ArgumentMatchers.refEq(expectedData, "eventId", "generatedAt")
-        )(
-          ArgumentMatchers.any[HeaderCarrier],
-          ArgumentMatchers.any[ExecutionContext]
-        )) thenReturn Future.successful(Success)
+        setupSendExtendedEvent()
 
-        testAuditingService.extendedAudit(testModel, Some(testPath))
-
-        verify(mockAuditConnector)
-          .sendExtendedEvent(
-            ArgumentMatchers.refEq(expectedData, "eventId", "generatedAt")
-          )(
-            ArgumentMatchers.any[HeaderCarrier],
-            ArgumentMatchers.any[ExecutionContext]
-          )
+        mockAuditService.extendedAudit(testModel, Some(testPath))
       }
     }
   }

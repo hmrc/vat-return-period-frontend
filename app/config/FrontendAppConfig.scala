@@ -37,7 +37,7 @@ trait AppConfig extends ServicesConfig {
   val whitelistExcludedPaths: Seq[Call]
   val whitelistShutterPage: String
   val features: Features
-  val accessibilityReportUrl : String
+  val accessibilityReportUrl: String
   val signInUrl: String
   def signOutUrl(identifier: String): String
   def exitSurveyUrl(identifier: String): String
@@ -53,7 +53,7 @@ trait AppConfig extends ServicesConfig {
 }
 
 @Singleton
-class FrontendAppConfig @Inject()(environment: Environment,implicit val runModeConfiguration: Configuration) extends AppConfig {
+class FrontendAppConfig @Inject()(environment: Environment, implicit val runModeConfiguration: Configuration) extends AppConfig {
   override protected def mode: Mode = environment.mode
 
   lazy val appName: String = getString(ConfigKeys.appName)

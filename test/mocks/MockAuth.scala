@@ -16,13 +16,14 @@
 
 package mocks
 
+import _root_.services.EnrolmentsAuthService
 import akka.util.Timeout
 import base.BaseSpec
-import controllers.predicates.AuthPredicate
+import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
+import mocks.services.MockCustomerCircumstanceDetailsService
 import play.api.http.Status
 import play.api.mvc.{Action, AnyContent, Request}
 import play.api.test.Helpers.redirectLocation
-import services.EnrolmentsAuthService
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Individual}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
@@ -31,7 +32,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait MockAuth extends BaseSpec {
+trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
 
   lazy val mockAuthConnector: AuthConnector = mock[AuthConnector]
   lazy val mockEnrolmentsAuthService: EnrolmentsAuthService = new EnrolmentsAuthService(mockAuthConnector)
@@ -102,4 +103,12 @@ trait MockAuth extends BaseSpec {
   val agentAuthorisedResponse: Future[~[Option[AffinityGroup], Enrolments]] = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
   val agentServicesEnrolmentWithoutDelegatedAuth: Enrolments = createEnrolment("HMRC-AS-AGENT", "AgentReferenceNumber", "XAIT1234567", None)
 
+  val mockInFlightReturnPeriodPredicate: InFlightReturnFrequencyPredicate =
+    new InFlightReturnFrequencyPredicate(
+      mockCustomerDetailsService,
+      errorHandler,
+      messagesApi,
+      mockAppConfig,
+      ec
+    )
 }

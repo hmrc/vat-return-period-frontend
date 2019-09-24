@@ -49,4 +49,20 @@ object CircumstanceDetailsTestConstants {
       None,
       None
     )
+
+  val circumstanceDetailsNoPending =
+    CircumstanceDetails(
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(Monthly),
+      Some(false),
+      Some(partyType)
+    )
+
+  val circumstanceDetailsNoChangeIndicator =
+    CircumstanceDetails(
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(Monthly),
+      None,
+      None
+    )
 }

@@ -16,7 +16,6 @@
 
 package audit.models
 
-import assets.BaseTestConstants._
 import base.BaseSpec
 import play.api.libs.json.Json
 
@@ -24,7 +23,7 @@ class ContactPreferenceAuditModelSpec extends BaseSpec {
 
   val transactionName = "contact-preference"
   val auditType = "ContactPreference"
-  val preference = "DIGTIAL"
+  val preference = "DIGITAL"
   val action = "ChangePPOBContactPreference"
 
   "The ContactPreferenceAuditModel" should {

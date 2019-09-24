@@ -17,38 +17,29 @@
 package mocks.connectors
 
 import connectors.VatSubscriptionConnector
-import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
-import models.errors.ErrorModel
-import models.returnFrequency.SubscriptionUpdateResponseModel
-import org.mockito.ArgumentMatchers
-import org.mockito.Mockito._
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mockito.MockitoSugar
+import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
+import models.circumstanceInfo.CircumstanceDetails
+import models.returnFrequency.{SubscriptionUpdateResponseModel, UpdateReturnPeriod}
+import org.scalamock.scalatest.MockFactory
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
-import org.mockito.ArgumentMatchers._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait MockSubscriptionConnector extends UnitSpec with MockitoSugar with BeforeAndAfterEach {
+trait MockSubscriptionConnector extends UnitSpec with MockFactory {
 
   val mockSubscriptionConnector: VatSubscriptionConnector = mock[VatSubscriptionConnector]
 
-  type CustomerDetailsResponse = Either[ErrorModel, CustomerDetails]
-  type SubscriptionUpdateResponse = Either[ErrorModel, SubscriptionUpdateResponseModel]
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    reset(mockSubscriptionConnector)
+  def setupMockUserDetails(vrn: String)(response: HttpGetResult[CircumstanceDetails]): Unit = {
+    (mockSubscriptionConnector.getCustomerCircumstanceDetails(_: String)(_: HeaderCarrier, _: ExecutionContext))
+      .expects(vrn, *, *)
+      .returns(Future.successful(response))
   }
 
-  def setupMockUserDetails(vrn: String)(response: Either[ErrorModel, CircumstanceDetails]): Unit = {
-    when(mockSubscriptionConnector.getCustomerCircumstanceDetails(ArgumentMatchers.eq(vrn))(ArgumentMatchers.any(), ArgumentMatchers.any()))
-      .thenReturn(Future.successful(response))
-  }
-
-  def setupMockUpdateReturnFrequency(response: Either[ErrorModel, SubscriptionUpdateResponseModel]): Unit = {
-    when(mockSubscriptionConnector.updateReturnFrequency(anyString(), any())(any(), any()))
-      .thenReturn(Future.successful(response))
+  def setupMockUpdateReturnFrequency(response: HttpPutResult[SubscriptionUpdateResponseModel]): Unit = {
+    (mockSubscriptionConnector.updateReturnFrequency(_: String, _: UpdateReturnPeriod)(_: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *, *)
+      .returns(Future.successful(response))
   }
 }
 

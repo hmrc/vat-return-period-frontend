@@ -35,8 +35,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val whitelistedIps: Seq[String] = Seq("")
   override val whitelistExcludedPaths: Seq[Call] = Nil
   override val whitelistShutterPage: String = "https://www.tax.service.gov.uk/shutter/vat-through-software"
-  implicit lazy val accessibilityReportEnabled : Boolean = true
-  implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
+  override val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
   override val features: Features = new Features()
   override val signInUrl: String = "sign-in-url"
   override def signOutUrl(identifier: String): String = s"/some-gg-signout-url/$identifier"

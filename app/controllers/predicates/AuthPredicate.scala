@@ -19,7 +19,7 @@ package controllers.predicates
 import common.EnrolmentKeys
 import common.EnrolmentKeys._
 import common.SessionKeys._
-import config.{AppConfig, ErrorHandler}
+import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import play.api.Logger
@@ -36,7 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
-                              errorHandler: ErrorHandler,
+                              errorHandler: ServiceErrorHandler,
                               val messagesApi: MessagesApi,
                               implicit val ec: ExecutionContext,
                               implicit val appConfig: AppConfig) extends FrontendController

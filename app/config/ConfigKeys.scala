@@ -31,7 +31,7 @@ object ConfigKeys {
   val whitelistShutterPage: String = "whitelist.shutter-page-url"
 
   val stubContactPreferencesFeature: String = "features.stubContactPreferences.enabled"
-  val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup"
+  val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
   val accessibilityReportFeature: String = "features.accessibilityReport.enabled"
 
   val accessibilityReportUrl: String = "accessibilityReport.url"

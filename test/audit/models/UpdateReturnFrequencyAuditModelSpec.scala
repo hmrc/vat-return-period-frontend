@@ -16,7 +16,6 @@
 
 package audit.models
 
-import assets.BaseTestConstants._
 import assets.CircumstanceDetailsTestConstants.partyType
 import base.BaseSpec
 import models.returnFrequency.{Jan, Monthly}

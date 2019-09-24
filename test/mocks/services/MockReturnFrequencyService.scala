@@ -16,40 +16,28 @@
 
 package mocks.services
 
-import org.mockito.ArgumentMatchers._
-import org.mockito.Mockito.{reset, _}
-import org.mockito.stubbing.OngoingStubbing
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mockito.MockitoSugar
+import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
+import models.auth.User
+import models.errors.ServerSideError
+import models.returnFrequency.{ReturnPeriod, SubscriptionUpdateResponseModel}
+import org.scalamock.scalatest.MockFactory
 import services.ReturnFrequencyService
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
-import assets.BaseTestConstants.formBundle
-import models.errors.ErrorModel
-import models.returnFrequency.SubscriptionUpdateResponseModel
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait MockReturnFrequencyService extends UnitSpec with MockitoSugar with BeforeAndAfterEach {
+trait MockReturnFrequencyService extends UnitSpec with MockFactory {
 
   val mockReturnFrequencyService: ReturnFrequencyService = mock[ReturnFrequencyService]
 
-  type ServiceResponse = Either[ErrorModel, SubscriptionUpdateResponseModel]
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    reset(mockReturnFrequencyService)
+  def setupMockReturnFrequencyService[A](response: HttpPutResult[SubscriptionUpdateResponseModel]): Unit  = {
+    (mockReturnFrequencyService.updateReturnFrequency(_: String, _: ReturnPeriod)(_: HeaderCarrier, _: ExecutionContext, _: User[A]))
+      .expects(*, *, *, *, *)
+      .returns(Future.successful(response))
   }
 
-  def setupMockReturnFrequencyService(response: ServiceResponse): OngoingStubbing[Future[ServiceResponse]]  = {
-    when(mockReturnFrequencyService.updateReturnFrequency(anyString(), any())(any(), any(), any()))
-      .thenReturn(Future.successful(response))
-  }
+  def setupMockReturnFrequencyServiceWithSuccess(): Unit = setupMockReturnFrequencyService(Right(SubscriptionUpdateResponseModel("12345")))
+  def setupMockReturnFrequencyServiceWithFailure(): Unit = setupMockReturnFrequencyService(Left(ServerSideError("", "")))
 
-  def setupMockReturnFrequencyServiceWithSuccess(): OngoingStubbing[Future[ServiceResponse]] = {
-    setupMockReturnFrequencyService(Right(SubscriptionUpdateResponseModel(formBundle)))
-  }
-
-  def setupMockReturnFrequencyServiceWithFailure(): OngoingStubbing[Future[ServiceResponse]] = {
-    setupMockReturnFrequencyService(Left(ErrorModel(500, "Boo")))
-  }
 }

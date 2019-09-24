@@ -18,8 +18,8 @@ package base
 
 import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
-import common.AuthKeys
-import config.ErrorHandler
+import common.SessionKeys
+import config.ServiceErrorHandler
 import mocks.MockConfig
 import models.auth.User
 import org.jsoup.Jsoup
@@ -49,14 +49,14 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
 
   implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
   lazy val fakeRequestWithClientsVRN: FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest().withSession(AuthKeys.agentSessionVrn -> vrn)
+    FakeRequest().withSession(SessionKeys.CLIENT_VRN -> vrn)
 
   val vrn: String = "999999999"
   val arn = "ABCD12345678901"
 
   implicit lazy val messages: Messages = messagesApi.preferred(fakeRequest)
 
-  lazy val errorHandler: ErrorHandler = injector.instanceOf[ErrorHandler]
+  lazy val errorHandler: ServiceErrorHandler = injector.instanceOf[ServiceErrorHandler]
 
   implicit val system: ActorSystem = ActorSystem()
   implicit val materializer: Materializer = ActorMaterializer()

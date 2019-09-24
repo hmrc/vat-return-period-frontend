@@ -16,15 +16,18 @@
 
 package controllers.predicates
 
+import assets.CircumstanceDetailsTestConstants._
 import assets.ReturnPeriodTestConstants._
+import assets.BaseTestConstants._
 import common.SessionKeys
 import mocks.MockAuth
+import mocks.services.MockCustomerCircumstanceDetailsService
 import models.auth.User
 import org.jsoup.Jsoup
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class InFlightReturnFrequencyPredicateSpec extends MockAuth {
+class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCircumstanceDetailsService {
 
   "The InFlightReturnFrequencyPredicate" when {
 
@@ -35,7 +38,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
       )
 
       lazy val result = {
-        mockCustomerDetailsSuccess(customerInformationNoPendingIndividual)
+        mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
         await(mockInFlightReturnPeriodPredicate.refine(User(vrn)(fakeRequest)))
       }
 
@@ -64,7 +67,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
         "return period change indicator is true" should {
 
           lazy val result = {
-            mockCustomerDetailsSuccess(customerInformationModelMaxIndividual)
+            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
           }
 
@@ -72,8 +75,8 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
             status(result) shouldBe SEE_OTHER
           }
 
-          s"redirect to ${controllers.routes.CustomerCircumstanceDetailsController.redirect().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.routes.CustomerCircumstanceDetailsController.redirect().url)
+          s"redirect to ${mockAppConfig.manageVatUrl}" in {
+            redirectLocation(result) shouldBe Some(mockAppConfig.manageVatUrl)
           }
         }
 
@@ -82,7 +85,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
           "no return period is returned" should {
 
             lazy val result = {
-              mockCustomerDetailsSuccess(customerInformationPendingEmailModel)
+              mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
               await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
             }
 
@@ -90,15 +93,15 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
               status(result) shouldBe SEE_OTHER
             }
 
-            s"redirect to ${controllers.routes.CustomerCircumstanceDetailsController.redirect().url}" in {
-              redirectLocation(result) shouldBe Some(controllers.routes.CustomerCircumstanceDetailsController.redirect().url)
+            s"redirect to ${mockAppConfig.manageVatUrl}" in {
+              redirectLocation(result) shouldBe Some(mockAppConfig.manageVatUrl)
             }
           }
 
           "return period is returned" should {
 
             lazy val result = {
-              mockCustomerDetailsSuccess(customerInformationModelDeregPending)
+              mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
               await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
             }
 
@@ -121,7 +124,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth {
           "return period is returned" should {
 
             lazy val result = {
-              mockCustomerDetailsSuccess(customerInformationNoPendingIndividual)
+              mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
               await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
             }
 

@@ -18,29 +18,17 @@ package audit.mocks
 
 import audit.AuditService
 import audit.models.ExtendedAuditModel
-import base.BaseSpec
-import org.mockito.Mockito._
-import org.mockito.{AdditionalMatchers, ArgumentMatchers}
-import org.scalatest.mockito.MockitoSugar
+import org.scalamock.scalatest.MockFactory
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext
 
-trait MockAuditingService extends BaseSpec with MockitoSugar {
+trait MockAuditingService extends MockFactory {
 
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    reset(mockAuditingService)
+  val mockAuditService: AuditService = mock[AuditService]
+
+  def setupAuditExtendedEvent[T <: ExtendedAuditModel]()(implicit hc: HeaderCarrier, ec: ExecutionContext): Unit = {
+    (mockAuditService.extendedAudit(_: T, _: Option[String])(_: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *, *)
   }
-
-  val mockAuditingService: AuditService = mock[AuditService]
-
-  def verifyExtendedAudit(model: ExtendedAuditModel, path: Option[String] = None): Unit =
-    verify(mockAuditingService).extendedAudit(
-      ArgumentMatchers.eq(model),
-      AdditionalMatchers.or(ArgumentMatchers.eq(path), ArgumentMatchers.isNull)
-    )(
-      ArgumentMatchers.any[HeaderCarrier],
-      ArgumentMatchers.any[ExecutionContext]
-    )
 }

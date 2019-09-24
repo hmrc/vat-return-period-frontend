@@ -18,9 +18,11 @@ package services
 
 import assets.BaseTestConstants._
 import base.BaseSpec
+import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import mocks.connectors.MockSubscriptionConnector
 import models.circumstanceInfo.CircumstanceDetails
-import models.errors.ErrorModel
+import assets.CircumstanceDetailsTestConstants._
+import models.errors.ServerSideError
 
 import scala.concurrent.Future
 
@@ -30,22 +32,22 @@ class CustomerCircumstanceDetailsServiceSpec extends BaseSpec with MockSubscript
 
   "CustomerDetailsService" should {
 
-    def result: Future[Either[ErrorModel, CircumstanceDetails]] = TestCustomerCircumstanceDetailsService.getCustomerCircumstanceDetails(vrn)
+    def result: Future[HttpGetResult[CircumstanceDetails]] = TestCustomerCircumstanceDetailsService.getCustomerCircumstanceDetails(vrn)
 
     "for getCustomerDetails method" when {
 
       "called for a Right with CustomerDetails" should {
 
         "return a CustomerDetailsModel" in {
-          setupMockUserDetails(vrn)(Right(customerInformationModelMaxOrganisation))
-          await(result) shouldBe Right(customerInformationModelMaxOrganisation)
+          setupMockUserDetails(vrn)(Right(circumstanceDetailsModelMax))
+          await(result) shouldBe Right(circumstanceDetailsModelMax)
         }
       }
 
       "given an error should" should {
 
         "return an Left with an ErrorModel" in {
-          setupMockUserDetails(vrn)
+          setupMockUserDetails(vrn)(Left(ServerSideError("", "")))
           await(result) shouldBe Left(errorModel)
         }
       }

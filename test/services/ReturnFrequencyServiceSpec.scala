@@ -17,12 +17,13 @@
 package services
 
 import base.BaseSpec
+import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
 import mocks.connectors.MockSubscriptionConnector
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel}
 
 class ReturnFrequencyServiceSpec extends BaseSpec with MockSubscriptionConnector {
 
-  def setup(subscriptionResponse: SubscriptionUpdateResponse): ReturnFrequencyService = {
+  def setup(subscriptionResponse: HttpPutResult[SubscriptionUpdateResponseModel]): ReturnFrequencyService = {
 
     setupMockUpdateReturnFrequency(subscriptionResponse)
     new ReturnFrequencyService(mockSubscriptionConnector)

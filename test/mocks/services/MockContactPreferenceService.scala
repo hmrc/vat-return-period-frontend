@@ -16,36 +16,28 @@
 
 package mocks.services
 
-import assets.BaseTestConstants.errorModel
+import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import models.contactPreferences.ContactPreference
-import models.errors.ErrorModel
-import org.scalatest.BeforeAndAfterEach
-import org.scalatest.mockito.MockitoSugar
+import models.errors.ServerSideError
+import org.scalamock.scalatest.MockFactory
 import services.ContactPreferenceService
+import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.test.UnitSpec
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait MockContactPreferenceService extends UnitSpec with MockitoSugar with BeforeAndAfterEach {
+trait MockContactPreferenceService extends UnitSpec with MockFactory {
 
   val mockContactPreferenceService: ContactPreferenceService = mock[ContactPreferenceService]
 
-  type ContactPreferenceResponse = Either[ErrorModel, ContactPreference]
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    reset(mockContactPreferenceService)
+  def setupMockContactPreference(vrn: String)(response: HttpGetResult[ContactPreference]): Unit = {
+    (mockContactPreferenceService.getContactPreference(_: String)(_: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *)
+      .returns(Future.successful(response))
   }
 
-  def setupMockContactPreference(vrn: String)(response: ContactPreferenceResponse): OngoingStubbing[Future[ContactPreferenceResponse]] = {
-    when(mockContactPreferenceService.getContactPreference(ArgumentMatchers.eq(vrn))(ArgumentMatchers.any(), ArgumentMatchers.any()))
-      .thenReturn(Future.successful(response))
-  }
+  def mockContactPreferenceSuccess(contactPreference: ContactPreference): Unit = setupMockContactPreference("999999999")(Right(contactPreference))
 
-  def mockContactPreferenceSuccess(contactPreference: ContactPreference): OngoingStubbing[Future[ContactPreferenceResponse]] =
-    setupMockContactPreference(vrn)(Right(contactPreference))
-
-  def mockContactPreferenceError(): OngoingStubbing[Future[ContactPreferenceResponse]] =
-    setupMockContactPreference(vrn)(Left(errorModel))
+  def mockContactPreferenceError(): Unit = setupMockContactPreference("999999999")(Left(ServerSideError("", "")))
 
 }
