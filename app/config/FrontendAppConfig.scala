@@ -60,7 +60,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   private lazy val platformHost = getString(ConfigKeys.platformHost)
 
   // Contact frontend
-  private val contactHost = getString(ConfigKeys.contactFrontendService)
+  private lazy val contactHost = getString(ConfigKeys.contactFrontendService)
   private val contactFormServiceIdentifier = "VATC"
 
   // GA
@@ -82,7 +82,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   override lazy val whitelistedIps: Seq[String] = whitelistConfig(ConfigKeys.whitelistedIps)
   override lazy val whitelistExcludedPaths: Seq[Call] = whitelistConfig(ConfigKeys.whitelistExcludedPaths) map
     (path => Call("GET", path))
-  override val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
+  override lazy val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
   // Gov.uk guidance
   override lazy val govUkGuidanceMtdVat: String = getString(ConfigKeys.govUkGuidanceMtdVat)
@@ -131,7 +131,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   //Accessibility statement
   private lazy val accessibilityReportHost: String = getString(ConfigKeys.accessibilityReportHost)
-  override val accessibilityReportUrl: String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
+  override lazy val accessibilityReportUrl: String = accessibilityReportHost + getString(ConfigKeys.accessibilityReportUrl)
 
   //Features
   override val features: Features = new Features

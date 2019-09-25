@@ -21,17 +21,21 @@ import base.BaseSpec
 import config.FrontendAppConfig
 import play.api.http.HeaderNames
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.AuditResult
+import uk.gov.hmrc.play.audit.http.connector.AuditResult.Success
 import uk.gov.hmrc.play.audit.model.ExtendedDataEvent
-import scala.concurrent.ExecutionContext
+
+import scala.concurrent.{ExecutionContext, Future}
 
 class AuditingServiceSpec extends BaseSpec {
 
-  val mockConfiguration: FrontendAppConfig = mock[FrontendAppConfig]
+  val mockConfiguration: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
   val mockAuditConnector: FrontendAuditConnector = mock[FrontendAuditConnector]
 
   def setupSendExtendedEvent()(implicit hc: HeaderCarrier, ec: ExecutionContext): Unit = {
     (mockAuditConnector.sendExtendedEvent(_: ExtendedDataEvent)(_: HeaderCarrier, _: ExecutionContext))
       .expects(*, *, *)
+      .returns(Future.successful(Success))
   }
 
   val mockAuditService = new AuditService(mockConfiguration, mockAuditConnector)
@@ -56,7 +60,6 @@ class AuditingServiceSpec extends BaseSpec {
 
         val testModel = new TestExtendedAuditModel("foo", "bar")
         val testPath = "/test/path"
-//        val expectedData = mockAuditService.toExtendedDataEvent(mockConfiguration.appName, testModel, testPath)
 
         setupSendExtendedEvent()
 

@@ -19,6 +19,7 @@ package controllers.returnFrequency
 import assets.BaseTestConstants._
 import assets.CircumstanceDetailsTestConstants._
 import assets.ReturnPeriodTestConstants._
+import assets.messages.AuthMessages
 import base.BaseSpec
 import common.SessionKeys
 import mocks.MockAuth
@@ -50,6 +51,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         lazy val result = TestChooseDatesController.show(fakeRequest)
 
         "return SEE_OTHER (303)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
           mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
           status(result) shouldBe Status.SEE_OTHER
         }
@@ -66,6 +68,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.show(fakeRequest)
 
           "return SEE_OTHER (303)" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
             status(result) shouldBe Status.SEE_OTHER
           }
@@ -75,7 +78,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the current return frequency to the session" in {
-            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMar)
+            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
           }
         }
 
@@ -88,7 +91,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             ))
 
             "return OK (200)" in {
-              mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
+              mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.OK
             }
 //
@@ -110,7 +113,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             )
 
             "return OK (200)" in {
-              mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
+              mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.OK
             }
 
@@ -134,6 +137,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.show(fakeRequest)
 
           "return 303" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
             status(result) shouldBe Status.SEE_OTHER
           }
@@ -148,11 +152,11 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.show(fakeRequest)
 
           "return ISE (500)" in {
-            mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockCustomerDetailsError()
 
             status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-            messages(Jsoup.parse(bodyOf(result)).title) shouldBe internalServerErrorTitle
+            messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }
         }
       }
@@ -169,6 +173,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         lazy val result = TestChooseDatesController.submit(request)
 
         "return SEE_OTHER (303)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
           mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
           status(result) shouldBe Status.SEE_OTHER
         }
@@ -186,6 +191,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.submit(request)
 
           "return SEE_OTHER (303)" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
             status(result) shouldBe Status.SEE_OTHER
           }
@@ -195,7 +201,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the current return frequency to the session" in {
-            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMar)
+            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
           }
         }
 
@@ -205,6 +211,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan))
 
           "return 303" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.SEE_OTHER
           }
 
@@ -225,8 +232,9 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid"))
 
             "return Internal Server Error (500)" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe internalServerErrorTitle
+              messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
 
@@ -236,6 +244,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan))
 
             "return Bad Request (400)" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.BAD_REQUEST
             }
 

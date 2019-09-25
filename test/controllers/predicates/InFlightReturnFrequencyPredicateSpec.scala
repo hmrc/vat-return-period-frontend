@@ -18,7 +18,7 @@ package controllers.predicates
 
 import assets.CircumstanceDetailsTestConstants._
 import assets.ReturnPeriodTestConstants._
-import assets.BaseTestConstants._
+import assets.messages.AuthMessages
 import common.SessionKeys
 import mocks.MockAuth
 import mocks.services.MockCustomerCircumstanceDetailsService
@@ -38,7 +38,6 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
       )
 
       lazy val result = {
-        mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
         await(mockInFlightReturnPeriodPredicate.refine(User(vrn)(fakeRequest)))
       }
 
@@ -58,7 +57,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
         "return 500" in {
           status(result) shouldBe INTERNAL_SERVER_ERROR
-          messages(Jsoup.parse(bodyOf(result)).title) shouldBe internalServerErrorTitle
+          messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
         }
       }
 
@@ -114,7 +113,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMar)
+              session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
             }
           }
         }
@@ -137,7 +136,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMar)
+              session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
             }
           }
         }

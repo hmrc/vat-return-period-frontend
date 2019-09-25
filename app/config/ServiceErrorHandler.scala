@@ -16,20 +16,20 @@
 
 package config
 
-import javax.inject.Inject
+import javax.inject.{Inject, Singleton}
 import play.api.i18n.MessagesApi
 import play.api.mvc.Results.InternalServerError
 import play.api.mvc.{Request, Result}
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
-import views.html.errors.standardError
 
+@Singleton
 class ServiceErrorHandler @Inject()(val messagesApi: MessagesApi,
-                                    implicit val appConfig: AppConfig) extends FrontendErrorHandler {
+                                    implicit val appConfig: FrontendAppConfig) extends FrontendErrorHandler {
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)
                                     (implicit request: Request[_]): Html =
-    standardError(appConfig, pageTitle, heading, message)
+    views.html.templates.error_template(pageTitle, heading, message)
 
   def showInternalServerError(implicit request: Request[_]): Result = InternalServerError(internalServerErrorTemplate)
 

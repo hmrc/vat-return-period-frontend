@@ -30,7 +30,7 @@ class CustomerCircumstanceDetailsServiceSpec extends BaseSpec with MockSubscript
 
   object TestCustomerCircumstanceDetailsService extends CustomerCircumstanceDetailsService(mockSubscriptionConnector)
 
-  "CustomerDetailsService" should {
+  "CustomerCircumstanceDetailsService" should {
 
     def result: Future[HttpGetResult[CircumstanceDetails]] = TestCustomerCircumstanceDetailsService.getCustomerCircumstanceDetails(vrn)
 
@@ -47,7 +47,7 @@ class CustomerCircumstanceDetailsServiceSpec extends BaseSpec with MockSubscript
       "given an error should" should {
 
         "return an Left with an ErrorModel" in {
-          setupMockUserDetails(vrn)(Left(ServerSideError("", "")))
+          setupMockUserDetails(vrn)(Left(ServerSideError("503", "response body")))
           await(result) shouldBe Left(errorModel)
         }
       }

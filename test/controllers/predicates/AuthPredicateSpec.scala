@@ -16,6 +16,7 @@
 
 package controllers.predicates
 
+import assets.BaseTestConstants
 import assets.messages.AuthMessages
 import mocks.MockAuth
 import org.jsoup.Jsoup
@@ -170,7 +171,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe "There is a problem with the service - VAT - GOV.UK"
+        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
 
@@ -202,7 +203,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe "There is a problem with the service - VAT - GOV.UK"
+        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
   }

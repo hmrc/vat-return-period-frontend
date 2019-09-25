@@ -29,5 +29,6 @@ trait BaseMessages {
   val mtdfvTitleSuffix = " - VAT - GOV.UK"
 
   val problemWithService = "Sorry, there is a problem with the service"
+  val problemWithServiceTitle = "There is a problem with the service"
 
 }

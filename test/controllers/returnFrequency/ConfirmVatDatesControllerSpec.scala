@@ -18,6 +18,7 @@ package controllers.returnFrequency
 
 import assets.BaseTestConstants._
 import assets.CircumstanceDetailsTestConstants._
+import assets.messages.AuthMessages
 import audit.mocks.MockAuditingService
 import base.BaseSpec
 import common.SessionKeys
@@ -60,7 +61,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           lazy val document = Jsoup.parse(bodyOf(result))
 
           "return 200" in {
-            mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
+            mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.OK
           }
 //
@@ -81,7 +82,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           ))
 
           "return 303" in {
-            mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
+            mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.SEE_OTHER
           }
 
@@ -96,6 +97,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         lazy val result = TestConfirmVatDatesController.show(fakeRequest)
 
         "return 303" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
           mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
           status(result) shouldBe Status.SEE_OTHER
         }
@@ -125,10 +127,11 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             ))
 
             "return 500" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
               setupMockReturnFrequencyServiceWithFailure()
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe internalServerErrorTitle
+              messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
 
@@ -140,6 +143,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             ))
 
             "return 303" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
               setupMockReturnFrequencyServiceWithSuccess()
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
               setupAuditExtendedEvent()
@@ -160,7 +164,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           ))
 
           "return 303" in {
-            setupMockReturnFrequencyServiceWithSuccess()
+            mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.SEE_OTHER
           }
 
@@ -177,7 +181,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         ))
 
         "return 303" in {
-          setupMockReturnFrequencyServiceWithSuccess()
+          mockAuthorise(mtdVatAuthorisedResponse)
           status(result) shouldBe Status.SEE_OTHER
         }
 

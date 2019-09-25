@@ -51,6 +51,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         "the call to the customer details service is successful" should {
 
           lazy val result = {
+            mockAuthoriseAsAgent(agentAuthorisedResponse, agentServicesEnrolment)
             mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
             TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
           }
@@ -72,6 +73,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         "the call to the customer details service is unsuccessful" should {
 
           lazy val result = {
+            mockAuthoriseAsAgent(agentAuthorisedResponse, agentServicesEnrolment)
             mockCustomerDetailsError()
             TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
           }
@@ -96,7 +98,9 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         "display the correct content for a user that has a digital contact preference" should {
 
           lazy val result = {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+            setupAuditExtendedEvent()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
 
@@ -120,7 +124,9 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         "display the correct content for a user that has a paper contact preference" should {
 
           lazy val result = {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceSuccess(ContactPreference("PAPER"))
+            setupAuditExtendedEvent()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
 
@@ -144,6 +150,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         "display the correct content when an error is returned from contactPreferences" should {
 
           lazy val result = {
+            mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceError()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
