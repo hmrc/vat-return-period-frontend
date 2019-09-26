@@ -21,7 +21,7 @@ import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
 import common.SessionKeys
 import models.auth.User
-import audit.{AuditService, ContactPreferenceAuditKeys}
+import audit.AuditService
 import audit.models.ContactPreferenceAuditModel
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
@@ -57,7 +57,7 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
     contactPreferenceService.getContactPreference(user.vrn).map {
       case Right(contactPreference) =>
         auditService.extendedAudit(
-          ContactPreferenceAuditModel(user.vrn, contactPreference.preference, ContactPreferenceAuditKeys.changeFrequencyAction),
+          ContactPreferenceAuditModel(user.vrn, contactPreference.preference),
           Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
         )
         Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(contactPreference.preference)))

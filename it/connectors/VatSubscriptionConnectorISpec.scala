@@ -59,7 +59,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
             stubGet(s"/vat-subscription/$vrn/full-information", invalidJson.toString(), OK)
 
             val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
-            result shouldBe Right(circumstanceDetailsModelMin)
+            result shouldBe Left(UnexpectedJsonFormat)
           }
         }
       }

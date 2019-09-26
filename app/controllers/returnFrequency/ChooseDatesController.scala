@@ -22,7 +22,6 @@ import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
 import forms.ChooseDatesForm.datesForm
 import javax.inject.{Inject, Singleton}
 import models.returnFrequency.{ReturnDatesModel, ReturnPeriod}
-import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
@@ -39,36 +38,28 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
 
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
-    user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).fold {
-      Logger.warn("[ChooseDatesController][show] No CURRENT_RETURN_FREQUENCY found in session")
-      serviceErrorHandler.showInternalServerError
-    } { currentReturnFrequency =>
 
-      val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
-        case Some(value) => datesForm.fill(ReturnDatesModel(value))
-        case _ => datesForm
-      }
+    val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
+    val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
+      case Some(value) => datesForm.fill(ReturnDatesModel(value))
+      case _ => datesForm
+    }
 
-      ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
-        Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
-      }
+    ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
+      Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
     }
   }
 
   val submit: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
 
-    user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).fold {
-      Logger.warn("[ChooseDatesController][submit] No CURRENT_RETURN_FREQUENCY found in session")
-      Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-    } { currentReturnFrequency =>
-        datesForm.bindFromRequest().fold(
-          errors =>
-            ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
-              BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
-            ),
-          success =>
-            Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)
-        )
-    }
+    val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
+    datesForm.bindFromRequest().fold(
+      errors =>
+        ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
+          BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
+        ),
+      success =>
+        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)
+    )
   }
 }

@@ -17,20 +17,22 @@
 package stubs
 
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
-import models.contactPreferences.ContactPreference
-import play.api.http.Status.OK
-import play.api.libs.json.{JsObject, Json}
+import models.returnFrequency.SubscriptionUpdateResponseModel
+import play.api.http.Status.{BAD_REQUEST, OK}
+import play.api.libs.json.Json
 import utils.WireMockMethods
 
-object ContactPreferencesStub extends WireMockMethods {
+object ReturnFrequencyStub extends WireMockMethods {
 
-  val uri: String => String = vrn => s"/contact-preferences/vat/vrn/$vrn"
-  val digitalContactPreferenceModel = ContactPreference("DIGITAL")
+  private val subscriptionUri: String => String = vrn => s"/vat-subscription/$vrn/return-period"
 
-  val digitalContactPreferenceJson: JsObject = Json.obj("preference" -> "digital")
+  def putSubscriptionSuccess(response: SubscriptionUpdateResponseModel): StubMapping = {
+    when(method = PUT, uri = subscriptionUri("999999999"))
+      .thenReturn(status = OK, body = Json.toJson(response))
+  }
 
-  def stubGetContactPreference(vrn: String): StubMapping = {
-    when(method = GET, uri = uri(vrn))
-      .thenReturn(status = OK, body = digitalContactPreferenceJson)
+  def putSubscriptionError(): StubMapping = {
+    when(method = PUT, uri = subscriptionUri("999999999"))
+      .thenReturn(status = BAD_REQUEST, body = Json.obj("code" -> "Terry Bell Tings"))
   }
 }

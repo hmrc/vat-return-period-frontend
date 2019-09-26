@@ -26,8 +26,6 @@ import uk.gov.hmrc.play.binders.ContinueUrl
 import uk.gov.hmrc.play.config.ServicesConfig
 
 trait AppConfig extends ServicesConfig {
-  val analyticsToken: String
-  val analyticsHost: String
   val reportAProblemPartialUrl: String
   val reportAProblemNonJSUrl: String
   val betaFeedbackUrl: String
@@ -44,7 +42,6 @@ trait AppConfig extends ServicesConfig {
   val unauthorisedSignOutUrl: String
   val agentClientLookupStartUrl: String => String
   val agentClientUnauthorisedUrl: String => String
-  val manageClientUrl: String
   val changeClientUrl: String
   val agentActionUrl: String
   val govUkGuidanceMtdVat: String
@@ -62,10 +59,6 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   // Contact frontend
   private lazy val contactHost = getString(ConfigKeys.contactFrontendService)
   private val contactFormServiceIdentifier = "VATC"
-
-  // GA
-  override lazy val analyticsToken: String = getString(ConfigKeys.googleAnalyticsToken)
-  override lazy val analyticsHost: String = getString(ConfigKeys.googleAnalyticsHost)
 
   // Feedback
   lazy val reportAProblemPartialUrl = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
@@ -96,7 +89,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   override lazy val signInUrl: String = s"$signInBaseUrl?continue=$signInContinueUrl&origin=$signInOrigin"
 
   // Sign-out
-  private lazy val feedbackSurveyBaseUrl =getString(ConfigKeys.feedbackSurveyHost) + getString(ConfigKeys.feedbackSurveyUrl)
+  private lazy val feedbackSurveyBaseUrl = getString(ConfigKeys.feedbackSurveyHost) + getString(ConfigKeys.feedbackSurveyUrl)
   override def exitSurveyUrl(identifier: String): String = s"$feedbackSurveyBaseUrl/$identifier"
   private lazy val governmentGatewayHost: String = getString(ConfigKeys.governmentGatewayHost)
   override lazy val unauthorisedSignOutUrl: String = s"$governmentGatewayHost/gg/sign-out?continue=$signInContinueUrl"
@@ -125,7 +118,6 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
         s"?redirectUrl=${agentClientLookupRedirectUrl(uri)}"
     }
 
-  override lazy val manageClientUrl: String = agentClientLookupHost + getString(ConfigKeys.manageClientUrl)
   override lazy val changeClientUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
   override lazy val agentActionUrl: String = agentClientLookupHost + getString(ConfigKeys.vatAgentClientLookupFrontendAgentActionUrl)
 

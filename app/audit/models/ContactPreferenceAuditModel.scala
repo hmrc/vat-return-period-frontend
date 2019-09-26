@@ -21,7 +21,7 @@ import utils.JsonObjectSugar
 
 case class ContactPreferenceAuditModel(vrn: String,
                                        contactPreference: String,
-                                       action: String) extends ExtendedAuditModel {
+                                       action: String = "ChangeReturnFrequencyContactPreference") extends ExtendedAuditModel {
 
   override val auditType: String = "ContactPreference"
   override val detail: JsValue = Json.toJson(this)

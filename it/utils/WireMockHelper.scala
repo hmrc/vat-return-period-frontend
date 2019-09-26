@@ -54,16 +54,6 @@ trait WireMockHelper {
     )
   }
 
-  def stubPost(url: String, response: String, status: Int = OK): StubMapping = {
-    stubFor(post(url)
-      .willReturn(
-        aResponse()
-          .withBody(response)
-          .withStatus(status)
-      )
-    )
-  }
-
   def stubPut(url: String, response: String, status: Int = OK): StubMapping = {
     stubFor(put(url)
       .willReturn(

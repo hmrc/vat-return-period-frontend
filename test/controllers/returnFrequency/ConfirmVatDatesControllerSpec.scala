@@ -50,27 +50,48 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
       "current return frequency is in session" when {
 
-        "new return frequency is in session" should {
+        "new return frequency is in session" when {
 
-          lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-            SessionKeys.NEW_RETURN_FREQUENCY -> "January")
-          )
+          "value is valid" should {
 
-          lazy val document = Jsoup.parse(bodyOf(result))
+            lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+              SessionKeys.NEW_RETURN_FREQUENCY -> "January")
+            )
 
-          "return 200" in {
-            mockAuthorise(mtdVatAuthorisedResponse)
-            status(result) shouldBe Status.OK
+            lazy val document = Jsoup.parse(bodyOf(result))
+
+            "return 200" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
+              status(result) shouldBe Status.OK
+            }
+
+            "return HTML" in {
+              contentType(result) shouldBe Some("text/html")
+              charset(result) shouldBe Some("utf-8")
+            }
+
+            "render the Confirm Dates Page" in {
+              document.title shouldBe ReturnFrequencyMessages.ConfirmPage.title
+            }
           }
 
-          "return HTML" in {
-            contentType(result) shouldBe Some("text/html")
-            charset(result) shouldBe Some("utf-8")
-          }
+          "value is invalid" should {
+            lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+              SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+            )
 
-          "render the Confirm Dates Page" in {
-            document.title shouldBe ReturnFrequencyMessages.ConfirmPage.title
+            lazy val document = Jsoup.parse(bodyOf(result))
+
+            "return 500" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
+              status(result) shouldBe Status.INTERNAL_SERVER_ERROR
+            }
+
+            "render the ISE page" in {
+              document.title shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+            }
           }
         }
 
@@ -169,6 +190,24 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
           s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
             redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          }
+        }
+
+        "session value is invalid" should {
+          lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+            SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+          )
+
+          lazy val document = Jsoup.parse(bodyOf(result))
+
+          "return 500" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
+            status(result) shouldBe Status.INTERNAL_SERVER_ERROR
+          }
+
+          "render the ISE page" in {
+            document.title shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }
         }
       }

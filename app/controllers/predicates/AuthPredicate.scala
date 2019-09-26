@@ -118,7 +118,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
 
       case None =>
         Logger.debug(s"[AuthPredicate][authoriseAsAgent] - No Client VRN in session. Redirecting to ${appConfig.agentClientLookupStartUrl}")
-        Future.successful(Redirect(appConfig.agentClientLookupStartUrl(request.uri)))
+        Future.successful(Redirect(appConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url)))
     }
   }
 }

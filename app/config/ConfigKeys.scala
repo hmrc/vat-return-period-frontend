@@ -49,7 +49,6 @@ object ConfigKeys {
   val vatAgentClientLookupFrontendStartUrl: String = "vat-agent-client-lookup-frontend.startUrl"
   val vatAgentClientLookupFrontendUnauthorisedUrl: String = "vat-agent-client-lookup-frontend.unauthorisedUrl"
   val vatAgentClientLookupFrontendAgentActionUrl: String = "vat-agent-client-lookup-frontend.agentActionUrl"
-  val manageClientUrl: String = "vat-agent-client-lookup-frontend.whatToDoUrl"
 
   val govUkGuidanceMtdVat: String = "gov-uk.guidance.mtdVat.url"
   val govUkGuidanceAgentServices: String = "gov-uk.guidance.agentServices.url"

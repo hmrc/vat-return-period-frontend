@@ -16,7 +16,6 @@
 
 package controllers.predicates
 
-import assets.BaseTestConstants
 import assets.messages.AuthMessages
 import mocks.MockAuth
 import org.jsoup.Jsoup
@@ -114,7 +113,7 @@ class AuthPredicateSpec extends MockAuth {
         val authResponse = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
         lazy val result = target()(FakeRequest())
 
-        val redirectUrl = mockAppConfig.agentClientLookupStartUrl("/")
+        val redirectUrl = mockAppConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url)
 
         "return 303" in {
           mockAuthorise(authResponse)

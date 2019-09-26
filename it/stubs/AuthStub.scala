@@ -20,8 +20,9 @@ import base.BaseISpec
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import play.api.http.Status.OK
 import play.api.libs.json.{JsObject, Json}
+import utils.WireMockMethods
 
-object AuthStub extends BaseISpec {
+object AuthStub extends BaseISpec with WireMockMethods {
 
   val uri: String = "/auth/authorise"
 
@@ -55,8 +56,53 @@ object AuthStub extends BaseISpec {
     )
   )
 
-  def stubResponse(status: Int, body: JsObject): StubMapping = {
-    stubPost(uri, Json.stringify(body), OK)
+  val agentEnrolmentAuthResponse: JsObject = Json.obj(
+    "affinityGroup" -> "Agent",
+    "allEnrolments" -> Json.arr(
+      Json.obj(
+        "key" -> "HMRC-AS-AGENT",
+        "identifiers" -> Json.arr(
+          Json.obj(
+            "key" -> "AgentReferenceNumber",
+            "value" -> "XARN1234567"
+          )
+        )
+      )
+    )
+  )
+
+  val agentUnauthorisedAuthResponse: JsObject = Json.obj(
+    "affinityGroup" -> "Agent",
+    "allEnrolments" -> Json.arr(
+      Json.obj(
+        "key" -> "OTHER",
+        "identifiers" -> Json.arr(
+          Json.obj(
+            "key" -> "OTHER",
+            "value" -> "1234567"
+          )
+        )
+      )
+    )
+  )
+
+  def authorised(): StubMapping = {
+    when(method = POST, uri = uri)
+      .thenReturn(status = OK, body = mtdVatAuthResponse)
   }
 
+  def agentUnauthorised(): StubMapping = {
+    when(method = POST, uri = uri)
+      .thenReturn(status = OK, body = agentUnauthorisedAuthResponse)
+  }
+
+  def agentAuthorised(): StubMapping = {
+    when(method = POST, uri = uri)
+      .thenReturn(status = OK, body = agentEnrolmentAuthResponse)
+  }
+
+  def unauthorised(): StubMapping = {
+    when(method = POST, uri = uri)
+      .thenReturn(status = OK, body = otherEnrolmentAuthResponse)
+  }
 }

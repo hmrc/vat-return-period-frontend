@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-package audit
+package pages
 
-object ContactPreferenceAuditKeys {
-  val changeFrequencyAction = "ChangeReturnFrequencyContactPreference"
+import base.BaseISpec
+import common.SessionKeys
+import utils.CustomMatchers
+
+trait BasePageISpec extends BaseISpec with CustomMatchers {
+
+  val titleSuffixOther = " - VAT - GOV.UK"
+
+  def formatSessionVrn: Option[String] => Map[String, String] = _.fold(Map.empty[String, String])(x => Map(SessionKeys.CLIENT_VRN -> x))
+
 }
