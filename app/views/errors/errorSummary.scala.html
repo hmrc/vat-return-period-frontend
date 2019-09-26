@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,22 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package assets.messages
+@import uk.gov.hmrc.play.views.html.helpers.{errorSummary => summary}
 
-trait BaseMessages {
+@(heading: String, form: Form[_])(implicit messages: Messages)
 
-  val continue = "Continue"
-  val back = "Back"
-  val confirmAndContinue = "Confirm and continue"
-  val finish = "Finish"
-  val errorHeading = "There is a problem"
-
-  val titleSuffix = " - Business tax account - GOV.UK"
-  val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
-  val mtdfvTitleSuffix = " - VAT - GOV.UK"
-
-  val problemWithService = "Sorry, there is a problem with the service"
-
+@if(form.hasErrors) {
+  @summary(messages(heading), form)
 }

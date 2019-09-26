@@ -19,6 +19,7 @@ package views
 import base.BaseSpec
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
+import org.scalatest.Assertion
 import play.twirl.api.Html
 
 trait ViewBaseSpec extends BaseSpec {
@@ -33,9 +34,20 @@ trait ViewBaseSpec extends BaseSpec {
     document.select(cssSelector).first()
   }
 
-  def elementText(selector: String)(implicit document: Document): String = {
-    element(selector).text()
+  def elementExtinct(cssSelector: String)(implicit document: Document): Assertion = {
+    val elements = document.select(cssSelector)
+
+    if (elements.size == 0) {
+      succeed
+    } else {
+      fail(s"Element with selector '$cssSelector' was found!")
+    }
   }
 
+  def elementText(selector: String)(implicit document: Document): String = element(selector).text()
+
   def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
+
+  def paragraph(index: Int)(implicit document: Document): String = elementText(s"article > p:nth-of-type($index)")
+
 }

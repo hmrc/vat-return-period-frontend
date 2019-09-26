@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package views.templates.input
+package views.templates.inputs
 
 import play.api.data.Field
 import play.twirl.api.Html

@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 
-package assets.messages
+package testOnly.models
 
-trait BaseMessages {
+import play.api.libs.json.{Json, OFormat}
 
-  val continue = "Continue"
-  val back = "Back"
-  val confirmAndContinue = "Confirm and continue"
-  val finish = "Finish"
-  val errorHeading = "There is a problem"
+case class TextInputModel(text: String)
 
-  val titleSuffix = " - Business tax account - GOV.UK"
-  val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
-  val mtdfvTitleSuffix = " - VAT - GOV.UK"
-
-  val problemWithService = "Sorry, there is a problem with the service"
-
+object TextInputModel {
+  implicit val format: OFormat[TextInputModel] = Json.format[TextInputModel]
 }

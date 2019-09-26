@@ -37,7 +37,7 @@ class UnauthorisedNonAgentViewSpec extends ViewBaseSpec {
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "have the correct document title" in {
-      document.title shouldBe AuthMessages.unauthorisedTitle
+      document.title shouldBe AuthMessages.unauthorisedTitle + AuthMessages.mtdfvTitleSuffix
     }
 
     "have a the correct page heading" in {
