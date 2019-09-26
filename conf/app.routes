@@ -15,3 +15,5 @@ GET         /confirm-vat-return-dates                 controllers.returnFrequenc
 POST        /confirm-vat-return-dates                 controllers.returnFrequency.ConfirmVatDatesController.submit
 
 GET         /confirmation-vat-return-dates/:userType  controllers.returnFrequency.ChangeReturnFrequencyConfirmation.show(userType: String)
+
+GET         /change-client-vat-number                 controllers.ChangeClientController.changeClient

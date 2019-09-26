@@ -44,11 +44,9 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
       customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
         case Right(details) =>
           val entityName = details.customerDetails.clientName
-          //TODO Ok(views.html.returnFrequency.change_return_frequency_confirmation(clientName = entityName, agentEmail = email))
-          Ok("")
+          Ok(views.html.returnFrequency.change_return_frequency_confirmation(clientName = entityName, agentEmail = email))
         case Left(_) =>
-          //TODO Ok(views.html.returnFrequency.change_return_frequency_confirmation(agentEmail = email))
-          Ok("")
+          Ok(views.html.returnFrequency.change_return_frequency_confirmation(agentEmail = email))
       }
     } else {
       nonAgentConfirmation
@@ -62,11 +60,9 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
           ContactPreferenceAuditModel(user.vrn, contactPreference.preference, ContactPreferenceAuditKeys.changeFrequencyAction),
           Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
         )
-        // Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(contactPreference.preference)))
-        Ok("")
+        Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(contactPreference.preference)))
       case Left(_) =>
-        // Ok(views.html.returnFrequency.change_return_frequency_confirmation())
-        Ok("")
+        Ok(views.html.returnFrequency.change_return_frequency_confirmation())
     }
   }
 }

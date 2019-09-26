@@ -19,7 +19,6 @@
 @import templates.inputs.radioGroup
 @import views.html.errors.errorSummary
 @import models.returnFrequency._
-@import views.html.helpers.back_to_business_details
 @import models.auth.User
 
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
@@ -37,12 +36,11 @@
   appConfig = appConfig,
   user = Some(user)) {
 
-  @back_to_business_details()
+  <a class="link-back" href='@appConfig.manageVatUrl'>@messages("base.back")</a>
 
   @errorSummary("common.errorSummary.heading", form)
 
-  @*TODO: Update to ChooseDatesController.submit when controller is available*@
-  @helpers.form(action = controllers.routes.HelloWorldController.helloWorld()) {
+  @helpers.form(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
 
       <div class="form-group" id="period-option">
           @radioGroup(
@@ -56,9 +54,9 @@
       </div>
 
       <button
-              class="button"
-              type ="submit"
-              id="continue">
+          class="button"
+          type ="submit"
+          id="continue">
           @messages("common.continue")
       </button>
 

@@ -16,9 +16,8 @@
 
 package controllers.returnFrequency
 
-import assets.BaseTestConstants._
 import assets.CircumstanceDetailsTestConstants._
-import assets.messages.AuthMessages
+import assets.messages.{AuthMessages, ReturnFrequencyMessages}
 import audit.mocks.MockAuditingService
 import base.BaseSpec
 import common.SessionKeys
@@ -64,15 +63,15 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.OK
           }
-//
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the Confirm Dates Page" in {
-//            document.title shouldBe Messages.ConfirmPage.title
-//          }
+
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the Confirm Dates Page" in {
+            document.title shouldBe ReturnFrequencyMessages.ConfirmPage.title
+          }
         }
 
         "new return frequency is not in session" should {

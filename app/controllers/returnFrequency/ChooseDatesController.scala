@@ -50,8 +50,7 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
       }
 
       ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
-        //TODO Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
-        Ok("")
+        Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
       }
     }
   }
@@ -65,8 +64,7 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
         datesForm.bindFromRequest().fold(
           errors =>
             ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
-              //TODO BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
-              BadRequest("")
+              BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
             ),
           success =>
             Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)

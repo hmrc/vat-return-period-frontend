@@ -50,8 +50,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
     } { newReturnFrequency =>
       ReturnPeriod(newReturnFrequency) match {
         case Some(newFrequency) =>
-          //TODO Ok(views.html.returnFrequency.confirm_dates(newFrequency))
-          Ok("")
+          Ok(views.html.returnFrequency.confirm_dates(newFrequency))
         case None => serviceErrorHandler.showInternalServerError
       }
     }

@@ -17,6 +17,7 @@
 package controllers.returnFrequency
 
 import assets.CircumstanceDetailsTestConstants._
+import assets.messages.ReturnFrequencyMessages
 import audit.mocks.MockAuditingService
 import base.BaseSpec
 import mocks.MockAuth
@@ -60,14 +61,14 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
             status(result) shouldBe Status.OK
           }
 
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the confirmation view" in {
-//            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-//          }
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the confirmation view" in {
+            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
+          }
         }
 
         "the call to the customer details service is unsuccessful" should {
@@ -82,14 +83,14 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
             status(result) shouldBe Status.OK
           }
 
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the confirmation view" in {
-//            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-//          }
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the confirmation view" in {
+            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
+          }
         }
       }
 
@@ -110,15 +111,15 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
             status(result) shouldBe Status.OK
           }
 
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the Change Return Frequency Confirmation Page" in {
-//            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-//            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
-//          }
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the Change Return Frequency Confirmation Page" in {
+            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
+          }
         }
 
         "display the correct content for a user that has a paper contact preference" should {
@@ -136,15 +137,15 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
             status(result) shouldBe Status.OK
           }
 
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the Change Return Frequency Confirmation Page" in {
-//            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-//            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.paperPref
-//          }
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the Change Return Frequency Confirmation Page" in {
+            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.paperPref
+          }
         }
 
         "display the correct content when an error is returned from contactPreferences" should {
@@ -161,15 +162,15 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
             status(result) shouldBe Status.OK
           }
 
-//          "return HTML" in {
-//            contentType(result) shouldBe Some("text/html")
-//            charset(result) shouldBe Some("utf-8")
-//          }
-//
-//          "render the Change Return Frequency Confirmation Page" in {
-//            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-//            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.contactPrefError
-//          }
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          "render the Change Return Frequency Confirmation Page" in {
+            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.contactPrefError
+          }
         }
       }
     }

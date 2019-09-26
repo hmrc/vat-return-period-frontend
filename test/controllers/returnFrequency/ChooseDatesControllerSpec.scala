@@ -16,10 +16,9 @@
 
 package controllers.returnFrequency
 
-import assets.BaseTestConstants._
 import assets.CircumstanceDetailsTestConstants._
 import assets.ReturnPeriodTestConstants._
-import assets.messages.AuthMessages
+import assets.messages.{AuthMessages, ReturnFrequencyMessages}
 import base.BaseSpec
 import common.SessionKeys
 import mocks.MockAuth
@@ -94,15 +93,15 @@ class ChooseDatesControllerSpec extends BaseSpec
               mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.OK
             }
-//
-//            "return HTML" in {
-//              contentType(result) shouldBe Some("text/html")
-//              charset(result) shouldBe Some("utf-8")
-//            }
-//
-//            s"have the title 'Choose the new VAT Return dates'" in {
-//              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
-//            }
+
+            "return HTML" in {
+              contentType(result) shouldBe Some("text/html")
+              charset(result) shouldBe Some("utf-8")
+            }
+
+            s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
+              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
+            }
           }
 
           "a value for new return frequency is in session" should {
@@ -117,18 +116,18 @@ class ChooseDatesControllerSpec extends BaseSpec
               status(result) shouldBe Status.OK
             }
 
-//            "return HTML" in {
-//              contentType(result) shouldBe Some("text/html")
-//              charset(result) shouldBe Some("utf-8")
-//            }
-//
-//            "have the January radio option selected" in {
-//              Jsoup.parse(bodyOf(result)).select("#period-option-march").attr("checked") shouldBe "checked"
-//            }
-//
-//            s"have the title 'Choose the new VAT Return dates'" in {
-//              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
-//            }
+            "return HTML" in {
+              contentType(result) shouldBe Some("text/html")
+              charset(result) shouldBe Some("utf-8")
+            }
+
+            "have the January radio option selected" in {
+              Jsoup.parse(bodyOf(result)).select("#period-option-march").attr("checked") shouldBe "checked"
+            }
+
+            s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
+              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
+            }
           }
         }
 
@@ -248,9 +247,9 @@ class ChooseDatesControllerSpec extends BaseSpec
               status(result) shouldBe Status.BAD_REQUEST
             }
 
-//            s"have the title 'Choose the new VAT Return dates'" in {
-//              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
-//            }
+            s"have the title ${ReturnFrequencyMessages.ChoosePage.errorTitle}" in {
+              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.errorTitle
+            }
           }
         }
       }
