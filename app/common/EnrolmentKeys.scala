@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package models.core
+package common
 
-import play.api.libs.json.{JsPath, Reads}
-
-trait JsonReadUtil {
-
-  implicit class JsonReadUtil(jsPath: JsPath) {
-    def readOpt[T](implicit reads: Reads[T]): Reads[Option[T]] = jsPath.readNullable[T].orElse(Reads.pure(None))
-  }
-
+object EnrolmentKeys {
+  val vatEnrolmentId: String = "HMRC-MTD-VAT"
+  val vatIdentifierId: String = "VRN"
+  val agentEnrolmentId: String = "HMRC-AS-AGENT"
+  val activated: String = "Activated"
+  val mtdVatDelegatedAuthRule: String = "mtd-vat-auth"
 }

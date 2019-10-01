@@ -35,7 +35,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
 
     s"have a the back link with correct text and url '${viewMessages.back}'" in {
       elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+      element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
     }
 
     s"have a the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
@@ -76,7 +76,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       }
 
       "has a URL back to the change dates page" in {
-        element("#change-vat-link").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+        element("#change-vat-link").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
       }
     }
 
@@ -86,15 +86,9 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         elementText("#continue-button") shouldBe viewMessages.confirmAndContinue
       }
 
-      /*TODO change to post when correct controller goes in. Is this actually needed? */
-      "posts data to the server" in {
-        element("form").attr("method") shouldBe "GET"
-      }
-
       "posts data to the correct endpoint" in {
-        element("form").attr("action") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+        element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url
       }
-
     }
   }
 }

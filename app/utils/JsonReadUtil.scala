@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package models.core
+package utils
 
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{JsPath, Reads}
 
-case class SubscriptionUpdateResponseModel(formBundle: String)
+trait JsonReadUtil {
 
-object SubscriptionUpdateResponseModel {
-  implicit val formats: Format[SubscriptionUpdateResponseModel] = Json.format[SubscriptionUpdateResponseModel]
+  implicit class JsonReadUtil(jsPath: JsPath) {
+    def readOpt[T](implicit reads: Reads[T]): Reads[Option[T]] = jsPath.readNullable[T].orElse(Reads.pure(None))
+  }
+
 }

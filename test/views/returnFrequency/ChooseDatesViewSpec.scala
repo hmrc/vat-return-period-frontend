@@ -62,7 +62,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
 
     s"have a the back link with correct text and url '${viewMessages.back}'" in {
       elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
   }
 

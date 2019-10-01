@@ -27,9 +27,7 @@
   appConfig = appConfig,
   user = Some(user)) {
 
-
-  @*TODO: Update to Choose dates controller .show when controller is available*@
-  <a class="link-back" href="@{controllers.routes.HelloWorldController.helloWorld().url}">@messages("base.back")</a>
+  <a class="link-back" href="@controllers.returnFrequency.routes.ChooseDatesController.show().url">@messages("base.back")</a>
 
   @headings(messages("confirm_return_frequency.heading"))
 
@@ -41,17 +39,15 @@
       @messages(s"return_frequency.${model.id}")
   </p>
 
-  @*TODO: Update to Choose dates controller .show when controller is available*@
   <p class="form-group">
       <a id="change-vat-link"
-         href="@controllers.routes.HelloWorldController.helloWorld()"
+         href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
          type="submit">
           @messages("confirm_return_frequency.changeLink")
       </a>
   </p>
 
-  @*TODO: Update to Confirm dates controller .submit when controller is available*@
-  @form(action = controllers.routes.HelloWorldController.helloWorld()) {
+  @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
     <button
             class="button"
             type ="submit"

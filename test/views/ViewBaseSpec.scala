@@ -46,8 +46,6 @@ trait ViewBaseSpec extends BaseSpec {
 
   def elementText(selector: String)(implicit document: Document): String = element(selector).text()
 
-  def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
-
   def paragraph(index: Int)(implicit document: Document): String = elementText(s"article > p:nth-of-type($index)")
 
 }

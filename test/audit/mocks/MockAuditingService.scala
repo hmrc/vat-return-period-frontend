@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2019 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import models.auth.User
+package audit.mocks
 
-@()(implicit messages: Messages, user : User[_])
-@*TODO: Move to app config for business details*@
-<a class="link-back" href='@controllers.routes.HelloWorldController.helloWorld()'>@messages("base.back")</a>
+import audit.AuditService
+import audit.models.ExtendedAuditModel
+import org.scalamock.scalatest.MockFactory
+import uk.gov.hmrc.http.HeaderCarrier
+
+import scala.concurrent.ExecutionContext
+
+trait MockAuditingService extends MockFactory {
+
+  val mockAuditService: AuditService = mock[AuditService]
+
+  def setupAuditExtendedEvent[T <: ExtendedAuditModel]()(implicit hc: HeaderCarrier, ec: ExecutionContext): Unit = {
+    (mockAuditService.extendedAudit(_: T, _: Option[String])(_: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *, *)
+  }
+}

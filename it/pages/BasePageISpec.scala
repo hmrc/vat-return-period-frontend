@@ -14,13 +14,16 @@
  * limitations under the License.
  */
 
-package common
+package pages
 
-object AuthKeys {
-  val vatEnrolmentId: String = "HMRC-MTD-VAT"
-  val vatIdentifierId: String = "VRN"
-  val agentEnrolmentId: String = "HMRC-AS-AGENT"
-  val delegatedAuthRule: String = "mtd-vat-auth"
-  val agentSessionVrn: String = "CLIENT_VRN"
-  val activated: String = "Activated"
+import base.BaseISpec
+import common.SessionKeys
+import utils.CustomMatchers
+
+trait BasePageISpec extends BaseISpec with CustomMatchers {
+
+  val titleSuffixOther = " - VAT - GOV.UK"
+
+  def formatSessionVrn: Option[String] => Map[String, String] = _.fold(Map.empty[String, String])(x => Map(SessionKeys.CLIENT_VRN -> x))
+
 }

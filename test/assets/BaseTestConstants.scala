@@ -16,12 +16,12 @@
 
 package assets
 
-import play.api.http.Status
-import uk.gov.hmrc.http.HttpResponse
+import models.errors.ServerSideError
 
 object BaseTestConstants {
 
   val agentEmail = "agentEmail@test.com"
+  val errorModel = ServerSideError("503", "response body")
+  val vrn: String = "999999999"
 
-  val errorModel = HttpResponse(Status.BAD_REQUEST, responseString = Some("Error Message"))
 }

@@ -29,7 +29,6 @@ class CircumstanceDetailsSpec extends BaseSpec {
       "all optional fields are present" should {
 
         "return a model with all optional fields present" in {
-
           circumstanceDetailsJsonMax.as[CircumstanceDetails] shouldBe circumstanceDetailsModelMax
         }
       }

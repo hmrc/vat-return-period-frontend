@@ -113,7 +113,7 @@ class AuthPredicateSpec extends MockAuth {
         val authResponse = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
         lazy val result = target()(FakeRequest())
 
-        val redirectUrl = mockAppConfig.agentClientLookupStartUrl("/")
+        val redirectUrl = mockAppConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url)
 
         "return 303" in {
           mockAuthorise(authResponse)
@@ -170,7 +170,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe "There is a problem with the service - VAT - GOV.UK"
+        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
 
@@ -202,7 +202,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe "There is a problem with the service - VAT - GOV.UK"
+        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
   }

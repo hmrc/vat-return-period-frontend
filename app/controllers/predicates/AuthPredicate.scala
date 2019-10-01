@@ -16,9 +16,10 @@
 
 package controllers.predicates
 
-import common.AuthKeys
-import common.AuthKeys._
-import config.{AppConfig, ErrorHandler}
+import common.EnrolmentKeys
+import common.EnrolmentKeys._
+import common.SessionKeys._
+import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import play.api.Logger
@@ -35,7 +36,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
-                              errorHandler: ErrorHandler,
+                              errorHandler: ServiceErrorHandler,
                               val messagesApi: MessagesApi,
                               implicit val ec: ExecutionContext,
                               implicit val appConfig: AppConfig) extends FrontendController
@@ -51,7 +52,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
       .authorised()
       .retrieve(affinityGroup and allEnrolments) {
         case Some(Agent) ~ enrolments =>
-          if (enrolments.enrolments.exists(_.key == AuthKeys.agentEnrolmentId)) {
+          if (enrolments.enrolments.exists(_.key == EnrolmentKeys.agentEnrolmentId)) {
             authoriseAsAgent(block)
           } else {
             Logger.debug("[AuthPredicate][invokeBlock] - Agent does not have correct agent enrolment ID")
@@ -74,7 +75,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
   private def authoriseAsNonAgent[A](enrolments: Enrolments, block: User[A] => Future[Result])
                                     (implicit request: Request[A]): Future[Result] = {
     enrolments.enrolments.collectFirst {
-      case Enrolment(AuthKeys.vatEnrolmentId, EnrolmentIdentifier(_, vrn) :: _, AuthKeys.activated, _) => vrn
+      case Enrolment(EnrolmentKeys.vatEnrolmentId, EnrolmentIdentifier(_, vrn) :: _, EnrolmentKeys.activated, _) => vrn
     } match {
       case Some(vrn) => block(User(vrn))
       case None =>
@@ -89,18 +90,18 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
     val agentDelegatedAuthorityRule: String => Enrolment = vrn =>
       Enrolment(vatEnrolmentId)
         .withIdentifier(vatIdentifierId, vrn)
-        .withDelegatedAuthRule(delegatedAuthRule)
+        .withDelegatedAuthRule(mtdVatDelegatedAuthRule)
 
-    request.session.get(agentSessionVrn) match {
+    request.session.get(CLIENT_VRN) match {
       case Some(vrn) =>
         authService
           .authorised(agentDelegatedAuthorityRule(vrn))
           .retrieve(allEnrolments) {
             enrolments =>
               enrolments.enrolments.collectFirst {
-                case Enrolment(AuthKeys.agentEnrolmentId, EnrolmentIdentifier(_, arn) :: _, AuthKeys.activated, _) => arn
+                case Enrolment(EnrolmentKeys.agentEnrolmentId, EnrolmentIdentifier(_, arn) :: _, EnrolmentKeys.activated, _) => arn
               } match {
-                case Some(arn) => block(User(vrn, Some(arn)))
+                case Some(arn) => block(User(vrn, active = true, Some(arn)))
                 case None =>
                   Logger.debug("[AuthPredicate][authoriseAsAgent] - Agent with no HMRC-AS-AGENT enrolment. Rendering unauthorised view.")
                   Future.successful(Forbidden(views.html.errors.unauthorised_agent()))
@@ -117,7 +118,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
 
       case None =>
         Logger.debug(s"[AuthPredicate][authoriseAsAgent] - No Client VRN in session. Redirecting to ${appConfig.agentClientLookupStartUrl}")
-        Future.successful(Redirect(appConfig.agentClientLookupStartUrl(request.uri)))
+        Future.successful(Redirect(appConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url)))
     }
   }
 }

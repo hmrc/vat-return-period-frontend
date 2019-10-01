@@ -1,10 +1,19 @@
 # microservice specific routes
 
 # Assets
-GET         /assets/*file                                    controllers.Assets.at(path="/public", file)
+GET         /assets/*file                             controllers.Assets.at(path="/public", file)
 
 # Pages
-GET         /hello-world                                     controllers.HelloWorldController.helloWorld
+GET         /hello-world                              controllers.HelloWorldController.helloWorld
 
-GET        /sign-out                      controllers.SignOutController.signOut(feedbackOnSignOut: Boolean)
+GET         /sign-out                                 controllers.SignOutController.signOut(feedbackOnSignOut: Boolean)
 
+GET         /change-vat-return-dates                  controllers.returnFrequency.ChooseDatesController.show
+POST        /change-vat-return-dates                  controllers.returnFrequency.ChooseDatesController.submit
+
+GET         /confirm-vat-return-dates                 controllers.returnFrequency.ConfirmVatDatesController.show
+POST        /confirm-vat-return-dates                 controllers.returnFrequency.ConfirmVatDatesController.submit
+
+GET         /confirmation-vat-return-dates/:userType  controllers.returnFrequency.ChangeReturnFrequencyConfirmation.show(userType: String)
+
+GET         /change-client-vat-number                 controllers.ChangeClientController.changeClient

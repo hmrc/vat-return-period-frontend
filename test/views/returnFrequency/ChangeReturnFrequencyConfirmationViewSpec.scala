@@ -62,7 +62,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         "has link back to customer details page" in {
-          element("#finish").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+          element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -103,7 +103,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         "has link back to customer details page" in {
-          element("#finish").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+          element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -144,7 +144,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         "has link back to customer details page" in {
-          element("#finish").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+          element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -186,7 +186,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "display the 'change another clients details' link" in {
           elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
           element("#change-client-link").attr("href") shouldBe
-            controllers.routes.HelloWorldController.helloWorld().url
+            controllers.routes.ChangeClientController.changeClient().url
         }
 
         "have the correct finish button" which {
@@ -196,7 +196,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           }
 
           "has link back to customer details page" in {
-            element("#finish").attr("href") shouldBe controllers.routes.HelloWorldController.helloWorld().url
+            element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
       }

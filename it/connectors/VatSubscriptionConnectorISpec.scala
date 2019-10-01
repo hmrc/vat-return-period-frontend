@@ -19,9 +19,8 @@ package connectors
 import base.BaseISpec
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import models.circumstanceInfo.CircumstanceDetails
-import models.core.SubscriptionUpdateResponseModel
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
-import models.returnFrequency.{Jan, UpdateReturnPeriod}
+import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import play.api.http.Status._
 import play.api.libs.json.{JsObject, Json}
 import stubs.VatSubscriptionStub._
@@ -60,7 +59,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
             stubGet(s"/vat-subscription/$vrn/full-information", invalidJson.toString(), OK)
 
             val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
-            result shouldBe Right(circumstanceDetailsModelMin)
+            result shouldBe Left(UnexpectedJsonFormat)
           }
         }
       }

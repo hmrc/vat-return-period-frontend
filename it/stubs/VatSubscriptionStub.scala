@@ -16,16 +16,26 @@
 
 package stubs
 
-import base.BaseISpec
-import models.circumstanceInfo.CircumstanceDetails
+import com.github.tomakehurst.wiremock.stubbing.StubMapping
+import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
 import models.returnFrequency.Monthly
+import play.api.http.Status.{INTERNAL_SERVER_ERROR, OK}
 import play.api.libs.json.{JsValue, Json}
+import utils.WireMockMethods
 
-object VatSubscriptionStub extends BaseISpec {
+object VatSubscriptionStub extends WireMockMethods {
+
+  private val subscriptionUri: String => String = vrn => s"/vat-subscription/$vrn/full-information"
 
   val partyType = "2"
 
   val circumstanceDetailsJsonMax: JsValue = Json.obj(
+    "customerDetails" -> Json.obj(
+      "firstName" -> "bob",
+      "lastName" -> "smith",
+      "organisationName" -> "org name",
+      "tradingName" -> "trading name"
+    ),
     "returnPeriod" -> Monthly,
     "changeIndicators" -> Json.obj(
       "returnPeriod" -> true
@@ -33,10 +43,9 @@ object VatSubscriptionStub extends BaseISpec {
     "partyType" -> Some("2")
   )
 
-  val circumstanceDetailsJsonMin: JsValue = Json.obj()
-
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(Monthly),
       Some(true),
       Some(partyType)
@@ -44,10 +53,14 @@ object VatSubscriptionStub extends BaseISpec {
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
+      CustomerDetails(None, None, None, None),
       None,
       None,
       None
     )
 
-
+  def getClientDetailsSuccess(vrn: String)(customerDetails: CircumstanceDetails): StubMapping = {
+    when(method = GET, uri = subscriptionUri(vrn))
+      .thenReturn(status = OK, body = Json.toJson(customerDetails))
+  }
 }

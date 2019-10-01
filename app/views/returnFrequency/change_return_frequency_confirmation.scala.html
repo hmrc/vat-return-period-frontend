@@ -19,11 +19,10 @@
 
 @(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
-@*TODO: Add agent client relationship controller with change client action*@
 @changeClientLink = {
         <p id="change-client-text">
             <a id="change-client-link"
-            href="@controllers.routes.HelloWorldController.helloWorld()">
+            href="@controllers.routes.ChangeClientController.changeClient()">
             @messages("common.agent.changeClient")</a>
         </p>
 }
@@ -69,10 +68,8 @@
 
     }
 
-
-    @*TODO: Route back to business overview page. Will need to get appConfig for this*@
     <a  id="finish"
-        href='@controllers.routes.HelloWorldController.helloWorld()'
+        href='@appConfig.manageVatUrl'
         class="button"
         role="button"
         type="submit">@messages("common.finish")</a>

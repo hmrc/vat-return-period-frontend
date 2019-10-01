@@ -26,7 +26,6 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.{Application, Configuration}
 
-
 class WhitelistFilterSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   lazy implicit val appConfig: Configuration = app.configuration

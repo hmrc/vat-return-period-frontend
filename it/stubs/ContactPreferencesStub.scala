@@ -16,15 +16,21 @@
 
 package stubs
 
-import base.BaseISpec
+import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import models.contactPreferences.ContactPreference
+import play.api.http.Status.OK
 import play.api.libs.json.{JsObject, Json}
+import utils.WireMockMethods
 
-object ContactPreferencesStub extends BaseISpec {
+object ContactPreferencesStub extends WireMockMethods {
 
+  val uri: String => String = vrn => s"/contact-preferences/vat/vrn/$vrn"
   val digitalContactPreferenceModel = ContactPreference("DIGITAL")
-  val paperContactPreferenceModel = ContactPreference("PAPER")
 
   val digitalContactPreferenceJson: JsObject = Json.obj("preference" -> "digital")
-  val paperContactPreferenceJson: JsObject = Json.obj("preference" -> "paper")
+
+  def stubGetContactPreference(vrn: String): StubMapping = {
+    when(method = GET, uri = uri(vrn))
+      .thenReturn(status = OK, body = digitalContactPreferenceJson)
+  }
 }
