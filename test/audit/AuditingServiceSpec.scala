@@ -21,7 +21,6 @@ import base.BaseSpec
 import config.FrontendAppConfig
 import play.api.http.HeaderNames
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.AuditResult
 import uk.gov.hmrc.play.audit.http.connector.AuditResult.Success
 import uk.gov.hmrc.play.audit.model.ExtendedDataEvent
 
