@@ -20,6 +20,7 @@ import java.util.Base64
 import config.features.Features
 import javax.inject.{Inject, Singleton}
 import play.api.Mode.Mode
+import play.api.i18n.Lang
 import play.api.mvc.Call
 import play.api.{Configuration, Environment}
 import uk.gov.hmrc.play.binders.ContinueUrl
@@ -47,6 +48,8 @@ trait AppConfig extends ServicesConfig {
   val govUkGuidanceMtdVat: String
   val govUkGuidanceAgentServices: String
   val manageVatUrl: String
+  val routeToSwitchLanguage: String => Call
+  def languageMap: Map[String,Lang]
 }
 
 @Singleton
@@ -128,6 +131,17 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   //Features
   override val features: Features = new Features
 
+
   // Manage VAT Subscription Frontend
   override lazy val manageVatUrl: String = getString(ConfigKeys.manageVatHost) + getString(ConfigKeys.manageVatUrl)
+
+  override def languageMap: Map[String, Lang] = Map(
+    "english" -> Lang("en"),
+    "cymraeg" -> Lang("cy")
+  )
+
+  //TODO the controllers to switch the language
+  override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.HelloWorldController.helloWorld()
+
+
 }
