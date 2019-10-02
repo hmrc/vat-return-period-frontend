@@ -26,6 +26,8 @@ import play.api.{Configuration, Mode}
 class MockConfig(implicit val runModeConfiguration: Configuration) extends AppConfig {
 
   override val mode: Mode = Mode.Test
+  override val analyticsToken: String = ""
+  override val analyticsHost: String = ""
   override val reportAProblemPartialUrl: String = ""
   override val reportAProblemNonJSUrl: String = ""
   override val betaFeedbackUrl: String = ""
@@ -34,7 +36,8 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val whitelistedIps: Seq[String] = Seq("")
   override val whitelistExcludedPaths: Seq[Call] = Nil
   override val whitelistShutterPage: String = "https://www.tax.service.gov.uk/shutter/vat-through-software"
-  override val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
+  implicit lazy val accessibilityReportEnabled : Boolean = true
+  implicit lazy val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
   override val features: Features = new Features()
   override val signInUrl: String = "sign-in-url"
   override def signOutUrl(identifier: String): String = s"/some-gg-signout-url/$identifier"
@@ -42,6 +45,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val unauthorisedSignOutUrl: String = "/unauth-signout-url"
   override val agentClientLookupStartUrl: String => String = uri => s"agent-client-lookup-start-url/$uri"
   override val agentClientUnauthorisedUrl: String => String = uri => s"agent-client-unauthorised-url/$uri"
+  override val manageClientUrl: String = "/agent-action"
   override val changeClientUrl: String = "/change-client"
   override val agentActionUrl: String = "/agent-action"
   override val govUkGuidanceMtdVat: String = "mtd-vat"
@@ -52,5 +56,4 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy")
   )
-
 }
