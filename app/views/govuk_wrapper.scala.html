@@ -50,7 +50,7 @@
         @if(showSignOut) {
             window.GOVUK.timeoutDialog({
               timeout: @appConfig.timeoutPeriod,
-              countdown: @appConfig.timeoutCountDown
+              countdown: @appConfig.timeoutCountdown
             });
             var dialogOpen;
         }
@@ -79,7 +79,7 @@
       analyticsToken = None,
       analyticsHost = "",
       ssoUrl = None,
-      scriptElem = scriptElem,
+      scriptElem = Some(scriptElement),
       gaCalls = None)
 }
 
