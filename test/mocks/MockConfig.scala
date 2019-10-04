@@ -19,6 +19,7 @@ package mocks
 import config.AppConfig
 import config.features.Features
 import play.api.Mode.Mode
+import play.api.i18n.Lang
 import play.api.mvc.Call
 import play.api.{Configuration, Mode}
 
@@ -46,4 +47,10 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val govUkGuidanceMtdVat: String = "mtd-vat"
   override val govUkGuidanceAgentServices: String = "agent-services"
   override val manageVatUrl: String = "/manage-vat"
+  override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.HelloWorldController.helloWorld()
+  override def languageMap: Map[String, Lang] = Map(
+    "english" -> Lang("en"),
+    "cymraeg" -> Lang("cy")
+  )
+
 }
