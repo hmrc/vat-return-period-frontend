@@ -38,6 +38,8 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val signInUrl: String = "sign-in-url"
   override def signOutUrl(identifier: String): String = s"/some-gg-signout-url/$identifier"
   override def exitSurveyUrl(identifier: String): String = s"/some-survey-url/$identifier"
+  override val timeoutPeriod: Int = 1800
+  override val timeoutCountdown: Int = 20
   override val unauthorisedSignOutUrl: String = "/unauth-signout-url"
   override val agentClientLookupStartUrl: String => String = uri => s"agent-client-lookup-start-url/$uri"
   override val agentClientUnauthorisedUrl: String => String = uri => s"agent-client-unauthorised-url/$uri"

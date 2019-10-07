@@ -39,7 +39,6 @@ trait AppConfig extends ServicesConfig {
   val signInUrl: String
   val timeoutPeriod: Int
   val timeoutCountdown: Int
-  val timeoutSignOutUrl: String
   def signOutUrl(identifier: String): String
   def exitSurveyUrl(identifier: String): String
   val unauthorisedSignOutUrl: String

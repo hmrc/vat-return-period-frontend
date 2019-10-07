@@ -52,8 +52,8 @@
             window.GOVUK.timeoutDialog({
               timeout: @appConfig.timeoutPeriod,
               countdown: @appConfig.timeoutCountdown,
-              keepAliveUrl: '@{controllers.routes.ChooseDatesController.redirect().url}',
-              signOutUrl: '@{controllers.routes.SignOutController.SignOut(authorised = false).url}'
+              keepAliveUrl: '@{controllers.returnFrequency.routes.ChooseDatesController.show()}',
+              signOutUrl: '@{controllers.routes.SignOutController.signOut(feedbackOnSignOut = false)}'
             });
             var dialogOpen;
         }
