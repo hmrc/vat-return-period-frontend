@@ -13,8 +13,6 @@ featureSwitch.heading = Nodweddion
 featureSwitch.submit = Cyflwyno
 
 common.error.prefixTitle = Gwall: {0}
-error.boolean = Please give an answer
-error.required = Please enter a value
 error.summary.title = Mae problem wedi codi
 
 navTitle.nonAgent = Cyfrif Treth Busnes
@@ -33,10 +31,6 @@ unauthorised_non_agent.title = Ni allwch ddefnyddio’r gwasanaeth hwn eto
 unauthorised_non_agent.heading = Ni allwch ddefnyddio’r gwasanaeth hwn eto
 unauthorised_non_agent.text = Mae’n rhaid i chi
 unauthorised_non_agent.link = gofrestru i ddefnyddio meddalwedd er mwyn cyflwyno’ch Ffurflenni TAW.
-
-session_expired.title = For your security, this service has been reset
-session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
 
 common.agent.changeClient.youCan = Gallwch
 common.agent.changeClient.link = newid manylion cleient arall

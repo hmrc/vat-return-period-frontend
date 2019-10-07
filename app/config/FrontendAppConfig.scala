@@ -139,6 +139,6 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy")
   )
-  //TODO the controllers to switch the language
-  override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.HelloWorldController.helloWorld()
+
+  override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.LanguageController.switchToLanguage(lang)
 }

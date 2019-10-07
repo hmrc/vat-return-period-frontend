@@ -23,7 +23,7 @@ import play.api.mvc.{AnyContentAsEmpty, Cookie}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class LanguageControllerSpec extends BaseSpec {
+class   LanguageControllerSpec extends BaseSpec {
   lazy val controller = new LanguageController(mockAppConfig, messagesApi)
 
   lazy val emptyFakeRequest = FakeRequest()
@@ -60,7 +60,7 @@ class LanguageControllerSpec extends BaseSpec {
       "one is not provided" in {
         lazy val result = controller.switchToLanguage("english")(emptyFakeRequest)
 
-        val expectedResponse = controllers.routes.HelloWorldController.helloWorld().url
+        val expectedResponse = controllers.returnFrequency.routes.ChooseDatesController.show().url
 
         status(result) shouldBe SEE_OTHER
         cookies(result).get(Play.langCookieName(messagesApi)) shouldBe Some(Cookie("PLAY_LANG", "en", None, "/", None, secure = false, httpOnly = true))
