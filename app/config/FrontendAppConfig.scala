@@ -39,6 +39,8 @@ trait AppConfig extends ServicesConfig {
   val features: Features
   val accessibilityReportUrl: String
   val signInUrl: String
+  val timeoutPeriod: Int
+  val timeoutCountdown: Int
   def signOutUrl(identifier: String): String
   def exitSurveyUrl(identifier: String): String
   val unauthorisedSignOutUrl: String
@@ -84,6 +86,10 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   // Gov.uk guidance
   override lazy val govUkGuidanceMtdVat: String = getString(ConfigKeys.govUkGuidanceMtdVat)
   override lazy val govUkGuidanceAgentServices: String = getString(ConfigKeys.govUkGuidanceAgentServices)
+
+  //Time-out
+  override lazy val timeoutPeriod: Int = getInt(ConfigKeys.timeoutPeriod)
+  override lazy val timeoutCountdown: Int = getInt(ConfigKeys.timeoutCountDown)
 
   // Sign-in
   private lazy val signInBaseUrl: String = getString(ConfigKeys.signInBaseUrl)

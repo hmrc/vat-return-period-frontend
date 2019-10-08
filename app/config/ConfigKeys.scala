@@ -41,6 +41,9 @@ object ConfigKeys {
   val signInContinueBaseUrl: String = "signIn.continueBaseUrl"
   val signInContinueUrl: String = "signIn.continueUrl"
 
+  val timeoutPeriod: String = "timeout.period"
+  val timeoutCountDown: String = "timeout.countDown"
+
   val feedbackSurveyHost: String = "feedback-frontend.host"
   val feedbackSurveyUrl: String  = "feedback-frontend.url"
   val governmentGatewayHost: String = "government-gateway.host"
