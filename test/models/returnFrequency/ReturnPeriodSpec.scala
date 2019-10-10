@@ -36,8 +36,12 @@ class ReturnPeriodSpec extends UnitSpec {
       ReturnPeriod(returnPeriodMar) shouldBe Some(Mar)
     }
 
-    "for 'Monthly' should return Monhtly case object" in {
+    "for 'Monthly' should return Monthly case object" in {
       ReturnPeriod(returnPeriodMonthly) shouldBe Some(Monthly)
+    }
+
+    "for 'Annually' should return Annually case object" in {
+      ReturnPeriod(returnPeriodAnnually) shouldBe Some(Annually)
     }
 
     "for non existent id should return None" in {
@@ -62,6 +66,10 @@ class ReturnPeriodSpec extends UnitSpec {
     "for Monthly case object return 'Monthly'" in {
       ReturnPeriod.unapply(Monthly) shouldBe returnPeriodMonthly
     }
+
+    "for Annually case object return 'Annually'" in {
+      ReturnPeriod.unapply(Annually) shouldBe returnPeriodAnnually
+    }
   }
 
   "ReturnPeriod Reads" should {
@@ -79,6 +87,12 @@ class ReturnPeriodSpec extends UnitSpec {
 
     "parse the json correctly for MM types" in {
       returnPeriodMMJson.as[ReturnPeriod] shouldBe Monthly
+    }
+
+    "parse the json correctly for all Annual types" in {
+      for((_, json) <- allAnnualKeysAsJson) {
+        json.as[ReturnPeriod] shouldBe Annually
+      }
     }
   }
 
