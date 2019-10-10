@@ -32,6 +32,10 @@ unauthorised_non_agent.heading = Ni allwch ddefnyddio’r gwasanaeth hwn eto
 unauthorised_non_agent.text = Mae’n rhaid i chi
 unauthorised_non_agent.link = gofrestru i ddefnyddio meddalwedd er mwyn cyflwyno’ch Ffurflenni TAW.
 
+preventLeavingAnnualAccounting.h1 = Mae gennych newid ar y gweill yn barod
+preventLeavingAnnualAccounting.p1 = Gwnaethoch gais yn ddiweddar i newid eich cynllun cyfrifyddu blynyddol.
+preventLeavingAnnualAccounting.p2 = Tan y bydd hyn wedi digwydd, ni allwch newid y dyddiadau ar gyfer cyflwyno Ffurflenni TAW.
+
 common.agent.changeClient.youCan = Gallwch
 common.agent.changeClient.link = newid manylion cleient arall
 common.agent.yourClient = eich cleient
