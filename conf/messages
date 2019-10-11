@@ -52,6 +52,7 @@ chooseDatesForm.frequency.missing = Select the new VAT Return dates
 return_frequency.title = Choose the new VAT Return dates
 return_frequency.heading = Choose the new VAT Return dates
 return_frequency.current = The VAT Return dates are currently
+return_frequency.currentAnnual = You currently submit returns annually. If you select a new VAT Return date, you will leave the Annual Accounting scheme.
 return_frequency.January = January, April, July and October
 return_frequency.February = February, May, August and November
 return_frequency.March = March, June, September and December

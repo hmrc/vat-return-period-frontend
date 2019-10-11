@@ -46,6 +46,7 @@ chooseDatesForm.frequency.missing = Dewiswch y dyddiadau newydd ar gyfer Ffurfle
 return_frequency.title = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
 return_frequency.heading = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
 return_frequency.current = Ar hyn o bryd, y dyddiadau ar gyfer Ffurflenni TAW yw
+return_frequency.currentAnnual = Ar hyn o bryd, rydych yn cyflwyno Ffurflenni TAW yn flynyddol. Os dewiswch ddyddiad newydd ar gyfer cyflwyno Ffurflenni TAW, byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol.
 return_frequency.January = Ionawr, Ebrill, Gorffennaf a Hydref
 return_frequency.February = Chwefror, Mai, Awst a Thachwedd
 return_frequency.March = Mawrth, Mehefin, Medi a Rhagfyr

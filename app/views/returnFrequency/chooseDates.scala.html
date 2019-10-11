@@ -24,10 +24,16 @@
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @additionalContent = {
-    <p>
-        <strong class="bold" id="currently-set-text">@messages("return_frequency.current")</strong>
-        <span id="currently-set-period">@messages(s"return_frequency.${current.id}")</span>
-    </p>
+    @if(current.id.equals("Annually")){
+        <p>
+            <span id="currently-set-text">@messages("return_frequency.currentAnnual")</span>
+        </p>
+    } else {
+        <p>
+            <span id="currently-set-text">@messages("return_frequency.current")</span>
+            <span id="currently-set-period">@messages(s"return_frequency.${current.id}")</span>
+        </p>
+    }
 }
 
 @views.html.main_template(
