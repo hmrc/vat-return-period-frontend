@@ -37,7 +37,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.title shouldBe viewMessages.ChoosePage.title
     }
 
-    s"have a the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
+    s"have the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
       elementText("h1") shouldBe viewMessages.ChoosePage.heading
     }
 
@@ -45,22 +45,22 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.select("#error-summary-display").isEmpty shouldBe true
     }
 
-    s"have a the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option1Jan}'" in {
+    s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option1Jan}'" in {
       elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
       elementText("#currently-set-period") shouldBe viewMessages.option1Jan
     }
 
-    "have a the correct options return dates of" in {
+    "have the correct options return dates of" in {
       elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option2Feb
       elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option3Mar
       elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option4Monthly
     }
 
-    s"have a continue button has the text '${viewMessages.continue}'" in {
+    s"have a continue button with the text '${viewMessages.continue}'" in {
       elementText("#continue") shouldBe viewMessages.continue
     }
 
-    s"have a the back link with correct text and url '${viewMessages.back}'" in {
+    s"have a back link with the correct text and url '${viewMessages.back}'" in {
       elementText(".link-back") shouldBe viewMessages.back
       element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
@@ -77,7 +77,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.title shouldBe viewMessages.ChoosePage.title
     }
 
-    s"have a the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
+    s"have the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
       elementText("h1") shouldBe viewMessages.ChoosePage.heading
     }
 
@@ -85,23 +85,23 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.select("#error-summary-display").isEmpty shouldBe true
     }
 
-    s"have a the correct current return dates of '${viewMessages.annually}'" in {
+    s"have the correct current return dates of '${viewMessages.annually}'" in {
       elementText("#currently-set-text") shouldBe viewMessages.annually
       elementExtinct("#currently-set-period")
     }
 
-    "have a the correct options return dates of" in {
+    "have the correct options return dates of" in {
       elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
       elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
       elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
       elementText("fieldset > div:nth-of-type(4) > label") shouldBe viewMessages.option4Monthly
     }
 
-    s"have a continue button has the text '${viewMessages.continue}'" in {
+    s"have a continue button with the text '${viewMessages.continue}'" in {
       elementText("#continue") shouldBe viewMessages.continue
     }
 
-    s"have a the back link with correct text and url '${viewMessages.back}'" in {
+    s"have the back link with correct text and url '${viewMessages.back}'" in {
       elementText(".link-back") shouldBe viewMessages.back
       element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
@@ -118,7 +118,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.title shouldBe viewMessages.ChoosePage.errorTitle
     }
 
-    s"have a the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
+    s"have the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
       elementText("h1") shouldBe viewMessages.ChoosePage.heading
     }
 
@@ -126,12 +126,12 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#error-summary-display") shouldBe s"${viewMessages.errorHeading} ${viewMessages.ChoosePage.error}"
     }
 
-    s"have a the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
+    s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
       elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
       elementText("#currently-set-period") shouldBe viewMessages.option4Monthly
     }
 
-    "have a the correct options return dates of" in {
+    "have the correct options return dates of" in {
       elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
       elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
       elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
