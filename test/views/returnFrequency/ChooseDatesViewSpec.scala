@@ -77,6 +77,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       document.title shouldBe viewMessages.ChoosePage.title
     }
 
+
     s"have the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
       elementText("h1") shouldBe viewMessages.ChoosePage.heading
     }
@@ -89,6 +90,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#currently-set-text") shouldBe viewMessages.annually
       elementExtinct("#currently-set-period")
     }
+
 
     "have the correct options return dates of" in {
       elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
