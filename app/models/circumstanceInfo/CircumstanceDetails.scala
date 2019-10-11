@@ -22,28 +22,28 @@ import play.api.libs.json.{Reads, Writes, __}
 import utils.JsonReadUtil
 
 case class CircumstanceDetails(customerDetails: CustomerDetails,
+                               changeIndicators: Option[ChangeIndicators],
                                returnPeriod: Option[ReturnPeriod],
-                               pendingReturnPeriod: Option[Boolean],
                                partyType: Option[String])
 
 object CircumstanceDetails extends JsonReadUtil {
 
   private val customerDetailsPath = __ \ "customerDetails"
   private val returnPeriodPath = __ \ "returnPeriod"
-  private val pendingReturnPeriodPath = __ \ "changeIndicators" \ "returnPeriod"
   private val partyTypePath = __ \ "partyType"
+  private val changeIndicators = __ \ "changeIndicators"
 
   implicit val reads: Reads[CircumstanceDetails] = (
     customerDetailsPath.read[CustomerDetails] and
+    changeIndicators.readOpt[ChangeIndicators] and
     returnPeriodPath.readOpt[ReturnPeriod] and
-    pendingReturnPeriodPath.readOpt[Boolean] and
     partyTypePath.readOpt[String]
   ) (CircumstanceDetails.apply _)
 
   implicit val writes: Writes[CircumstanceDetails] = (
     customerDetailsPath.write[CustomerDetails] and
+    changeIndicators.writeNullable[ChangeIndicators] and
     returnPeriodPath.writeNullable[ReturnPeriod] and
-    pendingReturnPeriodPath.writeNullable[Boolean] and
     partyTypePath.writeNullable[String]
   ) (unlift(CircumstanceDetails.unapply))
 
