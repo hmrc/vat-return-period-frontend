@@ -66,6 +66,46 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
   }
 
+  "Rendering the Choose Dates page for an Annual Accounting user" should {
+
+    val form: Form[ReturnDatesModel] = ChooseDatesForm.datesForm
+
+    lazy val view = views.html.returnFrequency.chooseDates(form, Annually)(user, messages, mockAppConfig)
+    lazy implicit val document: Document = Jsoup.parse(view.body)
+
+    s"have the correct document title of '${viewMessages.ChoosePage.title}'" in {
+      document.title shouldBe viewMessages.ChoosePage.title
+    }
+
+    s"have a the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
+      elementText("h1") shouldBe viewMessages.ChoosePage.heading
+    }
+
+    "should not display an error" in {
+      document.select("#error-summary-display").isEmpty shouldBe true
+    }
+
+    s"have a the correct current return dates of '${viewMessages.annually}'" in {
+      elementText("#currently-set-text") shouldBe viewMessages.annually
+      elementExtinct("#currently-set-period")
+    }
+
+    "have a the correct options return dates of" in {
+      elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
+      elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
+      elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
+      elementText("fieldset > div:nth-of-type(4) > label") shouldBe viewMessages.option4Monthly
+    }
+
+    s"have a continue button has the text '${viewMessages.continue}'" in {
+      elementText("#continue") shouldBe viewMessages.continue
+    }
+
+    s"have a the back link with correct text and url '${viewMessages.back}'" in {
+      elementText(".link-back") shouldBe viewMessages.back
+      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
+    }
+  }
 
   "Rendering the Choose dates page with errors" should {
 
