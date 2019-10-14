@@ -18,7 +18,7 @@ package controllers.returnFrequency
 
 import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
-import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
+import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate, InFlightAnnualAccountingPredicate}
 import forms.ChooseDatesForm.datesForm
 import javax.inject.{Inject, Singleton}
 import models.returnFrequency.{ReturnDatesModel, ReturnPeriod}
@@ -32,12 +32,13 @@ import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
                                       val authenticate: AuthPredicate,
                                       val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
+                                      val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
                                       val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                                       val serviceErrorHandler: ServiceErrorHandler,
                                       implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
 
-  val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
+  val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
 
     val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
     val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
@@ -50,7 +51,7 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
     }
   }
 
-  val submit: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
+  val submit: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
 
     val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
     datesForm.bindFromRequest().fold(

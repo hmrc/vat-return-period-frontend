@@ -19,3 +19,5 @@ GET         /confirmation-vat-return-dates/:userType  controllers.returnFrequenc
 GET         /change-client-vat-number                 controllers.ChangeClientController.changeClient
 
 GET         /language/:lang                           controllers.LanguageController.switchToLanguage(lang: String)
+
+GET         /inFlightAnnualAccountingChange           controllers.annualAccounting.PreventLeaveAnnualAccountingController.show

@@ -22,7 +22,7 @@ import cats.data.EitherT
 import cats.instances.future._
 import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
-import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
+import controllers.predicates.{AuthPredicate, InFlightAnnualAccountingPredicate, InFlightReturnFrequencyPredicate}
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import models.returnFrequency._
@@ -31,6 +31,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, ReturnFrequencyService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+
 import scala.concurrent.Future
 
 @Singleton
@@ -40,10 +41,11 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
                                           val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                                           val auditService: AuditService,
                                           val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
+                                          val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
                                           implicit val appConfig: AppConfig,
                                           implicit val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
 
-  val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
+  val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
     (user.session.get(SessionKeys.NEW_RETURN_FREQUENCY), user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY)) match {
       case (Some(newFrequency), Some(currentFrequency)) => (ReturnPeriod(newFrequency), ReturnPeriod(currentFrequency)) match {
         case (Some(nf), Some(cf)) =>
@@ -67,7 +69,6 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
         Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url))
     }
   }
-
 
   private def updateReturnFrequency(currentReturnPeriod: Option[ReturnPeriod],
                                     newReturnPeriod: Option[ReturnPeriod])(implicit user: User[AnyContent]): Future[Result] = {

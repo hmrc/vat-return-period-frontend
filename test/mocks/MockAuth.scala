@@ -19,7 +19,7 @@ package mocks
 import _root_.services.EnrolmentsAuthService
 import akka.util.Timeout
 import base.BaseSpec
-import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
+import controllers.predicates.{AuthPredicate, InFlightAnnualAccountingPredicate, InFlightReturnFrequencyPredicate}
 import mocks.services.MockCustomerCircumstanceDetailsService
 import play.api.http.Status
 import play.api.mvc.{Action, AnyContent, Request}
@@ -105,6 +105,15 @@ trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
 
   val mockInFlightReturnPeriodPredicate: InFlightReturnFrequencyPredicate =
     new InFlightReturnFrequencyPredicate(
+      mockCustomerDetailsService,
+      errorHandler,
+      messagesApi,
+      mockAppConfig,
+      ec
+    )
+
+  val mockInFlightAnnualAccountingPredicate: InFlightAnnualAccountingPredicate =
+    new InFlightAnnualAccountingPredicate(
       mockCustomerDetailsService,
       errorHandler,
       messagesApi,
