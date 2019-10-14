@@ -38,6 +38,10 @@ session_expired.title = For your security, this service has been reset
 session_expired.heading = For your security, this service has been reset
 session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
 
+preventLeavingAnnualAccounting.h1 = You already have a change pending
+preventLeavingAnnualAccounting.p1 = You recently requested to change your annual accounting scheme.
+preventLeavingAnnualAccounting.p2 = Until this has happened, you cannot change the VAT Return dates.
+
 common.agent.changeClient.youCan = You can
 common.agent.changeClient.link = change another client’s details
 common.agent.yourClient = your client
