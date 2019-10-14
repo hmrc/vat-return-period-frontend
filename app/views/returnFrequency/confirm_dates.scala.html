@@ -31,28 +31,20 @@
 
   @headings(messages("confirm_return_frequency.heading"))
 
-@if(annualAccounting) {
-  <p class="form-group">
-        @messages("confirm_return_frequency_annually.newDates")
+
+  <p id="p1" class="form-group">
+        @messages("confirm_return_frequency.newDates")
         @messages(s"return_frequency.${model.id}")
   </p>
 
-  <p>@messages("confirm_return_frequency_annually.p1")</p>
+@if(annualAccounting) {
+  <p id="change-annual-accounting">@messages("confirm_return_frequency_annually.p1")</p>
   <ul class="list list-bullet">
-     <li>@messages("received_frequency.bullet1")</li>
-     <li>@messages("received_frequency.bullet2")</li>
+     <li id="annual-accounting-bullet1">@messages("confirm_return_frequency_annually.bullet1")</li>
+     <li id="annual-accounting-bullet2">@messages("confirm_return_frequency_annually.bullet2")</li>
   </ul>
 }
-else
-{
-  <p id="p1"
-     class="form-group">
-      <strong class="bold">
-          @messages("confirm_return_frequency.newDates")
-      </strong>
-      @messages(s"return_frequency.${model.id}")
-  </p>
-}
+
   <p class="form-group">
       <a id="change-vat-link"
          href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"

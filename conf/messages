@@ -64,11 +64,10 @@ return_frequency.Monthly = Every month
 
 confirm_return_frequency.title = Confirm the new VAT Return dates
 confirm_return_frequency.heading = Confirm the new VAT Return dates
-confirm_return_frequency.newDates = The new VAT Return dates are
+confirm_return_frequency.newDates = Your new VAT Return dates will be
 confirm_return_frequency.changeLink = Change the VAT Return dates
 
-confirm_return_frequency_annually.newDates = Your new VAT Return dates will be
-confirm_return_frequency_annually.p1 = If this change is accepted:If you choose to change your VAT Return dates you will:
+confirm_return_frequency_annually.p1 = If you choose to change your VAT Return dates you will:
 confirm_return_frequency_annually.bullet1 = leave the Annual Accounting scheme immediately
 confirm_return_frequency_annually.bullet2 = have to wait 12 months before you can rejoin the scheme
 
