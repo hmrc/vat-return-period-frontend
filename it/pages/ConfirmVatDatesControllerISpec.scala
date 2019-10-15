@@ -32,7 +32,8 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec {
   val sessionWithReturnFrequency: Map[String, String] = Map(
     SessionKeys.CLIENT_VRN -> "999999999",
     SessionKeys.NEW_RETURN_FREQUENCY -> "January",
-    SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly"
+    SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
+    SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false"
   )
 
   "Calling ConfirmVatDatesController.show" when {
