@@ -16,7 +16,7 @@
 
 package controllers.predicates
 
-import common.SessionKeys.{ANNUAL_ACCOUNTING_BOOLEAN, CURRENT_RETURN_FREQUENCY}
+import common.SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN
 import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.Inject
 import models.auth.User
@@ -43,15 +43,16 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
     implicit val user: User[A] = request
 
-    getCustomerCircumstanceDetails
-
     user.session.get(ANNUAL_ACCOUNTING_BOOLEAN) match {
-      case Some(_) => Future.successful(Right(user))
+      case Some("true") => Future.successful(Left(Redirect(controllers.annualAccounting.routes.PreventLeaveAnnualAccountingController.show().url)))
+      case Some("false") => Future.successful(Right(user))
+      case _ => getCustomerCircumstanceDetails
       case None => getCustomerCircumstanceDetails
     }
   }
 
   private def getCustomerCircumstanceDetails[A](implicit user: User[A], hc: HeaderCarrier): Future[Either[Result, User[A]]] = {
+
     customerCircumstancesService.getCustomerCircumstanceDetails(user.vrn).map {
 
       case Right(circumstanceDetails) =>
@@ -59,8 +60,9 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
           case true =>
             Left(Redirect(controllers.annualAccounting.routes.PreventLeaveAnnualAccountingController.show().url)
               .addingToSession(ANNUAL_ACCOUNTING_BOOLEAN -> "true"))
+
           case false =>
-            Right(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
               .addingToSession(ANNUAL_ACCOUNTING_BOOLEAN -> "false"))
         }
       case Left(error) =>

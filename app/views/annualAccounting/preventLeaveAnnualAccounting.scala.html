@@ -17,7 +17,7 @@
 @import templates.headings
 @import models.auth.User
 
-@()(implicit user : User[_], messages: Messages, appConfig: config.AppConfig){
+@()(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @views.html.main_template(
   title = messages("preventLeavingAnnualAccounting.h1"),
@@ -30,5 +30,4 @@
   @headings(messages("preventLeavingAnnualAccounting.h1"))
   <p>@messages("preventLeavingAnnualAccounting.p1")</p>
   <p>@messages("preventLeavingAnnualAccounting.p2")</p>
-}
 }

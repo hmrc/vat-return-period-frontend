@@ -16,19 +16,31 @@
 
 package controllers.annualAccounting
 
-import assets.messages.ReturnFrequencyMessages
+import audit.mocks.MockAuditingService
 import base.BaseSpec
+import mocks.MockAuth
+import mocks.services.MockCustomerCircumstanceDetailsService
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.Helpers._
 
-class PreventLeaveAnnualAccountingControllerSpec extends BaseSpec {
+class PreventLeaveAnnualAccountingControllerSpec extends BaseSpec
+  with MockAuditingService
+  with MockCustomerCircumstanceDetailsService
+  with MockAuth{
 
-  val controller: PreventLeaveAnnualAccountingController = new PreventLeaveAnnualAccountingController(messagesApi, mockAppConfig)
+  object TestController extends PreventLeaveAnnualAccountingController(
+    messagesApi,
+    mockAuthPredicate,
+    mockCustomerDetailsService,
+    errorHandler,
+    mockAppConfig
+  )
 
   "Calling .show" should {
 
-     lazy val result = controller.show(fakeRequest)
+    mockAuthorise(mtdVatAuthorisedResponse)
+     lazy val result = TestController.show(fakeRequest)
 
     "return 200" in {
       status(result) shouldBe Status.OK
@@ -39,7 +51,8 @@ class PreventLeaveAnnualAccountingControllerSpec extends BaseSpec {
       charset(result)     shouldBe Some("utf-8")
     }
     "render the confirmation view" in {
-      Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending"
+      Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
     }
+    authControllerChecks(TestController.show, fakeRequest)
   }
 }

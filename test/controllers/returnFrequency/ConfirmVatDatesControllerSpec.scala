@@ -40,6 +40,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
     mockCustomerDetailsService,
     mockAuditService,
     mockInFlightReturnPeriodPredicate,
+    mockInFlightAnnualAccountingPredicate,
     mockAppConfig,
     messagesApi
   )
@@ -56,7 +57,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-              SessionKeys.NEW_RETURN_FREQUENCY -> "January")
+              SessionKeys.NEW_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false"
+              )
             )
 
             lazy val document = Jsoup.parse(bodyOf(result))
@@ -79,7 +82,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "value is invalid" should {
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-              SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+              SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
             )
 
             lazy val document = Jsoup.parse(bodyOf(result))
@@ -98,8 +102,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "new return frequency is not in session" should {
 
           lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March"
-          ))
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+          )
 
           "return 303" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -143,8 +148,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-            ))
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            )
 
             "return 500" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -159,8 +165,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "January",
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly"
-            ))
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            )
 
             "return 303" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -180,8 +187,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "new return frequency is not in session" should {
 
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-          ))
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+          )
 
           "return 303" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -196,7 +204,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "session value is invalid" should {
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-            SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+            SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
+            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
           )
 
           lazy val document = Jsoup.parse(bodyOf(result))
@@ -215,8 +224,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
       "current return frequency is not in session" should {
 
         lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-          SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-        ))
+          SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+          SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+        )
 
         "return 303" in {
           mockAuthorise(mtdVatAuthorisedResponse)

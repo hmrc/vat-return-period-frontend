@@ -31,12 +31,10 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
   "The InFlightAnnualAccountingPredicate" when {
 
-    //TODO
-
-    "user has CURRENT_ANNUAL_ACCOUNTING in session" should {
+    "user has CURRENT_ANNUAL_ACCOUNTING in session of false" should {
 
       lazy val fakeRequest = FakeRequest().withSession(
-        SessionKeys.CURRENT_ANNUAL_ACCOUNTING -> "false"
+        SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false"
       )
 
       lazy val result = {
@@ -47,7 +45,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
         result shouldBe Right(user)
       }
     }
-//
+
     "user has no CURRENT_ANNUAL_ACCOUNTING in session" when {
 
       "getCustomerCircumstanceDetails call fails" should {
@@ -62,13 +60,13 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
           messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
         }
       }
-//
+
       "getCustomerCircumstanceDetails call is successful" when {
 
         "annual accounting change indicator is true" should {
 
           lazy val result = {
-            //mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
+            mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
             await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
           }
 
@@ -77,7 +75,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
           }
 
           s"redirect to /inFlightAnnualAccountingChange " in {
-            redirectLocation(result) shouldBe "/inFlightAnnualAccountingChange"  //Some(mockAppConfig.manageVatUrl)
+            redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/inFlightAnnualAccountingChange")
           }
         }
 
@@ -86,7 +84,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
           "no annual accounting is returned" should {
 
             lazy val result = {
-              //mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
+              mockCustomerDetailsSuccess(circumstanceDetailsModelMinAA)
               await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
             }
 
@@ -95,14 +93,14 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             }
 
             s"redirect to /inFlightAnnualAccountingChange" in {
-              redirectLocation(result) shouldBe "/inFlightAnnualAccountingChange" //Some(mockAppConfig.manageVatUrl)
+              redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/inFlightAnnualAccountingChange")
             }
           }
 
           "annual accounting is returned" should {
 
             lazy val result = {
-              //mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
+              mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
               await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
             }
 
@@ -115,17 +113,17 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.CURRENT_ANNUAL_ACCOUNTING) shouldBe "false"
+              session(result).get(SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN) shouldBe Some("false")
             }
           }
         }
-//
+
         "changeIndicators is not returned" when {
 
           "annual accounting is returned" should {
 
             lazy val result = {
-              //mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
+              mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
               await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
             }
 
@@ -138,7 +136,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             }
 
             "add the current annual accounting value to the session" in {
-              session(result).get(SessionKeys.CURRENT_ANNUAL_ACCOUNTING) shouldBe "false"
+              session(result).get(SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN) shouldBe Some("false")
             }
           }
         }

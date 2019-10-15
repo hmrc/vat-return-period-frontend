@@ -36,7 +36,7 @@ class PreventLeaveAnnualAccountingController @Inject()(val messagesApi: Messages
                                                        implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
 
-  val show: Action[AnyContent] = (authenticate) { implicit user =>
+  val show: Action[AnyContent] = authenticate { implicit user =>
     Ok(views.html.annualAccounting.preventLeaveAnnualAccounting())
   }
 

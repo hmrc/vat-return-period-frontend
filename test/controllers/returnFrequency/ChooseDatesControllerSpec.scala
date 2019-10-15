@@ -36,6 +36,7 @@ class ChooseDatesControllerSpec extends BaseSpec
     messagesApi,
     mockAuthPredicate,
     mockInFlightReturnPeriodPredicate,
+    mockInFlightAnnualAccountingPredicate,
     mockCustomerDetailsService,
     errorHandler,
     mockAppConfig
@@ -86,8 +87,9 @@ class ChooseDatesControllerSpec extends BaseSpec
           "a value for new return frequency is not in session" should {
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan
-            ))
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            )
 
             "return OK (200)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -108,7 +110,8 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-              SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar)
+              SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
             )
 
             "return OK (200)" in {
@@ -207,7 +210,10 @@ class ChooseDatesControllerSpec extends BaseSpec
         "submitting with an option selected" should {
 
           lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
-          lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan))
+          lazy val result = TestChooseDatesController.submit(request.withSession(
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+          )
 
           "return 303" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -228,7 +234,10 @@ class ChooseDatesControllerSpec extends BaseSpec
           "current return period in session is not valid" should {
 
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
-            lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid"))
+            lazy val result = TestChooseDatesController.submit(request.withSession(
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            )
 
             "return Internal Server Error (500)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -240,7 +249,10 @@ class ChooseDatesControllerSpec extends BaseSpec
           "current return period in session is valid" should {
 
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
-            lazy val result = TestChooseDatesController.submit(request.withSession(SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan))
+            lazy val result = TestChooseDatesController.submit(request.withSession(
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            )
 
             "return Bad Request (400)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
