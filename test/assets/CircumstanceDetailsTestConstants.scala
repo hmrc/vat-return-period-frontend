@@ -16,7 +16,7 @@
 
 package assets
 
-import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
+import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails, CustomerDetails}
 import models.returnFrequency.Monthly
 import play.api.libs.json.{JsValue, Json}
 
@@ -33,7 +33,8 @@ object CircumstanceDetailsTestConstants {
     ),
     "returnPeriod" -> Monthly,
     "changeIndicators" -> Json.obj(
-      "returnPeriod" -> true
+      "returnPeriod" -> true,
+      "annualAccounting" -> false
     ),
     "partyType" -> Some(partyType)
   )
@@ -45,8 +46,8 @@ object CircumstanceDetailsTestConstants {
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(ChangeIndicators(Some(true))),
       Some(Monthly),
-      Some(true),
       Some(partyType)
     )
 
@@ -61,16 +62,16 @@ object CircumstanceDetailsTestConstants {
   val circumstanceDetailsNoPending =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(ChangeIndicators(Some(false))),
       Some(Monthly),
-      Some(false),
       Some(partyType)
     )
 
   val circumstanceDetailsNoChangeIndicator =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
-      Some(Monthly),
       None,
+      Some(Monthly),
       None
     )
 }

@@ -17,9 +17,9 @@
 package stubs
 
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
-import models.circumstanceInfo.{CircumstanceDetails, CustomerDetails}
+import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails, CustomerDetails}
 import models.returnFrequency.Monthly
-import play.api.http.Status.{INTERNAL_SERVER_ERROR, OK}
+import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
 import utils.WireMockMethods
 
@@ -38,7 +38,8 @@ object VatSubscriptionStub extends WireMockMethods {
     ),
     "returnPeriod" -> Monthly,
     "changeIndicators" -> Json.obj(
-      "returnPeriod" -> true
+      "returnPeriod" -> true,
+      "annualAccounting" -> false
     ),
     "partyType" -> Some("2")
   )
@@ -46,8 +47,8 @@ object VatSubscriptionStub extends WireMockMethods {
   val circumstanceDetailsModelMax =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(ChangeIndicators(Some(true))),
       Some(Monthly),
-      Some(true),
       Some(partyType)
     )
 

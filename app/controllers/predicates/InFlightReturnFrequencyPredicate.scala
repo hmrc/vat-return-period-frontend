@@ -20,6 +20,7 @@ import common.SessionKeys.CURRENT_RETURN_FREQUENCY
 import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.Inject
 import models.auth.User
+import models.circumstanceInfo.ChangeIndicators
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.Redirect
@@ -51,7 +52,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
   private def getCustomerCircumstanceDetails[A](implicit user: User[A], hc: HeaderCarrier): Future[Either[Result, User[A]]] = {
     customerCircumstancesService.getCustomerCircumstanceDetails(user.vrn).map {
 
-      case Right(circumstanceDetails) if circumstanceDetails.pendingReturnPeriod.getOrElse(false) =>
+      case Right(circumstanceDetails) if getReturnPeriod(circumstanceDetails.changeIndicators) =>
         Left(Redirect(appConfig.manageVatUrl))
       case Right(circumstanceDetails) =>
         circumstanceDetails.returnPeriod match {
@@ -65,6 +66,13 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
       case Left(error) =>
         Logger.warn(s"[InFlightReturnFrequencyPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")
         Left(serviceErrorHandler.showInternalServerError)
+    }
+  }
+
+  private def getReturnPeriod(changeIndicator: Option[ChangeIndicators]): Boolean = {
+    changeIndicator match {
+      case Some(indicators) => indicators.returnPeriod.getOrElse(false)
+      case _ => false
     }
   }
 }
