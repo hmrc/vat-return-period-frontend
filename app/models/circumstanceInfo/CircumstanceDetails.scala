@@ -31,18 +31,18 @@ object CircumstanceDetails extends JsonReadUtil {
   private val customerDetailsPath = __ \ "customerDetails"
   private val returnPeriodPath = __ \ "returnPeriod"
   private val partyTypePath = __ \ "partyType"
-  private val changeIndicators = __ \ "changeIndicators"
+  private val changeIndicatorsPath = __ \ "changeIndicators"
 
   implicit val reads: Reads[CircumstanceDetails] = (
     customerDetailsPath.read[CustomerDetails] and
-    changeIndicators.readOpt[ChangeIndicators] and
+    changeIndicatorsPath.readOpt[ChangeIndicators] and
     returnPeriodPath.readOpt[ReturnPeriod] and
     partyTypePath.readOpt[String]
   ) (CircumstanceDetails.apply _)
 
   implicit val writes: Writes[CircumstanceDetails] = (
     customerDetailsPath.write[CustomerDetails] and
-    changeIndicators.writeNullable[ChangeIndicators] and
+    changeIndicatorsPath.writeNullable[ChangeIndicators] and
     returnPeriodPath.writeNullable[ReturnPeriod] and
     partyTypePath.writeNullable[String]
   ) (unlift(CircumstanceDetails.unapply))
