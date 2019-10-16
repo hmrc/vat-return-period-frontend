@@ -47,7 +47,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
     (user.session.get(SessionKeys.NEW_RETURN_FREQUENCY), user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY)) match {
       case (Some(newFrequency), Some(currentFrequency)) => (ReturnPeriod(newFrequency), ReturnPeriod(currentFrequency)) match {
         case (Some(nf), Some(cf)) =>
-          Ok(views.html.returnFrequency.confirm_dates(nf, cf.id.equals("Annually")))
+          Ok(views.html.returnFrequency.confirm_dates(nf, cf == Annually))
         case _ => serviceErrorHandler.showInternalServerError
       }
       case _ =>

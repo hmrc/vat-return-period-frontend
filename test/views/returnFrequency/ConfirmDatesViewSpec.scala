@@ -35,39 +35,39 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         document.title shouldBe viewMessages.ConfirmPage.title
       }
 
-      s"have a the back link with correct text and url '${viewMessages.back}'" in {
+      s"display the back link with correct text and url '${viewMessages.back}'" in {
         elementText(".link-back") shouldBe viewMessages.back
         element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
       }
 
-      s"have a the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
+      s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
         elementText("#page-heading") shouldBe viewMessages.ConfirmPage.heading
       }
 
-      s"have a the display the correct dates of" when {
+      s"display the correct dates of" when {
 
         s"the current date is '${viewMessages.option1Jan}'" in {
           lazy val view = views.html.returnFrequency.confirm_dates(Jan, false)(user, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
-          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option1Jan}"
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option1Jan}."
         }
 
         s"the current date is '${viewMessages.option2Feb}'" in {
           lazy val view = views.html.returnFrequency.confirm_dates(Feb, false)(user, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
-          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option2Feb}"
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option2Feb}."
         }
 
         s"the current date is '${viewMessages.option3Mar}'" in {
           lazy val view = views.html.returnFrequency.confirm_dates(Mar, false)(user, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
-          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option3Mar}"
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option3Mar}."
         }
 
         s"the current date is '${viewMessages.option4Monthly}'" in {
           lazy val view = views.html.returnFrequency.confirm_dates(Monthly, false)(user, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
-          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option4Monthly}"
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option4Monthly}."
         }
       }
 
@@ -102,19 +102,20 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         document.title shouldBe viewMessages.ConfirmPage.title
       }
 
-      s"have a the back link with correct text and url '${viewMessages.back}'" in {
+      s"display the back link with correct text and url '${viewMessages.back}'" in {
         elementText(".link-back") shouldBe viewMessages.back
         element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
       }
 
-      s"have a the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
+      s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
         elementText("#page-heading") shouldBe viewMessages.ConfirmPage.heading
       }
 
       s"have a correct annual accounting messages" in {
-        elementText("#change-annual-accounting") shouldBe viewMessages.ConfirmPage.annualAccountingOption
-        elementText("#annual-accounting-bullet1") shouldBe viewMessages.ConfirmPage.annualAccountingBullet1
-        elementText("#annual-accounting-bullet2") shouldBe viewMessages.ConfirmPage.annualAccountingBullet2
+        elementText("#content > article > p:nth-child(4)") shouldBe viewMessages.ConfirmPage.annualAccountingOption
+        elementText("#content > article > ul > li:nth-child(1)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet1
+        elementText("#content > article > ul > li:nth-child(2)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet2
+
       }
     }
   }

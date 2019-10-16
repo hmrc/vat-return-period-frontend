@@ -19,7 +19,7 @@
 @import templates.headings
 @import models.auth.User
 
-@(model: ReturnPeriod, annualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+@(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @views.html.main_template(
   title = messages("confirm_return_frequency.title"),
@@ -33,15 +33,14 @@
 
 
   <p id="p1" class="form-group">
-        @messages("confirm_return_frequency.newDates")
-        @messages(s"return_frequency.${model.id}")
+      @messages("confirm_return_frequency.newDates", messages(s"return_frequency.${model.id}"))
   </p>
 
-@if(annualAccounting) {
-  <p id="change-annual-accounting">@messages("confirm_return_frequency_annually.p1")</p>
+@if(leavingAnnualAccounting) {
+  <p>@messages("confirm_return_frequency.annually.p1")</p>
   <ul class="list list-bullet">
-     <li id="annual-accounting-bullet1">@messages("confirm_return_frequency_annually.bullet1")</li>
-     <li id="annual-accounting-bullet2">@messages("confirm_return_frequency_annually.bullet2")</li>
+     <li>@messages("confirm_return_frequency.annually.bullet1")</li>
+     <li>@messages("confirm_return_frequency.annually.bullet2")</li>
   </ul>
 }
 
