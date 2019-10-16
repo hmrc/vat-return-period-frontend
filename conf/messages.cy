@@ -58,8 +58,12 @@ return_frequency.Monthly = Bob mis
 
 confirm_return_frequency.title = Cadarnhewch y dyddiadau newydd ar gyfer Ffurflenni TAW
 confirm_return_frequency.heading = Cadarnhewch y dyddiadau newydd ar gyfer Ffurflenni TAW
-confirm_return_frequency.newDates = Y dyddiadau newydd ar gyfer Ffurflenni TAW yw
+confirm_return_frequency.newDates = Eich dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW fydd {0}.
 confirm_return_frequency.changeLink = Newidiwch y dyddiadau ar gyfer Ffurflenni TAW
+
+confirm_return_frequency.annually.p1 = Os dewiswch newid eich dyddiadau ar gyfer cyflwyno Ffurflenni TAW:
+confirm_return_frequency.annually.bullet1 = byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol ar unwaith
+confirm_return_frequency.annually.bullet2 = bydd yn rhaid i chi aros 12 mis cyn i chi allu ailymuno â’r cynllun
 
 received_frequency.title = Mae’r dyddiadau newydd ar gyfer Ffurflenni TAW wedi dod i law
 received_frequency.heading = Mae’r dyddiadau newydd ar gyfer Ffurflenni TAW wedi dod i law

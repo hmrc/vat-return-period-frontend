@@ -24,70 +24,98 @@ import views.ViewBaseSpec
 
 class ConfirmDatesViewSpec extends ViewBaseSpec {
 
-  "Rendering the Confirm Dates page" should {
+  "Rendering the Confirm Dates page" when {
 
-    lazy val view = views.html.returnFrequency.confirm_dates(Jan)(user, messages, mockAppConfig)
-    lazy implicit val document: Document = Jsoup.parse(view.body)
+    "user doesn't come from annual accounting" should {
 
-    s"have the correct document title of '${viewMessages.ConfirmPage.title}'" in {
-      document.title shouldBe viewMessages.ConfirmPage.title
+      lazy val view = views.html.returnFrequency.confirm_dates(Jan, false)(user, messages, mockAppConfig)
+      lazy implicit val document: Document = Jsoup.parse(view.body)
+
+      s"have the correct document title of '${viewMessages.ConfirmPage.title}'" in {
+        document.title shouldBe viewMessages.ConfirmPage.title
+      }
+
+      s"display the back link with correct text and url '${viewMessages.back}'" in {
+        elementText(".link-back") shouldBe viewMessages.back
+        element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
+      }
+
+      s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
+        elementText("#page-heading") shouldBe viewMessages.ConfirmPage.heading
+      }
+
+      s"display the correct dates of" when {
+
+        s"the current date is '${viewMessages.option1Jan}'" in {
+          lazy val view = views.html.returnFrequency.confirm_dates(Jan, false)(user, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option1Jan}."
+        }
+
+        s"the current date is '${viewMessages.option2Feb}'" in {
+          lazy val view = views.html.returnFrequency.confirm_dates(Feb, false)(user, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option2Feb}."
+        }
+
+        s"the current date is '${viewMessages.option3Mar}'" in {
+          lazy val view = views.html.returnFrequency.confirm_dates(Mar, false)(user, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option3Mar}."
+        }
+
+        s"the current date is '${viewMessages.option4Monthly}'" in {
+          lazy val view = views.html.returnFrequency.confirm_dates(Monthly, false)(user, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
+          elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option4Monthly}."
+        }
+      }
+
+      "have a link back to the change dates page" which {
+
+        s"has the text '${viewMessages.ConfirmPage.changeLink}'" in {
+          elementText("#change-vat-link") shouldBe viewMessages.ConfirmPage.changeLink
+        }
+
+        "has a URL back to the change dates page" in {
+          element("#change-vat-link").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
+        }
+      }
+
+      "have a confirm button" which {
+
+        s"has the text '${viewMessages.confirmAndContinue}'" in {
+          elementText("#continue-button") shouldBe viewMessages.confirmAndContinue
+        }
+
+        "posts data to the correct endpoint" in {
+          element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url
+        }
+      }
     }
+    "user comes from annual accounting" should {
 
-    s"have a the back link with correct text and url '${viewMessages.back}'" in {
-      elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
-    }
+      lazy val view = views.html.returnFrequency.confirm_dates(Jan, true)(user, messages, mockAppConfig)
+      lazy implicit val document: Document = Jsoup.parse(view.body)
 
-    s"have a the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
-      elementText("#page-heading") shouldBe viewMessages.ConfirmPage.heading
-    }
-
-    s"have a the display the correct dates of" when {
-
-      s"the current date is '${viewMessages.option1Jan}'" in {
-        lazy val view = views.html.returnFrequency.confirm_dates(Jan)(user, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
-        elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option1Jan}"
+      s"have the correct document title of '${viewMessages.ConfirmPage.title}'" in {
+        document.title shouldBe viewMessages.ConfirmPage.title
       }
 
-      s"the current date is '${viewMessages.option2Feb}'" in {
-        lazy val view = views.html.returnFrequency.confirm_dates(Feb)(user, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
-        elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option2Feb}"
+      s"display the back link with correct text and url '${viewMessages.back}'" in {
+        elementText(".link-back") shouldBe viewMessages.back
+        element(".link-back").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
       }
 
-      s"the current date is '${viewMessages.option3Mar}'" in {
-        lazy val view = views.html.returnFrequency.confirm_dates(Mar)(user, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
-        elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option3Mar}"
+      s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
+        elementText("#page-heading") shouldBe viewMessages.ConfirmPage.heading
       }
 
-      s"the current date is '${viewMessages.option4Monthly}'" in {
-        lazy val view = views.html.returnFrequency.confirm_dates(Monthly)(user, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
-        elementText("#p1") shouldBe s"${viewMessages.ConfirmPage.newDates} ${viewMessages.option4Monthly}"
-      }
-    }
+      s"have a correct annual accounting messages" in {
+        elementText("#content > article > p:nth-child(4)") shouldBe viewMessages.ConfirmPage.annualAccountingOption
+        elementText("#content > article > ul > li:nth-child(1)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet1
+        elementText("#content > article > ul > li:nth-child(2)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet2
 
-    "have a link back to the change dates page" which {
-
-      s"has the text '${viewMessages.ConfirmPage.changeLink}'" in {
-        elementText("#change-vat-link") shouldBe viewMessages.ConfirmPage.changeLink
-      }
-
-      "has a URL back to the change dates page" in {
-        element("#change-vat-link").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
-      }
-    }
-
-    "have a confirm button" which {
-
-      s"has the text '${viewMessages.confirmAndContinue}'" in {
-        elementText("#continue-button") shouldBe viewMessages.confirmAndContinue
-      }
-
-      "posts data to the correct endpoint" in {
-        element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url
       }
     }
   }

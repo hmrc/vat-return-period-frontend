@@ -19,7 +19,7 @@
 @import templates.headings
 @import models.auth.User
 
-@(model: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+@(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @views.html.main_template(
   title = messages("confirm_return_frequency.title"),
@@ -31,13 +31,18 @@
 
   @headings(messages("confirm_return_frequency.heading"))
 
-  <p id="p1"
-     class="form-group">
-      <strong class="bold">
-          @messages("confirm_return_frequency.newDates")
-      </strong>
-      @messages(s"return_frequency.${model.id}")
+
+  <p id="p1" class="form-group">
+      @messages("confirm_return_frequency.newDates", messages(s"return_frequency.${model.id}"))
   </p>
+
+@if(leavingAnnualAccounting) {
+  <p>@messages("confirm_return_frequency.annually.p1")</p>
+  <ul class="list list-bullet">
+     <li>@messages("confirm_return_frequency.annually.bullet1")</li>
+     <li>@messages("confirm_return_frequency.annually.bullet2")</li>
+  </ul>
+}
 
   <p class="form-group">
       <a id="change-vat-link"

@@ -44,15 +44,15 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
                                           implicit val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency) { implicit user =>
-    user.session.get(SessionKeys.NEW_RETURN_FREQUENCY).fold {
-      Logger.info("[ConfirmVatDatesController][show] No NEW_RETURN_FREQUENCY found in session. Redirecting to Choose Dates page")
-      Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-    } { newReturnFrequency =>
-      ReturnPeriod(newReturnFrequency) match {
-        case Some(newFrequency) =>
-          Ok(views.html.returnFrequency.confirm_dates(newFrequency))
-        case None => serviceErrorHandler.showInternalServerError
+    (user.session.get(SessionKeys.NEW_RETURN_FREQUENCY), user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY)) match {
+      case (Some(newFrequency), Some(currentFrequency)) => (ReturnPeriod(newFrequency), ReturnPeriod(currentFrequency)) match {
+        case (Some(nf), Some(cf)) =>
+          Ok(views.html.returnFrequency.confirm_dates(nf, cf == Annually))
+        case _ => serviceErrorHandler.showInternalServerError
       }
+      case _ =>
+        Logger.info("[ConfirmVatDatesController][show] No NEW_RETURN_FREQUENCY found in session. Redirecting to Choose Dates page")
+        Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
     }
   }
 
@@ -67,6 +67,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
         Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url))
     }
   }
+
 
   private def updateReturnFrequency(currentReturnPeriod: Option[ReturnPeriod],
                                     newReturnPeriod: Option[ReturnPeriod])(implicit user: User[AnyContent]): Future[Result] = {
