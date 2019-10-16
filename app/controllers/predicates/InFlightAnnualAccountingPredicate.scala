@@ -23,11 +23,11 @@ import models.auth.User
 import models.circumstanceInfo.ChangeIndicators
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
+import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,7 +36,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
                                                   val messagesApi: MessagesApi,
                                                   implicit val appConfig: AppConfig,
                                                   implicit val ec: ExecutionContext)
-  extends ActionRefiner[User, User] with I18nSupport {
+  extends ActionRefiner[User, User] with I18nSupport with FrontendController {
 
   override def refine[A](request: User[A]): Future[Either[Result, User[A]]] = {
 
@@ -44,7 +44,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
     implicit val user: User[A] = request
 
     user.session.get(ANNUAL_ACCOUNTING_PENDING) match {
-      case Some("true") => Future.successful(Left(Redirect(controllers.annualAccounting.routes.PreventLeaveAnnualAccountingController.show().url)))
+      case Some("true") => Future.successful(Left(Ok(views.html.annualAccounting.preventLeaveAnnualAccounting())))
       case Some("false") => Future.successful(Right(user))
       case _ => getCustomerCircumstanceDetails
     }
@@ -57,8 +57,8 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
       case Right(circumstanceDetails) =>
         getAnnualAccounting(circumstanceDetails.changeIndicators) match {
           case true =>
-            Left(Redirect(controllers.annualAccounting.routes.PreventLeaveAnnualAccountingController.show().url)
-              .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "true"))
+            Left(Ok(views.html.annualAccounting.preventLeaveAnnualAccounting())
+            .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "true"))
 
           case false =>
             Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)

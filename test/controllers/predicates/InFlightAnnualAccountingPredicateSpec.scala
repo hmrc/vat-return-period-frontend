@@ -70,12 +70,8 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
           }
 
-          "return 303" in {
-            status(result) shouldBe SEE_OTHER
-          }
-
-          s"redirect to /inFlightAnnualAccountingChange " in {
-            redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/inFlightAnnualAccountingChange")
+          "return 200" in {
+            status(result) shouldBe OK
           }
         }
 
@@ -88,12 +84,8 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
               await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
             }
 
-            "return 303" in {
-              status(result) shouldBe SEE_OTHER
-            }
-
-            s"redirect to /inFlightAnnualAccountingChange" in {
-              redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/inFlightAnnualAccountingChange")
+            "return 200" in {
+              status(result) shouldBe OK
             }
           }
 
