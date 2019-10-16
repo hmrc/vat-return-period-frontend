@@ -33,7 +33,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec {
     SessionKeys.CLIENT_VRN -> "999999999",
     SessionKeys.NEW_RETURN_FREQUENCY -> "January",
     SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
-    SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false"
+    SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false"
   )
 
   "Calling ConfirmVatDatesController.show" when {

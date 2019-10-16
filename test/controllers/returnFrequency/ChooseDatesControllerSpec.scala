@@ -88,7 +88,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return OK (200)" in {
@@ -111,7 +111,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
               SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar,
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return OK (200)" in {
@@ -212,7 +212,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
           lazy val result = TestChooseDatesController.submit(request.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
           "return 303" in {
@@ -236,7 +236,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return Internal Server Error (500)" in {
@@ -251,7 +251,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return Bad Request (400)" in {

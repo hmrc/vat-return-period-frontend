@@ -32,8 +32,6 @@ class PreventLeaveAnnualAccountingControllerSpec extends BaseSpec
   object TestController extends PreventLeaveAnnualAccountingController(
     messagesApi,
     mockAuthPredicate,
-    mockCustomerDetailsService,
-    errorHandler,
     mockAppConfig
   )
 

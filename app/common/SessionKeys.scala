@@ -18,7 +18,7 @@ package common
 
 object SessionKeys {
   val CURRENT_RETURN_FREQUENCY: String = "CURRENT_RETURN_FREQUENCY"
-  val ANNUAL_ACCOUNTING_BOOLEAN: String = "CURRENT_ANNUAL_ACCOUNTING"
+  val ANNUAL_ACCOUNTING_PENDING: String = "CURRENT_ANNUAL_ACCOUNTING"
   val NEW_RETURN_FREQUENCY: String = "RETURN_FREQUENCY"
   val CLIENT_VRN: String = "CLIENT_VRN"
   val verifiedAgentEmail: String = "verifiedAgentEmail"

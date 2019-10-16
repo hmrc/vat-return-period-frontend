@@ -16,23 +16,16 @@
 
 package controllers.annualAccounting
 
-import common.SessionKeys
-import config.{AppConfig, ServiceErrorHandler}
-import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate}
-import forms.ChooseDatesForm.datesForm
+import config.AppConfig
+import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
-import models.returnFrequency.{ReturnDatesModel, ReturnPeriod}
-import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent}
-import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
 @Singleton
 class PreventLeaveAnnualAccountingController @Inject()(val messagesApi: MessagesApi,
                                                        val authenticate: AuthPredicate,
-                                                       val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
-                                                       val serviceErrorHandler: ServiceErrorHandler,
                                                        implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
 

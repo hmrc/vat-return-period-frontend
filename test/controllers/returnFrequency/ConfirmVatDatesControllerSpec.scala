@@ -58,7 +58,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
               SessionKeys.NEW_RETURN_FREQUENCY -> "January",
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false"
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false"
               )
             )
 
@@ -83,7 +83,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
               SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             lazy val document = Jsoup.parse(bodyOf(result))
@@ -103,7 +103,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
           lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
           "return 303" in {
@@ -149,7 +149,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return 500" in {
@@ -166,7 +166,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "January",
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
-              SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             "return 303" in {
@@ -188,7 +188,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
-            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
           "return 303" in {
@@ -205,7 +205,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
             SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
-            SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
           lazy val document = Jsoup.parse(bodyOf(result))
@@ -225,7 +225,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
         lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
           SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
-          SessionKeys.ANNUAL_ACCOUNTING_BOOLEAN -> "false")
+          SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
         )
 
         "return 303" in {
