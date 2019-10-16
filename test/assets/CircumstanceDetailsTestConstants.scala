@@ -51,10 +51,26 @@ object CircumstanceDetailsTestConstants {
       Some(partyType)
     )
 
+  val circumstanceDetailsModelMaxAA =
+    CircumstanceDetails(
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      Some(ChangeIndicators(Some(false), annualAccounting = true)),
+      Some(Monthly),
+      Some(partyType)
+    )
+
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
       CustomerDetails(None, None, None, None),
       None,
+      None,
+      None
+    )
+
+  val circumstanceDetailsModelMinAA =
+    CircumstanceDetails(
+      CustomerDetails(None, None, None, None),
+      Some(ChangeIndicators(Some(false), annualAccounting = true)),
       None,
       None
     )

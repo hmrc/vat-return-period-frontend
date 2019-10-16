@@ -24,18 +24,19 @@ class preventLeaveAnnualAccountingViewSpec extends ViewBaseSpec {
 
   "Rendering the preventLeaveAnnualAccounting page" should {
 
-    lazy val view = views.html.annualAccounting.preventLeaveAnnualAccounting()(messages,mockAppConfig)
+    lazy val view = views.html.annualAccounting.preventLeaveAnnualAccounting()(user,messages,mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "have a back button" in {
-      elementText("a:nth-child(1)")  shouldBe "Back"
+      elementText(".link-back")  shouldBe "Back"
     }
     "have a back button with the correct redirect url" in {
-      element("a:nth-child(1)").attr("href") shouldBe "/manage-vat"
+
+      element(".link-back").attr("href") shouldBe "/manage-vat"
     }
 
     "have the correct heading" in {
-      elementText("h1:nth-child(2)")  shouldBe "You already have a change pending"
+      elementText("h1:nth-child(1)")  shouldBe "You already have a change pending"
     }
     "have the correct 1st sentence" in {
       elementText("p:nth-child(3)")  shouldBe "You recently requested to change your annual accounting scheme."

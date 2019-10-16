@@ -40,6 +40,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
     mockCustomerDetailsService,
     mockAuditService,
     mockInFlightReturnPeriodPredicate,
+    mockInFlightAnnualAccountingPredicate,
     mockAppConfig,
     messagesApi
   )
@@ -56,7 +57,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-              SessionKeys.NEW_RETURN_FREQUENCY -> "January")
+              SessionKeys.NEW_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false"
+              )
             )
 
             lazy val document = Jsoup.parse(bodyOf(result))
@@ -79,7 +82,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "value is invalid" should {
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-              SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+              SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
             lazy val document = Jsoup.parse(bodyOf(result))
@@ -98,8 +102,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "new return frequency is not in session" should {
 
           lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March"
-          ))
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+          )
 
           "return 303" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -108,6 +113,28 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
           s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
             redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          }
+        }
+
+        "a value for annual accounting is in session" should {
+
+            lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "true")
+          )
+
+          "return OK (200)" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
+            status(result) shouldBe Status.OK
+          }
+
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
+            Jsoup.parse(bodyOf(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
           }
         }
       }
@@ -143,8 +170,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-            ))
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            )
 
             "return 500" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -159,8 +187,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "January",
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly"
-            ))
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            )
 
             "return 303" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -180,8 +209,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "new return frequency is not in session" should {
 
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-          ))
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+          )
 
           "return 303" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -196,7 +226,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "session value is invalid" should {
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
-            SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid")
+            SessionKeys.NEW_RETURN_FREQUENCY -> "Not valid",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
           lazy val document = Jsoup.parse(bodyOf(result))
@@ -212,11 +243,33 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         }
       }
 
+      "user has an in-flight annual accounting change" should {
+
+        lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+          SessionKeys.CURRENT_RETURN_FREQUENCY -> "Jan")
+        )
+
+        "return OK (200)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
+          mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
+          status(result) shouldBe Status.OK
+        }
+
+        s"have the correct page title" in {
+          Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+        }
+
+        "add the current return frequency to the session" in {
+          session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("true")
+        }
+      }
+
       "current return frequency is not in session" should {
 
         lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-          SessionKeys.CURRENT_RETURN_FREQUENCY -> "January"
-        ))
+          SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+          SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+        )
 
         "return 303" in {
           mockAuthorise(mtdVatAuthorisedResponse)

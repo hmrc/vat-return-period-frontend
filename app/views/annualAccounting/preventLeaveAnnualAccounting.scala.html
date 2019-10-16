@@ -14,11 +14,20 @@
  * limitations under the License.
  *@
 
-@()(implicit messages: Messages ,appConfig: config.AppConfig)
-{
-<a class="link-back" href="@appConfig.manageVatUrl">@messages("base.back")</a>
+@import templates.headings
+@import models.auth.User
 
-<h1 class="heading-large">@messages("preventLeavingAnnualAccounting.h1")</h1>
-<p>@messages("preventLeavingAnnualAccounting.p1")</p>
-<p>@messages("preventLeavingAnnualAccounting.p2")</p>
+@()(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+
+@views.html.main_template(
+  title = messages("preventLeavingAnnualAccounting.h1"),
+  bodyClasses = None,
+  appConfig = appConfig,
+  user = Some(user)) {
+
+  <a class="link-back" href="@appConfig.manageVatUrl">@messages("base.back")</a>
+
+  @headings(messages("preventLeavingAnnualAccounting.h1"))
+  <p>@messages("preventLeavingAnnualAccounting.p1")</p>
+  <p>@messages("preventLeavingAnnualAccounting.p2")</p>
 }
