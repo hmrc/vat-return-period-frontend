@@ -115,6 +115,28 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
           }
         }
+
+        "a value for annual accounting is in session" should {
+
+            lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "March",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "true")
+          )
+
+          "return OK (200)" in {
+            mockAuthorise(mtdVatAuthorisedResponse)
+            status(result) shouldBe Status.OK
+          }
+
+          "return HTML" in {
+            contentType(result) shouldBe Some("text/html")
+            charset(result) shouldBe Some("utf-8")
+          }
+
+          s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
+            Jsoup.parse(bodyOf(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
+          }
+        }
       }
 
       "current return frequency is not in session" should {
@@ -218,6 +240,27 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "render the ISE page" in {
             document.title shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }
+        }
+      }
+
+      "user has an in-flight annual accounting change" should {
+
+        lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
+          SessionKeys.CURRENT_RETURN_FREQUENCY -> "Jan")
+        )
+
+        "return OK (200)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
+          mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
+          status(result) shouldBe Status.OK
+        }
+
+        s"have the correct page title" in {
+          Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+        }
+
+        "add the current return frequency to the session" in {
+          session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("true")
         }
       }
 

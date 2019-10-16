@@ -110,26 +110,23 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
           }
         }
 
-        "changeIndicators is not returned" when {
+        "changeIndicators is not returned" should {
 
-          "annual accounting is returned" should {
+          lazy val result = {
+            mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
+            await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
+          }
 
-            lazy val result = {
-              mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
-              await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
-            }
+          "return 303" in {
+            status(result) shouldBe SEE_OTHER
+          }
 
-            "return 303" in {
-              status(result) shouldBe SEE_OTHER
-            }
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-            }
-
-            "add the current annual accounting value to the session" in {
-              session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("false")
-            }
+          "add the current annual accounting value to the session" in {
+            session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("false")
           }
         }
       }

@@ -61,6 +61,27 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
       }
 
+      "user has an in-flight annual accounting change" should {
+
+        lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
+          SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan)
+        )
+
+        "return OK (200)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
+          mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
+          status(result) shouldBe Status.OK
+        }
+
+        s"have the correct page title" in {
+          Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+        }
+
+        "add the current return frequency to the session" in {
+          session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("true")
+        }
+      }
+
       "user does not have an in-flight change" when {
 
         "a value is not held in session for the current Return Frequency" should {
@@ -103,6 +124,29 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
               Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
+            }
+          }
+
+          "a value for annual accounting is in session" should {
+
+            lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "true")
+            )
+
+            "return OK (200)" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
+              status(result) shouldBe Status.OK
+            }
+
+            "return HTML" in {
+              contentType(result) shouldBe Some("text/html")
+              charset(result) shouldBe Some("utf-8")
+            }
+
+            s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
+              Jsoup.parse(bodyOf(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
             }
           }
 
