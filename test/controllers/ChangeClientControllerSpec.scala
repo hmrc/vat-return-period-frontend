@@ -56,7 +56,7 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
 
           "redirect to the Select Your Client show action" in {
             redirectLocation(result) shouldBe
-              Some(mockAppConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url))
+              Some(mockAppConfig.agentClientLookupStartUrl(mockAppConfig.manageVatUrl))
           }
 
           "have removed the Clients VRN from session" in {
