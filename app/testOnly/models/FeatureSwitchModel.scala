@@ -16,6 +16,6 @@
 
 package testOnly.models
 
-case class FeatureSwitchModel(accessibilityReportFeature: Boolean,
+case class FeatureSwitchModel(
                               stubContactPreferencesFeature: Boolean,
                               stubAgentClientLookupFeature: Boolean)

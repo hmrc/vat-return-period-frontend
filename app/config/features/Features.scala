@@ -23,7 +23,6 @@ import play.api.Configuration
 @Singleton
 class Features @Inject()(implicit config: Configuration) {
 
-  val accessibilityReportFeature = new Feature(ConfigKeys.accessibilityReportFeature)
   val stubAgentClientLookup = new Feature(ConfigKeys.stubAgentClientLookupFeature)
   val stubContactPreferencesFeature = new Feature(ConfigKeys.stubContactPreferencesFeature)
 }
