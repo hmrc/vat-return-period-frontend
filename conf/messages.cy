@@ -45,10 +45,10 @@ common.agent.updateClient2 = i roi diweddariad.
 common.agent.changeClient = Newid cleient
 
 # Choose return frequency dates messages
-chooseDatesForm.frequency.missing = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
+chooseDatesForm.frequency.missing = Dewiswch y dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW
 
-return_frequency.title = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
-return_frequency.heading = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
+return_frequency.title = Dewiswch y dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW
+return_frequency.heading = Dewiswch y dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW
 return_frequency.current = Ar hyn o bryd, y dyddiadau ar gyfer Ffurflenni TAW yw
 return_frequency.currentAnnual = Ar hyn o bryd, rydych yn cyflwyno Ffurflenni TAW yn flynyddol. Os dewiswch ddyddiad newydd ar gyfer cyflwyno Ffurflenni TAW, byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol.
 return_frequency.January = Ionawr, Ebrill, Gorffennaf a Hydref
@@ -56,10 +56,10 @@ return_frequency.February = Chwefror, Mai, Awst a Thachwedd
 return_frequency.March = Mawrth, Mehefin, Medi a Rhagfyr
 return_frequency.Monthly = Bob mis
 
-confirm_return_frequency.title = Cadarnhewch y dyddiadau newydd ar gyfer Ffurflenni TAW
-confirm_return_frequency.heading = Cadarnhewch y dyddiadau newydd ar gyfer Ffurflenni TAW
+confirm_return_frequency.title = Cadarnhewch y dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW
+confirm_return_frequency.heading = Cadarnhewch y dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW
 confirm_return_frequency.newDates = Eich dyddiadau newydd ar gyfer cyflwyno Ffurflenni TAW fydd {0}.
-confirm_return_frequency.changeLink = Newidiwch y dyddiadau ar gyfer Ffurflenni TAW
+confirm_return_frequency.changeLink = Newidiwch y dyddiadau ar gyfer cyflwyno Ffurflenni TAW
 
 confirm_return_frequency.annually.p1 = Os dewiswch newid eich dyddiadau ar gyfer cyflwyno Ffurflenni TAW:
 confirm_return_frequency.annually.bullet1 = byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol ar unwaith
