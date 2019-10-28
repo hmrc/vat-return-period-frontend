@@ -4,8 +4,6 @@
 GET         /assets/*file                             controllers.Assets.at(path="/public", file)
 
 # Pages
-GET         /hello-world                              controllers.HelloWorldController.helloWorld
-
 GET         /sign-out                                 controllers.SignOutController.signOut(feedbackOnSignOut: Boolean)
 
 GET         /change-vat-return-dates                  controllers.returnFrequency.ChooseDatesController.show
