@@ -22,15 +22,27 @@ import org.jsoup.nodes.Document
 class GovUkWrapperSpec extends ViewBaseSpec {
 
   "creating a page with a footer" should {
+
     lazy val view = views.html.govuk_wrapper(mockAppConfig, "title")(fakeRequest, messages)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "render the accessibility text in the footer" in {
       elementText("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a") shouldBe "Accessibility"
     }
+
     "render the report link with the correct url" in {
       element("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a").attr ("href") shouldBe "/vat-through-software/accessibility-statement"
     }
-  }
 
+    "display a sign out link which" should {
+
+      "contain the text 'Sign out'" in {
+        elementText("#proposition-links > li > a") shouldBe "Sign out"
+      }
+
+      s"link to ${controllers.routes.SignOutController.signOut(feedbackOnSignOut = true).url}" in {
+        element("#proposition-links > li > a").attr("href") shouldBe controllers.routes.SignOutController.signOut(feedbackOnSignOut = true).url
+      }
+    }
+  }
 }

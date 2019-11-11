@@ -60,7 +60,15 @@
     @scriptElem.map(x => x)
 }
 
-@headerNavLinks = {}
+@headerNavLinks = {
+    @if(showSignOut) {
+        <li>
+            <a href="@routes.SignOutController.signOut(feedbackOnSignOut = true)">
+                @messages("base.signOut")
+            </a>
+        </li>
+    }
+}
 
 @dynamicNavTitle = @{
   user.fold(messages("navTitle.vat"))(u => if(u.isAgent) messages("navTitle.agent") else messages("navTitle.nonAgent"))

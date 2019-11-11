@@ -14,32 +14,29 @@
  * limitations under the License.
  *@
 
- @import config.AppConfig
- @import models.auth.User
+@import config.AppConfig
+@import models.auth.User
+@import uk.gov.hmrc.play.views.html.layouts
 
- @(title: String,
-        appConfig: AppConfig,
-        sidebarLinks: Option[Html] = None,
-        contentHeader: Option[Html] = None,
-        bodyClasses: Option[String] = None,
-        mainClass: Option[String] = None,
-        scriptElem: Option[Html] = None,
-        showSignOut: Boolean = true,
-        user: Option[User[_]] = None)(mainContent: Html)(implicit request: Request[_], messages: Messages)
+@(title: String,
+  appConfig: AppConfig,
+  sidebarLinks: Option[Html] = None,
+  contentHeader: Option[Html] = None,
+  bodyClasses: Option[String] = None,
+  mainClass: Option[String] = None,
+  scriptElem: Option[Html] = None,
+  showSignOut: Boolean = true,
+  user: Option[User[_]] = None)(mainContent: Html)(implicit request: Request[_], messages: Messages)
 
- @import uk.gov.hmrc.play.views.html.layouts
+@serviceInfoContent = {}
 
-
- @serviceInfoContent = {}
-
- @sidebar = {
+@sidebar = {
   @if(sidebarLinks.isDefined) {
     @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
   }
 }
 
- @titleServiceName = {@{user.fold(messages("navTitle.vat"))(u => if(u.isAgent) messages("navTitle.agent") else messages("navTitle.nonAgent"))}}
-
+@titleServiceName = {@{user.fold(messages("navTitle.vat"))(u => if(u.isAgent) messages("navTitle.agent") else messages("navTitle.nonAgent"))}}
 
 @govuk_wrapper(appConfig = appConfig,
   title = messages("common.pageTitle", title, titleServiceName),
