@@ -7,6 +7,7 @@ common.errorSummary.heading = Mae problem wedi codi
 common.continue = Yn eich blaen
 
 base.back = Yn ôl
+base.signOut = Allgofnodi
 
 featureSwitch.title = Feature switches
 featureSwitch.heading = Nodweddion
