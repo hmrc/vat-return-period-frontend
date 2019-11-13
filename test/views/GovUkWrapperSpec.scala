@@ -48,5 +48,16 @@ class GovUkWrapperSpec extends ViewBaseSpec {
         element("#proposition-links > li > a").attr("href") shouldBe controllers.routes.SignOutController.signOut(feedbackOnSignOut = true).url
       }
     }
+
+    "contain a BETA banner which" should {
+
+      "have the correct text" in {
+        elementText(".beta-banner") shouldBe "BETA This is a new service – your feedback will help us to improve it."
+      }
+
+      "have a link to BETA feedback page" in {
+        element(".beta-banner a").attr("href") shouldBe mockAppConfig.betaFeedbackUrl
+      }
+    }
   }
 }

@@ -96,9 +96,21 @@
 @footerTop = {}
 @footerLinks = {}
 
+@phaseBanner = {
+    <div class="beta-banner">
+        <p>
+            <strong class="phase-tag">@messages("banner.phaseName")</strong>
+            <span>@messages("feedback.before")
+                <a href="@appConfig.betaFeedbackUrl">@messages("feedback.link")</a>
+                @messages("feedback.after")
+            </span>
+        </p>
+    </div>
+}
+
 @serviceInfo = {
     @uiLayouts.serviceInfo(
-      betaBanner = HtmlFormat.empty,
+      betaBanner = phaseBanner,
       includeGridWrapper = false,
       includeHMRCBranding = false,
       serviceInfoContent = Some(serviceInfoContent))

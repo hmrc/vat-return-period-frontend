@@ -9,6 +9,11 @@ common.continue = Yn eich blaen
 base.back = Yn ôl
 base.signOut = Allgofnodi
 
+feedback.before = Gwasanaeth newydd yw hwn – bydd eich
+feedback.link = adborth
+feedback.after = yn ein helpu i’w wella.
+banner.phaseName = BETA
+
 featureSwitch.title = Feature switches
 featureSwitch.heading = Nodweddion
 featureSwitch.submit = Cyflwyno
