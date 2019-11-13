@@ -28,7 +28,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val mode: Mode = Mode.Test
   override val reportAProblemPartialUrl: String = ""
   override val reportAProblemNonJSUrl: String = ""
-  override val betaFeedbackUrl: String = ""
+  override val betaFeedbackUrl: String = "feedback-url"
   override val betaFeedbackUnauthenticatedUrl: String = ""
   override val whitelistEnabled: Boolean = false
   override val whitelistedIps: Seq[String] = Seq("")
