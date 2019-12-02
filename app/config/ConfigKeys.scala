@@ -25,11 +25,6 @@ object ConfigKeys {
   val appName: String = "appName"
   val platformHost: String = "platform.host"
 
-  val whitelistEnabled: String = "whitelist.enabled"
-  val whitelistedIps: String = "whitelist.allowedIps"
-  val whitelistExcludedPaths: String = "whitelist.excludedPaths"
-  val whitelistShutterPage: String = "whitelist.shutter-page-url"
-
   val stubContactPreferencesFeature: String = "features.stubContactPreferences.enabled"
   val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
 

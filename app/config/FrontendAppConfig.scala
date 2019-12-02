@@ -32,10 +32,6 @@ trait AppConfig extends ServicesConfig {
   val reportAProblemNonJSUrl: String
   val betaFeedbackUrl: String
   val betaFeedbackUnauthenticatedUrl: String
-  val whitelistedIps: Seq[String]
-  val whitelistEnabled: Boolean
-  val whitelistExcludedPaths: Seq[Call]
-  val whitelistShutterPage: String
   val features: Features
   val accessibilityReportUrl: String
   val signInUrl: String
@@ -78,12 +74,6 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   private def whitelistConfig(key: String): Seq[String] = Some(new String(Base64.getDecoder
     .decode(getString(key)), "UTF-8"))
     .map(_.split(",")).getOrElse(Array.empty).toSeq
-
-  override lazy val whitelistEnabled: Boolean = getBoolean(ConfigKeys.whitelistEnabled)
-  override lazy val whitelistedIps: Seq[String] = whitelistConfig(ConfigKeys.whitelistedIps)
-  override lazy val whitelistExcludedPaths: Seq[Call] = whitelistConfig(ConfigKeys.whitelistExcludedPaths) map
-    (path => Call("GET", path))
-  override lazy val whitelistShutterPage: String = getString(ConfigKeys.whitelistShutterPage)
 
   // Gov.uk guidance
   override lazy val govUkGuidanceMtdVat: String = getString(ConfigKeys.govUkGuidanceMtdVat)
