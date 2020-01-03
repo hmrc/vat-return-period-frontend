@@ -25,9 +25,13 @@ navTitle.nonAgent = Cyfrif Treth Busnes
 navTitle.agent = Manylion TAW eich cleient
 navTitle.vat = TAW
 
-global.error.InternalServerError500.title = Mae problem gyda’r gwasanaeth – TAW – GOV.UK
-global.error.InternalServerError500.heading = Mae’n ddrwg gennym – mae problem gyda’r gwasanaeth
-global.error.InternalServerError500.message = Rhowch gynnig arall arni yn nes ymlaen.
+standardError.title = Mae problem gyda’r gwasanaeth – TAW – GOV.UK
+standardError.heading = Mae’n ddrwg gennym – mae problem gyda’r gwasanaeth
+standardError.message = Rhowch gynnig arall arni yn nes ymlaen.
+
+notFound.title = Heb ddod o hyd i’r dudalen – TAW – GOV.UK
+notFound.heading = Ni ellir dod o hyd i’r dudalen hon
+notFound.message = Gwiriwch eich bod wedi nodi’r cyfeiriad gwe cywir.
 
 unauthorised.agent.title = Ni allwch ddefnyddio’r gwasanaeth hwn eto
 unauthorised.agent.useThisService = I ddefnyddio’r gwasanaeth hwn, bydd angen i chi
