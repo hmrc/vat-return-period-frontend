@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,11 +54,11 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc" %% "govuk-template" % "5.45.0-play-25",
-  "uk.gov.hmrc" %% "play-ui" % "8.3.0-play-25",
+  "uk.gov.hmrc" %% "govuk-template" % "5.48.0-play-25",
+  "uk.gov.hmrc" %% "play-ui" % "8.5.0-play-25",
   "uk.gov.hmrc" %% "bootstrap-play-25" % "5.1.0",
   "uk.gov.hmrc" %% "play-partials" % "6.9.0-play-25",
-  "uk.gov.hmrc" %% "auth-client" % "2.31.0-play-25",
+  "uk.gov.hmrc" %% "auth-client" % "2.32.0-play-25",
   "uk.gov.hmrc" %% "domain" % "5.6.0-play-25",
   "org.typelevel" %% "cats" % "0.9.0",
   "uk.gov.hmrc" %% "play-whitelist-filter" % "3.1.0-play-25",

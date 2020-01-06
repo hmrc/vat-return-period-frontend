@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 HM Revenue & Customs
+ * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,12 +25,19 @@ import uk.gov.hmrc.play.bootstrap.http.FrontendErrorHandler
 
 @Singleton
 class ServiceErrorHandler @Inject()(val messagesApi: MessagesApi,
-                                    implicit val appConfig: FrontendAppConfig) extends FrontendErrorHandler {
+                                    implicit val appConfig: AppConfig) extends FrontendErrorHandler {
 
   override def standardErrorTemplate(pageTitle: String, heading: String, message: String)
                                     (implicit request: Request[_]): Html =
     views.html.templates.error_template(pageTitle, heading, message)
 
-  def showInternalServerError(implicit request: Request[_]): Result = InternalServerError(internalServerErrorTemplate)
+  override def notFoundTemplate(implicit request: Request[_]): Html =
+    standardErrorTemplate("notFound.title", "notFound.heading", "notFound.message")
+
+  override def internalServerErrorTemplate(implicit request: Request[_]): Html =
+    standardErrorTemplate("standardError.title", "standardError.heading", "standardError.message")
+
+  def showInternalServerError(implicit request: Request[_]): Result =
+    InternalServerError(internalServerErrorTemplate)
 
 }
