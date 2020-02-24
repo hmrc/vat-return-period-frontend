@@ -31,6 +31,9 @@ object CircumstanceDetailsTestConstants {
       "organisationName" -> "org name",
       "tradingName" -> "trading name"
     ),
+    "ppob" -> Json.obj(
+      "contactDetails" -> Json.obj(
+        "emailVerified" -> true)),
     "returnPeriod" -> Monthly,
     "changeIndicators" -> Json.obj(
       "returnPeriod" -> true,
@@ -48,7 +51,8 @@ object CircumstanceDetailsTestConstants {
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(true))),
       Some(Monthly),
-      Some(partyType)
+      Some(partyType),
+      Some(true)
     )
 
   val circumstanceDetailsModelMaxAA =
@@ -56,12 +60,14 @@ object CircumstanceDetailsTestConstants {
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       Some(Monthly),
-      Some(partyType)
+      Some(partyType),
+      Some(true)
     )
 
   val circumstanceDetailsModelMin =
     CircumstanceDetails(
       CustomerDetails(None, None, None, None),
+      None,
       None,
       None,
       None
@@ -72,6 +78,7 @@ object CircumstanceDetailsTestConstants {
       CustomerDetails(None, None, None, None),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       None,
+      None,
       None
     )
 
@@ -80,7 +87,8 @@ object CircumstanceDetailsTestConstants {
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(false))),
       Some(Monthly),
-      Some(partyType)
+      Some(partyType),
+      None
     )
 
   val circumstanceDetailsNoChangeIndicator =
@@ -88,6 +96,7 @@ object CircumstanceDetailsTestConstants {
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       None,
       Some(Monthly),
+      None,
       None
     )
 }

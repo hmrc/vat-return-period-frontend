@@ -17,7 +17,7 @@
 @import views.html.templates.updateClient
 @import models.auth.User
 
-@(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+@(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None, emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @changeClientLink = {
         <p id="change-client-text">
@@ -60,7 +60,7 @@
     } else {
 
         @contactPref match {
-            case Some("DIGITAL") => {<p>@messages("contact_preference.digital")</p>}
+            case Some("DIGITAL") => {<p>@messages(if(emailVerified){"contact_preference.email"}else{"contact_preference.digital"})</p>}
             case Some("PAPER") => {<p>@messages("contact_preference.paper")</p>}
             case _ => {<p>@messages("contact_preference.contactPrefError")</p>}
         }

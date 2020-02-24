@@ -54,15 +54,20 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
   }
 
   private def nonAgentConfirmation(implicit user: User[AnyContent]): Future[Result] = {
-    contactPreferenceService.getContactPreference(user.vrn).map {
-      case Right(contactPreference) =>
-        auditService.extendedAudit(
-          ContactPreferenceAuditModel(user.vrn, contactPreference.preference),
-          Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
-        )
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(contactPreference.preference)))
-      case Left(_) =>
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation())
-    }
+    for {
+      cPref <- contactPreferenceService.getContactPreference(user.vrn).map {
+        case Right(contact) =>
+          auditService.extendedAudit(
+            ContactPreferenceAuditModel(user.vrn, contact.preference),
+            Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
+          )
+          Some(contact.preference)
+        case _ => None
+      }
+      verifiedEmail <- customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
+        case Right(details) => details.emailVerified.getOrElse(false)
+        case _ => false
+      }
+    } yield Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = cPref, emailVerified = verifiedEmail))
   }
 }

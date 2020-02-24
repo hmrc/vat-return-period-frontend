@@ -101,6 +101,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
           lazy val result = {
             mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             setupAuditExtendedEvent()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
@@ -118,7 +119,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
 
           "render the Change Return Frequency Confirmation Page" in {
             document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
+            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digiPrefWithEmail
           }
         }
 
@@ -127,6 +128,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
           lazy val result = {
             mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceSuccess(ContactPreference("PAPER"))
+            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             setupAuditExtendedEvent()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
@@ -153,6 +155,7 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
           lazy val result = {
             mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceError()
+            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
 

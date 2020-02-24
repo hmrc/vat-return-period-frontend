@@ -85,6 +85,7 @@ received_frequency.bullet2 = rhaid i’r busnes gyflwyno Ffurflen TAW y cyfnod h
 received_frequency.agent.p1-1 = Byddwn yn anfon e-bost at
 received_frequency.agent.p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a yw’r cais wedi’i dderbyn ai peidio.
 
+contact_preference.email = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith gyda diweddariad, neu gallwch wirio’ch negeseuon diogel oddi wrth CThEM.
 contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith i roi diweddariad, wedi’i ddilyn gan lythyr i’ch prif fan busnes. Gallwch hefyd fynd i’ch negeseuon diogel CThEM i weld a yw’ch cais wedi’i dderbyn.
 contact_preference.paper = Byddwn yn anfon llythyr i’ch prif fan busnes i roi diweddariad cyn pen 15 diwrnod gwaith.
 contact_preference.contactPrefError = Byddwn yn anfon diweddariad atoch cyn pen 15 diwrnod gwaith.
