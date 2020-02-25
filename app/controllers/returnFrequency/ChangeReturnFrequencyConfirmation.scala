@@ -21,6 +21,7 @@ import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
 import common.SessionKeys
 import models.auth.User
+import models.contactPreferences.ContactPreference._
 import audit.AuditService
 import audit.models.ContactPreferenceAuditModel
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -54,20 +55,28 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
   }
 
   private def nonAgentConfirmation(implicit user: User[AnyContent]): Future[Result] = {
-    for {
-      cPref <- contactPreferenceService.getContactPreference(user.vrn).map {
-        case Right(contact) =>
-          auditService.extendedAudit(
-            ContactPreferenceAuditModel(user.vrn, contact.preference),
-            Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
-          )
-          Some(contact.preference)
-        case _ => None
-      }
-      verifiedEmail <- customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
-        case Right(details) => details.emailVerified.getOrElse(false)
-        case _ => false
-      }
-    } yield Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = cPref, emailVerified = verifiedEmail))
+
+    contactPreferenceService.getContactPreference(user.vrn).flatMap {
+      case Right(cPref) =>
+
+        auditService.extendedAudit(
+          ContactPreferenceAuditModel(user.vrn, cPref.preference),
+          Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
+        )
+
+        cPref.preference match {
+          case `digital` if appConfig.features.emailVerifiedFeature() =>
+            customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
+              case Right(details) =>
+                Ok(views.html.returnFrequency.change_return_frequency_confirmation(
+                  contactPref = Some(digital),
+                  emailVerified = details.emailVerified.getOrElse(false)
+                ))
+              case _ => Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(digital)))
+            }
+          case preference => Future.successful(Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(preference))))
+        }
+      case Left(_) => Future.successful(Ok(views.html.returnFrequency.change_return_frequency_confirmation()))
+    }
   }
 }

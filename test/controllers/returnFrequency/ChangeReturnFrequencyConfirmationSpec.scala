@@ -96,30 +96,119 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
 
       "the user is not an agent" when {
 
-        "display the correct content for a user that has a digital contact preference" should {
+        "display the correct content for a user that has a digital contact preference" when {
 
-          lazy val result = {
-            mockAuthorise(mtdVatAuthorisedResponse)
-            mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
-            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
-            setupAuditExtendedEvent()
-            TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+          "emailVerified feature is enabled" when {
+
+            "the call to customer circumstance details is successful" when {
+
+              "the user has a verifiedEmail" should {
+                lazy val result = {
+                  mockAppConfig.features.emailVerifiedFeature(true)
+                  mockAuthorise(mtdVatAuthorisedResponse)
+                  mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+                  mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
+                  setupAuditExtendedEvent()
+                  TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+                }
+
+                lazy val document = Jsoup.parse(bodyOf(result))
+
+                "return 200" in {
+                  status(result) shouldBe Status.OK
+                }
+
+                "return HTML" in {
+                  contentType(result) shouldBe Some("text/html")
+                  charset(result) shouldBe Some("utf-8")
+                }
+
+                "render the Change Return Frequency Confirmation Page" in {
+                  document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+                  document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digiPrefWithEmail
+                }
+              }
+
+              "the user does not have a verifiedEmail" should {
+                lazy val result = {
+                  mockAppConfig.features.emailVerifiedFeature(true)
+                  mockAuthorise(mtdVatAuthorisedResponse)
+                  mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+                  mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
+                  setupAuditExtendedEvent()
+                  TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+                }
+
+                lazy val document = Jsoup.parse(bodyOf(result))
+
+                "return 200" in {
+                  status(result) shouldBe Status.OK
+                }
+
+                "return HTML" in {
+                  contentType(result) shouldBe Some("text/html")
+                  charset(result) shouldBe Some("utf-8")
+                }
+
+                "render the Change Return Frequency Confirmation Page" in {
+                  document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+                  document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
+                }
+              }
+            }
+
+            "the call to customer circumstance details throws an error" should {
+              lazy val result = {
+                mockAppConfig.features.emailVerifiedFeature(true)
+                mockAuthorise(mtdVatAuthorisedResponse)
+                mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+                mockCustomerDetailsError()
+                setupAuditExtendedEvent()
+                TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+              }
+
+              lazy val document = Jsoup.parse(bodyOf(result))
+
+              "return 200" in {
+                status(result) shouldBe Status.OK
+              }
+
+              "return HTML" in {
+                contentType(result) shouldBe Some("text/html")
+                charset(result) shouldBe Some("utf-8")
+              }
+
+              "render the Change Return Frequency Confirmation Page" in {
+                document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+                document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
+              }
+            }
           }
 
-          lazy val document = Jsoup.parse(bodyOf(result))
+          "emailVerified feature is disabled" should {
+            lazy val result = {
+              mockAppConfig.features.emailVerifiedFeature(false)
+              mockAuthorise(mtdVatAuthorisedResponse)
+              mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
+              setupAuditExtendedEvent()
+              TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+            }
 
-          "return 200" in {
-            status(result) shouldBe Status.OK
-          }
+            lazy val document = Jsoup.parse(bodyOf(result))
 
-          "return HTML" in {
-            contentType(result) shouldBe Some("text/html")
-            charset(result) shouldBe Some("utf-8")
-          }
+            "return 200" in {
+              status(result) shouldBe Status.OK
+            }
 
-          "render the Change Return Frequency Confirmation Page" in {
-            document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-            document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digiPrefWithEmail
+            "return HTML" in {
+              contentType(result) shouldBe Some("text/html")
+              charset(result) shouldBe Some("utf-8")
+            }
+
+            "render the Change Return Frequency Confirmation Page" in {
+              document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
+              document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
+            }
           }
         }
 
@@ -128,7 +217,6 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
           lazy val result = {
             mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceSuccess(ContactPreference("PAPER"))
-            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             setupAuditExtendedEvent()
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
@@ -155,7 +243,6 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
           lazy val result = {
             mockAuthorise(mtdVatAuthorisedResponse)
             mockContactPreferenceError()
-            mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
             TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
           }
 
