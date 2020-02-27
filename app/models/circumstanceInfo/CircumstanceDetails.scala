@@ -24,7 +24,8 @@ import utils.JsonReadUtil
 case class CircumstanceDetails(customerDetails: CustomerDetails,
                                changeIndicators: Option[ChangeIndicators],
                                returnPeriod: Option[ReturnPeriod],
-                               partyType: Option[String])
+                               partyType: Option[String],
+                               emailVerified: Option[Boolean])
 
 object CircumstanceDetails extends JsonReadUtil {
 
@@ -32,19 +33,22 @@ object CircumstanceDetails extends JsonReadUtil {
   private val returnPeriodPath = __ \ "returnPeriod"
   private val partyTypePath = __ \ "partyType"
   private val changeIndicatorsPath = __ \ "changeIndicators"
+  private val emailVerifiedPath = __ \ "ppob" \ "contactDetails" \ "emailVerified"
 
   implicit val reads: Reads[CircumstanceDetails] = (
     customerDetailsPath.read[CustomerDetails] and
     changeIndicatorsPath.readOpt[ChangeIndicators] and
     returnPeriodPath.readOpt[ReturnPeriod] and
-    partyTypePath.readOpt[String]
+    partyTypePath.readOpt[String] and
+    emailVerifiedPath.readOpt[Boolean]
   ) (CircumstanceDetails.apply _)
 
   implicit val writes: Writes[CircumstanceDetails] = (
     customerDetailsPath.write[CustomerDetails] and
     changeIndicatorsPath.writeNullable[ChangeIndicators] and
     returnPeriodPath.writeNullable[ReturnPeriod] and
-    partyTypePath.writeNullable[String]
+    partyTypePath.writeNullable[String] and
+    emailVerifiedPath.writeNullable[Boolean]
   ) (unlift(CircumstanceDetails.unapply))
 
 }

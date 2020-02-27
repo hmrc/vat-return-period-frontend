@@ -21,6 +21,7 @@ import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
 import common.SessionKeys
 import models.auth.User
+import models.contactPreferences.ContactPreference._
 import audit.AuditService
 import audit.models.ContactPreferenceAuditModel
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -54,15 +55,28 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
   }
 
   private def nonAgentConfirmation(implicit user: User[AnyContent]): Future[Result] = {
-    contactPreferenceService.getContactPreference(user.vrn).map {
-      case Right(contactPreference) =>
+
+    contactPreferenceService.getContactPreference(user.vrn).flatMap {
+      case Right(cPref) =>
+
         auditService.extendedAudit(
-          ContactPreferenceAuditModel(user.vrn, contactPreference.preference),
+          ContactPreferenceAuditModel(user.vrn, cPref.preference),
           Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
         )
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(contactPreference.preference)))
-      case Left(_) =>
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation())
+
+        cPref.preference match {
+          case `digital` if appConfig.features.emailVerifiedFeature() =>
+            customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
+              case Right(details) =>
+                Ok(views.html.returnFrequency.change_return_frequency_confirmation(
+                  contactPref = Some(digital),
+                  emailVerified = details.emailVerified.getOrElse(false)
+                ))
+              case _ => Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(digital)))
+            }
+          case preference => Future.successful(Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(preference))))
+        }
+      case Left(_) => Future.successful(Ok(views.html.returnFrequency.change_return_frequency_confirmation()))
     }
   }
 }
