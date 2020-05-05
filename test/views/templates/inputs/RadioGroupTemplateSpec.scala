@@ -106,13 +106,13 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
       val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(FormError("text", errorMessage)), None)
       val expectedMarkup = Html(
         s"""
-           |  <div class="form-field--error">
+           |  <div class="form-field--error panel-border-narrow">
            |    <fieldset>
            |      <legend>
            |        <h1 id="page-heading" class="heading-large">$labelText</h1>
            |      </legend>
            |
-           |      <span class="error-notification">$errorMessage</span>
+           |      <span class="error-message">$errorMessage</span>
            |
            |      ${generateExpectedRadioMarkup("value1", "display1")}
            |      ${generateExpectedRadioMarkup("value2", "display2")}
