@@ -23,7 +23,7 @@
 
 @elements = @{ FieldElements(field.id, field, null, Map(), messages) }
 
-<div @if(elements.hasErrors){ class="form-field--error"}>
+<div @if(elements.hasErrors){ class="form-field--error panel-border-narrow"}>
 
   <fieldset>
     <legend>
@@ -32,7 +32,7 @@
 
     @additionalContent.map { content => @content }
 
-    @elements.errors.map { error => <span class="error-notification">@messages(error)</span> }
+    @elements.errors.map { error => <span class="error-message">@messages(error)</span> }
 
     @choices.map { case (value, label) =>
 

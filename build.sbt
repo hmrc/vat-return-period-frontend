@@ -70,11 +70,10 @@ val test = Seq(
   "org.scalatest" %% "scalatest" % "3.0.8",
   "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1",
   "org.pegdown" % "pegdown" % "1.6.0",
-  "org.jsoup" % "jsoup" % "1.12.1",
+  "org.jsoup" % "jsoup" % "1.12.2",
   "com.typesafe.play" %% "play-test" % PlayVersion.current,
   "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0",
-  "com.github.tomakehurst" % "wiremock" % "2.23.2",
-  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0"
+  "com.github.tomakehurst" % "wiremock" % "2.23.2"
 ).map(_ % s"$Test, $IntegrationTest")
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
@@ -98,7 +97,7 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Keys.fork in Test := true,
     javaOptions in Test += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.11.11",
+    scalaVersion := "2.11.12",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
