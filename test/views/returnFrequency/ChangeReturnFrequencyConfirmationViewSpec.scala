@@ -24,6 +24,12 @@ import views.ViewBaseSpec
 
 class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
+
+  override def beforeEach(): Unit = {
+    mockAppConfig.features.agentBulkPaperFeature(true)
+  }
+
+
   "Rendering the Dates Received page for an individual" when {
 
     "contactPref is 'DIGITAL'" when {
@@ -165,7 +171,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
   }
 
-  "Rendering the Dates Received page for an agent" when {
+  "Rendering the Dates Received page for an agent without bulk paper content" when {
 
     "they have selected to receive email notifications" when {
 
@@ -178,6 +184,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
         s"have the correct document title of '${viewMessages.ReceivedPage.titleAgent}'" in {
+          mockAppConfig.features.agentBulkPaperFeature(false)
           document.title shouldBe viewMessages.ReceivedPage.titleAgent
         }
 
@@ -213,48 +220,139 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
             element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
-      }
 
-      "there is no client name" should {
+        "there is no client name" should {
 
-        lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
-          agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
+          lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+            agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
 
-        s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
-          paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+          s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
+            mockAppConfig.features.agentBulkPaperFeature(false)
+            paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+          }
+        }
+
+        "they have selected to not receive email notifications" when {
+
+          "there is a client name" should {
+
+            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+              clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
+            lazy implicit val document: Document = Jsoup.parse(view.body)
+
+            s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
+              mockAppConfig.features.agentBulkPaperFeature(false)
+              paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+            }
+
+            s"have the correct p2 of '${viewMessages.ReceivedPage.p2Agent}'" in {
+              paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
+            }
+          }
+
+          "there is no client name" should {
+
+            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(agentUser, messages, mockAppConfig)
+            lazy implicit val document: Document = Jsoup.parse(view.body)
+
+            s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
+              mockAppConfig.features.agentBulkPaperFeature(false)
+              paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+            }
+
+            s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
+              paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+            }
+          }
         }
       }
     }
+  }
 
-    "they have selected to not receive email notifications" when {
+  "Rendering the Dates Received page for an agent with bulk paper content" when {
 
-      "there is a client name" should {
+    "they have selected to receive email notifications" when {
 
-        lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
-          clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
+      "there is a client name and the changeClientFeature is on" should {
+
+        lazy val view = {
+          views.html.returnFrequency.change_return_frequency_confirmation(
+            clientName = Some("MyCompany Ltd"), agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
+        }
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
-        s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
-          paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+        s"have the correct document title of '${viewMessages.ReceivedPage.titleAgent}'" in {
+          document.title shouldBe viewMessages.ReceivedPage.titleAgent
+        }
+
+        s"have a correct page heading of '${viewMessages.ReceivedPage.heading}'" in {
+          elementText("#page-heading") shouldBe viewMessages.ReceivedPage.heading
+        }
+
+        s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
+          elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+        }
+
+        s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
+          paragraph(1) shouldBe viewMessages.ReceivedPage.p1AgentBulk
         }
 
         s"have the correct p2 of '${viewMessages.ReceivedPage.p2Agent}'" in {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
-      }
 
-      "there is no client name" should {
-
-        lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(agentUser, messages, mockAppConfig)
-        lazy implicit val document: Document = Jsoup.parse(view.body)
-
-        s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
-          paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+        "display the 'change another clients details' link" in {
+          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
+          element("#change-client-link").attr("href") shouldBe
+            controllers.routes.ChangeClientController.changeClient().url
         }
 
-        s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
-          paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+        "have the correct finish button" which {
+
+          s"has the text '${viewMessages.finish}'" in {
+            elementText("#finish") shouldBe viewMessages.finish
+          }
+
+          "has link back to customer details page" in {
+            element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+          }
+        }
+
+        "there is no client name" should {
+
+          lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+            agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
+          lazy implicit val document: Document = Jsoup.parse(view.body)
+
+          s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
+            paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+          }
+        }
+
+        "they have selected to not receive email notifications" when {
+
+          "there is a client name" should {
+
+            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+              clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
+            lazy implicit val document: Document = Jsoup.parse(view.body)
+
+            s"have the correct p1 of '${viewMessages.ReceivedPage.p2Agent}" in {
+              paragraph(1) shouldBe viewMessages.ReceivedPage.p2Agent
+            }
+
+          }
+
+          "there is no client name" should {
+
+            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(agentUser, messages, mockAppConfig)
+            lazy implicit val document: Document = Jsoup.parse(view.body)
+
+            s"have the correct p1 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
+              paragraph(1) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+            }
+          }
         }
       }
     }
