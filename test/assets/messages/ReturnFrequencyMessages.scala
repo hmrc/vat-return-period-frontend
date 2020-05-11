@@ -21,15 +21,15 @@ object ReturnFrequencyMessages extends BaseMessages {
   val option1Jan = "January, April, July and October"
   val option2Feb = "February, May, August and November"
   val option3Mar = "March, June, September and December"
-  val option4Monthly = "Every month"
+  val option4Monthly = "Monthly"
   val annually = "You currently submit returns annually. If you select a new VAT Return date, you will leave the Annual Accounting scheme."
 
   object ChoosePage {
-    val title: String = "Choose the new VAT Return dates" + titleSuffix
-    val errorTitle: String =  "Error: Choose the new VAT Return dates" + titleSuffix
-    val heading = "Choose the new VAT Return dates"
+    val title: String = "What are the new VAT Return dates?" + titleSuffix
+    val errorTitle: String =  "Error: What are the new VAT Return dates?" + titleSuffix
+    val heading = "What are the new VAT Return dates?"
     val question = "The VAT Return dates are currently"
-    val error = "Select the new VAT Return dates"
+    val error = "Choose the new VAT Return dates"
   }
 
   object ConfirmPage {
