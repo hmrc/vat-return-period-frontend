@@ -6,9 +6,6 @@ common.confirmAndContinue = Confirm and continue
 common.errorSummary.heading = There is a problem
 common.continue = Continue
 
-agent.finish.button = Back to client’s details
-org.finish.button = Finish
-
 base.back = Back
 base.signOut = Sign out
 
