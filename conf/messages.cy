@@ -50,8 +50,8 @@ common.agent.changeClient.youCan = Gallwch
 common.agent.changeClient.link = newid manylion cleient arall
 common.agent.yourClient = eich cleient
 common.agent.confirmationLetter = Byddwn yn anfon llythyr o gadarnhad i gyfeiriad yr asiantaeth sydd wedi’i gofrestru gyda CThEM cyn pen 15 diwrnod gwaith.
-common.agent.updateClient1 = Byddwn hefyd yn cysylltu â
-common.agent.updateClient2 = i roi diweddariad.
+common.agent.updateClient1 = Byddwn yn cysylltu â
+common.agent.updateClient2 = gyda diweddariad.
 common.agent.changeClient = Newid cleient
 
 # Choose return frequency dates messages
@@ -75,8 +75,8 @@ confirm_return_frequency.annually.p1 = Os dewiswch newid eich dyddiadau ar gyfer
 confirm_return_frequency.annually.bullet1 = byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol ar unwaith
 confirm_return_frequency.annually.bullet2 = bydd yn rhaid i chi aros 12 mis cyn i chi allu ailymuno â’r cynllun
 
-received_frequency.title = Mae’r dyddiadau newydd ar gyfer Ffurflenni TAW wedi dod i law
-received_frequency.heading = Mae’r dyddiadau newydd ar gyfer Ffurflenni TAW wedi dod i law
+received_frequency.title = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
+received_frequency.heading = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
 received_frequency.subheading = Yr hyn sy’n digwydd nesaf
 received_frequency.p1 = Gwiriwch eich Cyfrif Treth Busnes ar-lein cyn pen 2 ddiwrnod gwaith i weld a yw’ch cais wedi’i dderbyn.
 received_frequency.p2 = Os caiff y newid hwn ei dderbyn:
@@ -84,6 +84,8 @@ received_frequency.bullet1 = byddwn yn anfon llythyr o gadarnhad i’ch prif fan
 received_frequency.bullet2 = rhaid i’r busnes gyflwyno Ffurflen TAW y cyfnod hwn cyn dilyn y dyddiadau newydd ar gyfer Ffurflenni TAW
 received_frequency.agent.p1-1 = Byddwn yn anfon e-bost at
 received_frequency.agent.p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a yw’r cais wedi’i dderbyn ai peidio.
+received_frequency.agent.bulkPaper-p1-1 = Byddwn yn anfon e-bost i
+received_frequency.agent.bulkPaper-p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a allwn dderbyn eich cais ai peidio.
 
 contact_preference.email = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith gyda diweddariad, neu gallwch wirio’ch negeseuon diogel oddi wrth CThEM.
 contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith i roi diweddariad, wedi’i ddilyn gan lythyr i’ch prif fan busnes. Gallwch hefyd fynd i’ch negeseuon diogel CThEM i weld a yw’ch cais wedi’i dderbyn.

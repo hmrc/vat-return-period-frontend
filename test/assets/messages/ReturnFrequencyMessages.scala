@@ -44,9 +44,9 @@ object ReturnFrequencyMessages extends BaseMessages {
   }
 
   object ReceivedPage {
-    val title: String = "We have received the new VAT Return dates" + titleSuffix
-    val titleAgent: String = "We have received the new VAT Return dates" + agentTitleSuffix
-    val heading = "We have received the new VAT Return dates"
+    val title: String = "You have asked to change the VAT Return dates" + titleSuffix
+    val titleAgent: String = "You have asked to change the VAT Return dates" + agentTitleSuffix
+    val heading = "You have asked to change the VAT Return dates"
     val h2 = "What happens next"
     val p1 = "Check your online business tax account within 2 working days to see if your request has been accepted."
     val p2 = "If this change is accepted:"
@@ -56,8 +56,8 @@ object ReturnFrequencyMessages extends BaseMessages {
     val newChangeClientDetails = "Change client"
     val p1Agent: String = "We will send an email to agentEmail@test.com within 2 working days telling you whether or not " +
       "the request has been accepted."
-    val p2Agent = "We will also contact MyCompany Ltd with an update."
-    val p2AgentNoClientName = "We will also contact your client with an update."
+    val p2Agent = "We’ll contact MyCompany Ltd with an update."
+    val p2AgentNoClientName = "We’ll contact your client with an update."
     val confirmationLetter: String = "We will send a confirmation letter to the agency address registered with HMRC within " +
       "15 working days."
     val digiPrefWithEmail: String = "We’ll send you an email within 2 working days with an update or you can check your HMRC secure messages."
@@ -66,6 +66,7 @@ object ReturnFrequencyMessages extends BaseMessages {
     val paperPref = "We will send a letter to your principal place of business with an update within 15 working days."
     val contactPrefError = "We will send you an update within 15 working days."
     val contactDetails = "Make sure your contact details are up to date."
+    val p1AgentBulk: String = "We’ll send an email to agentEmail@test.com within 2 working days telling you whether we can accept your request."
 
   }
 }

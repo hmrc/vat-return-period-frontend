@@ -66,14 +66,6 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   lazy val user: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn)(fakeRequest)
   lazy val agentUser: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn, true, Some(arn))(fakeRequestWithClientsVRN)
 
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-  }
-
-  override def afterEach(): Unit = {
-    super.afterEach()
-  }
-
   def formatHtml(body: Html): String = Jsoup.parseBodyFragment(s"\n$body\n").toString.trim
 
 }
