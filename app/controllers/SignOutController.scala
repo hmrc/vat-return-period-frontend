@@ -26,12 +26,13 @@ import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import scala.concurrent.ExecutionContext
 
 import scala.concurrent.Future
 
 @Singleton
 class SignOutController @Inject()(val messagesApi: MessagesApi,
-                                  enrolmentsAuthService: EnrolmentsAuthService)
+                                  enrolmentsAuthService: EnrolmentsAuthService, implicit val executionContext: ExecutionContext)
                                  (implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
 
   def signOut(feedbackOnSignOut: Boolean) : Action[AnyContent] = Action.async { implicit request =>

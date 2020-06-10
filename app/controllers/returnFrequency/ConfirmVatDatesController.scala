@@ -32,7 +32,7 @@ import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, ReturnFrequencyService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
@@ -42,7 +42,7 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
                                           val auditService: AuditService,
                                           val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
                                           val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
-                                          implicit val appConfig: AppConfig,
+                                          implicit val appConfig: AppConfig, implicit val ec: ExecutionContext,
                                           implicit val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
