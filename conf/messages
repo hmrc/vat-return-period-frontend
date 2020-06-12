@@ -102,3 +102,8 @@ contact_preference.contact = Make sure your contact details are up to date.
 breadcrumb.bta = Business tax account
 breadcrumb.yourVatDetails = Your VAT details
 breadcrumb.changeBusinessDetails = Change of business details
+
+checkYourAnswers.title = Check your answers
+checkYourAnswers.vatBusinessDetails = VAT business details
+checkYourAnswers.change = Change
+checkYourAnswers.newDates = VAT return dates

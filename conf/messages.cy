@@ -96,3 +96,8 @@ contact_preference.contact = Sicrhewch fod eich manylion cyswllt wedi’u diwedd
 breadcrumb.bta = Cyfrif Treth Busnes
 breadcrumb.yourVatDetails = Eich manylion TAW
 breadcrumb.changeBusinessDetails = Newid o ran manylion busnes
+
+checkYourAnswers.title = Gwiriwch eich atebion
+checkYourAnswers.vatBusinessDetails = Manylion busnes TAW
+checkYourAnswers.change = Newid
+checkYourAnswers.newDates = Dyddiadau Ffurflenni TAW
