@@ -28,7 +28,7 @@ import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import services.{ContactPreferenceService, CustomerCircumstanceDetailsService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
@@ -37,7 +37,7 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
                                                   val contactPreferenceService: ContactPreferenceService,
                                                   val serviceErrorHandler: ServiceErrorHandler,
                                                   val auditService: AuditService,
-                                                  implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
+                                                  implicit val appConfig: AppConfig, implicit val ec: ExecutionContext) extends FrontendController with I18nSupport {
 
   val show: String => Action[AnyContent] = _ => authenticate.async { implicit user =>
     if (user.isAgent) {

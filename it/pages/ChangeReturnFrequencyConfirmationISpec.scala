@@ -33,7 +33,6 @@ class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec {
       def show(sessionVrn: Option[String] = None): WSResponse = get(s"$path/non-agent", formatSessionVrn(sessionVrn))
 
       "authorised" should {
-
         "render the return frequency confirmation page" in {
 
           given.user.isAuthenticated

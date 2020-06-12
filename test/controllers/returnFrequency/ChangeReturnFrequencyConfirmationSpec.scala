@@ -40,7 +40,8 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
     mockContactPreferenceService,
     errorHandler,
     mockAuditService,
-    mockAppConfig
+    mockAppConfig,
+    ec
   )
 
   "Calling the .show action" when {

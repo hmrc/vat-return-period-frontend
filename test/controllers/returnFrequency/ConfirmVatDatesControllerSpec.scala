@@ -42,6 +42,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
     mockInFlightReturnPeriodPredicate,
     mockInFlightAnnualAccountingPredicate,
     mockAppConfig,
+    ec,
     messagesApi
   )
 
