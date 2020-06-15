@@ -72,9 +72,6 @@ return_frequency.February = February, May, August and November
 return_frequency.March = March, June, September and December
 return_frequency.Monthly = Monthly
 
-confirm_return_frequency.title = Confirm the new VAT Return dates
-confirm_return_frequency.heading = Confirm the new VAT Return dates
-confirm_return_frequency.newDates = Your new VAT Return dates will be {0}.
 confirm_return_frequency.changeLink = Change the VAT Return dates
 
 confirm_return_frequency.annually.p1 = If you choose to change your VAT Return dates you will:
