@@ -32,7 +32,7 @@ user = Some(user)) {
 
 <h2>@messages("checkYourAnswers.vatBusinessDetails")</h2>
 
-<div id="p1" class="form-group">
+<div class="form-group">
     <dl class="govuk-check-your-answers cya-questions-long">
 
         <div>
@@ -46,12 +46,12 @@ user = Some(user)) {
 
 
 
-            <div class="cya-change">
+            <dd class="cya-change">
                 <a href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
                    aria-label=@messages("confirm_return_frequency.changeLink")>
                     @messages("checkYourAnswers.change")
                 </a>
-            </div>
+            </dd>
         </div>
 
     </dl>
