@@ -33,14 +33,16 @@ object ReturnFrequencyMessages extends BaseMessages {
   }
 
   object ConfirmPage {
-    val title: String = "Confirm the new VAT Return dates" + titleSuffix
-    val heading = "Confirm the new VAT Return dates"
-    val newDates = "Your new VAT Return dates will be"
-    val changeLink = "Change the VAT Return dates"
+    val title: String = "Check your answers" + titleSuffix
+    val heading = "Check your answers"
+    val heading2 = "VAT business details"
+    val newDates = "VAT return dates"
+    val changeLink = "Change"
     val p2 = "By confirming this change, you agree that the information you have given is complete and correct."
     val annualAccountingOption = "If you choose to change your VAT Return dates you will:"
     val annualAccountingBullet1 = "leave the Annual Accounting scheme immediately"
     val annualAccountingBullet2 = "have to wait 12 months before you can rejoin the scheme"
+
   }
 
   object ReceivedPage {

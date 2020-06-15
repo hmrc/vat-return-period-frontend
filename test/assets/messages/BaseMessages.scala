@@ -20,7 +20,6 @@ trait BaseMessages {
 
   val continue = "Continue"
   val back = "Back"
-  val confirmAndContinue = "Confirm and continue"
   val finish = "Finish"
   val errorHeading = "There is a problem"
 

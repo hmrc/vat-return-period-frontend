@@ -22,43 +22,56 @@
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @views.html.main_template(
-  title = messages("confirm_return_frequency.title"),
-  bodyClasses = None,
-  appConfig = appConfig,
-  user = Some(user)) {
-
-  <a class="link-back" href="@controllers.returnFrequency.routes.ChooseDatesController.show().url">@messages("base.back")</a>
-
-  @headings(messages("confirm_return_frequency.heading"))
+title = messages("checkYourAnswers.title"),
+bodyClasses = None,
+appConfig = appConfig,
+user = Some(user)) {
 
 
-  <p id="p1" class="form-group">
-      @messages("confirm_return_frequency.newDates", messages(s"return_frequency.${model.id}"))
-  </p>
+<h1 class="heading-large">@messages("checkYourAnswers.title")</h1>
+
+<h2>@messages("checkYourAnswers.vatBusinessDetails")</h2>
+
+<div class="form-group">
+    <dl class="govuk-check-your-answers cya-questions-long">
+
+        <div>
+            <dt class="cya-question">
+                @messages("checkYourAnswers.newDates")
+            </dt>
+
+            <dd class="cya-answer">
+                @messages(s"return_frequency.${model.id}")
+            </dd>
+
+
+
+            <dd class="cya-change">
+                <a href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
+                   aria-label=@messages("confirm_return_frequency.changeLink")>
+                    @messages("checkYourAnswers.change")
+                </a>
+            </dd>
+        </div>
+
+    </dl>
+</div>
 
 @if(leavingAnnualAccounting) {
-  <p>@messages("confirm_return_frequency.annually.p1")</p>
-  <ul class="list list-bullet">
-     <li>@messages("confirm_return_frequency.annually.bullet1")</li>
-     <li>@messages("confirm_return_frequency.annually.bullet2")</li>
-  </ul>
+<p>@messages("confirm_return_frequency.annually.p1")</p>
+<ul class="list list-bullet">
+    <li>@messages("confirm_return_frequency.annually.bullet1")</li>
+    <li>@messages("confirm_return_frequency.annually.bullet2")</li>
+</ul>
 }
 
-  <p class="form-group">
-      <a id="change-vat-link"
-         href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
-         type="submit">
-          @messages("confirm_return_frequency.changeLink")
-      </a>
-  </p>
-
-  @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
-    <button
-            class="button"
-            type ="submit"
-            id="continue-button">
-        @messages("common.confirmAndContinue")
-    </button>
-  }
+@form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
+<button
+        class="button"
+        type ="submit"
+        id="continue-button">
+    @messages("common.continue")
+</button>
+}
 
 }

@@ -50,8 +50,9 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec {
 
         res should have(
           httpStatus(OK),
-          elementText("#page-heading")(Messages("confirm_return_frequency.heading")),
-          elementText("#p1")(Messages("confirm_return_frequency.newDates", "January, April, July and October"))
+          elementText(".heading-large")(Messages("checkYourAnswers.title")),
+          elementText(".cya-question")(Messages("checkYourAnswers.newDates")),
+          elementText(".cya-answer")(Messages("January, April, July and October"))
         )
       }
 
@@ -64,8 +65,9 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec {
 
         res should have(
           httpStatus(OK),
-          elementText("#page-heading")(Messages("confirm_return_frequency.heading")),
-          elementText("#p1")(Messages("confirm_return_frequency.newDates", "January, April, July and October"))
+          elementText(".heading-large")(Messages("checkYourAnswers.title")),
+          elementText(".cya-question")(Messages("checkYourAnswers.newDates")),
+          elementText(".cya-answer")(Messages("January, April, July and October"))
         )
       }
     }
