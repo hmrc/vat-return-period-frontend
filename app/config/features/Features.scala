@@ -27,4 +27,5 @@ class Features @Inject()(implicit config: Configuration) {
   val stubContactPreferencesFeature = new Feature(ConfigKeys.stubContactPreferencesFeature)
   val emailVerifiedFeature = new Feature(ConfigKeys.emailVerifiedFeature)
   val agentBulkPaperFeature = new Feature(ConfigKeys.agentBulkPaperFeature)
+  val contactPrefMigrationFeature = new Feature(ConfigKeys.contactPrefMigrationFeature)
 }
