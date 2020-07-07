@@ -17,6 +17,7 @@
 package assets
 
 import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails, CustomerDetails}
+import models.contactPreferences.ContactPreference.digital
 import models.returnFrequency.Monthly
 import play.api.libs.json.{JsValue, Json}
 
@@ -39,63 +40,70 @@ object CircumstanceDetailsTestConstants {
       "returnPeriod" -> true,
       "annualAccounting" -> false
     ),
-    "partyType" -> Some(partyType)
+    "partyType" -> Some(partyType),
+    "commsPreference" -> digital
   )
 
   val circumstanceDetailsJsonMin: JsValue = Json.obj(
     "customerDetails" -> Json.obj()
   )
 
-  val circumstanceDetailsModelMax =
+  val circumstanceDetailsModelMax: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(true))),
       Some(Monthly),
       Some(partyType),
-      Some(true)
+      Some(true),
+      Some(digital)
     )
 
-  val circumstanceDetailsModelMaxAA =
+  val circumstanceDetailsModelMaxAA: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       Some(Monthly),
       Some(partyType),
-      Some(true)
+      Some(true),
+      Some(digital)
     )
 
-  val circumstanceDetailsModelMin =
+  val circumstanceDetailsModelMin: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(None, None, None, None),
+      None,
       None,
       None,
       None,
       None
     )
 
-  val circumstanceDetailsModelMinAA =
+  val circumstanceDetailsModelMinAA: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(None, None, None, None),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       None,
       None,
+      None,
       None
     )
 
-  val circumstanceDetailsNoPending =
+  val circumstanceDetailsNoPending: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(false))),
       Some(Monthly),
       Some(partyType),
+      None,
       None
     )
 
-  val circumstanceDetailsNoChangeIndicator =
+  val circumstanceDetailsNoChangeIndicator: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       None,
       Some(Monthly),
+      None,
       None,
       None
     )

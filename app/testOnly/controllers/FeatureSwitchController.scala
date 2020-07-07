@@ -33,7 +33,8 @@ class FeatureSwitchController @Inject()(val messagesApi: MessagesApi,
       FeatureSwitchModel(
         stubContactPreferencesFeature = appConfig.features.stubContactPreferencesFeature(),
         stubAgentClientLookupFeature = appConfig.features.stubAgentClientLookup(),
-        agentBulkPaperFeature = appConfig.features.agentBulkPaperFeature()
+        agentBulkPaperFeature = appConfig.features.agentBulkPaperFeature(),
+        contactPrefMigrationFeature = appConfig.features.contactPrefMigrationFeature()
       )
     )))
   }
@@ -49,6 +50,7 @@ class FeatureSwitchController @Inject()(val messagesApi: MessagesApi,
     appConfig.features.stubContactPreferencesFeature(model.stubContactPreferencesFeature)
     appConfig.features.stubAgentClientLookup(model.stubAgentClientLookupFeature)
     appConfig.features.agentBulkPaperFeature(model.agentBulkPaperFeature)
+    appConfig.features.contactPrefMigrationFeature(model.contactPrefMigrationFeature)
     Redirect(routes.FeatureSwitchController.featureSwitch())
   }
 }

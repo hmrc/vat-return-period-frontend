@@ -18,6 +18,7 @@ package stubs
 
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
 import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails, CustomerDetails}
+import models.contactPreferences.ContactPreference.digital
 import models.returnFrequency.Monthly
 import play.api.http.Status.OK
 import play.api.libs.json.{JsValue, Json}
@@ -44,29 +45,31 @@ object VatSubscriptionStub extends WireMockMethods {
       "returnPeriod" -> true,
       "annualAccounting" -> false
     ),
-    "partyType" -> Some("2")
+    "partyType" -> Some("2"),
+    "commsPreference" -> digital
   )
 
-  val circumstanceDetailsModelMax =
+  val circumstanceDetailsModelMax: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
       Some(ChangeIndicators(Some(true))),
       Some(Monthly),
       Some(partyType),
-      Some(true)
+      Some(true),
+      Some(digital)
     )
 
-  val circumstanceDetailsModelMin =
+  val circumstanceDetailsModelMin: CircumstanceDetails =
     CircumstanceDetails(
       CustomerDetails(None, None, None, None),
+      None,
       None,
       None,
       None,
       None
     )
 
-  def getClientDetailsSuccess(vrn: String)(customerDetails: CircumstanceDetails): StubMapping = {
+  def getClientDetailsSuccess(vrn: String)(customerDetails: CircumstanceDetails): StubMapping =
     when(method = GET, uri = subscriptionUri(vrn))
       .thenReturn(status = OK, body = Json.toJson(customerDetails))
-  }
 }

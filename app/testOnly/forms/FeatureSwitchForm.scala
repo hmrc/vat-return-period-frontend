@@ -27,7 +27,8 @@ object FeatureSwitchForm {
     mapping(
       ConfigKeys.stubContactPreferencesFeature -> boolean,
       ConfigKeys.stubAgentClientLookupFeature -> boolean,
-      ConfigKeys.agentBulkPaperFeature -> boolean
+      ConfigKeys.agentBulkPaperFeature -> boolean,
+      ConfigKeys.contactPrefMigrationFeature -> boolean
     )(FeatureSwitchModel.apply)(FeatureSwitchModel.unapply)
   )
 }

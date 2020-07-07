@@ -16,6 +16,7 @@
 
 @import views.html.templates.updateClient
 @import models.auth.User
+@import models.contactPreferences.ContactPreference.{digital, paper}
 
 @(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None, emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
@@ -69,8 +70,8 @@
     } else {
 
         @contactPref match {
-            case Some("DIGITAL") => {<p>@messages(if(emailVerified){"contact_preference.email"}else{"contact_preference.digital"})</p>}
-            case Some("PAPER") => {<p>@messages("contact_preference.paper")</p>}
+            case Some(`digital`) => {<p>@messages(if(emailVerified){"contact_preference.email"}else{"contact_preference.digital"})</p>}
+            case Some(`paper`) => {<p>@messages("contact_preference.paper")</p>}
             case _ => {<p>@messages("contact_preference.contactPrefError")</p>}
         }
         <p>@messages("contact_preference.contact")</p>
