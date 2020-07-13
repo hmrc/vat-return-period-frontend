@@ -16,8 +16,8 @@
 
 package models.circumstanceInfo
 
-import base.BaseSpec
 import assets.CircumstanceDetailsTestConstants._
+import base.BaseSpec
 import play.api.libs.json.Json
 
 class CircumstanceDetailsSpec extends BaseSpec {

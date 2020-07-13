@@ -26,12 +26,15 @@ import mocks.services.{MockCustomerCircumstanceDetailsService, MockReturnFrequen
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.Helpers._
+import views.html.returnFrequency.ConfirmDates
 
 class ConfirmVatDatesControllerSpec extends BaseSpec
   with MockReturnFrequencyService
   with MockAuditingService
   with MockCustomerCircumstanceDetailsService
   with MockAuth {
+
+  val confirmDates: ConfirmDates = injector.instanceOf[ConfirmDates]
 
   object TestConfirmVatDatesController extends ConfirmVatDatesController(
     mockAuthPredicate,
@@ -43,7 +46,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
     mockInFlightAnnualAccountingPredicate,
     mockAppConfig,
     ec,
-    messagesApi
+    mcc,
+    confirmDates
   )
 
   "Calling the .show action" when {

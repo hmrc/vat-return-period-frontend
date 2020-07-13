@@ -18,12 +18,15 @@ package views
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import views.html.GovUkWrapper
 
 class GovUkWrapperSpec extends ViewBaseSpec {
 
+  val govUkWrapperView: GovUkWrapper = injector.instanceOf[GovUkWrapper]
+
   "creating a page with a footer" should {
 
-    lazy val view = views.html.govuk_wrapper(mockAppConfig, "title")(fakeRequest, messages)
+    lazy val view = govUkWrapperView(mockAppConfig, "title")(fakeRequest, messages)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "not display a logo" in {

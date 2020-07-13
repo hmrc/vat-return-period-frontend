@@ -27,19 +27,23 @@ import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import views.html.returnFrequency.ChooseDates
 
 class ChooseDatesControllerSpec extends BaseSpec
   with MockCustomerCircumstanceDetailsService
   with MockAuth {
 
+  val chooseDatesView: ChooseDates = injector.instanceOf[ChooseDates]
+
   object TestChooseDatesController extends ChooseDatesController(
-    messagesApi,
     mockAuthPredicate,
     mockInFlightReturnPeriodPredicate,
     mockInFlightAnnualAccountingPredicate,
     mockCustomerDetailsService,
     errorHandler,
-    mockAppConfig
+    mcc,
+    mockAppConfig,
+    chooseDatesView
   )
 
   "ChooseDatesController 'show' method" when {

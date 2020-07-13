@@ -18,14 +18,12 @@ package mocks
 
 import config.AppConfig
 import config.features.Features
-import play.api.Mode.Mode
+import play.api.Configuration
 import play.api.i18n.Lang
 import play.api.mvc.Call
-import play.api.{Configuration, Mode}
 
 class MockConfig(implicit val runModeConfiguration: Configuration) extends AppConfig {
 
-  override val mode: Mode = Mode.Test
   override val reportAProblemPartialUrl: String = ""
   override val reportAProblemNonJSUrl: String = ""
   override val betaFeedbackUrl: String = "feedback-url"
@@ -50,5 +48,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy")
   )
-
+  override val vatSubscriptionBaseURL: String = ""
+  override val vatSubscriptionDynamicStubURL: String = ""
+  override val contactPreferenceURL: String = ""
 }

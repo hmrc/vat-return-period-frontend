@@ -21,9 +21,12 @@ import assets.messages.{ReturnFrequencyMessages => viewMessages}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import views.ViewBaseSpec
+import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
 
 class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
+  val changeReturnFrequencyConfirmationView: CRFCView =
+    injector.instanceOf[CRFCView]
 
   override def beforeEach(): Unit = {
     mockAppConfig.features.agentBulkPaperFeature(true)
@@ -37,7 +40,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "emailVerified is true" should {
 
         lazy val view =
-          views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some("DIGITAL"), emailVerified = true)(user, messages, mockAppConfig)
+          changeReturnFrequencyConfirmationView(contactPref = Some("DIGITAL"), emailVerified = true)(user, messages, mockAppConfig)
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
         s"have the correct document title of '${viewMessages.ReceivedPage.title}'" in {
@@ -78,7 +81,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
       "emailVerified is false" should {
 
-        lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some("DIGITAL"))(user, messages, mockAppConfig)
+        lazy val view = changeReturnFrequencyConfirmationView(contactPref = Some("DIGITAL"))(user, messages, mockAppConfig)
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.p1}'" in {
@@ -89,7 +92,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
     "contactPref is 'PAPER'" should {
 
-      lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some("PAPER"))(user, messages, mockAppConfig)
+      lazy val view = changeReturnFrequencyConfirmationView(contactPref = Some("PAPER"))(user, messages, mockAppConfig)
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       s"have the correct document title of '${viewMessages.ReceivedPage.title}'" in {
@@ -130,7 +133,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
     "no contact details are retrieved" should {
 
-      lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(user, messages, mockAppConfig)
+      lazy val view = changeReturnFrequencyConfirmationView()(user, messages, mockAppConfig)
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       s"have the correct document title of '${viewMessages.ReceivedPage.title}'" in {
@@ -178,7 +181,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "there is a client name and the changeClientFeature is on" should {
 
         lazy val view = {
-          views.html.returnFrequency.change_return_frequency_confirmation(
+          changeReturnFrequencyConfirmationView(
             clientName = Some("MyCompany Ltd"), agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
         }
         lazy implicit val document: Document = Jsoup.parse(view.body)
@@ -223,7 +226,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
         "there is no client name" should {
 
-          lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+          lazy val view = changeReturnFrequencyConfirmationView(
             agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
 
@@ -237,7 +240,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
           "there is a client name" should {
 
-            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+            lazy val view = changeReturnFrequencyConfirmationView(
               clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
@@ -253,7 +256,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
           "there is no client name" should {
 
-            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(agentUser, messages, mockAppConfig)
+            lazy val view = changeReturnFrequencyConfirmationView()(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
             s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
@@ -277,7 +280,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "there is a client name and the changeClientFeature is on" should {
 
         lazy val view = {
-          views.html.returnFrequency.change_return_frequency_confirmation(
+          changeReturnFrequencyConfirmationView(
             clientName = Some("MyCompany Ltd"), agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
         }
         lazy implicit val document: Document = Jsoup.parse(view.body)
@@ -321,7 +324,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
         "there is no client name" should {
 
-          lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+          lazy val view = changeReturnFrequencyConfirmationView(
             agentEmail = Some(agentEmail))(agentUser, messages, mockAppConfig)
           lazy implicit val document: Document = Jsoup.parse(view.body)
 
@@ -334,7 +337,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
           "there is a client name" should {
 
-            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation(
+            lazy val view = changeReturnFrequencyConfirmationView(
               clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
@@ -346,7 +349,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
           "there is no client name" should {
 
-            lazy val view = views.html.returnFrequency.change_return_frequency_confirmation()(agentUser, messages, mockAppConfig)
+            lazy val view = changeReturnFrequencyConfirmationView()(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
             s"have the correct p1 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {

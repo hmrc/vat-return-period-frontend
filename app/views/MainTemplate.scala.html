@@ -16,7 +16,9 @@
 
 @import config.AppConfig
 @import models.auth.User
-@import uk.gov.hmrc.play.views.html.layouts
+@import uk.gov.hmrc.play.views.html.layouts._
+
+@this(govUkWrapper: GovUkWrapper, article: Article, sidebar: Sidebar)
 
 @(title: String,
   appConfig: AppConfig,
@@ -30,21 +32,21 @@
 
 @serviceInfoContent = {}
 
-@sidebar = {
+@sidebarContent = {
   @if(sidebarLinks.isDefined) {
-    @layouts.sidebar(sidebarLinks.get, Some("sidebar"))
+    @sidebar(sidebarLinks.get, Some("sidebar"))
   }
 }
 
 @titleServiceName = {@{user.fold(messages("navTitle.vat"))(u => if(u.isAgent) messages("navTitle.agent") else messages("navTitle.nonAgent"))}}
 
-@govuk_wrapper(appConfig = appConfig,
+@govUkWrapper(appConfig = appConfig,
   title = messages("common.pageTitle", title, titleServiceName),
   mainClass = mainClass,
   bodyClasses = bodyClasses,
-  sidebar = sidebar,
+  sidebar = sidebarContent,
   contentHeader = contentHeader,
-  mainContent = layouts.article(mainContent),
+  mainBody = article(mainContent),
   serviceInfoContent = serviceInfoContent,
   scriptElem = scriptElem,
   showSignOut = showSignOut,

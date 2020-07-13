@@ -21,14 +21,17 @@ import models.returnFrequency._
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import views.ViewBaseSpec
+import views.html.returnFrequency.ConfirmDates
 
 class ConfirmDatesViewSpec extends ViewBaseSpec {
+
+  val confirmDatesView: ConfirmDates = injector.instanceOf[ConfirmDates]
 
   "Rendering the Confirm Dates page" when {
 
     "user doesn't come from annual accounting" should {
 
-      lazy val view = views.html.returnFrequency.confirm_dates(Jan, false)(user, messages, mockAppConfig)
+      lazy val view = confirmDatesView(Jan, false)(user, messages, mockAppConfig)
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       s"have the correct document title of '${viewMessages.ConfirmPage.title}'" in {
@@ -51,25 +54,25 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         s"display the correct dates of" when {
 
           s"the current date is '${viewMessages.option1Jan}'" in {
-            lazy val view = views.html.returnFrequency.confirm_dates(Jan, false)(user, messages, mockAppConfig)
+            lazy val view = confirmDatesView(Jan, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
             elementText(".cya-answer") shouldBe viewMessages.option1Jan
           }
 
           s"the current date is '${viewMessages.option2Feb}'" in {
-            lazy val view = views.html.returnFrequency.confirm_dates(Feb, false)(user, messages, mockAppConfig)
+            lazy val view = confirmDatesView(Feb, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
             elementText(".cya-answer") shouldBe viewMessages.option2Feb
           }
 
           s"the current date is '${viewMessages.option3Mar}'" in {
-            lazy val view = views.html.returnFrequency.confirm_dates(Mar, false)(user, messages, mockAppConfig)
+            lazy val view = confirmDatesView(Mar, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
             elementText(".cya-answer") shouldBe viewMessages.option3Mar
           }
 
           s"the current date is '${viewMessages.option4Monthly}'" in {
-            lazy val view = views.html.returnFrequency.confirm_dates(Monthly, false)(user, messages, mockAppConfig)
+            lazy val view = confirmDatesView(Monthly, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
             elementText(".cya-answer") shouldBe viewMessages.option4Monthly
           }
@@ -100,7 +103,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
     }
     "user comes from annual accounting" should {
 
-      lazy val view = views.html.returnFrequency.confirm_dates(Jan, true)(user, messages, mockAppConfig)
+      lazy val view = confirmDatesView(Jan, true)(user, messages, mockAppConfig)
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       s"have the correct document title of '${viewMessages.ConfirmPage.title}'" in {

@@ -23,7 +23,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */]]></parameter>
-
         </parameters>
     </check>
     <check level="warning" class="org.scalastyle.scalariform.SpacesAfterPlusChecker" enabled="true"></check>

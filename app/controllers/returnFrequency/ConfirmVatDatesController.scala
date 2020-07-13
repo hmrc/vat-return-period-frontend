@@ -27,10 +27,11 @@ import javax.inject.{Inject, Singleton}
 import models.auth.User
 import models.returnFrequency._
 import play.api.Logger
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, ReturnFrequencyService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.returnFrequency.ConfirmDates
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -43,13 +44,14 @@ class ConfirmVatDatesController @Inject()(val authenticate: AuthPredicate,
                                           val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
                                           val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
                                           implicit val appConfig: AppConfig, implicit val ec: ExecutionContext,
-                                          implicit val messagesApi: MessagesApi) extends FrontendController with I18nSupport {
+                                          implicit val mcc: MessagesControllerComponents,
+                                          confirmDates: ConfirmDates) extends FrontendController(mcc) with I18nSupport {
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
     (user.session.get(SessionKeys.NEW_RETURN_FREQUENCY), user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY)) match {
       case (Some(newFrequency), Some(currentFrequency)) => (ReturnPeriod(newFrequency), ReturnPeriod(currentFrequency)) match {
         case (Some(nf), Some(cf)) =>
-          Ok(views.html.returnFrequency.confirm_dates(nf, cf == Annually))
+          Ok(confirmDates(nf, cf == Annually))
         case _ => serviceErrorHandler.showInternalServerError
       }
       case _ =>

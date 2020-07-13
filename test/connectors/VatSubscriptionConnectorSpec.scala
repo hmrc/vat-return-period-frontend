@@ -19,23 +19,18 @@ package connectors
 import assets.BaseTestConstants.{agentEmail, errorModel}
 import assets.CircumstanceDetailsTestConstants._
 import base.BaseSpec
-import config.FrontendAppConfig
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import mocks.MockHttp
 import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
-import play.api.{Configuration, Environment}
 
 import scala.concurrent.Future
 
 class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
-  val env: Environment = Environment.simple()
-  val configuration: Configuration = Configuration.load(env)
-
   object TestVatSubscriptionConnector extends VatSubscriptionConnector(
     mockHttp,
-    new FrontendAppConfig(env, configuration)
+    mockAppConfig
   )
 
   "VatSubscriptionConnector" when {
@@ -84,7 +79,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
         "return a SubscriptionUpdateResponseModel" in {
           val response = Right(SubscriptionUpdateResponseModel("Ooooooh, it's good"))
-          setupMockHttpPut(s"${mockAppConfig.baseUrl("vat-subscription")}/vat-subscription/$vrn/return-period")(response)
+          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(response)
           await(result) shouldBe response
         }
 
@@ -92,7 +87,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
       "provided with an error" should {
         "return a Left with an ErrorModel" in {
-          setupMockHttpPut(s"${mockAppConfig.baseUrl("vat-subscription")}/vat-subscription/$vrn/return-period")(errorModel)
+          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(errorModel)
           await(result) shouldBe errorModel
         }
       }

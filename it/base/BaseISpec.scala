@@ -17,11 +17,12 @@
 package base
 
 import config.AppConfig
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Matchers, WordSpec}
+import org.scalatest._
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.http.HeaderNames
-import play.api.i18n.{Lang, Messages, MessagesApi}
+import play.api.i18n.{Lang, Messages, MessagesApi, MessagesImpl}
 import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
@@ -29,8 +30,6 @@ import play.api.{Application, Environment, Mode}
 import stubs.AuthStub
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 import utils.WireMockHelper
-import org.scalatest._
-import play.api.libs.json.JsValue
 
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Awaitable}
@@ -62,9 +61,9 @@ trait BaseISpec extends WordSpec
   lazy val httpClient: HttpClient = app.injector.instanceOf[HttpClient]
   lazy val wsClient: WSClient = app.injector.instanceOf[WSClient]
   lazy val appConfig: AppConfig = app.injector.instanceOf[AppConfig]
-  lazy val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
-  implicit lazy val messages: Messages = Messages(Lang("en-GB"), messagesApi)
   val appRouteContext: String = "/vat-through-software/account/returns"
+  lazy val messagesApi: MessagesApi = app.injector.instanceOf[MessagesApi]
+  implicit lazy val messages: Messages = MessagesImpl(Lang("en-GB"), messagesApi)
 
   implicit val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
 
@@ -128,7 +127,7 @@ trait BaseISpec extends WordSpec
 
   def buildRequest(path: String, additionalCookies: Map[String, String] = Map.empty): WSRequest =
     wsClient.url(s"http://localhost:$port$appRouteContext$path")
-      .withHeaders(HeaderNames.COOKIE -> SessionCookieBaker.bakeSessionCookie(additionalCookies), "Csrf-Token" -> "nocheck")
+      .withHttpHeaders(HeaderNames.COOKIE -> SessionCookieBaker.bakeSessionCookie(additionalCookies), "Csrf-Token" -> "nocheck")
       .withFollowRedirects(false)
 
 }

@@ -21,9 +21,9 @@ import play.api.http.Status
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import services.EnrolmentsAuthService
-import uk.gov.hmrc.auth.core.{AffinityGroup, AuthConnector, MissingBearerToken}
 import uk.gov.hmrc.auth.core.authorise.Predicate
 import uk.gov.hmrc.auth.core.retrieve.Retrieval
+import uk.gov.hmrc.auth.core.{AffinityGroup, AuthConnector, MissingBearerToken}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -32,7 +32,7 @@ class SignOutControllerSpec extends BaseSpec {
 
   val mockAuthConnector: AuthConnector = mock[AuthConnector]
   val mockEnrolmentsAuthService: EnrolmentsAuthService = new EnrolmentsAuthService(mockAuthConnector)
-  val controller: SignOutController = new SignOutController(messagesApi, mockEnrolmentsAuthService, ec)
+  val controller: SignOutController = new SignOutController(mockEnrolmentsAuthService, mcc)
 
   def mockAuth(authResult: Future[Option[AffinityGroup]]): Any =
     (mockAuthConnector.authorise(_: Predicate, _: Retrieval[Option[AffinityGroup]])(_: HeaderCarrier, _: ExecutionContext))

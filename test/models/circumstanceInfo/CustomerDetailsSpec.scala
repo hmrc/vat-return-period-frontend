@@ -16,9 +16,9 @@
 
 package models.circumstanceInfo
 
+import assets.CustomerDetailsTestConstants._
 import play.api.libs.json.Json
 import uk.gov.hmrc.play.test.UnitSpec
-import assets.CustomerDetailsTestConstants._
 
 class CustomerDetailsSpec extends UnitSpec {
 

@@ -14,9 +14,12 @@
  * limitations under the License.
  *@
 
-@import views.html.templates.updateClient
+@import views.html.templates.UpdateClient
 @import models.auth.User
 @import models.contactPreferences.ContactPreference.{digital, paper}
+@import views.html.MainTemplate
+
+@this(mainTemplate: MainTemplate, updateClient: UpdateClient)
 
 @(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None, emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
@@ -28,7 +31,7 @@
         </p>
 }
 
-@views.html.main_template(
+@mainTemplate(
   title = messages("received_frequency.title"),
   bodyClasses = None,
   appConfig = appConfig,

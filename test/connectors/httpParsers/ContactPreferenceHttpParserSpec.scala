@@ -35,7 +35,8 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
         val response = Json.obj("preference" -> "DIGITAL")
 
         "return Digital" in {
-          ContactPreferenceReads.read("", "", HttpResponse(Status.OK, Some(response))) shouldBe Right(ContactPreference("DIGITAL"))
+          ContactPreferenceReads.read("", "", HttpResponse.apply(Status.OK, response, Map.empty[String, Seq[String]])) shouldBe
+            Right(ContactPreference("DIGITAL"))
         }
       }
 
@@ -44,7 +45,8 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
         val response = Json.obj("preference" -> "PAPER")
 
         "return Paper" in {
-          ContactPreferenceReads.read("", "", HttpResponse(Status.OK, Some(response))) shouldBe Right(ContactPreference("PAPER"))
+          ContactPreferenceReads.read("", "", HttpResponse.apply(Status.OK, response, Map.empty[String, Seq[String]])) shouldBe
+            Right(ContactPreference("PAPER"))
         }
       }
 
@@ -53,7 +55,8 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
         val response = Json.obj("preference" -> "digITaL")
 
         "return DIGITAL" in {
-          ContactPreferenceReads.read("", "", HttpResponse(Status.OK, Some(response))) shouldBe Right(ContactPreference("DIGITAL"))
+          ContactPreferenceReads.read("", "", HttpResponse.apply(Status.OK, response, Map.empty[String, Seq[String]])) shouldBe
+            Right(ContactPreference("DIGITAL"))
         }
 
       }
@@ -63,7 +66,7 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
         val response = Json.obj("preference" -> "Invalid")
 
         "return an ErrorModel" in {
-          ContactPreferenceReads.read("", "", HttpResponse(Status.OK, Some(response))) shouldBe
+          ContactPreferenceReads.read("", "", HttpResponse.apply(Status.OK, response, Map.empty[String, Seq[String]])) shouldBe
             Left(UnexpectedJsonFormat)
         }
       }
@@ -73,7 +76,7 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
         val response = Json.obj("Invalid" -> "Invalid")
 
         "return an ErrorModel" in {
-          ContactPreferenceReads.read("", "", HttpResponse(Status.OK, Some(response))) shouldBe
+          ContactPreferenceReads.read("", "", HttpResponse.apply(Status.OK, response, Map.empty[String, Seq[String]])) shouldBe
             Left(UnexpectedJsonFormat)
         }
       }
@@ -82,7 +85,7 @@ class ContactPreferenceHttpParserSpec extends BaseSpec {
     "the http response status is unexpected" should {
 
       "return an ErrorModel" in {
-        ContactPreferenceReads.read("", "", HttpResponse(Status.NOT_FOUND, responseString = Some("Response body"))) shouldBe
+        ContactPreferenceReads.read("", "", HttpResponse.apply(Status.NOT_FOUND, "Response body", Map.empty[String, Seq[String]])) shouldBe
           Left(ServerSideError(Status.NOT_FOUND.toString,"Received downstream error when retrieving contact preferences."))
       }
     }

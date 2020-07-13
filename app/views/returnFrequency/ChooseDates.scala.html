@@ -15,11 +15,15 @@
  *@
 
 @import models.returnFrequency.ReturnDatesModel
-@import uk.gov.hmrc.play.views.html.helpers
-@import templates.inputs.radioGroup
-@import views.html.errors.errorSummary
+@import templates.inputs.RadioGroup
+@import views.html.errors.ErrorSummary
 @import models.returnFrequency._
 @import models.auth.User
+@import views.html.MainTemplate
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
+
+@this(mainTemplate: MainTemplate, errorSummary: ErrorSummary, radioGroup: RadioGroup,
+      helpersForm: FormWithCSRF)
 
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
@@ -36,7 +40,7 @@
     }
 }
 
-@views.html.main_template(
+@mainTemplate(
   title = if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title")) else messages("return_frequency.title"),
   bodyClasses = None,
   appConfig = appConfig,
@@ -46,7 +50,7 @@
 
   @errorSummary("common.errorSummary.heading", form)
 
-  @helpers.form(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
+  @helpersForm(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
 
       <div class="form-group" id="period-option">
           @radioGroup(

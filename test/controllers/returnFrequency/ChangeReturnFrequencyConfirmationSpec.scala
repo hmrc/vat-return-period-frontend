@@ -26,6 +26,7 @@ import models.contactPreferences.ContactPreference
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.Helpers._
+import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
 
 class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
   with MockContactPreferenceService
@@ -33,15 +34,18 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
   with MockCustomerCircumstanceDetailsService
   with MockAuth {
 
+  val changeReturnFrequencyConfirmationView: CRFCView = injector.instanceOf[CRFCView]
+
   object TestChangeReturnFrequencyConfirmation extends ChangeReturnFrequencyConfirmation(
-    messagesApi,
     mockAuthPredicate,
     mockCustomerDetailsService,
     mockContactPreferenceService,
     errorHandler,
     mockAuditService,
     mockAppConfig,
-    ec
+    ec,
+    mcc,
+    changeReturnFrequencyConfirmationView
   )
 
   "Calling the .show action" when {

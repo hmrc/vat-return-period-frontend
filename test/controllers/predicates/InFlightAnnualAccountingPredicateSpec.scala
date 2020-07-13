@@ -17,7 +17,6 @@
 package controllers.predicates
 
 import assets.CircumstanceDetailsTestConstants._
-import assets.ReturnPeriodTestConstants._
 import assets.messages.AuthMessages
 import common.SessionKeys
 import mocks.MockAuth

@@ -31,7 +31,7 @@ class SubscriptionUpdateHttpParserSpec extends BaseSpec {
     "http response status is OK with valid json" should {
 
       val successJson = Json.obj("formBundle" -> "12345")
-      val result = SubscriptionUpdateReads.read("", "", HttpResponse(Status.OK, Some(successJson)))
+      val result = SubscriptionUpdateReads.read("", "", HttpResponse.apply(Status.OK, successJson, Map.empty[String, Seq[String]]))
 
       "return SubscriptionUpdateResponseModel" in {
         result shouldBe Right(SubscriptionUpdateResponseModel("12345"))
@@ -41,7 +41,7 @@ class SubscriptionUpdateHttpParserSpec extends BaseSpec {
     "http response status is OK with invalid json" should {
 
       val invalidJson = Json.obj("invalidKey" -> "12345")
-      val result = SubscriptionUpdateReads.read("", "", HttpResponse(Status.OK, Some(invalidJson)))
+      val result = SubscriptionUpdateReads.read("", "", HttpResponse.apply(Status.OK, invalidJson, Map.empty[String, Seq[String]]))
 
       "return ErrorModel" in {
         result shouldBe Left(UnexpectedJsonFormat)
@@ -50,7 +50,7 @@ class SubscriptionUpdateHttpParserSpec extends BaseSpec {
 
     "http response status is not OK" should {
 
-      val result = SubscriptionUpdateReads.read("", "", HttpResponse(Status.INTERNAL_SERVER_ERROR, None))
+      val result = SubscriptionUpdateReads.read("", "", HttpResponse.apply(Status.INTERNAL_SERVER_ERROR, "", Map.empty[String, Seq[String]]))
 
       "return ErrorModel" in {
         result shouldBe Left(ServerSideError("500", "Received downstream error when retrieving subscription update response."))

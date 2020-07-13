@@ -17,10 +17,8 @@
 package views
 
 import base.BaseSpec
-import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import org.scalatest.Assertion
-import play.twirl.api.Html
 
 trait ViewBaseSpec extends BaseSpec {
 

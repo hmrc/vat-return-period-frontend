@@ -54,26 +54,24 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc" %% "govuk-template" % "5.55.0-play-25",
-  "uk.gov.hmrc" %% "play-ui" % "8.11.0-play-25",
-  "uk.gov.hmrc" %% "bootstrap-play-25" % "5.3.0",
-  "uk.gov.hmrc" %% "play-partials" % "6.11.0-play-25",
-  "uk.gov.hmrc" %% "auth-client" % "3.0.0-play-25",
-  "uk.gov.hmrc" %% "domain" % "5.6.0-play-25",
+  "uk.gov.hmrc" %% "govuk-template" % "5.55.0-play-26",
+  "uk.gov.hmrc" %% "play-ui" % "8.11.0-play-26",
+  "uk.gov.hmrc" %% "bootstrap-play-26" % "1.13.0",
+  "uk.gov.hmrc" %% "play-partials" % "6.11.0-play-26",
   "org.typelevel" %% "cats" % "0.9.0",
-  "uk.gov.hmrc" %% "play-whitelist-filter" % "3.4.0-play-25",
-  "uk.gov.hmrc" %% "play-language" % "3.4.0"
+  "uk.gov.hmrc" %% "play-whitelist-filter" % "3.4.0-play-26",
+  "uk.gov.hmrc" %% "play-language" % "4.2.0-play-26"
 )
 
 val test = Seq(
-  "uk.gov.hmrc" %% "hmrctest" % "3.9.0-play-25",
+  "uk.gov.hmrc" %% "hmrctest" % "3.9.0-play-26",
   "org.scalatest" %% "scalatest" % "3.0.8",
-  "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0",
   "org.pegdown" % "pegdown" % "1.6.0",
-  "org.jsoup" % "jsoup" % "1.12.2",
+  "org.jsoup" % "jsoup" % "1.13.1",
   "com.typesafe.play" %% "play-test" % PlayVersion.current,
   "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0",
-  "com.github.tomakehurst" % "wiremock" % "2.23.2"
+  "com.github.tomakehurst" % "wiremock-jre8" % "2.27.1"
 ).map(_ % s"$Test, $IntegrationTest")
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
@@ -100,8 +98,7 @@ lazy val microservice: Project = Project(appName, file("."))
     scalaVersion := "2.11.12",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
-    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
-    routesGenerator := InjectedRoutesGenerator
+    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
   )
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)

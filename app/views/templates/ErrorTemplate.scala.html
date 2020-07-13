@@ -14,13 +14,19 @@
  * limitations under the License.
  *@
 
-@(clientName: Option[String])(implicit messages: Messages)
+@import config.AppConfig
+@import views.html.GovUkWrapper
 
-<p>@messages("common.agent.updateClient1")
-    @clientName.fold(
-    <span>{messages("common.agent.yourClient")}</span>
-    )(
-    entityName => <strong class="bold">{entityName}</strong>
-    )
-    @messages("common.agent.updateClient2")
-</p>
+@this(hmrcGovUkWrapper: GovUkWrapper)
+
+@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+
+ @contentHeader = {
+  <h1>@messages(heading)</h1>
+}
+
+ @mainContent = {
+  <p>@messages(message)</p>
+}
+
+ @hmrcGovUkWrapper(appConfig = appConfig, title = messages(pageTitle), contentHeader = Some(contentHeader), mainBody = mainContent)

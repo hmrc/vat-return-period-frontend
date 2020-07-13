@@ -15,13 +15,15 @@
  *@
 
 @import models.returnFrequency.ReturnPeriod
-@import uk.gov.hmrc.play.views.html.helpers.form
-@import templates.headings
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import models.auth.User
+@import views.html.MainTemplate
+
+@this(mainTemplate: MainTemplate, form: FormWithCSRF)
 
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
-@views.html.main_template(
+@mainTemplate(
 title = messages("checkYourAnswers.title"),
 bodyClasses = None,
 appConfig = appConfig,
