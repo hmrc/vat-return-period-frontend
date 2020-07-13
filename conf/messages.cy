@@ -66,7 +66,7 @@ return_frequency.February = Chwefror, Mai, Awst a Thachwedd
 return_frequency.March = Mawrth, Mehefin, Medi a Rhagfyr
 return_frequency.Monthly = Bob mis
 
-confirm_return_frequency.changeLink = Newidiwch y dyddiadau ar gyfer cyflwyno Ffurflenni TAW
+confirm_return_frequency.changeLink = Newid y dyddiadau ar gyfer Ffurflenni TAW
 
 confirm_return_frequency.annually.p1 = Os dewiswch newid eich dyddiadau ar gyfer cyflwyno Ffurflenni TAW:
 confirm_return_frequency.annually.bullet1 = byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol ar unwaith
