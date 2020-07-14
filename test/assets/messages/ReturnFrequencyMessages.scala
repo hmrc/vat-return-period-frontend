@@ -36,7 +36,7 @@ object ReturnFrequencyMessages extends BaseMessages {
     val title: String = "Check your answers" + titleSuffix
     val heading = "Check your answers"
     val heading2 = "VAT business details"
-    val newDates = "VAT return dates"
+    val newDates = "VAT Return dates"
     val changeLink = "Change"
     val p2 = "By confirming this change, you agree that the information you have given is complete and correct."
     val annualAccountingOption = "If you choose to change your VAT Return dates you will:"
