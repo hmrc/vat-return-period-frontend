@@ -72,7 +72,7 @@ return_frequency.February = February, May, August and November
 return_frequency.March = March, June, September and December
 return_frequency.Monthly = Monthly
 
-confirm_return_frequency.changeLink = Change the VAT return dates
+confirm_return_frequency.changeLink = Change the VAT Return dates
 
 confirm_return_frequency.annually.p1 = If you choose to change your VAT Return dates you will:
 confirm_return_frequency.annually.bullet1 = leave the Annual Accounting scheme immediately
@@ -103,4 +103,4 @@ breadcrumb.changeBusinessDetails = Change of business details
 checkYourAnswers.title = Check your answers
 checkYourAnswers.vatBusinessDetails = VAT business details
 checkYourAnswers.change = Change
-checkYourAnswers.newDates = VAT return dates
+checkYourAnswers.newDates = VAT Return dates
