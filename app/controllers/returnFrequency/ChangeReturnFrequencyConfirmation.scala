@@ -16,29 +16,33 @@
 
 package controllers.returnFrequency
 
+import audit.AuditService
+import audit.models.ContactPreferenceAuditModel
+import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
 import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
-import common.SessionKeys
 import models.auth.User
 import models.contactPreferences.ContactPreference._
-import audit.AuditService
-import audit.models.ContactPreferenceAuditModel
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 import services.{ContactPreferenceService, CustomerCircumstanceDetailsService}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
-                                                  val authenticate: AuthPredicate,
+class ChangeReturnFrequencyConfirmation @Inject()(val authenticate: AuthPredicate,
                                                   customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                                                   val contactPreferenceService: ContactPreferenceService,
                                                   val serviceErrorHandler: ServiceErrorHandler,
                                                   val auditService: AuditService,
                                                   implicit val appConfig: AppConfig,
-                                                  implicit val ec: ExecutionContext) extends FrontendController with I18nSupport {
+                                                  implicit val ec: ExecutionContext,
+                                                  mcc: MessagesControllerComponents,
+                                                  changeReturnFrequencyConfirmationView:
+                                                  CRFCView) extends FrontendController(mcc) with I18nSupport {
 
   val show: String => Action[AnyContent] = _ => authenticate.async { implicit user =>
     if (user.isAgent) {
@@ -46,9 +50,9 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
       customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
         case Right(details) =>
           val entityName = details.customerDetails.clientName
-          Ok(views.html.returnFrequency.change_return_frequency_confirmation(clientName = entityName, agentEmail = email))
+          Ok(changeReturnFrequencyConfirmationView(clientName = entityName, agentEmail = email))
         case Left(_) =>
-          Ok(views.html.returnFrequency.change_return_frequency_confirmation(agentEmail = email))
+          Ok(changeReturnFrequencyConfirmationView(agentEmail = email))
       }
     } else {
       if(appConfig.features.contactPrefMigrationFeature()) renderView else contactPrefRenderView
@@ -69,27 +73,27 @@ class ChangeReturnFrequencyConfirmation @Inject()(val messagesApi: MessagesApi,
           case `digital` if appConfig.features.emailVerifiedFeature() =>
             customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
               case Right(details) =>
-                Ok(views.html.returnFrequency.change_return_frequency_confirmation(
+                Ok(changeReturnFrequencyConfirmationView(
                   contactPref = Some(digital),
                   emailVerified = details.emailVerified.getOrElse(false)
                 ))
-              case _ => Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(digital)))
+              case _ => Ok(changeReturnFrequencyConfirmationView(contactPref = Some(digital)))
             }
           case preference => Future.successful(
-            Ok(views.html.returnFrequency.change_return_frequency_confirmation(contactPref = Some(preference))))
+            Ok(changeReturnFrequencyConfirmationView(contactPref = Some(preference))))
         }
-      case Left(_) => Future.successful(Ok(views.html.returnFrequency.change_return_frequency_confirmation()))
+      case Left(_) => Future.successful(Ok(changeReturnFrequencyConfirmationView()))
     }
   }
 
   private def renderView(implicit user: User[AnyContent]): Future[Result] =
     customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
       case Right(details) =>
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation(
+        Ok(changeReturnFrequencyConfirmationView(
           contactPref = details.commsPreference,
           emailVerified = details.emailVerified.getOrElse(false)
         ))
       case Left(_) =>
-        Ok(views.html.returnFrequency.change_return_frequency_confirmation())
+        Ok(changeReturnFrequencyConfirmationView())
     }
 }

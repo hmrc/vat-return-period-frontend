@@ -24,7 +24,7 @@ import models.circumstanceInfo.ChangeIndicators
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.Redirect
-import play.api.mvc.{ActionRefiner, Result}
+import play.api.mvc.{ActionRefiner, MessagesControllerComponents, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
@@ -35,8 +35,10 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
                                                  val serviceErrorHandler: ServiceErrorHandler,
                                                  val messagesApi: MessagesApi,
                                                  implicit val appConfig: AppConfig,
-                                                 implicit val ec: ExecutionContext)
+                                                 val mcc: MessagesControllerComponents)
   extends ActionRefiner[User, User] with I18nSupport {
+
+  implicit val executionContext: ExecutionContext = mcc.executionContext
 
   override def refine[A](request: User[A]): Future[Either[Result, User[A]]] = {
 

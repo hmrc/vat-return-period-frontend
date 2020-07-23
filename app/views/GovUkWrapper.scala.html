@@ -15,10 +15,22 @@
  *@
 
 @import config.AppConfig
-@import layouts.{govuk_template => hmrcGovUkTemplate}
-@import uk.gov.hmrc.play.views.html.{layouts => uiLayouts}
-@import uk.gov.hmrc.play.views.html.{helpers => uiHelpers}
 @import models.auth.User
+@import play.twirl.api.HtmlFormat
+@import uk.gov.hmrc.play.views.html.layouts.{Head, HeaderNav, Footer, ServiceInfo, MainContentHeader, MainContent, FooterLinks}
+@import uk.gov.hmrc.play.views.html.helpers.ReportAProblemLink
+@import layouts.GovUkTemplate
+
+@this(head: Head,
+    headerNav: HeaderNav,
+    footer: Footer,
+    footerLinks: FooterLinks,
+    serviceInfo: ServiceInfo,
+    mainContentHeader: MainContentHeader,
+    reportAProblemLink: ReportAProblemLink,
+    mainContent: MainContent,
+    hmrcGovUkTemplate: GovUkTemplate
+)
 
 @(appConfig: AppConfig,
   title: String,
@@ -27,7 +39,7 @@
   bodyClasses: Option[String] = None,
   sidebar: Html = HtmlFormat.empty,
   contentHeader: Option[Html] = None,
-  mainContent: Html = HtmlFormat.empty,
+  mainBody: Html = HtmlFormat.empty,
   serviceInfoContent: Html = HtmlFormat.empty,
   showSignOut: Boolean = true,
   scriptElem: Option[Html] = None,
@@ -38,8 +50,8 @@
   <link rel="stylesheet" type="text/css" href='@routes.Assets.at("css/focus.css")'>
 }
 
-@head = {
-    @uiLayouts.head(
+@headContent = {
+    @head(
       linkElem = Some(linkElem),
       headScripts = None)
     <meta name="format-detection" content="telephone=no" />
@@ -76,7 +88,7 @@
 }
 
 @insideHeader = {
-    @uiLayouts.header_nav(
+    @headerNav(
       navTitle = Some(dynamicNavTitle),
       navTitleLink = None,
       showBetaLink = false,
@@ -86,7 +98,7 @@
 @afterHeader = {}
 
 @bodyEnd = {
-    @uiLayouts.footer(
+    @footer(
       analyticsToken = None,
       analyticsHost = "",
       ssoUrl = None,
@@ -95,7 +107,7 @@
 }
 
 @footerTop = {}
-@footerLinks = {}
+@footerLinksContent = {}
 
 @phaseBanner = {
     <div class="beta-banner">
@@ -109,45 +121,45 @@
     </div>
 }
 
-@serviceInfo = {
-    @uiLayouts.serviceInfo(
+@serviceInfoHtml = {
+    @serviceInfo(
       betaBanner = phaseBanner,
       includeGridWrapper = false,
       includeHMRCBranding = false,
       serviceInfoContent = Some(serviceInfoContent))
 }
 
-@mainContentHeader = {
+@mainContentHeaderContent = {
       @views.html.language_selection(
            appConfig.languageMap,
            appConfig.routeToSwitchLanguage,
            customClass = Some("text--right")
     )
     @if(contentHeader.isDefined) {
-        @uiLayouts.main_content_header(contentHeader = contentHeader.get)
+        @mainContentHeader(contentHeader = contentHeader.get)
     }
 }
 
-@getHelpForm = @{uiHelpers.reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
+@getHelpForm = @{reportAProblemLink(appConfig.reportAProblemPartialUrl, appConfig.reportAProblemNonJSUrl)}
 
 @content = {
-    @uiLayouts.main_content(
-      article = mainContent,
+    @mainContent(
+      article = mainBody,
       mainClass = mainClass,
       mainDataAttributes = mainDataAttributes,
-      mainContentHeader = mainContentHeader,
-      serviceInfo = serviceInfo,
+      mainContentHeader = mainContentHeaderContent,
+      serviceInfo = serviceInfoHtml,
       getHelpForm = getHelpForm,
       sidebar = sidebar)
 }
 
 @hmrcGovUkTemplate(Some(title), bodyClasses)(
-    head,
+    headContent,
     bodyEnd,
     insideHeader,
     afterHeader,
     footerTop,
-    Some(uiLayouts.footer_links(
+    Some(footerLinks(
         None,
         None,
         Some(appConfig.accessibilityReportUrl))),

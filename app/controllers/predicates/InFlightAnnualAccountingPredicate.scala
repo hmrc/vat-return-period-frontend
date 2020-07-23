@@ -23,20 +23,22 @@ import models.auth.User
 import models.circumstanceInfo.ChangeIndicators
 import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.mvc.Results.{Ok, Redirect}
 import play.api.mvc.{ActionRefiner, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.HeaderCarrierConverter
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.annualAccounting.PreventLeaveAnnualAccounting
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: CustomerCircumstanceDetailsService,
                                                   val serviceErrorHandler: ServiceErrorHandler,
-                                                  val messagesApi: MessagesApi,
                                                   implicit val appConfig: AppConfig,
-                                                  implicit val ec: ExecutionContext)
-  extends ActionRefiner[User, User] with I18nSupport with FrontendController {
+                                                  implicit val executionContext: ExecutionContext,
+                                                  implicit val messagesApi: MessagesApi,
+                                                  preventLeaveAnnualAccountingView: PreventLeaveAnnualAccounting)
+  extends ActionRefiner[User, User] with I18nSupport{
 
   override def refine[A](request: User[A]): Future[Either[Result, User[A]]] = {
 
@@ -44,7 +46,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
     implicit val user: User[A] = request
 
     user.session.get(ANNUAL_ACCOUNTING_PENDING) match {
-      case Some("true") => Future.successful(Left(Ok(views.html.annualAccounting.preventLeaveAnnualAccounting())))
+      case Some("true") => Future.successful(Left(Ok(preventLeaveAnnualAccountingView())))
       case Some("false") => Future.successful(Right(user))
       case _ => getCustomerCircumstanceDetails
     }
@@ -55,14 +57,12 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
     customerCircumstancesService.getCustomerCircumstanceDetails(user.vrn).map {
 
       case Right(circumstanceDetails) =>
-        getAnnualAccounting(circumstanceDetails.changeIndicators) match {
-          case true =>
-            Left(Ok(views.html.annualAccounting.preventLeaveAnnualAccounting())
+        if (getAnnualAccounting(circumstanceDetails.changeIndicators)) {
+          Left(Ok(preventLeaveAnnualAccountingView())
             .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "true"))
-
-          case false =>
-            Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-              .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "false"))
+        } else {
+          Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "false"))
         }
       case Left(error) =>
         Logger.warn(s"[InFlightAnnualAccountingPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")

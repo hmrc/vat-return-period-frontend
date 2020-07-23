@@ -23,14 +23,17 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import play.api.data.Form
 import views.ViewBaseSpec
+import views.html.returnFrequency.ChooseDates
 
 class ChooseDatesViewSpec extends ViewBaseSpec {
+
+  val chooseDatesView: ChooseDates = injector.instanceOf[ChooseDates]
 
   "Rendering the Choose dates page with no errors" should {
 
     val form: Form[ReturnDatesModel] = ChooseDatesForm.datesForm
 
-    lazy val view = views.html.returnFrequency.chooseDates(form,Jan)(user, messages, mockAppConfig)
+    lazy val view = chooseDatesView(form,Jan)(user, messages, mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     s"have the correct document title of '${viewMessages.ChoosePage.title}'" in {
@@ -70,7 +73,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
 
     val form: Form[ReturnDatesModel] = ChooseDatesForm.datesForm
 
-    lazy val view = views.html.returnFrequency.chooseDates(form, Annually)(user, messages, mockAppConfig)
+    lazy val view = chooseDatesView(form, Annually)(user, messages, mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     s"have the correct document title of '${viewMessages.ChoosePage.title}'" in {
@@ -111,7 +114,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
 
     val form: Form[ReturnDatesModel] = ChooseDatesForm.datesForm.bind(Map("period-option" -> ""))
 
-    lazy val view = views.html.returnFrequency.chooseDates(form,Monthly)(user, messages, mockAppConfig)
+    lazy val view = chooseDatesView(form,Monthly)(user, messages, mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     s"have the correct document title of '${viewMessages.ChoosePage.errorTitle}'" in {

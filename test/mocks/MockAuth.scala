@@ -29,14 +29,20 @@ import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
 import uk.gov.hmrc.auth.core.retrieve.{Retrieval, ~}
 import uk.gov.hmrc.http.HeaderCarrier
+import views.html.annualAccounting.PreventLeaveAnnualAccounting
+import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
 
+  val unauthorisedAgentView: UnauthorisedAgent = injector.instanceOf[UnauthorisedAgent]
+  val unauthorisedNonAgentView: UnauthorisedNonAgent = injector.instanceOf[UnauthorisedNonAgent]
+
   lazy val mockAuthConnector: AuthConnector = mock[AuthConnector]
   lazy val mockEnrolmentsAuthService: EnrolmentsAuthService = new EnrolmentsAuthService(mockAuthConnector)
-  lazy val mockAuthPredicate: AuthPredicate = new AuthPredicate(mockEnrolmentsAuthService, errorHandler, messagesApi, ec, mockAppConfig)
+  lazy val mockAuthPredicate: AuthPredicate = new AuthPredicate(mockEnrolmentsAuthService,
+    errorHandler, mockAppConfig, mcc, unauthorisedAgentView, unauthorisedNonAgentView)
 
   def mockAuthorise(authResponse: Future[~[Option[AffinityGroup], Enrolments]]): Unit = {
     (mockAuthConnector.authorise(_: Predicate, _: Retrieval[_])(_: HeaderCarrier, _: ExecutionContext))
@@ -109,15 +115,18 @@ trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
       errorHandler,
       messagesApi,
       mockAppConfig,
-      ec
+      mcc
     )
+
+  val preventLeaveAnnualAccountingView: PreventLeaveAnnualAccounting = injector.instanceOf[PreventLeaveAnnualAccounting]
 
   val mockInFlightAnnualAccountingPredicate: InFlightAnnualAccountingPredicate =
     new InFlightAnnualAccountingPredicate(
       mockCustomerDetailsService,
       errorHandler,
-      messagesApi,
       mockAppConfig,
-      ec
+      ec,
+      messagesApi,
+      preventLeaveAnnualAccountingView
     )
 }

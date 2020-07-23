@@ -19,12 +19,15 @@ package views.annualAccounting
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import views.ViewBaseSpec
+import views.html.annualAccounting.PreventLeaveAnnualAccounting
 
-class preventLeaveAnnualAccountingViewSpec extends ViewBaseSpec {
+class PreventLeaveAnnualAccountingViewSpec extends ViewBaseSpec {
+
+  val preventLeaveAnnualAccountingView: PreventLeaveAnnualAccounting = injector.instanceOf[PreventLeaveAnnualAccounting]
 
   "Rendering the preventLeaveAnnualAccounting page" should {
 
-    lazy val view = views.html.annualAccounting.preventLeaveAnnualAccounting()(user,messages,mockAppConfig)
+    lazy val view = preventLeaveAnnualAccountingView()(user,messages,mockAppConfig)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "have a back button" in {

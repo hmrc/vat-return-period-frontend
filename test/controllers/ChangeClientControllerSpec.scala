@@ -30,7 +30,8 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
 
   object TestConfirmClientVrnControllerSpec extends ChangeClientController(
     mockAuthPredicate,
-    mockAppConfig
+    mockAppConfig,
+    mcc
   )
 
   "Calling the .changeClient action" when {

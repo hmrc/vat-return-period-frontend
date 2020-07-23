@@ -23,6 +23,7 @@ import javax.inject.{Inject, Singleton}
 import models.contactPreferences.ContactPreference
 import play.api.Logger
 import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -33,9 +34,9 @@ class ContactPreferenceConnector @Inject()(val http: HttpClient,
 
   private[connectors] def getContactPreferencesUrl(vrn: String) = {
     val serviceHost = if (config.features.stubContactPreferencesFeature()) {
-      config.baseUrl("vat-subscription-dynamic-stub")
+      config.vatSubscriptionDynamicStubURL
     } else {
-      config.baseUrl("contact-preferences")
+      config.contactPreferenceURL
     }
     serviceHost + s"/contact-preferences/vat/vrn/$vrn"
   }

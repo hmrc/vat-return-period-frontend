@@ -30,7 +30,7 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
     "the http response status is OK and with valid Json" should {
 
       "return a CustomerDetailsModel" in {
-        CircumstanceDetailsReads.read("", "", HttpResponse(Status.OK, Some(circumstanceDetailsJsonMax))) shouldBe
+        CircumstanceDetailsReads.read("", "", HttpResponse.apply(Status.OK, circumstanceDetailsJsonMax, Map.empty[String, Seq[String]])) shouldBe
           Right(circumstanceDetailsModelMax)
       }
     }
@@ -38,7 +38,7 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
     "the http response status is OK with invalid Json" should {
 
       "return an empty model" in {
-        CircumstanceDetailsReads.read("", "", HttpResponse(Status.OK, responseString = Some(""))) shouldBe
+        CircumstanceDetailsReads.read("", "", HttpResponse.apply(Status.OK, "", Map.empty[String, Seq[String]])) shouldBe
           Left(UnexpectedJsonFormat)
       }
     }
@@ -46,7 +46,7 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
     "the http response status is BAD_REQUEST" should {
 
       "return an ErrorModel" in {
-        CircumstanceDetailsReads.read("", "", HttpResponse(Status.BAD_REQUEST, None)) shouldBe
+        CircumstanceDetailsReads.read("", "", HttpResponse.apply(Status.BAD_REQUEST, "", Map.empty[String, Seq[String]])) shouldBe
           Left(ServerSideError(Status.BAD_REQUEST.toString,"Received downstream error when retrieving customer details."))
       }
     }
@@ -54,7 +54,7 @@ class CircumstanceDetailsHttpParserSpec extends BaseSpec {
     "the http response status unexpected" should {
 
       "return an ErrorModel" in {
-        CircumstanceDetailsReads.read("", "", HttpResponse(Status.SEE_OTHER, None)) shouldBe
+        CircumstanceDetailsReads.read("", "", HttpResponse.apply(Status.SEE_OTHER, "", Map.empty[String, Seq[String]])) shouldBe
           Left(ServerSideError(Status.SEE_OTHER.toString,"Received downstream error when retrieving customer details."))
       }
     }

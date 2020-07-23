@@ -32,9 +32,9 @@ import scala.concurrent.{ExecutionContext, Future}
 class VatSubscriptionConnector @Inject()(val http: HttpClient,
                                          val config: AppConfig) {
 
-  private[connectors] def getCustomerDetailsUrl(vrn: String) = config.baseUrl("vat-subscription") + s"/vat-subscription/$vrn/full-information"
+  private[connectors] def getCustomerDetailsUrl(vrn: String) = config.vatSubscriptionBaseURL + s"/vat-subscription/$vrn/full-information"
 
-  private[connectors] def updateReturnPeriodUrl(vrn: String) = config.baseUrl("vat-subscription") + s"/vat-subscription/$vrn/return-period"
+  private[connectors] def updateReturnPeriodUrl(vrn: String) = config.vatSubscriptionBaseURL + s"/vat-subscription/$vrn/return-period"
 
   def getCustomerCircumstanceDetails(id: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[CircumstanceDetails]] = {
     val url = getCustomerDetailsUrl(id)

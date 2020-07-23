@@ -14,12 +14,12 @@
  * limitations under the License.
  *@
 
-@(field: Field, label: String)(implicit messages: Messages)
+@import uk.gov.hmrc.play.views.html.helpers.{ErrorSummary => Summary}
 
-@value = @{ field.value match { case Some(x) => x case None => "false" case x => x }}
+@this(summary: Summary)
 
-<div class="multiple-choice">
-    <input id="@{field.name}" name="@{field.name}" type="checkbox" value="true" @if(value == "true"){ checked }>
-    <label for="@{field.name}">@label</label>
-</div>
+@(heading: String, form: Form[_])(implicit messages: Messages)
 
+@if(form.hasErrors) {
+    @summary(messages(heading), form)
+}

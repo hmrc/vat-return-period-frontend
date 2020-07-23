@@ -15,15 +15,18 @@
  *@
 
 @import config.ConfigKeys
-@import helper.CSRF
+@import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import testOnly.models._
+@import views.html.templates.inputs.SingleCheckbox
+@import views.html.MainTemplate
+
+@this(singleCheckbox: SingleCheckbox, mainTemplate: MainTemplate, helperForm: FormWithCSRF)
 
 @(form: Form[FeatureSwitchModel])(implicit request: Request[_], messages: Messages, appConfig: config.AppConfig)
 
-@views.html.main_template(title = messages("featureSwitch.title"), appConfig = appConfig) {
+@mainTemplate(title = messages("featureSwitch.title"), appConfig = appConfig) {
 
-  @helper.form(action = testOnly.controllers.routes.FeatureSwitchController.submitFeatureSwitch) {
-    @CSRF.formField
+  @helperForm(action = testOnly.controllers.routes.FeatureSwitchController.submitFeatureSwitch) {
 
     <div class="form-group" style="border-radius: 25px;
         background: #C9EDD9;
@@ -32,10 +35,10 @@
         <legend>
             <p class="bold-medium" style="margin-bottom: 10px;">VAT Return Period Frontend Features</p>
         </legend>
-        @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.stubContactPreferencesFeature), "Stub Contact Preferences")
-        @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.stubAgentClientLookupFeature), "Stub Agent Client Lookup")
-        @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.agentBulkPaperFeature), "Agent Bulk Paper Content")
-        @views.html.templates.inputs.singleCheckbox(form(ConfigKeys.contactPrefMigrationFeature), "Retrieve contact pref from vat-subscription")
+        @singleCheckbox(form(ConfigKeys.stubContactPreferencesFeature), "Stub Contact Preferences")
+        @singleCheckbox(form(ConfigKeys.stubAgentClientLookupFeature), "Stub Agent Client Lookup")
+        @singleCheckbox(form(ConfigKeys.agentBulkPaperFeature), "Agent Bulk Paper Content")
+        @singleCheckbox(form(ConfigKeys.contactPrefMigrationFeature), "Retrieve contact pref from vat-subscription")
       </fieldset>
     </div>
 

@@ -23,10 +23,10 @@ import play.api.i18n.Messages
 import play.api.libs.json.Json
 import play.api.libs.ws.WSResponse
 import play.api.test.Helpers.{FORBIDDEN, OK}
-import stubs.VatSubscriptionStub._
 import stubs.ReturnFrequencyStub._
+import stubs.VatSubscriptionStub._
 
-class ConfirmVatDatesControllerISpec extends BasePageISpec {
+class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
   val path = "/confirm-vat-return-dates"
   val sessionWithReturnFrequency: Map[String, String] = Map(

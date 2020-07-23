@@ -16,6 +16,7 @@
 
 package base
 
+
 import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import common.SessionKeys
@@ -29,7 +30,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.Injector
-import play.api.mvc.AnyContentAsEmpty
+import play.api.mvc.{AnyContentAsEmpty, MessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier
@@ -62,6 +63,7 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
   implicit val materializer: Materializer = ActorMaterializer()
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
+  implicit lazy val mcc: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
 
   lazy val user: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn)(fakeRequest)
   lazy val agentUser: User[AnyContentAsEmpty.type] = User[AnyContentAsEmpty.type](vrn, true, Some(arn))(fakeRequestWithClientsVRN)

@@ -19,22 +19,17 @@ package connectors
 import assets.BaseTestConstants.errorModel
 import assets.ContactPreferenceTestConstants.digitalContactPreferenceModel
 import base.BaseSpec
-import config.FrontendAppConfig
 import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import mocks.MockHttp
 import models.contactPreferences.ContactPreference
-import play.api.{Configuration, Environment}
 
 import scala.concurrent.Future
 
 class ContactPreferencesConnectorSpec extends BaseSpec with MockHttp {
 
-  val env: Environment = Environment.simple()
-  val configuration: Configuration = Configuration.load(env)
-
   object TestContactPreferencesConnector extends ContactPreferenceConnector(
     mockHttp,
-    new FrontendAppConfig(env, configuration)
+    mockAppConfig
   )
 
   "ContactPreferenceConnector" when {

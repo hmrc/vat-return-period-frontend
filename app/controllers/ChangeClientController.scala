@@ -20,19 +20,20 @@ import common.SessionKeys
 import config.AppConfig
 import controllers.predicates.AuthPredicate
 import javax.inject.Inject
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
 
 import scala.concurrent.Future
 
 class ChangeClientController @Inject()(val authenticate: AuthPredicate,
-                                       implicit val appConfig: AppConfig) extends FrontendController {
+                                       implicit val appConfig: AppConfig,
+                                       val mcc: MessagesControllerComponents) extends FrontendController(mcc) {
 
   def changeClient: Action[AnyContent] = authenticate.async {
     implicit user =>
       Future.successful(
-        Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl))
-          .removingFromSession(SessionKeys.CLIENT_VRN, SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY, SessionKeys.ANNUAL_ACCOUNTING_PENDING)
+        Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl)).removingFromSession(SessionKeys.CLIENT_VRN,
+          SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY, SessionKeys.ANNUAL_ACCOUNTING_PENDING)
       )
   }
 }

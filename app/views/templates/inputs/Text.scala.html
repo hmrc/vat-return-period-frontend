@@ -14,13 +14,15 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.play.views.html.helpers
+@import uk.gov.hmrc.play.views.html.helpers.Input
+
+@this(input: Input)
 
 @(field: Field, label: String, hint: Option[String] = None)(implicit messages: Messages)
 
 <div class="form-field">
     @if(hint.isDefined) {
-        @helpers.input(
+        @input(
             field,
             '_label -> messages(label),
             '_labelTextClass -> "form-label visuallyhidden",
@@ -28,7 +30,7 @@
             '_inputClass -> "form-control input--no-spinner"
         )
     } else {
-        @helpers.input(
+        @input(
             field,
             '_label -> messages(label),
             '_labelTextClass -> "form-label visuallyhidden",

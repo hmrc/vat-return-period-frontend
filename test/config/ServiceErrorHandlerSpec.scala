@@ -19,10 +19,13 @@ package config
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import views.ViewBaseSpec
+import views.html.templates.ErrorTemplate
 
 class ServiceErrorHandlerSpec extends ViewBaseSpec {
 
-  val service: ServiceErrorHandler = new ServiceErrorHandler(messagesApi, mockAppConfig)
+  val errorTemplate: ErrorTemplate = injector.instanceOf[ErrorTemplate]
+
+  val service: ServiceErrorHandler = new ServiceErrorHandler(messagesApi, mockAppConfig, errorTemplate)
 
   object Selectors {
     val pageHeading = "h1"

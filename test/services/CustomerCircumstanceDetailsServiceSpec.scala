@@ -17,11 +17,11 @@
 package services
 
 import assets.BaseTestConstants._
+import assets.CircumstanceDetailsTestConstants._
 import base.BaseSpec
 import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import mocks.connectors.MockSubscriptionConnector
 import models.circumstanceInfo.CircumstanceDetails
-import assets.CircumstanceDetailsTestConstants._
 import models.errors.ServerSideError
 
 import scala.concurrent.Future

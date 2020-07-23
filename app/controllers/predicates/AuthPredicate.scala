@@ -23,7 +23,7 @@ import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import play.api.Logger
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 import services.EnrolmentsAuthService
 import uk.gov.hmrc.auth.core.AffinityGroup.Agent
@@ -31,18 +31,23 @@ import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals._
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
                               errorHandler: ServiceErrorHandler,
-                              val messagesApi: MessagesApi,
-                              implicit val ec: ExecutionContext,
-                              implicit val appConfig: AppConfig) extends FrontendController
+                              implicit val appConfig: AppConfig,
+                              val mcc: MessagesControllerComponents,
+                              unauthorisedAgentView: UnauthorisedAgent,
+                              unauthorisedNonAgentView: UnauthorisedNonAgent) extends FrontendController(mcc)
   with I18nSupport
-  with ActionBuilder[User]
+  with ActionBuilder[User, AnyContent]
   with ActionFunction[Request, User] {
+
+  override val parser: BodyParser[AnyContent] = mcc.parsers.defaultBodyParser
+  implicit val executionContext: ExecutionContext = mcc.executionContext
 
   override def invokeBlock[A](request: Request[A], block: User[A] => Future[Result]): Future[Result] = {
 
@@ -56,7 +61,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
             authoriseAsAgent(block)
           } else {
             Logger.debug("[AuthPredicate][invokeBlock] - Agent does not have correct agent enrolment ID")
-            Future.successful(Forbidden(views.html.errors.unauthorised_agent()))
+            Future.successful(Forbidden(unauthorisedAgentView()))
           }
         case Some(_) ~ enrolments => authoriseAsNonAgent(enrolments, block)
         case None ~ _ =>
@@ -80,7 +85,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
       case Some(vrn) => block(User(vrn))
       case None =>
         Logger.debug("[AuthPredicate][authoriseAsNonAgent] - Non-agent with no HMRC-MTD-VAT enrolment. Rendering unauthorised view.")
-        Future.successful(Forbidden(views.html.errors.unauthorised_non_agent()))
+        Future.successful(Forbidden(unauthorisedNonAgentView()))
     }
   }
 
@@ -104,7 +109,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
                 case Some(arn) => block(User(vrn, active = true, Some(arn)))
                 case None =>
                   Logger.debug("[AuthPredicate][authoriseAsAgent] - Agent with no HMRC-AS-AGENT enrolment. Rendering unauthorised view.")
-                  Future.successful(Forbidden(views.html.errors.unauthorised_agent()))
+                  Future.successful(Forbidden(unauthorisedAgentView()))
               }
           } recover {
           case _: NoActiveSession =>

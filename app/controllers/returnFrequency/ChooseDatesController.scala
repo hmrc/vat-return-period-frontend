@@ -18,24 +18,26 @@ package controllers.returnFrequency
 
 import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
-import controllers.predicates.{AuthPredicate, InFlightReturnFrequencyPredicate, InFlightAnnualAccountingPredicate}
+import controllers.predicates.{AuthPredicate, InFlightAnnualAccountingPredicate, InFlightReturnFrequencyPredicate}
 import forms.ChooseDatesForm.datesForm
 import javax.inject.{Inject, Singleton}
 import models.returnFrequency.{ReturnDatesModel, ReturnPeriod}
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, AnyContent}
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import views.html.returnFrequency.ChooseDates
 
 @Singleton
-class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
-                                      val authenticate: AuthPredicate,
+class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
                                       val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
                                       val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
                                       val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                                       val serviceErrorHandler: ServiceErrorHandler,
-                                      implicit val appConfig: AppConfig) extends FrontendController with I18nSupport {
+                                      val mcc: MessagesControllerComponents,
+                                      implicit val appConfig: AppConfig,
+                                      chooseDatesView: ChooseDates) extends FrontendController(mcc) with I18nSupport {
 
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
@@ -47,7 +49,7 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
     }
 
     ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
-      Ok(views.html.returnFrequency.chooseDates(form, returnFrequency))
+      Ok(chooseDatesView(form, returnFrequency))
     }
   }
 
@@ -57,7 +59,7 @@ class ChooseDatesController @Inject()(val messagesApi: MessagesApi,
     datesForm.bindFromRequest().fold(
       errors =>
         ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
-          BadRequest(views.html.returnFrequency.chooseDates(errors, returnFrequency))
+          BadRequest(chooseDatesView(errors, returnFrequency))
         ),
       success =>
         Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)

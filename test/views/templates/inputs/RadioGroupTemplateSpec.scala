@@ -20,7 +20,7 @@ import play.api.data.{Field, FormError}
 import play.twirl.api.Html
 import testOnly.forms.TextInputForm
 import views.ViewBaseSpec
-import views.html.templates.inputs.radioGroup
+import views.html.templates.inputs.RadioGroup
 
 class RadioGroupTemplateSpec extends ViewBaseSpec {
 
@@ -35,6 +35,7 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
     "value4" -> "display4",
     "value5" -> "display5"
   )
+  val radioGroup: RadioGroup = injector.instanceOf[RadioGroup]
 
   def generateExpectedRadioMarkup(value: String, display: String, checked: Boolean = false): String =
     s"""
