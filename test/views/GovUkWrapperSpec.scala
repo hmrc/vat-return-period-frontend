@@ -26,7 +26,7 @@ class GovUkWrapperSpec extends ViewBaseSpec {
 
   "creating a page with a footer" should {
 
-    lazy val view = govUkWrapperView(mockAppConfig, "title")(fakeRequest, messages)
+    lazy val view = govUkWrapperView(mockAppConfig, "title")(messages)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "not display a logo" in {

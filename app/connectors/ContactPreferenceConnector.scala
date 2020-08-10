@@ -22,9 +22,7 @@ import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import javax.inject.{Inject, Singleton}
 import models.contactPreferences.ContactPreference
 import play.api.Logger
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import uk.gov.hmrc.play.bootstrap.http.HttpClient
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 
 import scala.concurrent.{ExecutionContext, Future}
 

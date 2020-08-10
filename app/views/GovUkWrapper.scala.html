@@ -43,7 +43,7 @@
   serviceInfoContent: Html = HtmlFormat.empty,
   showSignOut: Boolean = true,
   scriptElem: Option[Html] = None,
-  user: Option[User[_]] = None)(implicit request: Request[_], messages: Messages)
+  user: Option[User[_]] = None)(implicit messages: Messages)
 
 @linkElem = {
   <link rel="stylesheet" type="text/css" href='@routes.Assets.at("css/palette.css")'>
@@ -107,7 +107,6 @@
 }
 
 @footerTop = {}
-@footerLinksContent = {}
 
 @phaseBanner = {
     <div class="beta-banner">
