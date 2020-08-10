@@ -15,6 +15,7 @@
  */
 
 import play.core.PlayVersion
+import play.sbt.routes.RoutesKeys
 import sbt.Tests.{Group, SubProcess}
 import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
@@ -24,6 +25,8 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
+
+RoutesKeys.routesImport := Seq.empty
 
 lazy val coverageSettings: Seq[Setting[_]] = {
   import scoverage.ScoverageKeys
