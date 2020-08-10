@@ -19,7 +19,7 @@
 
 @this(hmrcGovUkWrapper: GovUkWrapper)
 
-@(pageTitle: String, heading: String, message: String)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
+@(pageTitle: String, heading: String, message: String)(implicit messages: Messages, appConfig: AppConfig)
 
  @contentHeader = {
   <h1>@messages(heading)</h1>
