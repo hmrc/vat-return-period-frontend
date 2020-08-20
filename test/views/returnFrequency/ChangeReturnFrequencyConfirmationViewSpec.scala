@@ -210,7 +210,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "display the 'change another clients details' link" in {
           elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.backToClientDetails
           element("#change-client-link").attr("href") shouldBe
-            controllers.routes.ChangeClientController.changeClient().url
+            mockAppConfig.manageVatUrl
         }
 
         "have the correct finish button" which {
@@ -308,7 +308,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "display the 'back to client's details' link" in {
           elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.backToClientDetails
           element("#change-client-link").attr("href") shouldBe
-            controllers.routes.ChangeClientController.changeClient().url
+            mockAppConfig.manageVatUrl
         }
 
         "have the correct finish button" which {
