@@ -208,7 +208,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         "display the 'change another clients details' link" in {
-          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
+          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.backToClientDetails
           element("#change-client-link").attr("href") shouldBe
             controllers.routes.ChangeClientController.changeClient().url
         }
@@ -305,8 +305,8 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
 
-        "display the 'change another clients details' link" in {
-          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
+        "display the 'back to client's details' link" in {
+          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.backToClientDetails
           element("#change-client-link").attr("href") shouldBe
             controllers.routes.ChangeClientController.changeClient().url
         }

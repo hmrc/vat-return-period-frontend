@@ -58,7 +58,7 @@ common.agent.yourClient = your client
 common.agent.confirmationLetter = We will send a confirmation letter to the agency address registered with HMRC within 15 working days.
 common.agent.updateClient1 = We’ll contact
 common.agent.updateClient2 = with an update.
-common.agent.changeClient = Change client
+common.agent.backToClient = Back to client’s details
 
 # Choose return frequency dates messages
 chooseDatesForm.frequency.missing = Choose the new VAT Return dates
