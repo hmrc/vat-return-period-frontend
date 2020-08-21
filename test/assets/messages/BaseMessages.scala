@@ -20,7 +20,7 @@ trait BaseMessages {
 
   val continue = "Continue"
   val back = "Back"
-  val finish = "Finish"
+  val backToClient = "Back to client’s details"
   val errorHeading = "There is a problem"
 
   val titleSuffix = " - Business tax account - GOV.UK"

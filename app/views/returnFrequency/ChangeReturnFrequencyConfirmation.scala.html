@@ -23,13 +23,6 @@
 
 @(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None, emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
-@changeClientLink = {
-        <p id="change-client-text">
-            <a id="change-client-link"
-            href="@controllers.routes.ChangeClientController.changeClient()">
-            @messages("common.agent.changeClient")</a>
-        </p>
-}
 
 @mainTemplate(
   title = messages("received_frequency.title"),
@@ -69,7 +62,6 @@
             }
         }
 
-        @changeClientLink
     } else {
 
         @contactPref match {
@@ -85,6 +77,6 @@
         href='@appConfig.manageVatUrl'
         class="button"
         role="button"
-        type="submit">@messages("common.finish")</a>
+        type="submit">@messages("common.agent.backToClient")</a>
 
 }

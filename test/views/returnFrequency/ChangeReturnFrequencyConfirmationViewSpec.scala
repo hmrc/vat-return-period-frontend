@@ -69,8 +69,8 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
         "have the correct finish button" which {
 
-          s"has the text '${viewMessages.finish}'" in {
-            elementText("#finish") shouldBe viewMessages.finish
+          s"has the text '${viewMessages.backToClient}'" in {
+            elementText("#finish") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
@@ -119,10 +119,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementExtinct("#change-client-text")
       }
 
-      "have the correct finish button" which {
+      "have the correct Back to client's details button" which {
 
-        s"has the text '${viewMessages.finish}'" in {
-          elementText("#finish") shouldBe viewMessages.finish
+        s"has the text '${viewMessages.backToClient}'" in {
+          elementText("#finish") shouldBe viewMessages.backToClient
         }
 
         "has link back to customer details page" in {
@@ -160,10 +160,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementExtinct("#change-client-text")
       }
 
-      "have the correct finish button" which {
+      "have the correct back to client's details button" which {
 
-        s"has the text '${viewMessages.finish}'" in {
-          elementText("#finish") shouldBe viewMessages.finish
+        s"has the text '${viewMessages.backToClient}'" in {
+          elementText("#finish") shouldBe viewMessages.backToClient
         }
 
         "has link back to customer details page" in {
@@ -207,16 +207,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
 
-        "display the 'change another clients details' link" in {
-          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
-          element("#change-client-link").attr("href") shouldBe
-            controllers.routes.ChangeClientController.changeClient().url
-        }
+        "have the correct back to client's details button" which {
 
-        "have the correct finish button" which {
-
-          s"has the text '${viewMessages.finish}'" in {
-            elementText("#finish") shouldBe viewMessages.finish
+          s"has the text '${viewMessages.backToClient}'" in {
+            elementText("#finish") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
@@ -305,16 +299,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
 
-        "display the 'change another clients details' link" in {
-          elementText("#change-client-text") shouldBe viewMessages.ReceivedPage.newChangeClientDetails
-          element("#change-client-link").attr("href") shouldBe
-            controllers.routes.ChangeClientController.changeClient().url
-        }
 
-        "have the correct finish button" which {
+        "have the correct f button" which {
 
-          s"has the text '${viewMessages.finish}'" in {
-            elementText("#finish") shouldBe viewMessages.finish
+          s"has the text '${viewMessages.backToClient}'" in {
+            elementText("#finish") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {

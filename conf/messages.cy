@@ -52,7 +52,7 @@ common.agent.yourClient = eich cleient
 common.agent.confirmationLetter = Byddwn yn anfon llythyr o gadarnhad i gyfeiriad yr asiantaeth sydd wedi’i gofrestru gyda CThEM cyn pen 15 diwrnod gwaith.
 common.agent.updateClient1 = Byddwn yn cysylltu â
 common.agent.updateClient2 = gyda diweddariad.
-common.agent.changeClient = Newid cleient
+common.agent.backToClient = Yn ôl i fanylion y cleient
 
 # Choose return frequency dates messages
 chooseDatesForm.frequency.missing = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
