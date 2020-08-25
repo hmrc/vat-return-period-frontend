@@ -73,10 +73,18 @@
 
     }
 
+@if(user.isAgent) {
     <a  id="finish"
         href='@appConfig.manageVatUrl'
         class="button"
         role="button"
         type="submit">@messages("common.agent.backToClient")</a>
+} else {
+<a  id="finish"
+    href='@appConfig.manageVatUrl'
+    class="button"
+    role="button"
+    type="submit">@messages("common.finish")</a>
+}
 
 }

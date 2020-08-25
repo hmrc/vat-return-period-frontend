@@ -69,8 +69,8 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
         "have the correct finish button" which {
 
-          s"has the text '${viewMessages.backToClient}'" in {
-            elementText("#finish") shouldBe viewMessages.backToClient
+          s"has the text '${viewMessages.finish}'" in {
+            elementText("#finish") shouldBe viewMessages.finish
           }
 
           "has link back to customer details page" in {
@@ -119,10 +119,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementExtinct("#change-client-text")
       }
 
-      "have the correct Back to client's details button" which {
+      "have the correct finish button" which {
 
-        s"has the text '${viewMessages.backToClient}'" in {
-          elementText("#finish") shouldBe viewMessages.backToClient
+        s"has the text '${viewMessages.finish}'" in {
+          elementText("#finish") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {
@@ -160,10 +160,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementExtinct("#change-client-text")
       }
 
-      "have the correct back to client's details button" which {
+      "have the correct finish button" which {
 
         s"has the text '${viewMessages.backToClient}'" in {
-          elementText("#finish") shouldBe viewMessages.backToClient
+          elementText("#finish") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {

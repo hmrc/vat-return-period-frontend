@@ -22,6 +22,7 @@ trait BaseMessages {
   val back = "Back"
   val backToClient = "Back to client’s details"
   val errorHeading = "There is a problem"
+  val finish = "Finish"
 
   val titleSuffix = " - Business tax account - GOV.UK"
   val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
