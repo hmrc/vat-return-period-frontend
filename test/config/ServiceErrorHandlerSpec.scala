@@ -29,7 +29,7 @@ class ServiceErrorHandlerSpec extends ViewBaseSpec {
 
   object Selectors {
     val pageHeading = "h1"
-    val message = "#content > p:nth-child(3)"
+    val message = "#content > p:nth-child(2)"
   }
 
   "The not found template" should {
