@@ -34,7 +34,7 @@
 
 @(appConfig: AppConfig,
   title: String,
-  mainClass: Option[String] = None,
+  backLinkContent: Option[Html] = None,
   mainDataAttributes: Option[Html] = None,
   bodyClasses: Option[String] = None,
   sidebar: Html = HtmlFormat.empty,
@@ -95,7 +95,31 @@
       navLinks = Some(headerNavLinks))
 }
 
-@afterHeader = {}
+@phaseBanner = {
+  <div class="beta-banner">
+    <p>
+      <strong class="phase-tag">@messages("banner.phaseName")</strong>
+      <span>@messages("feedback.before")
+      <a href="@appConfig.betaFeedbackUrl">@messages("feedback.link")</a>
+        @messages("feedback.after")
+      </span>
+    </p>
+  </div>
+}
+
+@afterHeader = {
+  <div class="centered-content">
+    <div class="service-info">
+      @phaseBanner
+    </div>
+    @views.html.language_selection(
+      appConfig.languageMap,
+      appConfig.routeToSwitchLanguage,
+      customClass = Some("text--right")
+    )
+    @backLinkContent
+  </div>
+}
 
 @bodyEnd = {
     @footer(
@@ -108,18 +132,6 @@
 
 @footerTop = {}
 
-@phaseBanner = {
-    <div class="beta-banner">
-        <p>
-            <strong class="phase-tag">@messages("banner.phaseName")</strong>
-            <span>@messages("feedback.before")
-                <a href="@appConfig.betaFeedbackUrl">@messages("feedback.link")</a>
-                @messages("feedback.after")
-            </span>
-        </p>
-    </div>
-}
-
 @serviceInfoHtml = {
     @serviceInfo(
       betaBanner = phaseBanner,
@@ -129,11 +141,6 @@
 }
 
 @mainContentHeaderContent = {
-      @views.html.language_selection(
-           appConfig.languageMap,
-           appConfig.routeToSwitchLanguage,
-           customClass = Some("text--right")
-    )
     @if(contentHeader.isDefined) {
         @mainContentHeader(contentHeader = contentHeader.get)
     }
@@ -144,12 +151,11 @@
 @content = {
     @mainContent(
       article = mainBody,
-      mainClass = mainClass,
       mainDataAttributes = mainDataAttributes,
       mainContentHeader = mainContentHeaderContent,
-      serviceInfo = serviceInfoHtml,
       getHelpForm = getHelpForm,
-      sidebar = sidebar)
+      sidebar = sidebar
+    )
 }
 
 @hmrcGovUkTemplate(Some(title), bodyClasses)(

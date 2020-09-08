@@ -25,7 +25,7 @@
   sidebarLinks: Option[Html] = None,
   contentHeader: Option[Html] = None,
   bodyClasses: Option[String] = None,
-  mainClass: Option[String] = None,
+  backLinkContent: Option[Html] = None,
   scriptElem: Option[Html] = None,
   showSignOut: Boolean = true,
   user: Option[User[_]] = None)(mainContent: Html)(implicit messages: Messages)
@@ -42,7 +42,7 @@
 
 @govUkWrapper(appConfig = appConfig,
   title = messages("common.pageTitle", title, titleServiceName),
-  mainClass = mainClass,
+  backLinkContent = backLinkContent,
   bodyClasses = bodyClasses,
   sidebar = sidebarContent,
   contentHeader = contentHeader,

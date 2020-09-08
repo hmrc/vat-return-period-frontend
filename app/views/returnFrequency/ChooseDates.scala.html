@@ -22,8 +22,7 @@
 @import views.html.MainTemplate
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 
-@this(mainTemplate: MainTemplate, errorSummary: ErrorSummary, radioGroup: RadioGroup,
-      helpersForm: FormWithCSRF)
+@this(mainTemplate: MainTemplate, errorSummary: ErrorSummary, radioGroup: RadioGroup, helpersForm: FormWithCSRF)
 
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
@@ -40,13 +39,15 @@
     }
 }
 
+@backLink = {
+  <a class="link-back" href='@appConfig.manageVatUrl'>@messages("base.back")</a>
+}
+
 @mainTemplate(
   title = if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title")) else messages("return_frequency.title"),
-  bodyClasses = None,
   appConfig = appConfig,
+  backLinkContent = Some(backLink),
   user = Some(user)) {
-
-  <a class="link-back" href='@appConfig.manageVatUrl'>@messages("base.back")</a>
 
   @errorSummary("common.errorSummary.heading", form)
 
@@ -71,5 +72,4 @@
       </button>
 
   }
-
 }
