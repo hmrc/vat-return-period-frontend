@@ -46,20 +46,5 @@ object SessionCookieBaker {
     s"""mdtp="$encrypted"; Path=/; HTTPOnly"; Path=/; HTTPOnly"""
   }
 
-  private def cookieData(additionalData: Map[String, String], timeStampRollback: Long): Map[String, String] = {
-
-    val timeStamp = new java.util.Date().getTime
-    val rollbackTimestamp = (timeStamp - timeStampRollback).toString
-
-    Map(
-      SessionKeys.sessionId -> sessionId,
-      SessionKeys.userId -> userId,
-      SessionKeys.authToken -> "Bearer 1234",
-      SessionKeys.lastRequestTimestamp -> rollbackTimestamp
-    ) ++ additionalData
-  }
-
-  def bakeSessionCookie(additionalData: Map[String, String] = Map(), timeStampRollback: Long = 0): String = {
-    cookieValue(cookieData(additionalData, timeStampRollback))
-  }
+  def bakeSessionCookie(additionalData: Map[String, String] = Map()): String = cookieValue(additionalData)
 }
