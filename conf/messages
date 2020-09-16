@@ -5,6 +5,7 @@ common.finish = Finish
 common.confirmAndContinue = Confirm and continue
 common.errorSummary.heading = There is a problem
 common.continue = Continue
+common.error = Error:
 
 base.back = Back
 base.signOut = Sign out

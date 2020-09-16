@@ -51,20 +51,21 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
       val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), None)
       val expectedMarkup = Html(
         s"""
-           |  <div>
-           |    <fieldset>
-           |      <legend>
-           |        <h1 id="page-heading" class="heading-large">$labelText</h1>
-           |      </legend>
+           |<div class="form-group" id="period-option">
+           | <fieldset aria-describedby="form-hint">
+	         |   <div class="form-field">
+           |        <legend>
+           |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+           |        </legend>
            |
            |      ${generateExpectedRadioMarkup("value1", "display1")}
            |      ${generateExpectedRadioMarkup("value2", "display2")}
            |      ${generateExpectedRadioMarkup("value3", "display3")}
            |      ${generateExpectedRadioMarkup("value4", "display4")}
            |      ${generateExpectedRadioMarkup("value5", "display5")}
-           |
-           |   </fieldset>
            |  </div>
+           | </fieldset>
+           |</div>
         """.stripMargin
       )
 
@@ -79,19 +80,21 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
       val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), Some("value2"))
       val expectedMarkup = Html(
         s"""
-           |  <div>
-           |     <fieldset>
-           |      <legend>
-           |        <h1 id="page-heading" class="heading-large">$labelText</h1>
-           |      </legend>
+           |<div class="form-group" id="period-option">
+           |    <fieldset aria-describedby="form-hint">
+	         |      <div class="form-field">
+           |        <legend>
+           |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+           |        </legend>
            |
            |      ${generateExpectedRadioMarkup("value1", "display1")}
            |      ${generateExpectedRadioMarkup("value2", "display2", checked = true)}
            |      ${generateExpectedRadioMarkup("value3", "display3")}
            |      ${generateExpectedRadioMarkup("value4", "display4")}
            |      ${generateExpectedRadioMarkup("value5", "display5")}
-           |    </fieldset>
-           |  </div>
+           |    </div>
+           |   </fieldset>
+           |</div>
         """.stripMargin
       )
 
@@ -107,21 +110,26 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
       val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(FormError("text", errorMessage)), None)
       val expectedMarkup = Html(
         s"""
-           |  <div class="form-field--error panel-border-narrow">
-           |    <fieldset>
-           |      <legend>
-           |        <h1 id="page-heading" class="heading-large">$labelText</h1>
-           |      </legend>
+           |<div class="form-group" id="period-option">
+           |    <fieldset aria-describedby="form-hint form-error">
+           |      <div class="form-field--error panel-border-narrow">
+           |        <legend>
+           |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+           |        </legend>
            |
-           |      <span class="error-message">$errorMessage</span>
+           |      <span id="form-error" class="error-message">
+           |        <span class="visuallyhidden">Error:</span>
+           |        $errorMessage
+           |      </span>
            |
            |      ${generateExpectedRadioMarkup("value1", "display1")}
            |      ${generateExpectedRadioMarkup("value2", "display2")}
            |      ${generateExpectedRadioMarkup("value3", "display3")}
            |      ${generateExpectedRadioMarkup("value4", "display4")}
            |      ${generateExpectedRadioMarkup("value5", "display5")}
-           |    </fieldset>
-           |  </div>
+           |    </div>
+           |   </fieldset>
+           |</div>
         """.stripMargin
       )
 
@@ -137,21 +145,22 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
       val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), None)
       val expectedMarkup = Html(
         s"""
-           |<div>
-           |    <fieldset>
-           |      <legend>
-           |        <h1 id="page-heading" class="heading-large">$labelText</h1>
-           |      </legend>
+           |<div class="form-group" id="period-option">
+           |  <fieldset aria-describedby="form-hint">
+	         |    <div class="form-field">
+           |        <legend>
+           |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+           |        </legend>
            |
            |      $additionalContent
-
+           |
            |      ${generateExpectedRadioMarkup("value1", "display1")}
            |      ${generateExpectedRadioMarkup("value2", "display2")}
            |      ${generateExpectedRadioMarkup("value3", "display3")}
            |      ${generateExpectedRadioMarkup("value4", "display4")}
            |      ${generateExpectedRadioMarkup("value5", "display5")}
-           |
-           |    </fieldset>
+           |    </div>
+           | </fieldset>
            |</div>
         """.stripMargin
       )

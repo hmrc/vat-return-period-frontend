@@ -5,6 +5,7 @@ common.finish = Gorffen
 common.confirmAndContinue = Cadarnhau ac yn eich blaen
 common.errorSummary.heading = Mae problem wedi codi
 common.continue = Yn eich blaen
+common.error = Gwall:
 
 base.back = Yn ôl
 base.signOut = Allgofnodi
