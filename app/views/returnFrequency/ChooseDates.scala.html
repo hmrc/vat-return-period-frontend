@@ -28,11 +28,11 @@
 
 @additionalContent = {
     @if(current.id.equals("Annually")){
-        <p>
+        <p id="form-hint">
             <span id="currently-set-text">@messages("return_frequency.currentAnnual")</span>
         </p>
     } else {
-        <p>
+        <p id="form-hint">
             <span id="currently-set-text">@messages("return_frequency.current")</span>
             <span id="currently-set-period">@messages(s"return_frequency.${current.id}")</span>
         </p>
@@ -53,7 +53,6 @@
 
   @helpersForm(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
 
-      <div class="form-group" id="period-option">
           @radioGroup(
               field = form("period-option"),
               choices = Seq(Jan, Feb, Mar, Monthly).filterNot(_ == current).map { option =>
@@ -62,7 +61,6 @@
               question = messages("return_frequency.title"),
               additionalContent = Some(additionalContent)
           )
-      </div>
 
       <button
           class="button"

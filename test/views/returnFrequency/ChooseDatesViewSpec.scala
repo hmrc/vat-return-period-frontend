@@ -54,9 +54,9 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     "have the correct options return dates of" in {
-      elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option2Feb
-      elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option3Mar
-      elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option4Monthly
+      elementText(".form-field > div:nth-of-type(1) > label") shouldBe viewMessages.option2Feb
+      elementText(".form-field > div:nth-of-type(2) > label") shouldBe viewMessages.option3Mar
+      elementText(".form-field > div:nth-of-type(3) > label") shouldBe viewMessages.option4Monthly
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -94,10 +94,10 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     "have the correct options return dates of" in {
-      elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
-      elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
-      elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
-      elementText("fieldset > div:nth-of-type(4) > label") shouldBe viewMessages.option4Monthly
+      elementText(".form-field > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".form-field > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
+      elementText(".form-field > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
+      elementText(".form-field > div:nth-of-type(4) > label") shouldBe viewMessages.option4Monthly
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -135,9 +135,9 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     "have the correct options return dates of" in {
-      elementText("fieldset > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
-      elementText("fieldset > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
-      elementText("fieldset > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
+      elementText(".form-field--error > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".form-field--error > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
+      elementText(".form-field--error > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
     }
   }
 }
