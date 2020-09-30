@@ -76,20 +76,16 @@ confirm_return_frequency.annually.bullet2 = bydd yn rhaid i chi aros 12 mis cyn 
 received_frequency.title = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
 received_frequency.heading = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
 received_frequency.subheading = Yr hyn sy’n digwydd nesaf
-received_frequency.p1 = Gwiriwch eich Cyfrif Treth Busnes ar-lein cyn pen 2 ddiwrnod gwaith i weld a yw’ch cais wedi’i dderbyn.
-received_frequency.p2 = Os caiff y newid hwn ei dderbyn:
-received_frequency.bullet1 = byddwn yn anfon llythyr o gadarnhad i’ch prif fan busnes cyn pen 10 diwrnod gwaith
-received_frequency.bullet2 = rhaid i’r busnes gyflwyno Ffurflen TAW y cyfnod hwn cyn dilyn y dyddiadau newydd ar gyfer Ffurflenni TAW
 received_frequency.agent.p1-1 = Byddwn yn anfon e-bost at
 received_frequency.agent.p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a yw’r cais wedi’i dderbyn ai peidio.
 received_frequency.agent.bulkPaper-p1-1 = Byddwn yn anfon e-bost i
 received_frequency.agent.bulkPaper-p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a allwn dderbyn eich cais ai peidio.
+received_frequency.newDates = Bydd y dyddiadau newydd ar gyfer Ffurflenni TAW ond yn dangos ar y cyfrif pan fyddant yn newid. Tan hynny, byddwn yn parhau i ddangos y dyddiadau cyflwyno presennol.
 
 contact_preference.email = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith gyda diweddariad, neu gallwch wirio’ch negeseuon diogel oddi wrth CThEM.
 contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith i roi diweddariad, wedi’i ddilyn gan lythyr i’ch prif fan busnes. Gallwch hefyd fynd i’ch negeseuon diogel CThEM i weld a yw’ch cais wedi’i dderbyn.
 contact_preference.paper = Byddwn yn anfon llythyr i’ch prif fan busnes i roi diweddariad cyn pen 15 diwrnod gwaith.
 contact_preference.contactPrefError = Byddwn yn anfon diweddariad atoch cyn pen 15 diwrnod gwaith.
-contact_preference.contact = Sicrhewch fod eich manylion cyswllt wedi’u diweddaru.
 
 breadcrumb.bta = Cyfrif Treth Busnes
 breadcrumb.yourVatDetails = Eich manylion TAW

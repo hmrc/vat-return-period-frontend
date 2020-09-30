@@ -55,12 +55,12 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           elementText("h2") shouldBe viewMessages.ReceivedPage.h2
         }
 
-        s"have the correct p1 of '${viewMessages.ReceivedPage.p1}'" in {
+        s"have the correct p1 of '${viewMessages.ReceivedPage.digiPrefWithEmail}'" in {
           paragraph(1) shouldBe viewMessages.ReceivedPage.digiPrefWithEmail
         }
 
-        s"have the correct p2 of '${viewMessages.ReceivedPage.p2}'" in {
-          paragraph(2) shouldBe viewMessages.ReceivedPage.contactDetails
+        s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+          paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
         }
 
         "not have a link to change client" in {
@@ -84,7 +84,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         lazy val view = changeReturnFrequencyConfirmationView(contactPref = Some("DIGITAL"))(user, messages, mockAppConfig)
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
-        s"have the correct p1 of '${viewMessages.ReceivedPage.p1}'" in {
+        s"have the correct p1 of '${viewMessages.ReceivedPage.digitalPref}'" in {
           paragraph(1) shouldBe viewMessages.ReceivedPage.digitalPref
         }
       }
@@ -107,12 +107,12 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementText("h2") shouldBe viewMessages.ReceivedPage.h2
       }
 
-      s"have the correct p1 of '${viewMessages.ReceivedPage.p1}'" in {
+      s"have the correct p1 of '${viewMessages.ReceivedPage.paperPref}'" in {
         paragraph(1) shouldBe viewMessages.ReceivedPage.paperPref
       }
 
-      s"have the correct p2 of '${viewMessages.ReceivedPage.p2}'" in {
-        paragraph(2) shouldBe viewMessages.ReceivedPage.contactDetails
+      s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+        paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
       }
 
       "not have a link to change client" in {
@@ -148,12 +148,12 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         elementText("h2") shouldBe viewMessages.ReceivedPage.h2
       }
 
-      s"have the correct p1 of '${viewMessages.ReceivedPage.p1}'" in {
+      s"have the correct p1 of '${viewMessages.ReceivedPage.contactPrefError}'" in {
         paragraph(1) shouldBe viewMessages.ReceivedPage.contactPrefError
       }
 
-      s"have the correct p2 of '${viewMessages.ReceivedPage.p2}'" in {
-        paragraph(2) shouldBe viewMessages.ReceivedPage.contactDetails
+      s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+        paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
       }
 
       "not have a link to change client" in {
@@ -207,6 +207,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
 
+        s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
+          paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
+        }
+
         "have the correct back to client's details button" which {
 
           s"has the text '${viewMessages.backToClient}'" in {
@@ -246,6 +250,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
             s"have the correct p2 of '${viewMessages.ReceivedPage.p2Agent}'" in {
               paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
             }
+
+            s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
+              paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
+            }
           }
 
           "there is no client name" should {
@@ -260,6 +268,10 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
 
             s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
               paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
+            }
+
+            s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
+              paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
             }
           }
         }
@@ -299,6 +311,9 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
         }
 
+        s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
+          paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
+        }
 
         "have the correct f button" which {
 
@@ -334,6 +349,9 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
               paragraph(1) shouldBe viewMessages.ReceivedPage.p2Agent
             }
 
+            s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+              paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
+            }
           }
 
           "there is no client name" should {

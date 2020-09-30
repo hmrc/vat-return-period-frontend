@@ -21,70 +21,74 @@
 
 @this(mainTemplate: MainTemplate, updateClient: UpdateClient)
 
-@(clientName: Option[String] = None, agentEmail: Option[String] = None, contactPref: Option[String] = None, emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+@(clientName: Option[String] = None,
+  agentEmail: Option[String] = None,
+  contactPref: Option[String] = None,
+  emailVerified: Boolean = false)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 
 @mainTemplate(
   title = messages("received_frequency.title"),
-  bodyClasses = None,
   appConfig = appConfig,
-  user = Some(user)) {
+  user = Some(user)
+) {
 
-    <div class="govuk-box-highlight">
-        <h1 id="page-heading" class="heading-xlarge">@messages("received_frequency.heading")</h1>
-    </div>
+  <div class="govuk-box-highlight">
+      <h1 id="page-heading" class="heading-xlarge">@messages("received_frequency.heading")</h1>
+  </div>
 
-    <h2 class="heading-medium">@messages("received_frequency.subheading")</h2>
+  <h2 class="heading-medium">@messages("received_frequency.subheading")</h2>
 
-    @if(user.isAgent){
+  @if(user.isAgent){
 
-        @agentEmail match {
+    @agentEmail match {
 
-            case Some(email) => {
-                @if(appConfig.features.agentBulkPaperFeature()) {
-                    <p>@messages("received_frequency.agent.bulkPaper-p1-1")
-                        <strong class="bold">@email</strong>
-                        @messages("received_frequency.agent.bulkPaper-p1-2")</p>
-                @updateClient(clientName)
-            } else {
-                <p>@messages("received_frequency.agent.p1-1")
-                    <strong class="bold">@email</strong>
-                    @messages("received_frequency.agent.p1-2")</p>
-                @updateClient(clientName)}
-            }
-
-            case None => {
-                @if(appConfig.features.agentBulkPaperFeature()) {
-                        @updateClient(clientName)
-                } else {
-                    <p>@messages("common.agent.confirmationLetter")</p>
-                @updateClient(clientName)}
-            }
+      case Some(email) => {
+        @if(appConfig.features.agentBulkPaperFeature()) {
+          <p>@messages("received_frequency.agent.bulkPaper-p1-1")
+            <strong class="bold">@email</strong>
+            @messages("received_frequency.agent.bulkPaper-p1-2")</p>
+          @updateClient(clientName)
+        } else {
+          <p>@messages("received_frequency.agent.p1-1")
+            <strong class="bold">@email</strong>
+            @messages("received_frequency.agent.p1-2")</p>
+          @updateClient(clientName)
         }
+      }
 
-    } else {
-
-        @contactPref match {
-            case Some(`digital`) => {<p>@messages(if(emailVerified){"contact_preference.email"}else{"contact_preference.digital"})</p>}
-            case Some(`paper`) => {<p>@messages("contact_preference.paper")</p>}
-            case _ => {<p>@messages("contact_preference.contactPrefError")</p>}
+      case None => {
+        @if(appConfig.features.agentBulkPaperFeature()) {
+          @updateClient(clientName)
+        } else {
+          <p>@messages("common.agent.confirmationLetter")</p>
+          @updateClient(clientName)
         }
-        <p>@messages("contact_preference.contact")</p>
-
+      }
     }
 
-@if(user.isAgent) {
+  } else {
+
+    @contactPref match {
+      case Some(`digital`) => {<p>@messages(if(emailVerified){"contact_preference.email"}else{"contact_preference.digital"})</p>}
+      case Some(`paper`) => {<p>@messages("contact_preference.paper")</p>}
+      case _ => {<p>@messages("contact_preference.contactPrefError")</p>}
+    }
+  }
+
+  <p>@messages("received_frequency.newDates")</p>
+
+  @if(user.isAgent) {
     <a  id="finish"
         href='@appConfig.manageVatUrl'
         class="button"
         role="button"
         type="submit">@messages("common.agent.backToClient")</a>
-} else {
-<a  id="finish"
-    href='@appConfig.manageVatUrl'
-    class="button"
-    role="button"
-    type="submit">@messages("common.finish")</a>
-}
-
+  } else {
+    <a  id="finish"
+        href='@appConfig.manageVatUrl'
+        class="button"
+        role="button"
+        type="submit">@messages("common.finish")</a>
+  }
 }

@@ -50,10 +50,6 @@ object ReturnFrequencyMessages extends BaseMessages {
     val titleAgent: String = "You have asked to change the VAT Return dates" + agentTitleSuffix
     val heading = "You have asked to change the VAT Return dates"
     val h2 = "What happens next"
-    val p1 = "Check your online business tax account within 2 working days to see if your request has been accepted."
-    val p2 = "If this change is accepted:"
-    val bullet1 = "we will send a confirmation letter to your principal place of business within 10 working days"
-    val bullet2 = "the business must submit this period's return before following the new VAT Return dates"
     val oldChangeClientDetails = "You can change another client’s details."
     val backToClientDetails = "Back to client’s details"
     val p1Agent: String = "We will send an email to agentEmail@test.com within 2 working days telling you whether or not " +
@@ -67,7 +63,7 @@ object ReturnFrequencyMessages extends BaseMessages {
       "your principal place of business. You can also go to your HMRC secure messages to find out if your request has been accepted."
     val paperPref = "We will send a letter to your principal place of business with an update within 15 working days."
     val contactPrefError = "We will send you an update within 15 working days."
-    val contactDetails = "Make sure your contact details are up to date."
+    val newDates = "The new VAT Return dates will only show on the account when they change. Until then, we will continue to show the current submission dates."
     val p1AgentBulk: String = "We’ll send an email to agentEmail@test.com within 2 working days telling you whether we can accept your request."
 
   }
