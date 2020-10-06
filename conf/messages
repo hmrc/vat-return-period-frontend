@@ -72,6 +72,8 @@ return_frequency.January = January, April, July and October
 return_frequency.February = February, May, August and November
 return_frequency.March = March, June, September and December
 return_frequency.Monthly = Monthly
+return_frequency.changeAtEndOfQuarter = We’ll change your dates at the end of this quarter
+return_frequency.changeAtEndOfMonth = We’ll change your dates at the end of this month
 
 confirm_return_frequency.changeLink = Change the VAT Return dates
 
