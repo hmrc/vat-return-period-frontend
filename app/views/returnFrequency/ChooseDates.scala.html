@@ -26,15 +26,16 @@
 
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
+
 @additionalContent = {
     @if(current.id.equals("Annually")){
-        <p id="form-hint">
+        <p id="form-hint" class="form-hint">
             <span id="currently-set-text">@messages("return_frequency.currentAnnual")</span>
         </p>
     } else {
-        <p id="form-hint">
+        <p id="form-hint" class="form-hint">
             <span id="currently-set-text">@messages("return_frequency.current")</span>
-            <span id="currently-set-period">@messages(s"return_frequency.${current.id}")</span>
+            <span id="currently-set-period">@messages(s"return_frequency.${current.id}")@messages("common.fullStop")</span>
         </p>
     }
 }
@@ -59,6 +60,7 @@
                 (option.id, messages(s"return_frequency.${option.id}"))
               },
               question = messages("return_frequency.title"),
+              currentReturnPeriod = current,
               additionalContent = Some(additionalContent)
           )
 

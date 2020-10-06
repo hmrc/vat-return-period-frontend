@@ -50,13 +50,19 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
 
     s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option1Jan}'" in {
       elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
-      elementText("#currently-set-period") shouldBe viewMessages.option1Jan
+      elementText("#currently-set-period") shouldBe viewMessages.option1Jan + viewMessages.fullStop
     }
 
     "have the correct options return dates of" in {
-      elementText(".form-field > div:nth-of-type(1) > label") shouldBe viewMessages.option2Feb
-      elementText(".form-field > div:nth-of-type(2) > label") shouldBe viewMessages.option3Mar
-      elementText(".form-field > div:nth-of-type(3) > label") shouldBe viewMessages.option4Monthly
+      elementText("#period-option > fieldset > div > div:nth-child(3)") shouldBe viewMessages.option2Feb
+      elementText("#period-option > fieldset > div > div:nth-child(5)") shouldBe viewMessages.option3Mar
+      elementText("#period-option > fieldset > div > div:nth-child(7)") shouldBe viewMessages.option4Monthly
+    }
+
+    "have the correct hint text of" in {
+      elementText("#period-option > fieldset > div > div:nth-child(4)") shouldBe viewMessages.changeEndOfQuarter
+      elementText("#period-option > fieldset > div > div:nth-child(6)") shouldBe viewMessages.changeEndOfQuarter
+      elementText("#period-option > fieldset > div > div:nth-child(8)") shouldBe viewMessages.changeEndOfMonth
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -64,6 +70,52 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have a back link with the correct text and url '${viewMessages.back}'" in {
+      elementText(".link-back") shouldBe viewMessages.back
+      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
+    }
+  }
+
+  "Rendering the Choose Dates page for a Monthly Accounting user" should {
+
+    val form: Form[ReturnDatesModel] = ChooseDatesForm.datesForm
+
+    lazy val view = chooseDatesView(form, Monthly)(user, messages, mockAppConfig)
+    lazy implicit val document: Document = Jsoup.parse(view.body)
+
+    s"have the correct document title of '${viewMessages.ChoosePage.title}'" in {
+      document.title shouldBe viewMessages.ChoosePage.title
+    }
+
+    s"have the correct page heading of '${viewMessages.ChoosePage.heading}'" in {
+      elementText("h1") shouldBe viewMessages.ChoosePage.heading
+    }
+
+    "should not display an error" in {
+      document.select("#error-summary-display").isEmpty shouldBe true
+    }
+
+    s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
+      elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
+      elementText("#currently-set-period") shouldBe viewMessages.option4Monthly + viewMessages.fullStop
+    }
+
+    "have the correct options return dates of" in {
+      elementText("#period-option > fieldset > div > div:nth-child(3) > label") shouldBe viewMessages.option1Jan
+      elementText("#period-option > fieldset > div > div:nth-child(5) > label") shouldBe viewMessages.option2Feb
+      elementText("#period-option > fieldset > div > div:nth-child(7) > label") shouldBe viewMessages.option3Mar
+    }
+
+    "have the correct hint text of" in {
+      elementText("#period-option > fieldset > div > div:nth-child(4)") shouldBe viewMessages.changeEndOfMonth
+      elementText("#period-option > fieldset > div > div:nth-child(6)") shouldBe viewMessages.changeEndOfMonth
+      elementText("#period-option > fieldset > div > div:nth-child(8)") shouldBe viewMessages.changeEndOfMonth
+    }
+
+    s"have a continue button with the text '${viewMessages.continue}'" in {
+      elementText("#continue") shouldBe viewMessages.continue
+    }
+
+    s"have the back link with correct text and url '${viewMessages.back}'" in {
       elementText(".link-back") shouldBe viewMessages.back
       element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
@@ -94,10 +146,10 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     "have the correct options return dates of" in {
-      elementText(".form-field > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
-      elementText(".form-field > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
-      elementText(".form-field > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
-      elementText(".form-field > div:nth-of-type(4) > label") shouldBe viewMessages.option4Monthly
+      elementText("#period-option > fieldset > div > div:nth-child(3) > label") shouldBe viewMessages.option1Jan
+      elementText("#period-option > fieldset > div > div:nth-child(5) > label") shouldBe viewMessages.option2Feb
+      elementText("#period-option > fieldset > div > div:nth-child(7) > label") shouldBe viewMessages.option3Mar
+      elementText("#period-option > fieldset > div > div:nth-child(9) > label") shouldBe viewMessages.option4Monthly
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -131,13 +183,13 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
 
     s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
       elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
-      elementText("#currently-set-period") shouldBe viewMessages.option4Monthly
+      elementText("#currently-set-period") shouldBe viewMessages.option4Monthly + viewMessages.fullStop
     }
 
     "have the correct options return dates of" in {
-      elementText(".form-field--error > div:nth-of-type(1) > label") shouldBe viewMessages.option1Jan
-      elementText(".form-field--error > div:nth-of-type(2) > label") shouldBe viewMessages.option2Feb
-      elementText(".form-field--error > div:nth-of-type(3) > label") shouldBe viewMessages.option3Mar
+      elementText("#period-option > fieldset > div > div:nth-child(4) > label") shouldBe viewMessages.option1Jan
+      elementText("#period-option > fieldset > div > div:nth-child(6) > label") shouldBe viewMessages.option2Feb
+      elementText("#period-option > fieldset > div > div:nth-child(8) > label") shouldBe viewMessages.option3Mar
     }
   }
 }

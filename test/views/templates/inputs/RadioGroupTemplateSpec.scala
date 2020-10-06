@@ -16,6 +16,7 @@
 
 package views.templates.inputs
 
+import models.returnFrequency.{Jan, Monthly}
 import play.api.data.{Field, FormError}
 import play.twirl.api.Html
 import testOnly.forms.TextInputForm
@@ -27,6 +28,8 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
   val fieldName = "fieldName"
   val labelText = "labelText"
   val hintText = "hintText"
+  val returnPeriodMonthly = Monthly
+  val returnPeriodQuarterly = Jan
   val errorMessage = "error message"
   val choices: Seq[(String, String)] = Seq(
     "value1" -> "display1",
@@ -36,41 +39,80 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
     "value5" -> "display5"
   )
   val radioGroup: RadioGroup = injector.instanceOf[RadioGroup]
+  val changeEndOfMonth = "We’ll change your dates at the end of this month"
+  val changeEndOfQuarter = "We’ll change your dates at the end of this quarter"
 
-  def generateExpectedRadioMarkup(value: String, display: String, checked: Boolean = false): String =
+  def generateExpectedRadioMarkup(value: String, display: String, hiddenContent: String = changeEndOfMonth, checked: Boolean = false): String = {
+    val jsHidden = if (!checked) " js-hidden" else ""
     s"""
-       |  <div class="multiple-choice">
+       |  <div class="multiple-choice" data-target="hiddenContent-$fieldName-$value">
        |    <input type="radio" id="$fieldName-$value" name="$fieldName" value="$value"${if (checked) " checked" else ""}>
        |    <label for="$fieldName-$value">$display</label>
        |  </div>
+       |  <div class="form-group panel panel-border-narrow form-hint$jsHidden" id="hiddenContent-$fieldName-$value">
+       |    $hiddenContent
+       |  </div>
       """.stripMargin
+  }
 
-  "Calling the radio helper with no choice pre-selected" should {
+  "Calling the radio helper with no choice pre-selected" when {
 
-    "render the choices as radio buttons" in {
-      val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), None)
-      val expectedMarkup = Html(
-        s"""
-           |<div class="form-group" id="period-option">
-           | <fieldset aria-describedby="form-hint">
+    "current return period is monthly" should {
+
+      "render the choices as radio buttons" in {
+        val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), None)
+        val expectedMarkup = Html(
+          s"""
+             |<div class="form-group" id="period-option">
+             | <fieldset aria-describedby="form-hint">
 	         |   <div class="form-field">
-           |        <legend>
-           |          <h1 id="page-heading" class="heading-large">$labelText</h1>
-           |        </legend>
-           |
-           |      ${generateExpectedRadioMarkup("value1", "display1")}
-           |      ${generateExpectedRadioMarkup("value2", "display2")}
-           |      ${generateExpectedRadioMarkup("value3", "display3")}
-           |      ${generateExpectedRadioMarkup("value4", "display4")}
-           |      ${generateExpectedRadioMarkup("value5", "display5")}
-           |  </div>
-           | </fieldset>
-           |</div>
-        """.stripMargin
-      )
+             |        <legend>
+             |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+             |        </legend>
+             |
+             |      ${generateExpectedRadioMarkup("value1", "display1")}
+             |      ${generateExpectedRadioMarkup("value2", "display2")}
+             |      ${generateExpectedRadioMarkup("value3", "display3")}
+             |      ${generateExpectedRadioMarkup("value4", "display4")}
+             |      ${generateExpectedRadioMarkup("value5", "display5")}
+             |  </div>
+             | </fieldset>
+             |</div>
+          """.stripMargin
+        )
 
-      val markup = radioGroup(field, choices, labelText, None)
-      formatHtml(markup) shouldBe formatHtml(expectedMarkup)
+        val markup = radioGroup(field, choices, labelText, returnPeriodMonthly, None)
+        formatHtml(markup) shouldBe formatHtml(expectedMarkup)
+      }
+    }
+
+    "current return period is quarterly" should {
+
+      "render the choices as radio buttons" in {
+        val field: Field = Field(TextInputForm.form, fieldName, Seq(), None, Seq(), None)
+        val expectedMarkup = Html(
+          s"""
+             |<div class="form-group" id="period-option">
+             | <fieldset aria-describedby="form-hint">
+	          |   <div class="form-field">
+             |        <legend>
+             |          <h1 id="page-heading" class="heading-large">$labelText</h1>
+             |        </legend>
+             |
+             |      ${generateExpectedRadioMarkup("value1", "display1", changeEndOfQuarter)}
+             |      ${generateExpectedRadioMarkup("value2", "display2", changeEndOfQuarter)}
+             |      ${generateExpectedRadioMarkup("value3", "display3", changeEndOfQuarter)}
+             |      ${generateExpectedRadioMarkup("value4", "display4", changeEndOfQuarter)}
+             |      ${generateExpectedRadioMarkup("value5", "display5", changeEndOfQuarter)}
+             |  </div>
+             | </fieldset>
+             |</div>
+          """.stripMargin
+        )
+
+        val markup = radioGroup(field, choices, labelText, returnPeriodQuarterly, None)
+        formatHtml(markup) shouldBe formatHtml(expectedMarkup)
+      }
     }
   }
 
@@ -98,7 +140,7 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
         """.stripMargin
       )
 
-      val markup = radioGroup(field, choices, labelText, None)
+      val markup = radioGroup(field, choices, labelText, returnPeriodMonthly, None)
       formatHtml(markup) shouldBe formatHtml(expectedMarkup)
     }
   }
@@ -133,7 +175,7 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
         """.stripMargin
       )
 
-      val markup = radioGroup(field, choices, labelText, None)
+      val markup = radioGroup(field, choices, labelText, returnPeriodMonthly, None)
       formatHtml(markup) shouldBe formatHtml(expectedMarkup)
     }
   }
@@ -159,13 +201,14 @@ class RadioGroupTemplateSpec extends ViewBaseSpec {
            |      ${generateExpectedRadioMarkup("value3", "display3")}
            |      ${generateExpectedRadioMarkup("value4", "display4")}
            |      ${generateExpectedRadioMarkup("value5", "display5")}
+           |
            |    </div>
            | </fieldset>
            |</div>
         """.stripMargin
       )
 
-      val markup = radioGroup(field, choices, labelText, Some(additionalContent))
+      val markup = radioGroup(field, choices, labelText, returnPeriodMonthly, Some(additionalContent))
       formatHtml(markup) shouldBe formatHtml(expectedMarkup)
     }
   }

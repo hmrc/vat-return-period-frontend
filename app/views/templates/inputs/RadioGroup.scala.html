@@ -14,11 +14,15 @@
  * limitations under the License.
  *@
 
+@import models.returnFrequency.ReturnPeriod
+@import models.returnFrequency.Monthly
+
 @this()
 
 @(field: Field,
         choices: Seq[(String, String)],
         question: String,
+        currentReturnPeriod: ReturnPeriod,
         additionalContent: Option[Html] = None)(implicit messages: Messages)
 
 <div class="form-group" id="period-option">
@@ -42,7 +46,7 @@
     @choices.map { case (value, label) =>
 
       @defining(s"${field.name}-${value.toLowerCase}") { inputId =>
-        <div class="multiple-choice">
+        <div class="multiple-choice" data-target="hiddenContent-@inputId">
           <input
           type="radio"
           id="@inputId"
@@ -51,6 +55,12 @@
             @field.value.filter( _ == value).map{_ => checked="checked"}/>
           <label for="@inputId">@label</label>
         </div>
+            <div class="form-group panel panel-border-narrow form-hint@if(!field.value.contains(value)){ js-hidden}" id="hiddenContent-@inputId" >
+                @(currentReturnPeriod, value) match {
+                    case (Monthly, _) | (_, "Monthly") => {@messages("return_frequency.changeAtEndOfMonth")}
+                    case _ => {@messages("return_frequency.changeAtEndOfQuarter")}
+                }
+            </div>
       }
     }
         </div>
