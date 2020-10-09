@@ -56,4 +56,6 @@ object ConfigKeys {
   val manageVatUrl: String = "manage-vat-subscription-frontend.url"
   val manageVatHost: String = "manage-vat-subscription-frontend.host"
 
+  val trackingConsentUrl: String = "tracking-consent-frontend.url"
+
 }
