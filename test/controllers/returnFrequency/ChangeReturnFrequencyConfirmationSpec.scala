@@ -146,42 +146,8 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
 
           "the contactPrefMigration feature is disabled" when {
 
-            "emailVerified feature is enabled" when {
-
-              "the call to customer circumstance details is successful" when {
-
-                "the user has a verifiedEmail" should {
-                  lazy val result = {
-                    mockAppConfig.features.emailVerifiedFeature(true)
-                    mockAppConfig.features.contactPrefMigrationFeature(false)
-                    mockAuthorise(mtdVatAuthorisedResponse)
-                    mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
-                    mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
-                    setupAuditExtendedEvent()
-                    TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
-                  }
-
-                  lazy val document = Jsoup.parse(bodyOf(result))
-
-                  "return 200" in {
-                    status(result) shouldBe Status.OK
-                  }
-
-                  "return HTML" in {
-                    contentType(result) shouldBe Some("text/html")
-                    charset(result) shouldBe Some("utf-8")
-                  }
-
-                  "render the Change Return Frequency Confirmation Page" in {
-                    document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-                    document.select("#content article p:nth-of-type(1)").text() shouldBe
-                      ReturnFrequencyMessages.ReceivedPage.digiPrefWithEmail
-                  }
-                }
-
                 "the user does not have a verifiedEmail" should {
                   lazy val result = {
-                    mockAppConfig.features.emailVerifiedFeature(true)
                     mockAppConfig.features.contactPrefMigrationFeature(false)
                     mockAuthorise(mtdVatAuthorisedResponse)
                     mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
@@ -207,11 +173,10 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
                       ReturnFrequencyMessages.ReceivedPage.digitalPref
                   }
                 }
-              }
+
 
               "the call to customer circumstance details returns an error" should {
                 lazy val result = {
-                  mockAppConfig.features.emailVerifiedFeature(true)
                   mockAppConfig.features.contactPrefMigrationFeature(false)
                   mockAuthorise(mtdVatAuthorisedResponse)
                   mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
@@ -236,34 +201,6 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
                   document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
                 }
               }
-            }
-
-            "emailVerified feature is disabled" should {
-              lazy val result = {
-                mockAppConfig.features.emailVerifiedFeature(false)
-                mockAppConfig.features.contactPrefMigrationFeature(false)
-                mockAuthorise(mtdVatAuthorisedResponse)
-                mockContactPreferenceSuccess(ContactPreference("DIGITAL"))
-                setupAuditExtendedEvent()
-                TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
-              }
-
-              lazy val document = Jsoup.parse(bodyOf(result))
-
-              "return 200" in {
-                status(result) shouldBe Status.OK
-              }
-
-              "return HTML" in {
-                contentType(result) shouldBe Some("text/html")
-                charset(result) shouldBe Some("utf-8")
-              }
-
-              "render the Change Return Frequency Confirmation Page" in {
-                document.title shouldBe ReturnFrequencyMessages.ReceivedPage.title
-                document.select("#content article p:nth-of-type(1)").text() shouldBe ReturnFrequencyMessages.ReceivedPage.digitalPref
-              }
-            }
 
             "the user has a paper contact preference" should {
 

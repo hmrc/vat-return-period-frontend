@@ -35,7 +35,6 @@ class FeatureSwitchController @Inject()(val mcc: MessagesControllerComponents,
       FeatureSwitchModel(
         stubContactPreferencesFeature = appConfig.features.stubContactPreferencesFeature(),
         stubAgentClientLookupFeature = appConfig.features.stubAgentClientLookup(),
-        agentBulkPaperFeature = appConfig.features.agentBulkPaperFeature(),
         contactPrefMigrationFeature = appConfig.features.contactPrefMigrationFeature()
       )
     )))
@@ -51,7 +50,6 @@ class FeatureSwitchController @Inject()(val mcc: MessagesControllerComponents,
   def handleSuccess(model: FeatureSwitchModel): Result = {
     appConfig.features.stubContactPreferencesFeature(model.stubContactPreferencesFeature)
     appConfig.features.stubAgentClientLookup(model.stubAgentClientLookupFeature)
-    appConfig.features.agentBulkPaperFeature(model.agentBulkPaperFeature)
     appConfig.features.contactPrefMigrationFeature(model.contactPrefMigrationFeature)
     Redirect(routes.FeatureSwitchController.featureSwitch())
   }

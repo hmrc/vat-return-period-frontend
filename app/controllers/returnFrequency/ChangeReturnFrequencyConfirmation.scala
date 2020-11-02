@@ -70,12 +70,11 @@ class ChangeReturnFrequencyConfirmation @Inject()(val authenticate: AuthPredicat
         )
 
         cPref.preference match {
-          case `digital` if appConfig.features.emailVerifiedFeature() =>
+          case `digital` =>
             customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
               case Right(details) =>
                 Ok(changeReturnFrequencyConfirmationView(
-                  contactPref = Some(digital),
-                  emailVerified = details.emailVerified.getOrElse(false)
+                  contactPref = Some(digital)
                 ))
               case _ => Ok(changeReturnFrequencyConfirmationView(contactPref = Some(digital)))
             }

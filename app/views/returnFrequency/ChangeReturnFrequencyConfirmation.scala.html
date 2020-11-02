@@ -44,28 +44,16 @@
     @agentEmail match {
 
       case Some(email) => {
-        @if(appConfig.features.agentBulkPaperFeature()) {
           <p>@messages("received_frequency.agent.bulkPaper-p1-1")
             <strong class="bold">@email</strong>
             @messages("received_frequency.agent.bulkPaper-p1-2")</p>
           @updateClient(clientName)
-        } else {
-          <p>@messages("received_frequency.agent.p1-1")
-            <strong class="bold">@email</strong>
-            @messages("received_frequency.agent.p1-2")</p>
-          @updateClient(clientName)
         }
-      }
 
       case None => {
-        @if(appConfig.features.agentBulkPaperFeature()) {
-          @updateClient(clientName)
-        } else {
-          <p>@messages("common.agent.confirmationLetter")</p>
           @updateClient(clientName)
         }
       }
-    }
 
   } else {
 

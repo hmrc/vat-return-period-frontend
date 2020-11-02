@@ -28,10 +28,6 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
   val changeReturnFrequencyConfirmationView: CRFCView =
     injector.instanceOf[CRFCView]
 
-  override def beforeEach(): Unit = {
-    mockAppConfig.features.agentBulkPaperFeature(true)
-  }
-
 
   "Rendering the Dates Received page for an individual" when {
 
@@ -187,7 +183,6 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         lazy implicit val document: Document = Jsoup.parse(view.body)
 
         s"have the correct document title of '${viewMessages.ReceivedPage.titleAgent}'" in {
-          mockAppConfig.features.agentBulkPaperFeature(false)
           document.title shouldBe viewMessages.ReceivedPage.titleAgent
         }
 
@@ -199,8 +194,8 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           elementText("h2") shouldBe viewMessages.ReceivedPage.h2
         }
 
-        s"have the correct p1 of '${viewMessages.ReceivedPage.p1Agent}'" in {
-          paragraph(1) shouldBe viewMessages.ReceivedPage.p1Agent
+        s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
+          paragraph(1) shouldBe viewMessages.ReceivedPage.p1AgentBulk
         }
 
         s"have the correct p2 of '${viewMessages.ReceivedPage.p2Agent}'" in {
@@ -229,7 +224,6 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
           lazy implicit val document: Document = Jsoup.parse(view.body)
 
           s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
-            mockAppConfig.features.agentBulkPaperFeature(false)
             paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
           }
         }
@@ -242,17 +236,12 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
               clientName = Some("MyCompany Ltd"))(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
-            s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
-              mockAppConfig.features.agentBulkPaperFeature(false)
-              paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+            s"have the correct p1 of '${viewMessages.ReceivedPage.p2Agent}" in {
+              paragraph(1) shouldBe viewMessages.ReceivedPage.p2Agent
             }
 
-            s"have the correct p2 of '${viewMessages.ReceivedPage.p2Agent}'" in {
-              paragraph(2) shouldBe viewMessages.ReceivedPage.p2Agent
-            }
-
-            s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
-              paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
+            s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+              paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
             }
           }
 
@@ -261,17 +250,12 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
             lazy val view = changeReturnFrequencyConfirmationView()(agentUser, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
 
-            s"have the correct p1 of '${viewMessages.ReceivedPage.confirmationLetter}" in {
-              mockAppConfig.features.agentBulkPaperFeature(false)
-              paragraph(1) shouldBe viewMessages.ReceivedPage.confirmationLetter
+            s"have the correct p1 of '${viewMessages.ReceivedPage.p2AgentNoClientName}" in {
+              paragraph(1) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
             }
 
-            s"have the correct p2 of '${viewMessages.ReceivedPage.p2AgentNoClientName}'" in {
-              paragraph(2) shouldBe viewMessages.ReceivedPage.p2AgentNoClientName
-            }
-
-            s"have the correct p3 of '${viewMessages.ReceivedPage.newDates}'" in {
-              paragraph(3) shouldBe viewMessages.ReceivedPage.newDates
+            s"have the correct p2 of '${viewMessages.ReceivedPage.newDates}'" in {
+              paragraph(2) shouldBe viewMessages.ReceivedPage.newDates
             }
           }
         }
