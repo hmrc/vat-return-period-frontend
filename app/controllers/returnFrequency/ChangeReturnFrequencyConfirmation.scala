@@ -74,7 +74,8 @@ class ChangeReturnFrequencyConfirmation @Inject()(val authenticate: AuthPredicat
             customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
               case Right(details) =>
                 Ok(changeReturnFrequencyConfirmationView(
-                  contactPref = Some(digital)
+                  contactPref = Some(digital),
+                  emailVerified = details.emailVerified.getOrElse(false)
                 ))
               case _ => Ok(changeReturnFrequencyConfirmationView(contactPref = Some(digital)))
             }
