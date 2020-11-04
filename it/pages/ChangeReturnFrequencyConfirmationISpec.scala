@@ -19,7 +19,6 @@ package pages
 import play.api.i18n.Messages
 import play.api.libs.ws.WSResponse
 import play.api.test.Helpers._
-import stubs.ContactPreferencesStub._
 import stubs.VatSubscriptionStub._
 
 class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
@@ -36,9 +35,6 @@ class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
         "render the return frequency confirmation page" in {
 
           given.user.isAuthenticated
-
-          And("I stub a successful response from Contact Preferences")
-          stubGetContactPreference("999999999")
 
           When("I call to show the Confirm Return Frequency Page")
           val res = show()
@@ -76,9 +72,6 @@ class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
         "render the return frequency confirmation page" in {
 
           given.agent.isSignedUpToAgentServices
-
-          And("I stub a successful response from Contact Preferences")
-          stubGetContactPreference("999999999")
 
           And("I stub a successful response from VAT Subscription")
           getClientDetailsSuccess("999999999")(circumstanceDetailsModelMax)

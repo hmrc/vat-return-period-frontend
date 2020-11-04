@@ -24,8 +24,4 @@ import play.api.Configuration
 class Features @Inject()(implicit config: Configuration) {
 
   val stubAgentClientLookup = new Feature(ConfigKeys.stubAgentClientLookupFeature)
-  val stubContactPreferencesFeature = new Feature(ConfigKeys.stubContactPreferencesFeature)
-  val emailVerifiedFeature = new Feature(ConfigKeys.emailVerifiedFeature)
-  val agentBulkPaperFeature = new Feature(ConfigKeys.agentBulkPaperFeature)
-  val contactPrefMigrationFeature = new Feature(ConfigKeys.contactPrefMigrationFeature)
 }

@@ -17,16 +17,14 @@
 package controllers.returnFrequency
 
 import audit.AuditService
-import audit.models.ContactPreferenceAuditModel
 import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
 import controllers.predicates.AuthPredicate
 import javax.inject.{Inject, Singleton}
 import models.auth.User
-import models.contactPreferences.ContactPreference._
 import play.api.i18n.I18nSupport
 import play.api.mvc._
-import services.{ContactPreferenceService, CustomerCircumstanceDetailsService}
+import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
 
@@ -35,7 +33,6 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ChangeReturnFrequencyConfirmation @Inject()(val authenticate: AuthPredicate,
                                                   customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
-                                                  val contactPreferenceService: ContactPreferenceService,
                                                   val serviceErrorHandler: ServiceErrorHandler,
                                                   val auditService: AuditService,
                                                   implicit val appConfig: AppConfig,
@@ -54,36 +51,7 @@ class ChangeReturnFrequencyConfirmation @Inject()(val authenticate: AuthPredicat
         case Left(_) =>
           Ok(changeReturnFrequencyConfirmationView(agentEmail = email))
       }
-    } else {
-      if(appConfig.features.contactPrefMigrationFeature()) renderView else contactPrefRenderView
-    }
-  }
-
-  private def contactPrefRenderView(implicit user: User[AnyContent]): Future[Result] = {
-
-    contactPreferenceService.getContactPreference(user.vrn).flatMap {
-      case Right(cPref) =>
-
-        auditService.extendedAudit(
-          ContactPreferenceAuditModel(user.vrn, cPref.preference),
-          Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
-        )
-
-        cPref.preference match {
-          case `digital` if appConfig.features.emailVerifiedFeature() =>
-            customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
-              case Right(details) =>
-                Ok(changeReturnFrequencyConfirmationView(
-                  contactPref = Some(digital),
-                  emailVerified = details.emailVerified.getOrElse(false)
-                ))
-              case _ => Ok(changeReturnFrequencyConfirmationView(contactPref = Some(digital)))
-            }
-          case preference => Future.successful(
-            Ok(changeReturnFrequencyConfirmationView(contactPref = Some(preference))))
-        }
-      case Left(_) => Future.successful(Ok(changeReturnFrequencyConfirmationView()))
-    }
+    } else {renderView}
   }
 
   private def renderView(implicit user: User[AnyContent]): Future[Result] =
