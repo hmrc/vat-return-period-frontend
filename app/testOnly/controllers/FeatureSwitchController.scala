@@ -32,9 +32,7 @@ class FeatureSwitchController @Inject()(val mcc: MessagesControllerComponents,
 
   def featureSwitch: Action[AnyContent] = Action { implicit request =>
     Ok(featureSwitchView(FeatureSwitchForm.form.fill(
-      FeatureSwitchModel(
-        stubContactPreferencesFeature = appConfig.features.stubContactPreferencesFeature(),
-        stubAgentClientLookupFeature = appConfig.features.stubAgentClientLookup()
+      FeatureSwitchModel(stubAgentClientLookupFeature = appConfig.features.stubAgentClientLookup()
       )
     )))
   }
@@ -47,7 +45,6 @@ class FeatureSwitchController @Inject()(val mcc: MessagesControllerComponents,
   }
 
   def handleSuccess(model: FeatureSwitchModel): Result = {
-    appConfig.features.stubContactPreferencesFeature(model.stubContactPreferencesFeature)
     appConfig.features.stubAgentClientLookup(model.stubAgentClientLookupFeature)
     Redirect(routes.FeatureSwitchController.featureSwitch())
   }

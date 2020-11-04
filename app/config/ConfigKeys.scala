@@ -25,7 +25,6 @@ object ConfigKeys {
   val appName: String = "appName"
   val platformHost: String = "platform.host"
 
-  val stubContactPreferencesFeature: String = "features.stubContactPreferences.enabled"
   val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
 
   val accessibilityReportUrl: String = "accessibilityReport.url"

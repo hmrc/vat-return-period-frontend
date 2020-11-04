@@ -16,5 +16,4 @@
 
 package testOnly.models
 
-case class FeatureSwitchModel(stubContactPreferencesFeature: Boolean,
-                              stubAgentClientLookupFeature: Boolean)
+case class FeatureSwitchModel(stubAgentClientLookupFeature: Boolean)
