@@ -49,7 +49,7 @@ trait AppConfig {
   val vatSubscriptionBaseURL: String
   val vatSubscriptionDynamicStubURL: String
   val contactPreferenceURL: String
-  val trackingConsentUrl: String
+  val gtmContainer: String
 }
 
 @Singleton
@@ -147,5 +147,5 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   override val routeToSwitchLanguage: String => Call = (lang: String) =>
     controllers.routes.LanguageController.switchToLanguage(lang)
 
-  val trackingConsentUrl: String = servicesConfig.getString(ConfigKeys.trackingConsentUrl)
+  override val gtmContainer: String = servicesConfig.getString(ConfigKeys.gtmContainer)
 }
