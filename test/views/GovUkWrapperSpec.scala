@@ -26,7 +26,7 @@ class GovUkWrapperSpec extends ViewBaseSpec {
 
   "creating a page with a footer" should {
 
-    lazy val view = govUkWrapperView(mockAppConfig, "title")(messages)
+    lazy val view = govUkWrapperView(mockAppConfig, "title")(fakeRequest, messages)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "not display a logo" in {
@@ -34,7 +34,7 @@ class GovUkWrapperSpec extends ViewBaseSpec {
     }
 
     "render the accessibility text in the footer" in {
-      elementText("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a") shouldBe "Accessibility"
+      elementText("#footer > div > div > div.footer-meta-inner > ul > li:nth-child(2) > a") shouldBe "Accessibility statement"
     }
 
     "render the report link with the correct url" in {

@@ -58,13 +58,13 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "govuk-template"                % "5.55.0-play-26",
-  "uk.gov.hmrc"    %% "play-ui"                       % "8.11.0-play-26",
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "2.24.0",
-  "uk.gov.hmrc"    %% "play-partials"                 % "6.11.0-play-26",
+  "uk.gov.hmrc"    %% "govuk-template"                % "5.58.0-play-26",
+  "uk.gov.hmrc"    %% "play-ui"                       % "8.14.0-play-26",
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "3.0.0",
+  "uk.gov.hmrc"    %% "play-partials"                 % "7.0.0-play-26",
   "org.typelevel"  %% "cats"                          % "0.9.0",
   "uk.gov.hmrc"    %% "play-whitelist-filter"         % "3.4.0-play-26",
-  "uk.gov.hmrc"    %% "play-language"                 % "4.2.0-play-26"
+  "uk.gov.hmrc"    %% "play-language"                 % "4.4.0-play-26"
 )
 
 val test = Seq(
@@ -87,7 +87,7 @@ def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
 
 
 lazy val microservice: Project = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin, SbtArtifactory) ++ plugins: _*)
+  .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin) ++ plugins: _*)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(PlayKeys.playDefaultPort := 9167)
   .settings(coverageSettings: _*)
@@ -99,7 +99,7 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Keys.fork in Test := true,
     javaOptions in Test += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.12.11",
+    scalaVersion := "2.12.12",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)

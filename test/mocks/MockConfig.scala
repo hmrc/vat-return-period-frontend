@@ -43,7 +43,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val govUkGuidanceMtdVat: String = "mtd-vat"
   override val govUkGuidanceAgentServices: String = "agent-services"
   override val manageVatUrl: String = "/manage-vat"
-  override val trackingConsentUrl: String ="/tracking"
+  override val gtmContainer: String = "x"
   override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.LanguageController.switchToLanguage(lang)
   override def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),
