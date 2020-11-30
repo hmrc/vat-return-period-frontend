@@ -96,9 +96,9 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
     servicesConfig.getString(ConfigKeys.feedbackSurveyUrl)
   override def exitSurveyUrl(identifier: String): String = s"$feedbackSurveyBaseUrl/$identifier"
   private lazy val governmentGatewayHost: String = servicesConfig.getString(ConfigKeys.governmentGatewayHost)
-  override lazy val unauthorisedSignOutUrl: String = s"$governmentGatewayHost/gg/sign-out?continue=$signInContinueUrl"
+  override lazy val unauthorisedSignOutUrl: String = s"$governmentGatewayHost/bas-gateway/sign-out-without-state?continue=$signInContinueUrl"
   override def signOutUrl(identifier: String): String =
-    s"$governmentGatewayHost/gg/sign-out?continue=${exitSurveyUrl(identifier)}"
+    s"$governmentGatewayHost/bas-gateway/sign-out-without-state?continue=${exitSurveyUrl(identifier)}"
 
   // Agent Client Lookup
   private lazy val agentClientLookupRedirectUrl: String => String = uri => SafeRedirectUrl(platformHost + uri).encodedUrl
