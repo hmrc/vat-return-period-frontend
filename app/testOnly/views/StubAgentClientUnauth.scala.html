@@ -15,17 +15,20 @@
  *@
 
 @import views.html.MainTemplate
+@import config.AppConfig
 
-@this(mainTemplate: MainTemplate)
+@this(mainTemplate: MainTemplate, govukButton: GovukButton)
 
 @(redirectUrl: String)(implicit request: Request[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(title = "Stub Agent Client Lookup Frontend - Unauthorised", bodyClasses = None, appConfig = appConfig) {
+@mainTemplate(pageTitle = "Stub Agent Client Lookup Frontend - Unauthorised") {
 
-    <h1>Agent Unauthorised</h1>
+ <h1 class="govuk-heading-m">Agent Unauthorised</h1>
 
-    <p><span class="bold-small">RedirectUrl:</span> @redirectUrl</p>
+    <p><span class="govuk-heading-s">RedirectUrl:</span> <p1 class="govuk-body"> @redirectUrl</p1></p>
 
-    <a class="button" role="button" id="continue-button" href="@redirectUrl">Redirect</a>
-
+ @govukButton(Button(
+   href = Some(redirectUrl),
+   content = Text("Redirect")
+  ))
 }

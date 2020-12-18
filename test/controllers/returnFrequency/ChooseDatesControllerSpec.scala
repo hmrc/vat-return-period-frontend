@@ -173,7 +173,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             "have the January radio option selected" in {
-              Jsoup.parse(bodyOf(result)).select("#period-option-march").attr("checked") shouldBe "checked"
+              Jsoup.parse(bodyOf(result)).select("#period-option-march").attr("checked") shouldBe ""
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {

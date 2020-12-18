@@ -31,7 +31,7 @@ object ReturnFrequencyMessages extends BaseMessages {
     val title: String = "What are the new VAT Return dates?" + titleSuffix
     val errorTitle: String =  "Error: What are the new VAT Return dates?" + titleSuffix
     val heading = "What are the new VAT Return dates?"
-    val question = "The VAT Return dates are currently"
+    val question = "The VAT Return dates are currently "
     val error = "Choose the new VAT Return dates"
   }
 

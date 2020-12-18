@@ -33,20 +33,16 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
   val excludedPackages = Seq(
     "<empty>",
-    "Reverse.*",
+    ".*Reverse.*",
     ".*standardError*.*",
-    ".*govuk_wrapper*.*",
-    ".*main_template*.*",
     "uk.gov.hmrc.BuildInfo",
     "testOnly.*",
     "app.*",
     "common.*",
     "config.*",
-    "testOnly.*",
     "testOnlyDoNotUseInAppConf.*",
     "prod.*",
-    "views.*",
-    "controllers..*Reverse.*")
+    "views.*")
 
   Seq(
     ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
@@ -64,7 +60,9 @@ val compile = Seq(
   "uk.gov.hmrc"    %% "play-partials"                 % "7.0.0-play-26",
   "org.typelevel"  %% "cats"                          % "0.9.0",
   "uk.gov.hmrc"    %% "play-whitelist-filter"         % "3.4.0-play-26",
-  "uk.gov.hmrc"    %% "play-language"                 % "4.5.0-play-26"
+  "uk.gov.hmrc"    %% "play-language"                 % "4.5.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.56.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.32.0-play-26"
 )
 
 val test = Seq(
@@ -85,6 +83,11 @@ def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
     ))
 }
 
+TwirlKeys.templateImports ++= Seq(
+  "uk.gov.hmrc.govukfrontend.views.html.components._",
+  "uk.gov.hmrc.govukfrontend.views.html.helpers._",
+  "uk.gov.hmrc.hmrcfrontend.views.html.components._"
+)
 
 lazy val microservice: Project = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin) ++ plugins: _*)

@@ -19,6 +19,7 @@ package pages
 import play.api.i18n.Messages
 import play.api.libs.ws.WSResponse
 import play.api.test.Helpers._
+import stubs.VatSubscriptionStub
 import stubs.VatSubscriptionStub._
 
 class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
@@ -35,6 +36,7 @@ class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
         "render the return frequency confirmation page" in {
 
           given.user.isAuthenticated
+          VatSubscriptionStub.getClientDetailsSuccess("999999999")(circumstanceDetailsModelMax)
 
           When("I call to show the Confirm Return Frequency Page")
           val res = show()

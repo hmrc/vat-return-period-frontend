@@ -44,6 +44,6 @@ trait ViewBaseSpec extends BaseSpec {
 
   def elementText(selector: String)(implicit document: Document): String = element(selector).text()
 
-  def paragraph(index: Int)(implicit document: Document): String = elementText(s"article > p:nth-of-type($index)")
+  def paragraph(index: Int)(implicit document: Document): String = elementText(s"#content > p:nth-of-type($index)")
 
 }

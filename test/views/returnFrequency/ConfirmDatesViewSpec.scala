@@ -39,7 +39,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       }
 
       s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
-        elementText(".heading-large") shouldBe viewMessages.ConfirmPage.heading
+        elementText(".govuk-heading-l") shouldBe viewMessages.ConfirmPage.heading
       }
 
       s"display the correct h2 page heading of '${viewMessages.ConfirmPage.heading2}'" in {
@@ -49,32 +49,32 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       s"display VAT return dates message" when {
 
         s"the current date is '${viewMessages.ConfirmPage.newDates}'" in {
-          elementText(".cya-question") shouldBe viewMessages.ConfirmPage.newDates
+          elementText(".govuk-summary-list__key") shouldBe viewMessages.ConfirmPage.newDates
         }
         s"display the correct dates of" when {
 
           s"the current date is '${viewMessages.option1Jan}'" in {
             lazy val view = confirmDatesView(Jan, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
-            elementText(".cya-answer") shouldBe viewMessages.option1Jan
+            elementText(".govuk-summary-list__value") shouldBe viewMessages.option1Jan
           }
 
           s"the current date is '${viewMessages.option2Feb}'" in {
             lazy val view = confirmDatesView(Feb, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
-            elementText(".cya-answer") shouldBe viewMessages.option2Feb
+            elementText(".govuk-summary-list__value") shouldBe viewMessages.option2Feb
           }
 
           s"the current date is '${viewMessages.option3Mar}'" in {
             lazy val view = confirmDatesView(Mar, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
-            elementText(".cya-answer") shouldBe viewMessages.option3Mar
+            elementText(".govuk-summary-list__value") shouldBe viewMessages.option3Mar
           }
 
           s"the current date is '${viewMessages.option4Monthly}'" in {
             lazy val view = confirmDatesView(Monthly, false)(user, messages, mockAppConfig)
             lazy implicit val document: Document = Jsoup.parse(view.body)
-            elementText(".cya-answer") shouldBe viewMessages.option4Monthly
+            elementText(".govuk-summary-list__value") shouldBe viewMessages.option4Monthly
           }
         }
       }
@@ -82,18 +82,18 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       "have a link back to the change dates page" which {
 
         s"has the text '${viewMessages.ConfirmPage.changeLink}'" in {
-          elementText(".cya-change") shouldBe viewMessages.ConfirmPage.changeLink
+          elementText(".govuk-summary-list__actions") shouldBe viewMessages.ConfirmPage.changeLink
         }
 
         "has a URL back to the change dates page" in {
-          element(".cya-change a").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
+          element(".govuk-summary-list__actions a").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
         }
       }
 
       "have a continue button" which {
 
         s"has the text '${viewMessages.continue}'" in {
-          elementText("#continue-button") shouldBe viewMessages.continue
+          elementText(".govuk-button") shouldBe viewMessages.continue
         }
 
         "posts data to the correct endpoint" in {
@@ -111,14 +111,13 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       }
 
       s"display the correct page heading of '${viewMessages.ConfirmPage.heading}'" in {
-        elementText(".heading-large") shouldBe viewMessages.ConfirmPage.heading
+        elementText(".govuk-heading-l") shouldBe viewMessages.ConfirmPage.heading
       }
 
-
       s"have a correct annual accounting messages" in {
-        elementText("#content > article > p") shouldBe viewMessages.ConfirmPage.annualAccountingOption
-        elementText("#content > article > ul > li:nth-child(1)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet1
-        elementText("#content > article > ul > li:nth-child(2)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet2
+        elementText(".govuk-body") shouldBe viewMessages.ConfirmPage.annualAccountingOption
+        elementText(".govuk-list--bullet > li:nth-child(1)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet1
+        elementText(".govuk-list--bullet > li:nth-child(2)") shouldBe viewMessages.ConfirmPage.annualAccountingBullet2
 
       }
     }
