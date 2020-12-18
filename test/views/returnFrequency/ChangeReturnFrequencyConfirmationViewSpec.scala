@@ -66,11 +66,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct finish button" which {
 
           s"has the text '${viewMessages.finish}'" in {
-            elementText("#finish") shouldBe viewMessages.finish
+            elementText(".govuk-button") shouldBe viewMessages.finish
           }
 
           "has link back to customer details page" in {
-            element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element(".govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
       }
@@ -118,11 +118,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "have the correct finish button" which {
 
         s"has the text '${viewMessages.finish}'" in {
-          elementText("#finish") shouldBe viewMessages.finish
+          elementText(".govuk-button") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {
-          element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+          element(".govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -159,11 +159,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "have the correct finish button" which {
 
         s"has the text '${viewMessages.backToClient}'" in {
-          elementText("#finish") shouldBe viewMessages.finish
+          elementText(".govuk-button") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {
-          element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+          element(".govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -209,11 +209,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct back to client's details button" which {
 
           s"has the text '${viewMessages.backToClient}'" in {
-            elementText("#finish") shouldBe viewMessages.backToClient
+            elementText(".govuk-button") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
-            element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element(".govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
 
@@ -302,11 +302,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct f button" which {
 
           s"has the text '${viewMessages.backToClient}'" in {
-            elementText("#finish") shouldBe viewMessages.backToClient
+            elementText(".govuk-button") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
-            element("#finish").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element(".govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
 

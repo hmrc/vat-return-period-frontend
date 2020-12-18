@@ -28,11 +28,11 @@ navTitle.nonAgent = Business tax account
 navTitle.agent = Your client’s VAT details
 navTitle.vat = VAT
 
-standardError.title = There is a problem with the service - VAT - GOV.UK
+standardError.title = There is a problem with the service
 standardError.heading = Sorry, there is a problem with the service
 standardError.message = Try again later.
 
-notFound.title = Page not found - VAT - GOV.UK
+notFound.title = Page not found
 notFound.heading = This page cannot be found
 notFound.message = Please check that you have entered the correct web address.
 
@@ -103,3 +103,9 @@ checkYourAnswers.title = Check your answers
 checkYourAnswers.vatBusinessDetails = VAT business details
 checkYourAnswers.change = Change
 checkYourAnswers.newDates = VAT Return dates
+
+footerLinks.cookies = Cookies
+footerLinks.accessibility = Accessibility
+footerLinks.privacyPolicy = Privacy policy
+footerLinks.termsAndConditions = Terms and conditions
+footerLinks.help = Help using GOV.UK

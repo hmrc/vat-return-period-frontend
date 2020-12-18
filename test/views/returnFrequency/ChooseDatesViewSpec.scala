@@ -49,29 +49,28 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option1Jan}'" in {
-      elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
-      elementText("#currently-set-period") shouldBe viewMessages.option1Jan + viewMessages.fullStop
+      elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option1Jan + viewMessages.fullStop
     }
 
     "have the correct options return dates of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(3)") shouldBe viewMessages.option2Feb
-      elementText("#period-option > fieldset > div > div:nth-child(5)") shouldBe viewMessages.option3Mar
-      elementText("#period-option > fieldset > div > div:nth-child(7)") shouldBe viewMessages.option4Monthly
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1)") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3)") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5)") shouldBe viewMessages.option4Monthly
     }
 
     "have the correct hint text of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(4)") shouldBe viewMessages.changeEndOfQuarter
-      elementText("#period-option > fieldset > div > div:nth-child(6)") shouldBe viewMessages.changeEndOfQuarter
-      elementText("#period-option > fieldset > div > div:nth-child(8)") shouldBe viewMessages.changeEndOfMonth
+      elementText("#conditional-period-option") shouldBe viewMessages.changeEndOfQuarter
+      elementText("#conditional-period-option-2") shouldBe viewMessages.changeEndOfQuarter
+      elementText("#conditional-period-option-3") shouldBe viewMessages.changeEndOfMonth
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("#continue") shouldBe viewMessages.continue
+      elementText(".govuk-button") shouldBe viewMessages.continue
     }
 
     s"have a back link with the correct text and url '${viewMessages.back}'" in {
-      elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
+      elementText(".govuk-back-link") shouldBe viewMessages.back
+      element(".govuk-back-link").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
   }
 
@@ -95,29 +94,28 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
-      elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
-      elementText("#currently-set-period") shouldBe viewMessages.option4Monthly + viewMessages.fullStop
+      elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option4Monthly + viewMessages.fullStop
     }
 
     "have the correct options return dates of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(3) > label") shouldBe viewMessages.option1Jan
-      elementText("#period-option > fieldset > div > div:nth-child(5) > label") shouldBe viewMessages.option2Feb
-      elementText("#period-option > fieldset > div > div:nth-child(7) > label") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5) > label") shouldBe viewMessages.option3Mar
     }
 
     "have the correct hint text of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(4)") shouldBe viewMessages.changeEndOfMonth
-      elementText("#period-option > fieldset > div > div:nth-child(6)") shouldBe viewMessages.changeEndOfMonth
-      elementText("#period-option > fieldset > div > div:nth-child(8)") shouldBe viewMessages.changeEndOfMonth
+      elementText("#conditional-period-option > p") shouldBe viewMessages.changeEndOfMonth
+      elementText("#conditional-period-option-2 > p") shouldBe viewMessages.changeEndOfMonth
+      elementText("#conditional-period-option-3 > p") shouldBe viewMessages.changeEndOfMonth
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("#continue") shouldBe viewMessages.continue
+      elementText(".govuk-button") shouldBe viewMessages.continue
     }
 
     s"have the back link with correct text and url '${viewMessages.back}'" in {
-      elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
+      elementText(".govuk-back-link") shouldBe viewMessages.back
+      element(".govuk-back-link").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
   }
 
@@ -141,24 +139,23 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have the correct current return dates of '${viewMessages.annually}'" in {
-      elementText("#currently-set-text") shouldBe viewMessages.annually
-      elementExtinct("#currently-set-period")
+      elementText("#period-option-hint") shouldBe viewMessages.annually
     }
 
     "have the correct options return dates of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(3) > label") shouldBe viewMessages.option1Jan
-      elementText("#period-option > fieldset > div > div:nth-child(5) > label") shouldBe viewMessages.option2Feb
-      elementText("#period-option > fieldset > div > div:nth-child(7) > label") shouldBe viewMessages.option3Mar
-      elementText("#period-option > fieldset > div > div:nth-child(9) > label") shouldBe viewMessages.option4Monthly
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5) > label") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(7) > label") shouldBe viewMessages.option4Monthly
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("#continue") shouldBe viewMessages.continue
+      elementText(".govuk-button") shouldBe viewMessages.continue
     }
 
     s"have the back link with correct text and url '${viewMessages.back}'" in {
-      elementText(".link-back") shouldBe viewMessages.back
-      element(".link-back").attr("href") shouldBe mockAppConfig.manageVatUrl
+      elementText(".govuk-back-link") shouldBe viewMessages.back
+      element(".govuk-back-link").attr("href") shouldBe mockAppConfig.manageVatUrl
     }
   }
 
@@ -178,18 +175,17 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     "should display an error" in {
-      elementText("#error-summary-display") shouldBe s"${viewMessages.errorHeading} ${viewMessages.ChoosePage.error}"
+      elementText(".govuk-error-summary") shouldBe s"${viewMessages.errorHeading} ${viewMessages.ChoosePage.error}"
     }
 
     s"have the correct current return dates of '${viewMessages.ChoosePage.question} ${viewMessages.option4Monthly}'" in {
-      elementText("#currently-set-text") shouldBe viewMessages.ChoosePage.question
-      elementText("#currently-set-period") shouldBe viewMessages.option4Monthly + viewMessages.fullStop
+      elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option4Monthly + viewMessages.fullStop
     }
 
     "have the correct options return dates of" in {
-      elementText("#period-option > fieldset > div > div:nth-child(4) > label") shouldBe viewMessages.option1Jan
-      elementText("#period-option > fieldset > div > div:nth-child(6) > label") shouldBe viewMessages.option2Feb
-      elementText("#period-option > fieldset > div > div:nth-child(8) > label") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1)") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3)") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5)") shouldBe viewMessages.option3Mar
     }
   }
 }

@@ -50,9 +50,9 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
         res should have(
           httpStatus(OK),
-          elementText(".heading-large")(Messages("checkYourAnswers.title")),
-          elementText(".cya-question")(Messages("checkYourAnswers.newDates")),
-          elementText(".cya-answer")(Messages("January, April, July and October"))
+          elementText(".govuk-heading-l")(Messages("checkYourAnswers.title")),
+          elementText(".govuk-summary-list__key")(Messages("checkYourAnswers.newDates")),
+          elementText(".govuk-summary-list__value")(Messages("January, April, July and October"))
         )
       }
 
@@ -65,9 +65,9 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
         res should have(
           httpStatus(OK),
-          elementText(".heading-large")(Messages("checkYourAnswers.title")),
-          elementText(".cya-question")(Messages("checkYourAnswers.newDates")),
-          elementText(".cya-answer")(Messages("January, April, July and October"))
+          elementText(".govuk-heading-l")(Messages("checkYourAnswers.title")),
+          elementText(".govuk-summary-list__key")(Messages("checkYourAnswers.newDates")),
+          elementText(".govuk-summary-list__value")(Messages("January, April, July and October"))
         )
       }
     }

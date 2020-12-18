@@ -17,3 +17,6 @@ GET         /confirmation-vat-return-dates/:userType  controllers.returnFrequenc
 GET         /change-client-vat-number                 controllers.ChangeClientController.changeClient
 
 GET         /language/:lang                           controllers.LanguageController.switchToLanguage(lang: String)
+
+->         /govuk-frontend            govuk.Routes
+->         /hmrc-frontend             hmrcfrontend.Routes

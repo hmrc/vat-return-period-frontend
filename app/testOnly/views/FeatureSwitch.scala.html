@@ -17,28 +17,37 @@
 @import config.ConfigKeys
 @import uk.gov.hmrc.play.views.html.helpers.FormWithCSRF
 @import testOnly.models._
-@import views.html.templates.inputs.SingleCheckbox
 @import views.html.MainTemplate
 
-@this(singleCheckbox: SingleCheckbox, mainTemplate: MainTemplate, helperForm: FormWithCSRF)
+@this(govukCheckboxes: GovukCheckboxes, mainTemplate: MainTemplate, helperForm: FormWithCSRF, govukButton: GovukButton)
 
 @(form: Form[FeatureSwitchModel])(implicit request: Request[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(title = messages("featureSwitch.title"), appConfig = appConfig) {
+@mainTemplate(pageTitle = messages("featureSwitch.title")) {
 
   @helperForm(action = testOnly.controllers.routes.FeatureSwitchController.submitFeatureSwitch) {
 
-    <div class="form-group" style="border-radius: 25px;
-        background: #C9EDD9;
-        padding: 25px;">
-      <fieldset>
-        <legend>
-            <p class="bold-medium" style="margin-bottom: 10px;">VAT Return Period Frontend Features</p>
-        </legend>
-        @singleCheckbox(form(ConfigKeys.stubAgentClientLookupFeature), "Stub Agent Client Lookup")
-      </fieldset>
-    </div>
-
-    <button class="button" type="submit" id="continue-button">@messages("featureSwitch.submit")</button>
-  }
+@govukCheckboxes(Checkboxes(
+    fieldset = Some(Fieldset(
+         legend = Some(Legend(
+             content = Text("VAT Return Period Frontend Features"),
+             classes = "govuk-fieldset__legend--l",
+             isPageHeading = true
+         ))
+    )),
+    idPrefix = Some(form(ConfigKeys.stubAgentClientLookupFeature).name),
+    name = form(ConfigKeys.stubAgentClientLookupFeature).name,
+    items = Seq(
+        CheckboxItem(
+            content = Text("Stub Agent Client Lookup"),
+            value = "true",
+            checked = form(ConfigKeys.stubAgentClientLookupFeature).value.get.toBoolean
+        )
+    )
+))
+    @govukButton(Button(
+    content = Text(messages("featureSwitch.submit"))
+    ))
+ }
 }
+

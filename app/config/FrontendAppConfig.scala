@@ -50,6 +50,11 @@ trait AppConfig {
   val vatSubscriptionDynamicStubURL: String
   val contactPreferenceURL: String
   val gtmContainer: String
+  val footerCookiesUrl: String
+  val footerPrivacyUrl: String
+  val footerTermsConditionsUrl: String
+  val footerHelpUrl: String
+  val contactFormServiceIdentifier: String
 }
 
 @Singleton
@@ -66,7 +71,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   // Contact frontend
   private lazy val contactHost = servicesConfig.getString(ConfigKeys.contactFrontendService)
-  private val contactFormServiceIdentifier = "VATC"
+  lazy val contactFormServiceIdentifier = "VATC"
 
   // Feedback
   lazy val reportAProblemPartialUrl: String = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
@@ -148,4 +153,9 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
     controllers.routes.LanguageController.switchToLanguage(lang)
 
   override val gtmContainer: String = servicesConfig.getString(ConfigKeys.gtmContainer)
+
+  override val footerPrivacyUrl: String = servicesConfig.getString(ConfigKeys.footerPrivacyUrl)
+  override val footerTermsConditionsUrl: String = servicesConfig.getString(ConfigKeys.footerTermsConditionsUrl)
+  override val footerHelpUrl: String = servicesConfig.getString(ConfigKeys.footerHelpUrl)
+  override val footerCookiesUrl: String = servicesConfig.getString(ConfigKeys.footerCookiesUrl)
 }

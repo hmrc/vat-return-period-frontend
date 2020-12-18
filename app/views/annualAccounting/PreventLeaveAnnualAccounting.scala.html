@@ -14,23 +14,23 @@
  * limitations under the License.
  *@
 
-@import templates.headings
 @import models.auth.User
 @import views.html.MainTemplate
+@import config.AppConfig
 
-@this(mainTemplate: MainTemplate)
+@this(mainTemplate: MainTemplate, govukBackLink: GovukBackLink)
 
-@()(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
+@()(implicit user : User[_], messages: Messages, appConfig: AppConfig)
 
 @mainTemplate(
-  title = messages("preventLeavingAnnualAccounting.h1"),
-  bodyClasses = None,
-  appConfig = appConfig,
+  pageTitle = messages("preventLeavingAnnualAccounting.h1"),
   user = Some(user)) {
 
-  <a class="link-back" href="@appConfig.manageVatUrl">@messages("base.back")</a>
+@govukBackLink(BackLink(
+href = appConfig.manageVatUrl))
 
-  @headings(messages("preventLeavingAnnualAccounting.h1"))
-  <p>@messages("preventLeavingAnnualAccounting.p1")</p>
-  <p>@messages("preventLeavingAnnualAccounting.p2")</p>
+    <h1 class="govuk-heading-l">@messages("preventLeavingAnnualAccounting.h1")</h1>
+
+    <p class="govuk-body">@messages("preventLeavingAnnualAccounting.p1")</p>
+    <p class="govuk-body">@messages("preventLeavingAnnualAccounting.p2")</p>
 }

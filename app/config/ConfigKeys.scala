@@ -46,11 +46,16 @@ object ConfigKeys {
   val vatAgentClientLookupFrontendUnauthorisedUrl: String = "vat-agent-client-lookup-frontend.unauthorisedUrl"
   val vatAgentClientLookupFrontendAgentActionUrl: String = "vat-agent-client-lookup-frontend.agentActionUrl"
 
-  val govUkGuidanceMtdVat: String = "gov-uk.guidance.mtdVat.url"
-  val govUkGuidanceAgentServices: String = "gov-uk.guidance.agentServices.url"
+  val govUkGuidanceMtdVat: String = "gov-uk.mtdVat"
+  val govUkGuidanceAgentServices: String = "gov-uk.agentServices"
 
   val manageVatUrl: String = "manage-vat-subscription-frontend.url"
   val manageVatHost: String = "manage-vat-subscription-frontend.host"
 
   val gtmContainer: String = "tracking-consent-frontend.gtm.container"
+
+  val footerCookiesUrl: String = "mdtp.cookies"
+  val footerPrivacyUrl: String = "mdtp.privacyPolicy"
+  val footerTermsConditionsUrl: String = "mdtp.termsAndConditions"
+  val footerHelpUrl: String = "gov-uk.helpUsingGovuk"
 }

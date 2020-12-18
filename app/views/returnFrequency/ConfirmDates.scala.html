@@ -19,61 +19,49 @@
 @import models.auth.User
 @import views.html.MainTemplate
 
-@this(mainTemplate: MainTemplate, form: FormWithCSRF)
+@this(mainTemplate: MainTemplate, form: FormWithCSRF, govukButton: GovukButton)
 
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @mainTemplate(
-title = messages("checkYourAnswers.title"),
-bodyClasses = None,
-appConfig = appConfig,
-user = Some(user)) {
+    pageTitle = messages("checkYourAnswers.title"),
+    user = Some(user)) {
 
+<h1 class="govuk-heading-l">@messages("checkYourAnswers.title")</h1>
 
-<h1 class="heading-large">@messages("checkYourAnswers.title")</h1>
+<h2 class="govuk-heading-m">@messages("checkYourAnswers.vatBusinessDetails")</h2>
 
-<h2>@messages("checkYourAnswers.vatBusinessDetails")</h2>
+<dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
-<div class="form-group">
-    <dl class="govuk-check-your-answers cya-questions-long">
+    <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+            @messages("checkYourAnswers.newDates")
+        </dt>
 
-        <div>
-            <dt class="cya-question">
-                @messages("checkYourAnswers.newDates")
-            </dt>
+        <dd class="govuk-summary-list__value">
+            @messages(s"return_frequency.${model.id}")
+        </dd>
 
-            <dd class="cya-answer">
-                @messages(s"return_frequency.${model.id}")
-            </dd>
+        <dd class="govuk-summary-list__actions">
+            <a class= "govuk-link" href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
+               aria-label='@messages("confirm_return_frequency.changeLink")'>
+                @messages("checkYourAnswers.change")
+            </a>
+        </dd>
+    </div>
 
+</dl>
 
-
-            <dd class="cya-change">
-                <a href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
-                   aria-label='@messages("confirm_return_frequency.changeLink")'>
-                    @messages("checkYourAnswers.change")
-                </a>
-            </dd>
-        </div>
-
-    </dl>
-</div>
-
-@if(leavingAnnualAccounting) {
-<p>@messages("confirm_return_frequency.annually.p1")</p>
-<ul class="list list-bullet">
-    <li>@messages("confirm_return_frequency.annually.bullet1")</li>
-    <li>@messages("confirm_return_frequency.annually.bullet2")</li>
-</ul>
+    @if(leavingAnnualAccounting) {
+    <p class="govuk-body">@messages("confirm_return_frequency.annually.p1")</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>@messages("confirm_return_frequency.annually.bullet1")</li>
+        <li>@messages("confirm_return_frequency.annually.bullet2")</li>
+    </ul>
 }
-
-@form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
-<button
-        class="button"
-        type ="submit"
-        id="continue-button">
-    @messages("common.continue")
-</button>
-}
-
+    @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
+        @govukButton(Button(
+    content = Text(messages("common.continue"))
+    ))
+    }
 }

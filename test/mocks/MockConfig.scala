@@ -29,6 +29,7 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val betaFeedbackUrl: String = "feedback-url"
   override val betaFeedbackUnauthenticatedUrl: String = ""
   override val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
+  override val contactFormServiceIdentifier = ""
   override val features: Features = new Features()
   override val signInUrl: String = "sign-in-url"
   override def signOutUrl(identifier: String): String = s"/some-gg-signout-url/$identifier"
@@ -44,6 +45,10 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val govUkGuidanceAgentServices: String = "agent-services"
   override val manageVatUrl: String = "/manage-vat"
   override val gtmContainer: String = "x"
+  override val footerCookiesUrl: String = "/cookies"
+  override val footerPrivacyUrl: String = "/privacy"
+  override val footerTermsConditionsUrl: String = "/terms"
+  override val footerHelpUrl: String = "/help"
   override val routeToSwitchLanguage: String => Call = (lang: String) => controllers.routes.LanguageController.switchToLanguage(lang)
   override def languageMap: Map[String, Lang] = Map(
     "english" -> Lang("en"),

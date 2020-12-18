@@ -31,15 +31,15 @@ class PreventLeaveAnnualAccountingViewSpec extends ViewBaseSpec {
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "have a back button" in {
-      elementText(".link-back")  shouldBe "Back"
+      elementText(".govuk-back-link")  shouldBe "Back"
     }
     "have a back button with the correct redirect url" in {
 
-      element(".link-back").attr("href") shouldBe "/manage-vat"
+      element(".govuk-back-link").attr("href") shouldBe "/manage-vat"
     }
 
     "have the correct heading" in {
-      elementText("h1:nth-child(1)")  shouldBe "You already have a change pending"
+      elementText(".govuk-heading-l")  shouldBe "You already have a change pending"
     }
     "have the correct 1st sentence" in {
       elementText("p:nth-child(3)")  shouldBe "You recently requested to change your annual accounting scheme."
