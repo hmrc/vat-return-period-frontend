@@ -66,14 +66,14 @@
         title = Text(messages("common.errorSummary.heading")),
         errorList = form.errors.map { error =>
           ErrorLink(
-            href = availableOptions.lift(0).map(option => s"#return_frequency.${option.id}"),
+            href = Some("#period-option"),
             content = Text(messages(error.message))
             )
         }
     ))
   }
 
-  @formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
+@formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
     @govukRadios(Radios(
         idPrefix = Some(form("period-option").id),
         name = "period-option",
