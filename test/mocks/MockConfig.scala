@@ -40,7 +40,6 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val agentClientLookupStartUrl: String => String = uri => s"agent-client-lookup-start-url/$uri"
   override val agentClientUnauthorisedUrl: String => String = uri => s"agent-client-unauthorised-url/$uri"
   override val changeClientUrl: String = "/change-client"
-  override val agentActionUrl: String = "/agent-action"
   override val govUkGuidanceMtdVat: String = "mtd-vat"
   override val govUkGuidanceAgentServices: String = "agent-services"
   override val manageVatUrl: String = "/manage-vat"
