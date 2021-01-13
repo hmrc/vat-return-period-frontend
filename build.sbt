@@ -54,21 +54,21 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "govuk-template"                % "5.60.0-play-26",
-  "uk.gov.hmrc"    %% "play-ui"                       % "8.18.0-play-26",
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "3.0.0",
-  "uk.gov.hmrc"    %% "play-partials"                 % "7.0.0-play-26",
+  "uk.gov.hmrc"    %% "govuk-template"                % "5.61.0-play-26",
+  "uk.gov.hmrc"    %% "play-ui"                       % "8.20.0-play-26",
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "3.3.0",
+  "uk.gov.hmrc"    %% "play-partials"                 % "7.1.0-play-26",
   "org.typelevel"  %% "cats"                          % "0.9.0",
   "uk.gov.hmrc"    %% "play-whitelist-filter"         % "3.4.0-play-26",
-  "uk.gov.hmrc"    %% "play-language"                 % "4.5.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.56.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.32.0-play-26"
+  "uk.gov.hmrc"    %% "play-language"                 % "4.7.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.57.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.35.0-play-26"
 )
 
 val test = Seq(
-  "uk.gov.hmrc"             %% "hmrctest"                     % "3.9.0-play-26",
-  "org.scalatest"           %% "scalatest"                    % "3.0.8",
-  "org.scalatestplus.play"  %% "scalatestplus-play"           % "3.1.0",
+  "uk.gov.hmrc"             %% "hmrctest"                     % "3.10.0-play-26",
+  "org.scalatest"           %% "scalatest"                    % "3.0.9",
+  "org.scalatestplus.play"  %% "scalatestplus-play"           % "3.1.3",
   "org.pegdown"             % "pegdown"                       % "1.6.0",
   "org.jsoup"               % "jsoup"                         % "1.13.1",
   "com.typesafe.play"       %% "play-test"                    % PlayVersion.current,
