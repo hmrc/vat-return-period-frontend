@@ -40,22 +40,28 @@ object CustomerDetailsTestConstants {
     "organisationName" -> orgName,
     "firstName" -> firstName,
     "lastName" -> lastName,
-    "tradingName" -> tradingName
+    "tradingName" -> tradingName,
+    "isInsolvent" -> false,
+    "continueToTrade" -> Some(true)
   )
 
-  val customerDetailsJsonMin: JsObject = Json.obj()
+  val customerDetailsJsonMin: JsObject = Json.obj("isInsolvent" -> false)
 
   val customerDetailsMax = CustomerDetails(
     Some(firstName),
     Some(lastName),
     Some(orgName),
-    Some(tradingName)
+    Some(tradingName),
+    false,
+    Some(true)
   )
 
   val customerDetailsMin = CustomerDetails(
     None,
     None,
     None,
+    None,
+    false,
     None
   )
 
@@ -63,6 +69,8 @@ object CustomerDetailsTestConstants {
     None,
     None,
     Some("org name"),
+    None,
+    false,
     None
   )
 
@@ -70,6 +78,8 @@ object CustomerDetailsTestConstants {
     Some(firstName),
     Some(lastName),
     None,
+    None,
+    false,
     None
   )
 }

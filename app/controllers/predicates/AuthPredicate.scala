@@ -16,7 +16,7 @@
 
 package controllers.predicates
 
-import common.EnrolmentKeys
+import common.{EnrolmentKeys, SessionKeys}
 import common.EnrolmentKeys._
 import common.SessionKeys._
 import config.{AppConfig, ServiceErrorHandler}
@@ -25,7 +25,7 @@ import models.auth.User
 import play.api.Logger
 import play.api.i18n.I18nSupport
 import play.api.mvc._
-import services.EnrolmentsAuthService
+import services.{CustomerCircumstanceDetailsService, EnrolmentsAuthService}
 import uk.gov.hmrc.auth.core.AffinityGroup.Agent
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals._
@@ -38,6 +38,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
                               errorHandler: ServiceErrorHandler,
+                              customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
                               implicit val appConfig: AppConfig,
                               val mcc: MessagesControllerComponents,
                               unauthorisedAgentView: UnauthorisedAgent,
@@ -82,7 +83,23 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
     enrolments.enrolments.collectFirst {
       case Enrolment(EnrolmentKeys.vatEnrolmentId, EnrolmentIdentifier(_, vrn) :: _, EnrolmentKeys.activated, _) => vrn
     } match {
-      case Some(vrn) => block(User(vrn))
+      case Some(vrn) =>
+        val user = User(vrn)
+        request.session.get(SessionKeys.insolventWithoutAccessKey) match {
+          case Some("true") => Future.successful(Forbidden(unauthorisedNonAgentView()))
+          case Some("false") => block(user)
+          case _ => customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).flatMap {
+            case Right(details) if details.customerDetails.isInsolventWithoutAccess =>
+              Logger.debug("[AuthPredicate][authoriseAsNonAgent] - User is insolvent and not continuing to trade")
+              Future.successful(Forbidden(unauthorisedNonAgentView()).addingToSession(SessionKeys.insolventWithoutAccessKey -> "true"))
+            case Right(_) =>
+              Logger.debug("[AuthPredicate][authoriseAsNonAgent] - Authenticated as principle")
+              block(user).map(result => result.addingToSession(SessionKeys.insolventWithoutAccessKey -> "false"))
+            case _ =>
+              Logger.warn("[AuthPredicate][authoriseAsNonAgent] - Failure obtaining insolvency status from Customer Info API")
+              Future.successful(errorHandler.showInternalServerError)
+          }
+        }
       case None =>
         Logger.debug("[AuthPredicate][authoriseAsNonAgent] - Non-agent with no HMRC-MTD-VAT enrolment. Rendering unauthorised view.")
         Future.successful(Forbidden(unauthorisedNonAgentView()))

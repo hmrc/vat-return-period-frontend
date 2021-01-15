@@ -30,7 +30,9 @@ object CircumstanceDetailsTestConstants {
       "firstName" -> "bob",
       "lastName" -> "smith",
       "organisationName" -> "org name",
-      "tradingName" -> "trading name"
+      "tradingName" -> "trading name",
+      "isInsolvent" -> false,
+      "continueToTrade" -> Some(true)
     ),
     "ppob" -> Json.obj(
       "contactDetails" -> Json.obj(
@@ -45,12 +47,12 @@ object CircumstanceDetailsTestConstants {
   )
 
   val circumstanceDetailsJsonMin: JsValue = Json.obj(
-    "customerDetails" -> Json.obj()
+    "customerDetails" -> Json.obj("isInsolvent" -> false)
   )
 
   val circumstanceDetailsModelMax: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, Some(true)),
       Some(ChangeIndicators(Some(true))),
       Some(Monthly),
       Some(partyType),
@@ -60,7 +62,7 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsModelMaxAA: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, Some(true)),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       Some(Monthly),
       Some(partyType),
@@ -70,7 +72,7 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsModelMin: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(None, None, None, None),
+      CustomerDetails(None, None, None, None, false, None),
       None,
       None,
       None,
@@ -80,7 +82,7 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsModelMinAA: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(None, None, None, None),
+      CustomerDetails(None, None, None, None, false, None),
       Some(ChangeIndicators(Some(false), annualAccounting = true)),
       None,
       None,
@@ -90,7 +92,7 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsNoPending: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, None),
       Some(ChangeIndicators(Some(false))),
       Some(Monthly),
       Some(partyType),
@@ -100,7 +102,7 @@ object CircumstanceDetailsTestConstants {
 
   val circumstanceDetailsNoChangeIndicator: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name")),
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, None),
       None,
       Some(Monthly),
       None,
