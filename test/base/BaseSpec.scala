@@ -20,6 +20,7 @@ package base
 import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
 import common.SessionKeys
+import common.SessionKeys.insolventWithoutAccessKey
 import config.ServiceErrorHandler
 import mocks.MockConfig
 import models.auth.User
@@ -48,9 +49,9 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
 
   implicit lazy val messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
-  implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "")
+  implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(insolventWithoutAccessKey -> "false")
   lazy val fakeRequestWithClientsVRN: FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest().withSession(SessionKeys.CLIENT_VRN -> vrn)
+    FakeRequest().withSession(SessionKeys.CLIENT_VRN -> vrn, insolventWithoutAccessKey -> "false")
 
   val vrn: String = "999999999"
   val arn = "ABCD12345678901"

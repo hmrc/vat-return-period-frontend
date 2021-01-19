@@ -17,6 +17,7 @@
 package controllers.predicates
 
 import assets.messages.AuthMessages
+import common.SessionKeys.insolventWithoutAccessKey
 import mocks.MockAuth
 import org.jsoup.Jsoup
 import play.api.http.Status
@@ -132,7 +133,7 @@ class AuthPredicateSpec extends MockAuth {
       "user has HMRC-MTD-VAT enrolment" should {
 
         val authResponse = Future.successful(new ~(Some(Individual), mtdVatEnrolment))
-        lazy val result = target()(FakeRequest())
+        lazy val result = target()(FakeRequest().withSession(insolventWithoutAccessKey -> "false"))
 
         "allow the request through" in {
           mockAuthorise(authResponse)
