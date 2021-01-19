@@ -135,5 +135,22 @@ class CustomerDetailsSpec extends UnitSpec {
         Json.toJson(customerDetailsMin)(CustomerDetails.writes) shouldBe customerDetailsJsonMin
       }
     }
+
+    "calling .isInsolventWithoutAccess" should {
+
+      "return true when the user is insolvent and not continuing to trade" in {
+        customerDetailsInsolvent.isInsolventWithoutAccess shouldBe true
+      }
+
+      "return false when the user is insolvent but is continuing to trade" in {
+        customerDetailsInsolvent.copy(continueToTrade = Some(true)).isInsolventWithoutAccess shouldBe false
+      }
+
+      "return false when the user is not insolvent, regardless of the continueToTrade flag" in {
+        customerDetailsMax.isInsolventWithoutAccess shouldBe false
+        customerDetailsMax.copy(continueToTrade = Some(false)).isInsolventWithoutAccess shouldBe false
+        customerDetailsMax.copy(continueToTrade = None).isInsolventWithoutAccess shouldBe false
+      }
+    }
   }
 }

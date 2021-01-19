@@ -160,6 +160,15 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
       }
     }
 
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        val result = TestConfirmVatDatesController.show(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
+      }
+    }
+
     authControllerChecks(TestConfirmVatDatesController.show, fakeRequest)
   }
 
@@ -284,6 +293,15 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
           redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
         }
+      }
+    }
+
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        val result = TestConfirmVatDatesController.submit(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
       }
     }
   }

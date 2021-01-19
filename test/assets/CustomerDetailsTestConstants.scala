@@ -82,4 +82,6 @@ object CustomerDetailsTestConstants {
     false,
     None
   )
+
+  val customerDetailsInsolvent: CustomerDetails = customerDetailsMax.copy(isInsolvent = true, continueToTrade = Some(false))
 }

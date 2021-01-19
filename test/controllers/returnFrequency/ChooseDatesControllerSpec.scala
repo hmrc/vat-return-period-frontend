@@ -212,6 +212,15 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
       }
     }
+
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        lazy val result = TestChooseDatesController.show(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
+      }
+    }
   }
 
   "ChooseDatesController 'submit' method" when {
@@ -318,6 +327,15 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
           }
         }
+      }
+    }
+
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        val result = TestChooseDatesController.submit(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
       }
     }
   }

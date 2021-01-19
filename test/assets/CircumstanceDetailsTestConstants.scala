@@ -16,6 +16,7 @@
 
 package assets
 
+import assets.CustomerDetailsTestConstants.customerDetailsInsolvent
 import models.circumstanceInfo.{ChangeIndicators, CircumstanceDetails, CustomerDetails}
 import models.contactPreferences.ContactPreference.digital
 import models.returnFrequency.Monthly
@@ -109,4 +110,7 @@ object CircumstanceDetailsTestConstants {
       None,
       None
     )
+
+  val circumstanceDetailsInsolvent: CircumstanceDetails =
+    circumstanceDetailsModelMax.copy(customerDetails = customerDetailsInsolvent)
 }

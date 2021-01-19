@@ -139,6 +139,15 @@ class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
         }
       }
 
+      "the user is insolvent and not continuing to trade" should {
+
+        "return 403 (Forbidden)" in {
+          mockAuthorise(mtdVatAuthorisedResponse)
+          lazy val result = TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(insolventRequest)
+          status(result) shouldBe Status.FORBIDDEN
+        }
+      }
+
     authControllerChecks(TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix), fakeRequest)
   }
 }
