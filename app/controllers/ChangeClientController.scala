@@ -20,7 +20,6 @@ import common.SessionKeys
 import config.AppConfig
 import controllers.predicates.AuthPredicate
 import javax.inject.Inject
-import models.returnFrequency.{Feb, Jan, Mar, Monthly}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 

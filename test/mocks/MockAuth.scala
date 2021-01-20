@@ -42,7 +42,7 @@ trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
   lazy val mockAuthConnector: AuthConnector = mock[AuthConnector]
   lazy val mockEnrolmentsAuthService: EnrolmentsAuthService = new EnrolmentsAuthService(mockAuthConnector)
   lazy val mockAuthPredicate: AuthPredicate = new AuthPredicate(mockEnrolmentsAuthService,
-    errorHandler, mockAppConfig, mcc, unauthorisedAgentView, unauthorisedNonAgentView)
+    errorHandler, mockCustomerDetailsService, mockAppConfig, mcc, unauthorisedAgentView, unauthorisedNonAgentView)
 
   def mockAuthorise(authResponse: Future[~[Option[AffinityGroup], Enrolments]]): Unit = {
     (mockAuthConnector.authorise(_: Predicate, _: Retrieval[_])(_: HeaderCarrier, _: ExecutionContext))

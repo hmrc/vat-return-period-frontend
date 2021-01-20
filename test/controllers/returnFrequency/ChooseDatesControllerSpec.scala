@@ -21,6 +21,7 @@ import assets.ReturnPeriodTestConstants._
 import assets.messages.{AuthMessages, ReturnFrequencyMessages}
 import base.BaseSpec
 import common.SessionKeys
+import common.SessionKeys.insolventWithoutAccessKey
 import mocks.MockAuth
 import mocks.services.MockCustomerCircumstanceDetailsService
 import org.jsoup.Jsoup
@@ -211,6 +212,15 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
       }
     }
+
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        lazy val result = TestChooseDatesController.show(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
+      }
+    }
   }
 
   "ChooseDatesController 'submit' method" when {
@@ -220,6 +230,7 @@ class ChooseDatesControllerSpec extends BaseSpec
       "user has an in-flight return frequency change" should {
 
         lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
+          .withSession(insolventWithoutAccessKey -> "false")
         lazy val result = TestChooseDatesController.submit(request)
 
         "return SEE_OTHER (303)" in {
@@ -238,6 +249,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         "a value is not held in session for the current Return Frequency" should {
 
           lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
+            .withSession(insolventWithoutAccessKey -> "false")
           lazy val result = TestChooseDatesController.submit(request)
 
           "return SEE_OTHER (303)" in {
@@ -258,6 +270,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         "submitting with an option selected" should {
 
           lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
+            .withSession(insolventWithoutAccessKey -> "false")
           lazy val result = TestChooseDatesController.submit(request.withSession(
             SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
             SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
@@ -282,6 +295,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           "current return period in session is not valid" should {
 
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
+              .withSession(insolventWithoutAccessKey -> "false")
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
@@ -297,6 +311,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           "current return period in session is valid" should {
 
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
+              .withSession(insolventWithoutAccessKey -> "false")
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
@@ -312,6 +327,15 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
           }
         }
+      }
+    }
+
+    "the user is insolvent and not continuing to trade" should {
+
+      "return 403 (Forbidden)" in {
+        mockAuthorise(mtdVatAuthorisedResponse)
+        val result = TestChooseDatesController.submit(insolventRequest)
+        status(result) shouldBe Status.FORBIDDEN
       }
     }
   }

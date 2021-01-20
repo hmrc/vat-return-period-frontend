@@ -47,14 +47,14 @@ class CustomerDetailsSpec extends UnitSpec {
       "FirstName is present" should {
 
         "return 'Firstname'" in {
-          CustomerDetails(Some(firstName), None, None, None).userName shouldBe Some(s"$firstName")
+          CustomerDetails(Some(firstName), None, None, None, false, None).userName shouldBe Some(s"$firstName")
         }
       }
 
       "LastName is present" should {
 
         "return 'Lastname'" in {
-          CustomerDetails(None, Some(lastName), None, None).userName shouldBe Some(s"$lastName")
+          CustomerDetails(None, Some(lastName), None, None, false, None).userName shouldBe Some(s"$lastName")
         }
       }
 
@@ -133,6 +133,23 @@ class CustomerDetailsSpec extends UnitSpec {
 
       "no optional fields are returned" in {
         Json.toJson(customerDetailsMin)(CustomerDetails.writes) shouldBe customerDetailsJsonMin
+      }
+    }
+
+    "calling .isInsolventWithoutAccess" should {
+
+      "return true when the user is insolvent and not continuing to trade" in {
+        customerDetailsInsolvent.isInsolventWithoutAccess shouldBe true
+      }
+
+      "return false when the user is insolvent but is continuing to trade" in {
+        customerDetailsInsolvent.copy(continueToTrade = Some(true)).isInsolventWithoutAccess shouldBe false
+      }
+
+      "return false when the user is not insolvent, regardless of the continueToTrade flag" in {
+        customerDetailsMax.isInsolventWithoutAccess shouldBe false
+        customerDetailsMax.copy(continueToTrade = Some(false)).isInsolventWithoutAccess shouldBe false
+        customerDetailsMax.copy(continueToTrade = None).isInsolventWithoutAccess shouldBe false
       }
     }
   }

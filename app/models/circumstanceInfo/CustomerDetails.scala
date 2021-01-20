@@ -23,7 +23,9 @@ import utils.{JsonObjectSugar, JsonReadUtil}
 case class CustomerDetails(firstName: Option[String],
                            lastName: Option[String],
                            organisationName: Option[String],
-                           tradingName: Option[String]) {
+                           tradingName: Option[String],
+                           isInsolvent: Boolean,
+                           continueToTrade: Option[Boolean]) {
 
   val isOrganisation: Boolean = organisationName.isDefined
   val userName: Option[String] = {
@@ -32,6 +34,11 @@ case class CustomerDetails(firstName: Option[String],
   }
   val businessName: Option[String] = if (isOrganisation) organisationName else userName
   val clientName: Option[String] = if (tradingName.isDefined) tradingName else businessName
+
+  val isInsolventWithoutAccess: Boolean = continueToTrade match {
+    case Some(false) => isInsolvent
+    case _ => false
+  }
 }
 
 object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
@@ -40,12 +47,16 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
   private val lastNamePath = __ \ "lastName"
   private val organisationNamePath = __ \ "organisationName"
   private val tradingNamePath = __ \ "tradingName"
+  private val isInsolventPath = __ \ "isInsolvent"
+  private val continueToTradePath = __ \ "continueToTrade"
 
   implicit val reads: Reads[CustomerDetails] = (
     firstNamePath.readOpt[String] and
     lastNamePath.readOpt[String] and
     organisationNamePath.readOpt[String] and
-    tradingNamePath.readOpt[String]
+    tradingNamePath.readOpt[String] and
+    isInsolventPath.read[Boolean] and
+    continueToTradePath.readOpt[Boolean]
   ) (CustomerDetails.apply _)
 
   implicit val writes: Writes[CustomerDetails] = Writes {
@@ -54,7 +65,9 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
         "firstName" -> model.firstName,
         "lastName" -> model.lastName,
         "organisationName" -> model.organisationName,
-        "tradingName" -> model.tradingName
+        "tradingName" -> model.tradingName,
+        "isInsolvent" -> model.isInsolvent,
+        "continueToTrade" -> model.continueToTrade
       )
   }
 }
