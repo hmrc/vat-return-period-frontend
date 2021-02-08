@@ -25,7 +25,8 @@ case class CustomerDetails(firstName: Option[String],
                            organisationName: Option[String],
                            tradingName: Option[String],
                            isInsolvent: Boolean,
-                           continueToTrade: Option[Boolean]) {
+                           continueToTrade: Option[Boolean],
+                           insolvencyType: Option[String]) {
 
   val isOrganisation: Boolean = organisationName.isDefined
   val userName: Option[String] = {
@@ -35,8 +36,13 @@ case class CustomerDetails(firstName: Option[String],
   val businessName: Option[String] = if (isOrganisation) organisationName else userName
   val clientName: Option[String] = if (tradingName.isDefined) tradingName else businessName
 
-  val isInsolventWithoutAccess: Boolean = continueToTrade match {
-    case Some(false) => isInsolvent
+  val exemptInsolvencyTypes = Seq("07", "12", "13", "14")
+  val blockedInsolvencyTypes = Seq("08", "09", "10", "15")
+
+  val isInsolventWithoutAccess: Boolean = (isInsolvent, insolvencyType) match {
+    case (true, Some(inType)) if exemptInsolvencyTypes.contains(inType) => false
+    case (true, Some(inType)) if blockedInsolvencyTypes.contains(inType) => true
+    case (true, _) if continueToTrade.contains(false) => true
     case _ => false
   }
 }
@@ -49,6 +55,7 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
   private val tradingNamePath = __ \ "tradingName"
   private val isInsolventPath = __ \ "isInsolvent"
   private val continueToTradePath = __ \ "continueToTrade"
+  private val insolvencyTypePath = __ \ "insolvencyType"
 
   implicit val reads: Reads[CustomerDetails] = (
     firstNamePath.readOpt[String] and
@@ -56,7 +63,8 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
     organisationNamePath.readOpt[String] and
     tradingNamePath.readOpt[String] and
     isInsolventPath.read[Boolean] and
-    continueToTradePath.readOpt[Boolean]
+    continueToTradePath.readOpt[Boolean] and
+    insolvencyTypePath.readOpt[String]
   ) (CustomerDetails.apply _)
 
   implicit val writes: Writes[CustomerDetails] = Writes {
@@ -67,7 +75,8 @@ object CustomerDetails extends JsonReadUtil with JsonObjectSugar {
         "organisationName" -> model.organisationName,
         "tradingName" -> model.tradingName,
         "isInsolvent" -> model.isInsolvent,
-        "continueToTrade" -> model.continueToTrade
+        "continueToTrade" -> model.continueToTrade,
+        "insolvencyType" -> model.insolvencyType
       )
   }
 }

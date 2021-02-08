@@ -37,7 +37,8 @@ object VatSubscriptionStub extends WireMockMethods {
       "organisationName" -> "org name",
       "tradingName" -> "trading name",
       "isInsolvent" -> false,
-      "continueToTrade" -> Some(true)
+      "continueToTrade" -> Some(true),
+      "insolvencyType" -> Some("01")
     ),
     "ppob" -> Json.obj(
       "contactDetails" -> Json.obj(
@@ -53,7 +54,7 @@ object VatSubscriptionStub extends WireMockMethods {
 
   val circumstanceDetailsModelMax: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, Some(true)),
+      CustomerDetails(Some("bob"), Some("smith"), Some("org name"), Some("trading name"), false, Some(true), Some("01")),
       Some(ChangeIndicators(Some(true))),
       Some(Monthly),
       Some(partyType),
@@ -63,7 +64,7 @@ object VatSubscriptionStub extends WireMockMethods {
 
   val circumstanceDetailsModelMin: CircumstanceDetails =
     CircumstanceDetails(
-      CustomerDetails(None, None, None, None, false, None),
+      CustomerDetails(None, None, None, None, false, None, None),
       None,
       None,
       None,

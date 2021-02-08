@@ -22,6 +22,9 @@ import uk.gov.hmrc.play.test.UnitSpec
 
 class CustomerDetailsSpec extends UnitSpec {
 
+  val exemptInsolvencyTypes: Seq[String] = customerDetailsMax.exemptInsolvencyTypes
+  val blockedInsolvencyTypes: Seq[String] = customerDetailsMax.blockedInsolvencyTypes
+
   "CustomerDetailsModel" when {
 
     "calling .isOrg" should {
@@ -47,14 +50,14 @@ class CustomerDetailsSpec extends UnitSpec {
       "FirstName is present" should {
 
         "return 'Firstname'" in {
-          CustomerDetails(Some(firstName), None, None, None, false, None).userName shouldBe Some(s"$firstName")
+          CustomerDetails(Some(firstName), None, None, None, false, None, None).userName shouldBe Some(s"$firstName")
         }
       }
 
       "LastName is present" should {
 
         "return 'Lastname'" in {
-          CustomerDetails(None, Some(lastName), None, None, false, None).userName shouldBe Some(s"$lastName")
+          CustomerDetails(None, Some(lastName), None, None, false, None, None).userName shouldBe Some(s"$lastName")
         }
       }
 
@@ -136,20 +139,44 @@ class CustomerDetailsSpec extends UnitSpec {
       }
     }
 
-    "calling .isInsolventWithoutAccess" should {
+    "calling .isInsolventWithoutAccess" when {
 
-      "return true when the user is insolvent and not continuing to trade" in {
-        customerDetailsInsolvent.isInsolventWithoutAccess shouldBe true
+      "the user is insolvent and has an exempt insolvency type" should {
+
+        "return false" in {
+          exemptInsolvencyTypes.foreach { value =>
+            customerDetailsInsolvent.copy(insolvencyType = Some(value)).isInsolventWithoutAccess shouldBe false
+          }
+        }
       }
+      "the user is insolvent and has a blocked insolvency type" should {
 
-      "return false when the user is insolvent but is continuing to trade" in {
-        customerDetailsInsolvent.copy(continueToTrade = Some(true)).isInsolventWithoutAccess shouldBe false
+        "return true" in {
+          blockedInsolvencyTypes.foreach { value =>
+            customerDetailsInsolvent.copy(insolvencyType = Some(value)).isInsolventWithoutAccess shouldBe true
+          }
+        }
       }
+      "the user is insolvent and has an insolvency type with no associated rules" when {
 
-      "return false when the user is not insolvent, regardless of the continueToTrade flag" in {
-        customerDetailsMax.isInsolventWithoutAccess shouldBe false
-        customerDetailsMax.copy(continueToTrade = Some(false)).isInsolventWithoutAccess shouldBe false
-        customerDetailsMax.copy(continueToTrade = None).isInsolventWithoutAccess shouldBe false
+        "the user is continuing to trade" should {
+
+          "return false" in {
+            customerDetailsInsolvent.copy(continueToTrade = Some(true)).isInsolventWithoutAccess shouldBe false
+          }
+        }
+        "the user is not continuing to trade" should {
+
+          "return true" in {
+            customerDetailsInsolvent.isInsolventWithoutAccess shouldBe true
+          }
+        }
+      }
+      "the user is not insolvent" should {
+
+        "return false" in {
+          customerDetailsMax.isInsolventWithoutAccess shouldBe false
+        }
       }
     }
   }
