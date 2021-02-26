@@ -97,9 +97,3 @@ checkYourAnswers.title = Gwiriwch eich atebion
 checkYourAnswers.vatBusinessDetails = Manylion busnes TAW
 checkYourAnswers.change = Newid
 checkYourAnswers.newDates = Dyddiadau Ffurflenni TAW
-
-footerLinks.cookies = Cwcis
-footerLinks.accessibility = Hygyrchedd
-footerLinks.privacyPolicy = Polisi preifatrwydd
-footerLinks.termsAndConditions = Telerau ac Amodau
-footerLinks.help = Help wrth ddefnyddio GOV.UK

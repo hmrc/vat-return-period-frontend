@@ -49,10 +49,6 @@ trait AppConfig {
   val vatSubscriptionDynamicStubURL: String
   val contactPreferenceURL: String
   val gtmContainer: String
-  val footerCookiesUrl: String
-  val footerPrivacyUrl: String
-  val footerTermsConditionsUrl: String
-  val footerHelpUrl: String
   val contactFormServiceIdentifier: String
 }
 
@@ -151,8 +147,4 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override val gtmContainer: String = servicesConfig.getString(ConfigKeys.gtmContainer)
 
-  override val footerPrivacyUrl: String = servicesConfig.getString(ConfigKeys.footerPrivacyUrl)
-  override val footerTermsConditionsUrl: String = servicesConfig.getString(ConfigKeys.footerTermsConditionsUrl)
-  override val footerHelpUrl: String = servicesConfig.getString(ConfigKeys.footerHelpUrl)
-  override val footerCookiesUrl: String = servicesConfig.getString(ConfigKeys.footerCookiesUrl)
 }
