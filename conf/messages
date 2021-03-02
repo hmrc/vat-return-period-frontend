@@ -103,9 +103,3 @@ checkYourAnswers.title = Check your answers
 checkYourAnswers.vatBusinessDetails = VAT business details
 checkYourAnswers.change = Change
 checkYourAnswers.newDates = VAT Return dates
-
-footerLinks.cookies = Cookies
-footerLinks.accessibility = Accessibility
-footerLinks.privacyPolicy = Privacy policy
-footerLinks.termsAndConditions = Terms and conditions
-footerLinks.help = Help using GOV.UK

@@ -53,8 +53,4 @@ object ConfigKeys {
 
   val gtmContainer: String = "tracking-consent-frontend.gtm.container"
 
-  val footerCookiesUrl: String = "mdtp.cookies"
-  val footerPrivacyUrl: String = "mdtp.privacyPolicy"
-  val footerTermsConditionsUrl: String = "mdtp.termsAndConditions"
-  val footerHelpUrl: String = "gov-uk.helpUsingGovuk"
 }
