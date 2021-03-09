@@ -26,3 +26,10 @@ $hmrc-assets-path: "/vat-through-software/account/returns/assets/lib/hmrc-fronte
   pointer-events: none;
   cursor: default;
 }
+
+.js-enabled .govuk-header__menu-button {
+  display: none;
+}
+.js-enabled .govuk-header__navigation {
+  display: block;
+}
