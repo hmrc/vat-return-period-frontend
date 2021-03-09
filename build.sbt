@@ -55,14 +55,14 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "govuk-template"                % "5.63.0-play-26",
-  "uk.gov.hmrc"    %% "play-ui"                       % "8.21.0-play-26",
+  "uk.gov.hmrc"    %% "play-ui"                       % "9.0.0-play-26",
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "3.4.0",
   "uk.gov.hmrc"    %% "play-partials"                 % "7.1.0-play-26",
   "org.typelevel"  %% "cats"                          % "0.9.0",
   "uk.gov.hmrc"    %% "play-whitelist-filter"         % "3.4.0-play-26",
-  "uk.gov.hmrc"    %% "play-language"                 % "4.7.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.63.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.49.0-play-26"
+  "uk.gov.hmrc"    %% "play-language"                 % "4.10.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.65.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.50.0-play-26"
 )
 
 val test = Seq(
@@ -73,7 +73,7 @@ val test = Seq(
   "org.jsoup"               % "jsoup"                         % "1.13.1",
   "com.typesafe.play"       %% "play-test"                    % PlayVersion.current,
   "org.scalamock"           %% "scalamock-scalatest-support"  % "3.6.0",
-  "com.github.tomakehurst"  % "wiremock-jre8" % "2.27.1"
+  "com.github.tomakehurst"  % "wiremock-jre8"                 % "2.27.2"
 ).map(_ % s"$Test, $IntegrationTest")
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
