@@ -9,10 +9,6 @@ $hmrc-assets-path: "/vat-through-software/account/returns/assets/lib/hmrc-fronte
   font-weight: bold;
 }
 
-.govuk-header__content > nav {
-  float: right;
-}
-
 .govuk-main-wrapper {
   padding-top: 0;
 }
@@ -25,11 +21,4 @@ $hmrc-assets-path: "/vat-through-software/account/returns/assets/lib/hmrc-fronte
   text-decoration: none;
   pointer-events: none;
   cursor: default;
-}
-
-.js-enabled .govuk-header__menu-button {
-  display: none;
-}
-.js-enabled .govuk-header__navigation {
-  display: block;
 }

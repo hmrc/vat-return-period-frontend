@@ -29,12 +29,14 @@ trait MockHttp extends UnitSpec with MockFactory {
   val mockHttp: HttpClient = mock[HttpClient]
 
   def setupMockHttpGet[T](url: String)(response: T): Unit =
-    (mockHttp.GET[T](_: String)(_: HttpReads[T], _: HeaderCarrier, _: ExecutionContext))
-      .expects(*, *, *, *)
+    (mockHttp.GET[T](_: String, _: Seq[(String, String)], _: Seq[(String, String)])
+                    (_: HttpReads[T], _: HeaderCarrier, _: ExecutionContext))
+      .expects(*, *, *, *, *, *)
       .returns(response)
 
   def setupMockHttpPut[I,O](url: String)(response: O): Unit =
-    (mockHttp.PUT[I,O](_: String, _: I, _: Seq[(String, String)])(_: Writes[I], _: HttpReads[O], _: HeaderCarrier, _: ExecutionContext))
+    (mockHttp.PUT[I,O](_: String, _: I, _: Seq[(String, String)])
+                      (_: Writes[I], _: HttpReads[O], _: HeaderCarrier, _: ExecutionContext))
       .expects(*, *, *, *, *, *, *)
       .returns(response)
 
