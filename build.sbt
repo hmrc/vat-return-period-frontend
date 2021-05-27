@@ -54,15 +54,14 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "govuk-template"                % "5.63.0-play-26",
-  "uk.gov.hmrc"    %% "play-ui"                       % "9.0.0-play-26",
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "3.4.0",
-  "uk.gov.hmrc"    %% "play-partials"                 % "7.1.0-play-26",
+  "uk.gov.hmrc"    %% "govuk-template"                % "5.66.0-play-26",
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-26"    % "5.3.0",
+  "uk.gov.hmrc"    %% "play-partials"                 % "8.1.0-play-26",
   "org.typelevel"  %% "cats"                          % "0.9.0",
   "uk.gov.hmrc"    %% "play-whitelist-filter"         % "3.4.0-play-26",
-  "uk.gov.hmrc"    %% "play-language"                 % "4.10.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.65.0-play-26",
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.50.0-play-26"
+  "uk.gov.hmrc"    %% "play-language"                 % "5.0.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-govuk"           % "0.73.0-play-26",
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "0.66.0-play-26"
 )
 
 val test = Seq(
@@ -90,7 +89,7 @@ TwirlKeys.templateImports ++= Seq(
 )
 
 lazy val microservice: Project = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin) ++ plugins: _*)
+  .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins: _*)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(PlayKeys.playDefaultPort := 9167)
   .settings(coverageSettings: _*)
@@ -115,8 +114,5 @@ lazy val microservice: Project = Project(appName, file("."))
     addTestReportOption(IntegrationTest, "int-test-reports"),
     testGrouping in IntegrationTest := oneForkedJvmPerTest((definedTests in IntegrationTest).value),
     parallelExecution in IntegrationTest := false,
-    resourceDirectory in IntegrationTest := baseDirectory.value / "it" / "resources")
-  .settings(resolvers ++= Seq(
-    Resolver.bintrayRepo("hmrc", "releases"),
-    Resolver.jcenterRepo
-  ))
+    resourceDirectory in IntegrationTest := baseDirectory.value / "it" / "resources"
+  )

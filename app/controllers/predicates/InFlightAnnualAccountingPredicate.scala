@@ -18,6 +18,7 @@ package controllers.predicates
 
 import common.SessionKeys.ANNUAL_ACCOUNTING_PENDING
 import config.{AppConfig, ServiceErrorHandler}
+
 import javax.inject.Inject
 import models.auth.User
 import models.circumstanceInfo.ChangeIndicators
@@ -27,7 +28,7 @@ import play.api.mvc.Results.{Ok, Redirect}
 import play.api.mvc.{ActionRefiner, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.HeaderCarrierConverter
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 import views.html.annualAccounting.PreventLeaveAnnualAccounting
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -42,7 +43,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
 
   override def refine[A](request: User[A]): Future[Either[Result, User[A]]] = {
 
-    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromHeadersAndSession(request.headers, Some(request.session))
+    implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     implicit val user: User[A] = request
 
     user.session.get(ANNUAL_ACCOUNTING_PENDING) match {
