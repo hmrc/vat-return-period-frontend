@@ -22,15 +22,20 @@
 
 @()(implicit user : User[_], messages: Messages, appConfig: AppConfig)
 
+@backLink = {
+    @govukBackLink(BackLink(
+      href = appConfig.manageVatUrl
+    ))
+}
+
 @mainTemplate(
   pageTitle = messages("preventLeavingAnnualAccounting.h1"),
+  backLinkContent = Some(backLink),
   user = Some(user)) {
-
-@govukBackLink(BackLink(
-href = appConfig.manageVatUrl))
 
     <h1 class="govuk-heading-l">@messages("preventLeavingAnnualAccounting.h1")</h1>
 
     <p class="govuk-body">@messages("preventLeavingAnnualAccounting.p1")</p>
     <p class="govuk-body">@messages("preventLeavingAnnualAccounting.p2")</p>
-}
+
+  }

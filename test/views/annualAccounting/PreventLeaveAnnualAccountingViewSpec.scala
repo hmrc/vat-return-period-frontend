@@ -42,10 +42,10 @@ class PreventLeaveAnnualAccountingViewSpec extends ViewBaseSpec {
       elementText(".govuk-heading-l")  shouldBe "You already have a change pending"
     }
     "have the correct 1st sentence" in {
-      elementText("p:nth-child(3)")  shouldBe "You recently requested to change your annual accounting scheme."
+      elementText("p:nth-child(2)")  shouldBe "You recently requested to change your annual accounting scheme."
     }
     "have the correct 2nd sentence" in {
-      elementText("p:nth-child(4)")  shouldBe "Until this has happened, you cannot change the VAT Return dates."
+      elementText("p:nth-child(3)")  shouldBe "Until this has happened, you cannot change the VAT Return dates."
     }
   }
 }

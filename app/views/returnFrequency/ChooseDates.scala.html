@@ -49,16 +49,19 @@
     </p>
 }
 
+@backLink= {
+  @govukBackLink(BackLink(
+  href = appConfig.manageVatUrl,
+  content = Text(messages("base.back"))
+  ))
+}
+
 @mainTemplate(
+  backLinkContent = Some(backLink),
   pageTitle =
     if(form.errors.nonEmpty) messages("common.error.prefixTitle",
     messages("return_frequency.title")) else messages("return_frequency.title"),
   user = Some(user)) {
-
-  @govukBackLink(BackLink(
-    href = appConfig.manageVatUrl,
-    content = Text(messages("base.back"))
-  ))
 
   @if(form.hasErrors) {
     @govukErrorSummary(ErrorSummary(

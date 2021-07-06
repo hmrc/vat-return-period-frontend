@@ -30,6 +30,7 @@
       hmrcTrackingConsentSnippet: HmrcTrackingConsentSnippet)
 
 @(pageTitle: String,
+  backLinkContent: Option[Html] = None,
   showSignOut: Boolean = true,
   feedbackOnSignOut: Boolean = true,
   user: Option[User[_]] = None)(mainContent: Html)(implicit request: Request[_], messages: Messages, appConfig: AppConfig)
@@ -54,6 +55,7 @@
         En -> appConfig.routeToSwitchLanguage("english").url,
         Cy -> appConfig.routeToSwitchLanguage("cymraeg").url
   ))
+  @backLinkContent
 }
 
 @head = {
