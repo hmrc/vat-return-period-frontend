@@ -84,10 +84,6 @@ contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwa
 contact_preference.paper = Byddwn yn anfon llythyr i’ch prif fan busnes i roi diweddariad cyn pen 15 diwrnod gwaith.
 contact_preference.contactPrefError = Byddwn yn anfon diweddariad atoch cyn pen 15 diwrnod gwaith.
 
-breadcrumb.bta = Cyfrif Treth Busnes
-breadcrumb.yourVatDetails = Eich manylion TAW
-breadcrumb.changeBusinessDetails = Newid o ran manylion busnes
-
 checkYourAnswers.title = Gwiriwch eich atebion
 checkYourAnswers.vatBusinessDetails = Manylion busnes TAW
 checkYourAnswers.change = Newid

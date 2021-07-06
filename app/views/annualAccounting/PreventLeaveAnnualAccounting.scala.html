@@ -22,7 +22,7 @@
 
 @()(implicit user : User[_], messages: Messages, appConfig: AppConfig)
 
-@bankLink = {
+@backLink = {
     @govukBackLink(BackLink(
       href = appConfig.manageVatUrl
     ))
@@ -30,7 +30,7 @@
 
 @mainTemplate(
   pageTitle = messages("preventLeavingAnnualAccounting.h1"),
-  backLinkContent = Some(bankLink),
+  backLinkContent = Some(backLink),
   user = Some(user)) {
 
     <h1 class="govuk-heading-l">@messages("preventLeavingAnnualAccounting.h1")</h1>
