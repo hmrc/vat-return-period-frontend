@@ -27,22 +27,18 @@ import play.api.http.Status
 import play.api.test.Helpers._
 import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
 
-class ChangeReturnFrequencyConfirmationSpec extends BaseSpec
+class ConfirmationControllerSpec extends BaseSpec
   with MockAuditingService
   with MockCustomerCircumstanceDetailsService
   with MockAuth {
 
   val changeReturnFrequencyConfirmationView: CRFCView = injector.instanceOf[CRFCView]
 
-  object TestChangeReturnFrequencyConfirmation extends ChangeReturnFrequencyConfirmation(
+  object TestChangeReturnFrequencyConfirmation extends ConfirmationController(
     mockAuthPredicate,
     mockCustomerDetailsService,
-    errorHandler,
-    mockAuditService,
-    mockAppConfig,
-    ec,
-    mcc,
-    changeReturnFrequencyConfirmationView
+    changeReturnFrequencyConfirmationView,
+    mcc
   )
 
   "Calling the .show action" when {

@@ -214,8 +214,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               status(result) shouldBe Status.SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
+            s"redirect to ${controllers.returnFrequency.routes.ConfirmationController.show("non-agent").url}" in {
+              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ConfirmationController.show("non-agent").url)
             }
           }
         }
