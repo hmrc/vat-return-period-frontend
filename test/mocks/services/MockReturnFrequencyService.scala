@@ -37,7 +37,10 @@ trait MockReturnFrequencyService extends UnitSpec with MockFactory {
       .returns(Future.successful(response))
   }
 
-  def setupMockReturnFrequencyServiceWithSuccess(): Unit = setupMockReturnFrequencyService(Right(SubscriptionUpdateResponseModel("12345")))
-  def setupMockReturnFrequencyServiceWithFailure(): Unit = setupMockReturnFrequencyService(Left(ServerSideError("", "")))
-
+  def setupMockReturnFrequencyServiceWithSuccess(): Unit =
+    setupMockReturnFrequencyService(Right(SubscriptionUpdateResponseModel("12345")))
+  def setupMockReturnFrequencyServiceWithConflict(): Unit =
+    setupMockReturnFrequencyService(Left(ServerSideError("409", "Error")))
+  def setupMockReturnFrequencyServiceWithFailure(): Unit =
+    setupMockReturnFrequencyService(Left(ServerSideError("", "")))
 }
