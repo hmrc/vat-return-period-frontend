@@ -39,7 +39,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
   "Calling ConfirmVatDatesController.show" when {
 
-    def show(sessionVrn: String, returnFrequency: String): WSResponse = get(path, sessionWithReturnFrequency)
+    def show: WSResponse = get(path, sessionWithReturnFrequency)
 
     "A valid ReturnPeriod is returned" should {
 
@@ -47,7 +47,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
         given.user.isAuthenticated
 
         When("I call to show the Customer Circumstances page")
-        val res = show("999999999", "Jan")
+        val res = show
 
         res should have(
           httpStatus(OK),
@@ -62,7 +62,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
         given.agent.isSignedUpToAgentServices
 
         When("I call to show the Customer Circumstances page")
-        val res = show("999999999", "Jan")
+        val res = show
 
         res should have(
           httpStatus(OK),
@@ -96,7 +96,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
           res should have(
             httpStatus(SEE_OTHER),
-            redirectURI(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
+            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show("non-agent").url)
           )
         }
       }
@@ -142,7 +142,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
           res should have(
             httpStatus(SEE_OTHER),
-            redirectURI(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("agent").url)
+            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show("agent").url)
           )
         }
       }

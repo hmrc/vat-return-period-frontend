@@ -44,8 +44,6 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
     mockAuditService,
     mockInFlightReturnPeriodPredicate,
     mockInFlightAnnualAccountingPredicate,
-    mockAppConfig,
-    ec,
     mcc,
     confirmDates
   )
@@ -180,7 +178,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
         "new return frequency is in session" when {
 
-          "updateReturnFrequency returns an error" should {
+          "updateReturnFrequency returns an unexpected error" should {
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
               SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
@@ -193,7 +191,28 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
               setupMockReturnFrequencyServiceWithFailure()
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+              messages(Jsoup.parse(bodyOf(result)).title) shouldBe
+                AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+            }
+          }
+
+          "updateReturnFrequency returns a 409 error (stagger change already in progress)" should {
+
+            lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
+              SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            )
+
+            "return 303" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
+              setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
+              setupMockReturnFrequencyServiceWithConflict()
+              status(result) shouldBe Status.SEE_OTHER
+            }
+
+            "redirect to the manage VAT overview page" in {
+              redirectLocation(result) shouldBe Some(mockAppConfig.manageVatUrl)
             }
           }
 
@@ -210,12 +229,29 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               setupMockReturnFrequencyServiceWithSuccess()
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
               setupAuditExtendedEvent()
-
               status(result) shouldBe Status.SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChangeReturnFrequencyConfirmation.show("non-agent").url)
+            s"redirect to ${controllers.returnFrequency.routes.ConfirmationController.show("non-agent").url}" in {
+              redirectLocation(result) shouldBe
+                Some(controllers.returnFrequency.routes.ConfirmationController.show("non-agent").url)
+            }
+          }
+
+          "getCustomerCircumstanceDetails returns an unexpected error" should {
+
+            lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
+              SessionKeys.NEW_RETURN_FREQUENCY -> "Monthly",
+              SessionKeys.CURRENT_RETURN_FREQUENCY -> "January",
+              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            )
+
+            "return 500" in {
+              mockAuthorise(mtdVatAuthorisedResponse)
+              mockCustomerDetailsError()
+              status(result) shouldBe Status.INTERNAL_SERVER_ERROR
+              messages(Jsoup.parse(bodyOf(result)).title) shouldBe
+                AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
         }

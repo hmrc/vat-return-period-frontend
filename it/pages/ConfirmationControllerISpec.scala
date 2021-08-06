@@ -22,7 +22,7 @@ import play.api.test.Helpers._
 import stubs.VatSubscriptionStub
 import stubs.VatSubscriptionStub._
 
-class ChangeReturnFrequencyConfirmationISpec extends BasePageISpec{
+class ConfirmationControllerISpec extends BasePageISpec{
 
   val path = "/confirmation-vat-return-dates"
 
