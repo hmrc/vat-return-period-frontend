@@ -17,7 +17,6 @@
 package controllers.predicates
 
 import assets.CircumstanceDetailsTestConstants._
-import assets.ReturnPeriodTestConstants._
 import assets.messages.AuthMessages
 import common.SessionKeys
 import mocks.MockAuth
@@ -26,6 +25,7 @@ import models.auth.User
 import org.jsoup.Jsoup
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
+import assets.ReturnPeriodTestConstants.returnPeriodMonthly
 
 class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCircumstanceDetailsService {
 
@@ -52,12 +52,12 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
         lazy val result = {
           mockCustomerDetailsError()
-          await(mockInFlightReturnPeriodPredicate.refine(user)).left.get
+          mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
         }
 
         "return 500" in {
           status(result) shouldBe INTERNAL_SERVER_ERROR
-          messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+          messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
         }
       }
 
@@ -67,7 +67,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
-            await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
+            mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
           }
 
           "return 303" in {
@@ -85,7 +85,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
-              await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
             }
 
             "return 303" in {
@@ -101,7 +101,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
-              await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
             }
 
             "return 303" in {
@@ -124,7 +124,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
-              await(mockInFlightReturnPeriodPredicate.refine(user).left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
             }
 
             "return 303" in {

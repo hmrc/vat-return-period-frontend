@@ -22,7 +22,6 @@ import common.SessionKeys._
 import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.{Inject, Singleton}
 import models.auth.User
-import play.api.Logger
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, EnrolmentsAuthService}
@@ -31,6 +30,7 @@ import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals._
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import utils.LoggerUtil
 import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -45,7 +45,8 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
                               unauthorisedNonAgentView: UnauthorisedNonAgent) extends FrontendController(mcc)
   with I18nSupport
   with ActionBuilder[User, AnyContent]
-  with ActionFunction[Request, User] {
+  with ActionFunction[Request, User]
+  with LoggerUtil {
 
   override val parser: BodyParser[AnyContent] = mcc.parsers.defaultBodyParser
   implicit val executionContext: ExecutionContext = mcc.executionContext
@@ -61,19 +62,19 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
           if (enrolments.enrolments.exists(_.key == EnrolmentKeys.agentEnrolmentId)) {
             authoriseAsAgent(block)
           } else {
-            Logger.debug("[AuthPredicate][invokeBlock] - Agent does not have correct agent enrolment ID")
+            logger.debug("[AuthPredicate][invokeBlock] - Agent does not have correct agent enrolment ID")
             Future.successful(Forbidden(unauthorisedAgentView()))
           }
         case Some(_) ~ enrolments => authoriseAsNonAgent(enrolments, block)
         case None ~ _ =>
-          Logger.warn("[AuthPredicate][invokeBlock] - Missing affinity group")
+          logger.warn("[AuthPredicate][invokeBlock] - Missing affinity group")
           Future.successful(errorHandler.showInternalServerError)
       } recover {
       case _: NoActiveSession =>
-        Logger.debug(s"[AuthPredicate][invokeBlock] - No active session. Redirecting to ${appConfig.signInUrl}")
+        logger.debug(s"[AuthPredicate][invokeBlock] - No active session. Redirecting to ${appConfig.signInUrl}")
         Redirect(appConfig.signInUrl)
       case _: AuthorisationException =>
-        Logger.warn("[AuthPredicate][invokeBlock] - Unauthorised exception when retrieving affinity and all enrolments")
+        logger.warn("[AuthPredicate][invokeBlock] - Unauthorised exception when retrieving affinity and all enrolments")
         errorHandler.showInternalServerError
     }
   }
@@ -81,7 +82,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
   private def authoriseAsNonAgent[A](enrolments: Enrolments, block: User[A] => Future[Result])
                                     (implicit request: Request[A]): Future[Result] = {
     enrolments.enrolments.collectFirst {
-      case Enrolment(EnrolmentKeys.vatEnrolmentId, EnrolmentIdentifier(_, vrn) :: _, EnrolmentKeys.activated, _) => vrn
+      case Enrolment(EnrolmentKeys.vatEnrolmentId, Seq(EnrolmentIdentifier(_, vrn)), EnrolmentKeys.activated, _) => vrn
     } match {
       case Some(vrn) =>
         val user = User(vrn)
@@ -90,18 +91,18 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
           case Some("false") => block(user)
           case _ => customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).flatMap {
             case Right(details) if details.customerDetails.isInsolventWithoutAccess =>
-              Logger.debug("[AuthPredicate][authoriseAsNonAgent] - User is insolvent and not continuing to trade")
+              logger.debug("[AuthPredicate][authoriseAsNonAgent] - User is insolvent and not continuing to trade")
               Future.successful(Forbidden(unauthorisedNonAgentView()).addingToSession(SessionKeys.insolventWithoutAccessKey -> "true"))
             case Right(_) =>
-              Logger.debug("[AuthPredicate][authoriseAsNonAgent] - Authenticated as principle")
+              logger.debug("[AuthPredicate][authoriseAsNonAgent] - Authenticated as principle")
               block(user).map(result => result.addingToSession(SessionKeys.insolventWithoutAccessKey -> "false"))
             case _ =>
-              Logger.warn("[AuthPredicate][authoriseAsNonAgent] - Failure obtaining insolvency status from Customer Info API")
+              logger.warn("[AuthPredicate][authoriseAsNonAgent] - Failure obtaining insolvency status from Customer Info API")
               Future.successful(errorHandler.showInternalServerError)
           }
         }
       case None =>
-        Logger.debug("[AuthPredicate][authoriseAsNonAgent] - Non-agent with no HMRC-MTD-VAT enrolment. Rendering unauthorised view.")
+        logger.debug("[AuthPredicate][authoriseAsNonAgent] - Non-agent with no HMRC-MTD-VAT enrolment. Rendering unauthorised view.")
         Future.successful(Forbidden(unauthorisedNonAgentView()))
     }
   }
@@ -121,25 +122,25 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
           .retrieve(allEnrolments) {
             enrolments =>
               enrolments.enrolments.collectFirst {
-                case Enrolment(EnrolmentKeys.agentEnrolmentId, EnrolmentIdentifier(_, arn) :: _, EnrolmentKeys.activated, _) => arn
+                case Enrolment(EnrolmentKeys.agentEnrolmentId, Seq(EnrolmentIdentifier(_, arn)), EnrolmentKeys.activated, _) => arn
               } match {
                 case Some(arn) => block(User(vrn, active = true, Some(arn)))
                 case None =>
-                  Logger.debug("[AuthPredicate][authoriseAsAgent] - Agent with no HMRC-AS-AGENT enrolment. Rendering unauthorised view.")
+                  logger.debug("[AuthPredicate][authoriseAsAgent] - Agent with no HMRC-AS-AGENT enrolment. Rendering unauthorised view.")
                   Future.successful(Forbidden(unauthorisedAgentView()))
               }
           } recover {
           case _: NoActiveSession =>
-            Logger.debug(s"AuthoriseAsAgentWithClient][authoriseAsAgent] - No active session. Redirecting to ${appConfig.signInUrl}")
+            logger.debug(s"AuthoriseAsAgentWithClient][authoriseAsAgent] - No active session. Redirecting to ${appConfig.signInUrl}")
             Redirect(appConfig.signInUrl)
           case _: AuthorisationException =>
-            Logger.debug(s"[AuthoriseAsAgentWithClient][authoriseAsAgent] - Agent does not have delegated authority for Client. " +
+            logger.debug(s"[AuthoriseAsAgentWithClient][authoriseAsAgent] - Agent does not have delegated authority for Client. " +
               s"Redirecting to ${appConfig.agentClientUnauthorisedUrl(request.uri)}")
             Redirect(appConfig.agentClientUnauthorisedUrl(request.uri))
         }
 
       case None =>
-        Logger.debug(s"[AuthPredicate][authoriseAsAgent] - No Client VRN in session. Redirecting to ${appConfig.agentClientLookupStartUrl}")
+        logger.debug(s"[AuthPredicate][authoriseAsAgent] - No Client VRN in session. Redirecting to ${appConfig.agentClientLookupStartUrl}")
         Future.successful(Redirect(appConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url)))
     }
   }

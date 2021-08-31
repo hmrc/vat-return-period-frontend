@@ -33,18 +33,19 @@ object CircumstanceDetailsTestConstants {
       "organisationName" -> "org name",
       "tradingName" -> "trading name",
       "isInsolvent" -> false,
-      "continueToTrade" -> Some(true),
+      "continueToTrade" -> true,
       "insolvencyType" -> "01"
     ),
     "ppob" -> Json.obj(
       "contactDetails" -> Json.obj(
         "emailVerified" -> true)),
-    "returnPeriod" -> Monthly,
+    "returnPeriod" -> Json.obj(
+      "stdReturnPeriod" -> "MM"),
     "changeIndicators" -> Json.obj(
       "returnPeriod" -> true,
       "annualAccounting" -> false
     ),
-    "partyType" -> Some(partyType),
+    "partyType" -> partyType,
     "commsPreference" -> digital
   )
 

@@ -51,12 +51,12 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
         lazy val result = {
           mockCustomerDetailsError()
-          await(mockInFlightAnnualAccountingPredicate.refine(user)).left.get
+          mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
         }
 
         "return 500" in {
           status(result) shouldBe INTERNAL_SERVER_ERROR
-          messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+          messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
         }
       }
 
@@ -66,7 +66,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
-            await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
+            mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
           }
 
           "return 200" in {
@@ -80,7 +80,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsModelMinAA)
-              await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
+              mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
             }
 
             "return 200" in {
@@ -92,7 +92,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
-              await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
+              mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
             }
 
             "return 303" in {
@@ -113,7 +113,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
-            await(mockInFlightAnnualAccountingPredicate.refine(user).left.get)
+            mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
           }
 
           "return 303" in {

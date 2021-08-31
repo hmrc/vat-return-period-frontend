@@ -79,7 +79,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
 
         s"have the correct page title" in {
-          Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+          Jsoup.parse(contentAsString(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
         }
 
         "add the current return frequency to the session" in {
@@ -128,7 +128,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
+              Jsoup.parse(contentAsString(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
             }
           }
 
@@ -151,7 +151,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-              Jsoup.parse(bodyOf(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
+              Jsoup.parse(contentAsString(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
             }
           }
 
@@ -174,11 +174,11 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             "have the January radio option selected" in {
-              Jsoup.parse(bodyOf(result)).select("#period-option-march").attr("checked") shouldBe ""
+              Jsoup.parse(contentAsString(result)).select("#period-option-march").attr("checked") shouldBe ""
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
+              Jsoup.parse(contentAsString(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.title
             }
           }
         }
@@ -207,7 +207,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             mockCustomerDetailsError()
 
             status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-            messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+            messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }
         }
       }
@@ -304,7 +304,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             "return Internal Server Error (500)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+              messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
 
@@ -323,7 +323,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.errorTitle}" in {
-              Jsoup.parse(bodyOf(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.errorTitle
+              Jsoup.parse(contentAsString(result)).title() shouldBe ReturnFrequencyMessages.ChoosePage.errorTitle
             }
           }
         }

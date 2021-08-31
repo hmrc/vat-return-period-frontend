@@ -36,7 +36,7 @@ class ConfirmationControllerISpec extends BasePageISpec{
         "render the return frequency confirmation page" in {
 
           given.user.isAuthenticated
-          VatSubscriptionStub.getClientDetailsSuccess("999999999")(circumstanceDetailsModelMax)
+          VatSubscriptionStub.getClientDetailsSuccess("999999999")(circumstanceDetailsJsonMax)
 
           When("I call to show the Confirm Return Frequency Page")
           val res = show()
@@ -76,7 +76,7 @@ class ConfirmationControllerISpec extends BasePageISpec{
           given.agent.isSignedUpToAgentServices
 
           And("I stub a successful response from VAT Subscription")
-          getClientDetailsSuccess("999999999")(circumstanceDetailsModelMax)
+          getClientDetailsSuccess("999999999")(circumstanceDetailsJsonMax)
 
           When("I call to show the Confirm Return Frequency Page")
           val res = show(Some("999999999"))

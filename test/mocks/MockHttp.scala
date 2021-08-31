@@ -20,21 +20,21 @@ import org.scalamock.scalatest.MockFactory
 import play.api.libs.json.Writes
 import uk.gov.hmrc.http.{HeaderCarrier, HttpReads}
 import uk.gov.hmrc.http.HttpClient
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
-trait MockHttp extends UnitSpec with MockFactory {
+trait MockHttp extends AnyWordSpecLike with MockFactory {
 
   val mockHttp: HttpClient = mock[HttpClient]
 
-  def setupMockHttpGet[T](url: String)(response: T): Unit =
+  def setupMockHttpGet[T](url: String)(response: Future[T]): Unit =
     (mockHttp.GET[T](_: String, _: Seq[(String, String)], _: Seq[(String, String)])
                     (_: HttpReads[T], _: HeaderCarrier, _: ExecutionContext))
       .expects(*, *, *, *, *, *)
       .returns(response)
 
-  def setupMockHttpPut[I,O](url: String)(response: O): Unit =
+  def setupMockHttpPut[I,O](url: String)(response: Future[O]): Unit =
     (mockHttp.PUT[I,O](_: String, _: I, _: Seq[(String, String)])
                       (_: Writes[I], _: HttpReads[O], _: HeaderCarrier, _: ExecutionContext))
       .expects(*, *, *, *, *, *, *)

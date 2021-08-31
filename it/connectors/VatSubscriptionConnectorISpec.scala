@@ -25,12 +25,12 @@ import play.api.http.Status._
 import play.api.libs.json.{JsObject, Json}
 import stubs.VatSubscriptionStub._
 import uk.gov.hmrc.http.HeaderCarrier
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 class VatSubscriptionConnectorISpec extends BaseISpec {
 
   implicit val hc: HeaderCarrier = HeaderCarrier()
+  implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
   lazy val connector: VatSubscriptionConnector = new VatSubscriptionConnector(httpClient, appConfig)
 
   "VatSubscriptionConnector" when {

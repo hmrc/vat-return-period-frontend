@@ -30,11 +30,11 @@ import play.api.{Application, Environment, Mode}
 import stubs.AuthStub
 import uk.gov.hmrc.http.HttpClient
 import utils.WireMockHelper
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Awaitable}
-
-trait BaseISpec extends WordSpec
+trait BaseISpec extends AnyWordSpecLike
   with WireMockHelper
   with Matchers
   with BeforeAndAfterAll
@@ -114,8 +114,6 @@ trait BaseISpec extends WordSpec
       builder
     }
   }
-
-  def await[T](awaitable: Awaitable[T]): T = Await.result(awaitable, Duration.Inf)
 
   def get(path: String, additionalCookies: Map[String, String] = Map.empty): WSResponse = await(
     buildRequest(path, additionalCookies).get()

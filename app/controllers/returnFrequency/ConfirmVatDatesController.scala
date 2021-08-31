@@ -26,12 +26,12 @@ import javax.inject.{Inject, Singleton}
 import models.auth.User
 import models.errors.ServerSideError
 import models.returnFrequency._
-import play.api.Logger
 import play.api.i18n.I18nSupport
 import play.api.mvc._
 import services.{CustomerCircumstanceDetailsService, ReturnFrequencyService}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.returnFrequency.ConfirmDates
+import utils.LoggerUtil
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,7 +46,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
                                           mcc: MessagesControllerComponents,
                                           confirmDates: ConfirmDates)
                                          (implicit appConfig: AppConfig,
-                                          ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
+                                          ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport with LoggerUtil {
 
   val show: Action[AnyContent] = (authenticate andThen
                                   pendingReturnFrequency andThen
@@ -59,7 +59,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
           case _ => serviceErrorHandler.showInternalServerError
         }
       case _ =>
-        Logger.info("[ConfirmVatDatesController][show] No NEW_RETURN_FREQUENCY found in session. " +
+        logger.info("[ConfirmVatDatesController][show] No NEW_RETURN_FREQUENCY found in session. " +
           "Redirecting to Choose Dates page")
         Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
     }
@@ -71,7 +71,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
       case (Some(currentFrequency), Some(newFrequency)) =>
         updateReturnFrequency(ReturnPeriod(currentFrequency), ReturnPeriod(newFrequency))
       case (_, _) =>
-        Logger.info("[ConfirmVatDatesController][submit] No NEW_RETURN_FREQUENCY and/or " +
+        logger.info("[ConfirmVatDatesController][submit] No NEW_RETURN_FREQUENCY and/or " +
           "CURRENT_RETURN_FREQUENCY found in session. Redirecting to Choose Dates page")
         Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url))
     }
@@ -94,7 +94,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
                   controllers.returnFrequency.routes.ConfirmationController.show(if (user.isAgent) "agent" else "non-agent")
                 ).removingFromSession(SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY)
               case Left(ServerSideError("409", _)) =>
-                Logger.warn("[ConfirmVatDatesController][updateReturnFrequency] Stagger update already in progress. " +
+                logger.warn("[ConfirmVatDatesController][updateReturnFrequency] Stagger update already in progress. " +
                   "Redirecting user to manage VAT overview")
                 Redirect(appConfig.manageVatUrl)
               case _ =>
@@ -104,7 +104,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
             Future.successful(serviceErrorHandler.showInternalServerError)
         }
       case _ =>
-        Logger.warn("[ConfirmVatDatesController][updateReturnFrequency] " +
+        logger.warn("[ConfirmVatDatesController][updateReturnFrequency] " +
           "CURRENT_RETURN_FREQUENCY and/or NEW_RETURN_FREQUENCY session keys are not valid")
         Future.successful(serviceErrorHandler.showInternalServerError)
     }

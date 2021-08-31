@@ -18,7 +18,6 @@ package models.circumstanceInfo
 
 import assets.CircumstanceDetailsTestConstants._
 import base.BaseSpec
-import play.api.libs.json.Json
 
 class CircumstanceDetailsSpec extends BaseSpec {
 
@@ -37,25 +36,6 @@ class CircumstanceDetailsSpec extends BaseSpec {
 
         "return a model with no optional fields present" in {
           circumstanceDetailsJsonMin.as[CircumstanceDetails] shouldBe circumstanceDetailsModelMin
-        }
-      }
-    }
-
-    "parse correctly to json" when {
-
-      "all optional fields are present" should {
-
-        "return json with all optional fields" in {
-
-          Json.toJson(circumstanceDetailsModelMax) shouldBe circumstanceDetailsJsonMax
-        }
-      }
-
-      "no optional fields are present" should {
-
-        "return json with no optional fields" in {
-
-          Json.toJson(circumstanceDetailsModelMin) shouldBe circumstanceDetailsJsonMin
         }
       }
     }

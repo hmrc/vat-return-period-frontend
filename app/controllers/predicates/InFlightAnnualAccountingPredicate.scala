@@ -18,17 +18,16 @@ package controllers.predicates
 
 import common.SessionKeys.ANNUAL_ACCOUNTING_PENDING
 import config.{AppConfig, ServiceErrorHandler}
-
 import javax.inject.Inject
 import models.auth.User
 import models.circumstanceInfo.ChangeIndicators
-import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.{Ok, Redirect}
 import play.api.mvc.{ActionRefiner, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import utils.LoggerUtil
 import views.html.annualAccounting.PreventLeaveAnnualAccounting
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -39,7 +38,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
                                                   implicit val executionContext: ExecutionContext,
                                                   implicit val messagesApi: MessagesApi,
                                                   preventLeaveAnnualAccountingView: PreventLeaveAnnualAccounting)
-  extends ActionRefiner[User, User] with I18nSupport{
+  extends ActionRefiner[User, User] with I18nSupport with LoggerUtil {
 
   override def refine[A](request: User[A]): Future[Either[Result, User[A]]] = {
 
@@ -66,7 +65,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
             .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "false"))
         }
       case Left(error) =>
-        Logger.warn(s"[InFlightAnnualAccountingPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")
+        logger.warn(s"[InFlightAnnualAccountingPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")
         Left(serviceErrorHandler.showInternalServerError)
     }
   }
@@ -74,7 +73,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
   private def getAnnualAccounting(changeIndicator: Option[ChangeIndicators]): Boolean = {
     changeIndicator match {
       case Some(changeIndicator) => changeIndicator.annualAccounting
-      case _ => Logger.info("[InFlightAnnualAccountingPredicate][refine] - No changeIndicators returned from GetCustomerInfo ")
+      case _ => logger.info("[InFlightAnnualAccountingPredicate][refine] - No changeIndicators returned from GetCustomerInfo ")
         false
     }
   }

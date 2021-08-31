@@ -17,9 +17,10 @@
 package models.circumstanceInfo
 
 import play.api.libs.json.{JsObject, Json}
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.matchers.should.Matchers
 
-class ChangeIndicatorsSpec extends UnitSpec {
+class ChangeIndicatorsSpec extends AnyWordSpecLike with Matchers {
 
   val validJson: JsObject = Json.obj(
     "returnPeriod" -> true,

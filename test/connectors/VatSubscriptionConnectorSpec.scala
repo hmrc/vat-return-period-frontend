@@ -25,6 +25,7 @@ import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 
 import scala.concurrent.Future
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
@@ -57,14 +58,14 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
       "a successful response is returned" should {
 
         "return a CustomerDetailsModel" in {
-          setupMockHttpGet(TestVatSubscriptionConnector.getCustomerDetailsUrl(vrn))(Right(circumstanceDetailsModelMax))
+          setupMockHttpGet(TestVatSubscriptionConnector.getCustomerDetailsUrl(vrn))(Future.successful(Right(circumstanceDetailsModelMax)))
           await(result) shouldBe Right(circumstanceDetailsModelMax)
         }
       }
 
       "an unsuccessful response is returned" should {
         "return a Left with an ErrorModel" in {
-          setupMockHttpGet(TestVatSubscriptionConnector.getCustomerDetailsUrl(vrn))(Left(errorModel))
+          setupMockHttpGet(TestVatSubscriptionConnector.getCustomerDetailsUrl(vrn))(Future.successful(Left(errorModel)))
           await(result) shouldBe Left(errorModel)
         }
       }
@@ -79,7 +80,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
         "return a SubscriptionUpdateResponseModel" in {
           val response = Right(SubscriptionUpdateResponseModel("Ooooooh, it's good"))
-          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(response)
+          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(Future.successful(response))
           await(result) shouldBe response
         }
 
@@ -87,7 +88,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
       "provided with an error" should {
         "return a Left with an ErrorModel" in {
-          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(errorModel)
+          setupMockHttpPut(s"${mockAppConfig.vatSubscriptionBaseURL}/$vrn/return-period")(Future.successful(errorModel))
           await(result) shouldBe errorModel
         }
       }
