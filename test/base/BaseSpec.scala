@@ -16,9 +16,6 @@
 
 package base
 
-
-import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, Materializer}
 import common.SessionKeys
 import common.SessionKeys.insolventWithoutAccessKey
 import config.ServiceErrorHandler
@@ -63,8 +60,6 @@ trait BaseSpec extends AnyWordSpecLike with Matchers with GuiceOneAppPerSuite wi
 
   lazy val errorHandler: ServiceErrorHandler = injector.instanceOf[ServiceErrorHandler]
 
-  implicit val system: ActorSystem = ActorSystem()
-  implicit val materializer: Materializer = ActorMaterializer()
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
   implicit lazy val mcc: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]
