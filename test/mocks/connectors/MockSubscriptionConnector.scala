@@ -22,11 +22,11 @@ import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import org.scalamock.scalatest.MockFactory
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait MockSubscriptionConnector extends UnitSpec with MockFactory {
+trait MockSubscriptionConnector extends AnyWordSpecLike with MockFactory {
 
   val mockSubscriptionConnector: VatSubscriptionConnector = mock[VatSubscriptionConnector]
 

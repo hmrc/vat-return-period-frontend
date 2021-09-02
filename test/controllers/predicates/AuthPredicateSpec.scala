@@ -49,11 +49,10 @@ class AuthPredicateSpec extends MockAuth {
 
           "agent has HMRC-AS-AGENT enrolment" should {
 
-            val authResponse = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
             lazy val result = target()(FakeRequest().withSession("CLIENT_VRN" -> "999999999"))
 
             "allow the request through" in {
-              mockAuthoriseAsAgent(authResponse, authResponse.b)
+              mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
 
               status(result) shouldBe Status.OK
             }
@@ -71,7 +70,7 @@ class AuthPredicateSpec extends MockAuth {
             }
 
             "render Agent unauthorised view" in {
-              Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.unauthorisedTitle + AuthMessages.mtdfvTitleSuffix
+              Jsoup.parse(contentAsString(result)).title() shouldBe AuthMessages.unauthorisedTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
         }
@@ -219,7 +218,7 @@ class AuthPredicateSpec extends MockAuth {
         }
 
         "render the unauthorised view" in {
-          Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.unauthorisedTitle + AuthMessages.mtdfvTitleSuffix
+          Jsoup.parse(contentAsString(result)).title() shouldBe AuthMessages.unauthorisedTitle + AuthMessages.mtdfvTitleSuffix
         }
       }
     }
@@ -236,7 +235,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+        Jsoup.parse(contentAsString(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
 
@@ -268,7 +267,7 @@ class AuthPredicateSpec extends MockAuth {
       }
 
       "render ISE page" in {
-        Jsoup.parse(bodyOf(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+        Jsoup.parse(contentAsString(result)).title() shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
       }
     }
   }

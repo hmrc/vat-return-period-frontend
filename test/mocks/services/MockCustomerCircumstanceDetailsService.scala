@@ -23,11 +23,11 @@ import models.errors.ServerSideError
 import org.scalamock.scalatest.MockFactory
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait MockCustomerCircumstanceDetailsService extends UnitSpec with MockFactory {
+trait MockCustomerCircumstanceDetailsService extends AnyWordSpecLike with MockFactory {
 
   val mockCustomerDetailsService: CustomerCircumstanceDetailsService = mock[CustomerCircumstanceDetailsService]
 

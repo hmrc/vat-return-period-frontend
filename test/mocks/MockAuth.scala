@@ -17,13 +17,12 @@
 package mocks
 
 import _root_.services.EnrolmentsAuthService
-import akka.util.Timeout
 import base.BaseSpec
 import controllers.predicates.{AuthPredicate, InFlightAnnualAccountingPredicate, InFlightReturnFrequencyPredicate}
 import mocks.services.MockCustomerCircumstanceDetailsService
 import play.api.http.Status
 import play.api.mvc.{Action, AnyContent, Request}
-import play.api.test.Helpers.redirectLocation
+import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.AffinityGroup.{Agent, Individual}
 import uk.gov.hmrc.auth.core._
 import uk.gov.hmrc.auth.core.authorise.Predicate
@@ -61,7 +60,7 @@ trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
       .returns(secondAuthResponse)
   }
 
-  def authControllerChecks(action: Action[AnyContent], request: Request[AnyContent])(implicit timeout: Timeout): Unit = {
+  def authControllerChecks(action: Action[AnyContent], request: Request[AnyContent]): Unit = {
 
     "user is unauthenticated" should {
 

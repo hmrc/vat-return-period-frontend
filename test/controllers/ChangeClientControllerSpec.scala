@@ -51,7 +51,7 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
           lazy val result = TestConfirmClientVrnControllerSpec.changeClient(request)
 
           "return status redirect SEE_OTHER (303)" in {
-            mockAuthoriseAsAgent(agentAuthorisedResponse, agentServicesEnrolment)
+            mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
             status(result) shouldBe Status.SEE_OTHER
           }
 

@@ -18,9 +18,10 @@ package models.circumstanceInfo
 
 import assets.CustomerDetailsTestConstants._
 import play.api.libs.json.Json
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.matchers.should.Matchers
 
-class CustomerDetailsSpec extends UnitSpec {
+class CustomerDetailsSpec extends AnyWordSpecLike with Matchers {
 
   val exemptInsolvencyTypes: Seq[String] = customerDetailsMax.exemptInsolvencyTypes
   val blockedInsolvencyTypes: Seq[String] = customerDetailsMax.blockedInsolvencyTypes

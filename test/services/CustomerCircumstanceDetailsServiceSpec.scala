@@ -23,6 +23,7 @@ import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import mocks.connectors.MockSubscriptionConnector
 import models.circumstanceInfo.CircumstanceDetails
 import models.errors.ServerSideError
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 import scala.concurrent.Future
 

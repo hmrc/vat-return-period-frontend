@@ -26,6 +26,7 @@ import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.Helpers._
 import views.html.returnFrequency.{ChangeReturnFrequencyConfirmation => CRFCView}
+import scala.concurrent.Future
 
 class ConfirmationControllerSpec extends BaseSpec
   with MockAuditingService
@@ -50,7 +51,7 @@ class ConfirmationControllerSpec extends BaseSpec
         "the call to the customer details service is successful" should {
 
           lazy val result = {
-            mockAuthoriseAsAgent(agentAuthorisedResponse, agentServicesEnrolment)
+            mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
             mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
             TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
           }
@@ -65,14 +66,14 @@ class ConfirmationControllerSpec extends BaseSpec
           }
 
           "render the confirmation view" in {
-            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
+            Jsoup.parse(contentAsString(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
           }
         }
 
         "the call to the customer details service is unsuccessful" should {
 
           lazy val result = {
-            mockAuthoriseAsAgent(agentAuthorisedResponse, agentServicesEnrolment)
+            mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
             mockCustomerDetailsError()
             TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
           }
@@ -87,7 +88,7 @@ class ConfirmationControllerSpec extends BaseSpec
           }
 
           "render the confirmation view" in {
-            Jsoup.parse(bodyOf(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
+            Jsoup.parse(contentAsString(result)).title shouldBe ReturnFrequencyMessages.ReceivedPage.titleAgent
           }
         }
       }

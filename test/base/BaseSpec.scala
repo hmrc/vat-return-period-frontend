@@ -16,9 +16,6 @@
 
 package base
 
-
-import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, Materializer}
 import common.SessionKeys
 import common.SessionKeys.insolventWithoutAccessKey
 import config.ServiceErrorHandler
@@ -26,7 +23,7 @@ import mocks.MockConfig
 import models.auth.User
 import org.jsoup.Jsoup
 import org.scalamock.scalatest.MockFactory
-import org.scalatest.{BeforeAndAfterEach, Matchers, WordSpec}
+import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.Configuration
 import play.api.i18n.{Messages, MessagesApi}
@@ -35,11 +32,12 @@ import play.api.mvc.{AnyContentAsEmpty, MessagesControllerComponents}
 import play.api.test.FakeRequest
 import play.twirl.api.Html
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.ExecutionContext
 
-trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with MockFactory with UnitSpec with BeforeAndAfterEach {
+trait BaseSpec extends AnyWordSpecLike with Matchers with GuiceOneAppPerSuite with MockFactory with BeforeAndAfterEach {
 
   lazy val injector: Injector = app.injector
 
@@ -62,8 +60,6 @@ trait BaseSpec extends WordSpec with Matchers with GuiceOneAppPerSuite with Mock
 
   lazy val errorHandler: ServiceErrorHandler = injector.instanceOf[ServiceErrorHandler]
 
-  implicit val system: ActorSystem = ActorSystem()
-  implicit val materializer: Materializer = ActorMaterializer()
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
   implicit lazy val ec: ExecutionContext = injector.instanceOf[ExecutionContext]
   implicit lazy val mcc: MessagesControllerComponents = injector.instanceOf[MessagesControllerComponents]

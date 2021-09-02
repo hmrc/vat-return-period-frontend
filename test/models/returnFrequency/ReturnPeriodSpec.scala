@@ -17,10 +17,10 @@
 package models.returnFrequency
 
 import assets.ReturnPeriodTestConstants._
-import play.api.libs.json.Json
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.matchers.should.Matchers
 
-class ReturnPeriodSpec extends UnitSpec {
+class ReturnPeriodSpec extends AnyWordSpecLike with Matchers {
 
   "ReturnPeriod.apply" should {
 
@@ -93,25 +93,6 @@ class ReturnPeriodSpec extends UnitSpec {
       for((_, json) <- allAnnualKeysAsJson) {
         json.as[ReturnPeriod] shouldBe Annually
       }
-    }
-  }
-
-  "ReturnPeriod Writes" should {
-
-    "output a fully populated MA ReturnPeriod object with all fields populated" in {
-      Json.toJson(Jan) shouldBe returnPeriodMAJson
-    }
-
-    "output a fully populated MB ReturnPeriod object with all fields populated" in {
-      Json.toJson(Feb) shouldBe returnPeriodMBJson
-    }
-
-    "output a fully populated MC ReturnPeriod object with all fields populated" in {
-      Json.toJson(Mar) shouldBe returnPeriodMCJson
-    }
-
-    "output a fully populated MM ReturnPeriod object with all fields populated" in {
-      Json.toJson(Monthly) shouldBe returnPeriodMMJson
     }
   }
 }

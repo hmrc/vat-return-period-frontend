@@ -19,13 +19,13 @@ package connectors.httpParsers
 import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
 import models.returnFrequency.SubscriptionUpdateResponseModel
-import play.api.Logger
+import utils.LoggerUtil
 import play.api.http.Status
 import uk.gov.hmrc.http.{HttpReads, HttpResponse}
 
 import scala.util.{Failure, Success, Try}
 
-object SubscriptionUpdateHttpParser {
+object SubscriptionUpdateHttpParser extends LoggerUtil {
 
   implicit object SubscriptionUpdateReads extends HttpReads[HttpPutResult[SubscriptionUpdateResponseModel]] {
 
@@ -37,12 +37,12 @@ object SubscriptionUpdateHttpParser {
         } match {
           case Success(parsedModel) => Right(parsedModel)
           case Failure(reason) =>
-            Logger.debug(s"[SubscriptionUpdateHttpParser][SubscriptionUpdateReads]: Invalid Json - $reason")
-            Logger.warn("[SubscriptionUpdateHttpParser][SubscriptionUpdateReads]: Invalid Json returned")
+            logger.debug(s"[SubscriptionUpdateHttpParser][SubscriptionUpdateReads]: Invalid Json - $reason")
+            logger.warn("[SubscriptionUpdateHttpParser][SubscriptionUpdateReads]: Invalid Json returned")
             Left(UnexpectedJsonFormat)
         }
         case status =>
-          Logger.warn(s"[SubscriptionUpdateHttpParser][read]: Unexpected Response, Status $status returned")
+          logger.warn(s"[SubscriptionUpdateHttpParser][read]: Unexpected Response, Status $status returned")
           Left(ServerSideError(s"$status", "Received downstream error when retrieving subscription update response."))
       }
     }

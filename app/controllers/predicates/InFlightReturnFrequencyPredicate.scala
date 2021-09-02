@@ -18,17 +18,16 @@ package controllers.predicates
 
 import common.SessionKeys.CURRENT_RETURN_FREQUENCY
 import config.{AppConfig, ServiceErrorHandler}
-
 import javax.inject.Inject
 import models.auth.User
 import models.circumstanceInfo.ChangeIndicators
-import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, MessagesControllerComponents, Result}
 import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
+import utils.LoggerUtil
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -37,7 +36,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
                                                  val messagesApi: MessagesApi,
                                                  implicit val appConfig: AppConfig,
                                                  val mcc: MessagesControllerComponents)
-  extends ActionRefiner[User, User] with I18nSupport {
+  extends ActionRefiner[User, User] with I18nSupport with LoggerUtil {
 
   implicit val executionContext: ExecutionContext = mcc.executionContext
 
@@ -63,11 +62,11 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
             Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
               .addingToSession(CURRENT_RETURN_FREQUENCY -> returnPeriod.id))
           case None =>
-            Logger.warn("[InFlightReturnFrequencyPredicate][refine] - No return frequency returned from GetCustomerInfo")
+            logger.warn("[InFlightReturnFrequencyPredicate][refine] - No return frequency returned from GetCustomerInfo")
             Left(Redirect(appConfig.manageVatUrl))
         }
       case Left(error) =>
-        Logger.warn(s"[InFlightReturnFrequencyPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")
+        logger.warn(s"[InFlightReturnFrequencyPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")
         Left(serviceErrorHandler.showInternalServerError)
     }
   }

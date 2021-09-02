@@ -18,7 +18,7 @@ package models.circumstanceInfo
 
 import models.returnFrequency.ReturnPeriod
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{Reads, Writes, __}
+import play.api.libs.json.{Reads, __}
 import utils.JsonReadUtil
 
 case class CircumstanceDetails(customerDetails: CustomerDetails,
@@ -45,14 +45,5 @@ object CircumstanceDetails extends JsonReadUtil {
     emailVerifiedPath.readOpt[Boolean] and
     commsPreferencePath.readOpt[String]
   ) (CircumstanceDetails.apply _)
-
-  implicit val writes: Writes[CircumstanceDetails] = (
-    customerDetailsPath.write[CustomerDetails] and
-    changeIndicatorsPath.writeNullable[ChangeIndicators] and
-    returnPeriodPath.writeNullable[ReturnPeriod] and
-    partyTypePath.writeNullable[String] and
-    emailVerifiedPath.writeNullable[Boolean] and
-    commsPreferencePath.writeNullable[String]
-  ) (unlift(CircumstanceDetails.unapply))
 
 }

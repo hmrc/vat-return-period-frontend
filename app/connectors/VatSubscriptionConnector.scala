@@ -22,7 +22,7 @@ import connectors.httpParsers.CircumstanceDetailsHttpParser.CircumstanceDetailsR
 import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
 import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{SubscriptionUpdateResponseModel, UpdateReturnPeriod}
-import play.api.Logger
+import utils.LoggerUtil
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.http.HttpClient
 
@@ -30,7 +30,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class VatSubscriptionConnector @Inject()(val http: HttpClient,
-                                         val config: AppConfig) {
+                                         val config: AppConfig) extends LoggerUtil {
 
   private[connectors] def getCustomerDetailsUrl(vrn: String) = config.vatSubscriptionBaseURL + s"/vat-subscription/$vrn/full-information"
 
@@ -38,7 +38,7 @@ class VatSubscriptionConnector @Inject()(val http: HttpClient,
 
   def getCustomerCircumstanceDetails(id: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[CircumstanceDetails]] = {
     val url = getCustomerDetailsUrl(id)
-    Logger.debug(s"[CustomerDetailsConnector][getCustomerDetails]: Calling getCustomerDetails with URL - $url")
+    logger.debug(s"[CustomerDetailsConnector][getCustomerDetails]: Calling getCustomerDetails with URL - $url")
     http.GET(url)(CircumstanceDetailsReads, headerCarrier, ec)
   }
 

@@ -86,7 +86,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
           And("I stub a successful response from the Payments service")
           putSubscriptionSuccess(SubscriptionUpdateResponseModel("Good times"))
-          getClientDetailsSuccess("999999999")(circumstanceDetailsModelMin)
+          getClientDetailsSuccess("999999999")(circumstanceDetailsJsonMin)
 
           When("I initiate a return frequency update journey")
           val res: WSResponse = postJSValueBody(

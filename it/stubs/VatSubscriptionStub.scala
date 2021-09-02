@@ -37,18 +37,19 @@ object VatSubscriptionStub extends WireMockMethods {
       "organisationName" -> "org name",
       "tradingName" -> "trading name",
       "isInsolvent" -> false,
-      "continueToTrade" -> Some(true),
-      "insolvencyType" -> Some("01")
+      "continueToTrade" -> true,
+      "insolvencyType" -> "01"
     ),
     "ppob" -> Json.obj(
       "contactDetails" -> Json.obj(
         "emailVerified" -> true)),
-    "returnPeriod" -> Monthly,
+    "returnPeriod" -> Json.obj(
+      "stdReturnPeriod" -> "MM"),
     "changeIndicators" -> Json.obj(
       "returnPeriod" -> true,
       "annualAccounting" -> false
     ),
-    "partyType" -> Some("2"),
+    "partyType" -> "2",
     "commsPreference" -> digital
   )
 
@@ -62,17 +63,12 @@ object VatSubscriptionStub extends WireMockMethods {
       Some(digital)
     )
 
-  val circumstanceDetailsModelMin: CircumstanceDetails =
-    CircumstanceDetails(
-      CustomerDetails(None, None, None, None, false, None, None),
-      None,
-      None,
-      None,
-      None,
-      None
-    )
+  val circumstanceDetailsJsonMin: JsValue = Json.obj(
+    "customerDetails" -> Json.obj(
+      "isInsolvent" -> false
+    ))
 
-  def getClientDetailsSuccess(vrn: String)(customerDetails: CircumstanceDetails): StubMapping =
+  def getClientDetailsSuccess(vrn: String)(jsValue: JsValue): StubMapping =
     when(method = GET, uri = subscriptionUri(vrn))
-      .thenReturn(status = OK, body = Json.toJson(customerDetails))
+      .thenReturn(status = OK, body = jsValue)
 }

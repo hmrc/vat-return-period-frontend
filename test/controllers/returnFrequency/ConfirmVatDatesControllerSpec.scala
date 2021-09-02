@@ -65,7 +65,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               )
             )
 
-            lazy val document = Jsoup.parse(bodyOf(result))
+            lazy val document = Jsoup.parse(contentAsString(result))
 
             "return 200" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -89,7 +89,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
-            lazy val document = Jsoup.parse(bodyOf(result))
+            lazy val document = Jsoup.parse(contentAsString(result))
 
             "return 500" in {
               mockAuthorise(mtdVatAuthorisedResponse)
@@ -137,7 +137,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           }
 
           s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-            Jsoup.parse(bodyOf(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
+            Jsoup.parse(contentAsString(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
           }
         }
       }
@@ -191,7 +191,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
               setupMockReturnFrequencyServiceWithFailure()
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe
+              messages(Jsoup.parse(contentAsString(result)).title) shouldBe
                 AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
@@ -250,7 +250,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               mockAuthorise(mtdVatAuthorisedResponse)
               mockCustomerDetailsError()
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(bodyOf(result)).title) shouldBe
+              messages(Jsoup.parse(contentAsString(result)).title) shouldBe
                 AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
@@ -280,7 +280,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
-          lazy val document = Jsoup.parse(bodyOf(result))
+          lazy val document = Jsoup.parse(contentAsString(result))
 
           "return 500" in {
             mockAuthorise(mtdVatAuthorisedResponse)
@@ -306,7 +306,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         }
 
         s"have the correct page title" in {
-          Jsoup.parse(bodyOf(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+          Jsoup.parse(contentAsString(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
         }
 
         "add the current return frequency to the session" in {

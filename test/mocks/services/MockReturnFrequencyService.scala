@@ -23,11 +23,11 @@ import models.returnFrequency.{ReturnPeriod, SubscriptionUpdateResponseModel}
 import org.scalamock.scalatest.MockFactory
 import services.ReturnFrequencyService
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.test.UnitSpec
+import org.scalatest.wordspec.AnyWordSpecLike
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait MockReturnFrequencyService extends UnitSpec with MockFactory {
+trait MockReturnFrequencyService extends AnyWordSpecLike with MockFactory {
 
   val mockReturnFrequencyService: ReturnFrequencyService = mock[ReturnFrequencyService]
 

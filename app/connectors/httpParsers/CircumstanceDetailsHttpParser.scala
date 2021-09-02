@@ -19,13 +19,13 @@ package connectors.httpParsers
 import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
 import models.circumstanceInfo.CircumstanceDetails
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
-import play.api.Logger
+import utils.LoggerUtil
 import play.api.http.Status
 import uk.gov.hmrc.http.{HttpReads, HttpResponse}
 
 import scala.util.{Failure, Success, Try}
 
-object CircumstanceDetailsHttpParser {
+object CircumstanceDetailsHttpParser extends LoggerUtil {
 
   implicit object CircumstanceDetailsReads extends HttpReads[HttpGetResult[CircumstanceDetails]] {
 
@@ -37,11 +37,11 @@ object CircumstanceDetailsHttpParser {
         } match {
           case Success(parsedModel) => Right(parsedModel)
           case Failure(reason) =>
-            Logger.debug(s"[CustomerDetailsHttpParser][CustomerDetailsReads]: Invalid Json - $reason")
-            Logger.warn("[CustomerDetailsHttpParser][CustomerDetailsReads]: Invalid Json returned")
+            logger.debug(s"[CustomerDetailsHttpParser][CustomerDetailsReads]: Invalid Json - $reason")
+            logger.warn("[CustomerDetailsHttpParser][CustomerDetailsReads]: Invalid Json returned")
             Left(UnexpectedJsonFormat)
         } case status =>
-          Logger.warn(s"[CustomerCircumstancesHttpParser][read]: Unexpected Response, Status $status returned")
+          logger.warn(s"[CustomerCircumstancesHttpParser][read]: Unexpected Response, Status $status returned")
           Left(ServerSideError(s"$status", "Received downstream error when retrieving customer details."))
       }
     }
