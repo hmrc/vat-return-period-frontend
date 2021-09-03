@@ -39,6 +39,8 @@ trait AppConfig {
   val unauthorisedSignOutUrl: String
   val agentClientLookupStartUrl: String => String
   val agentClientUnauthorisedUrl: String => String
+  val agentClientLookupUrl: String
+  val btaHomeUrl: String
   val changeClientUrl: String
   val govUkGuidanceMtdVat: String
   val govUkGuidanceAgentServices: String
@@ -104,6 +106,10 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   private lazy val agentClientLookupRedirectUrl: String => String = uri => SafeRedirectUrl(platformHost + uri).encodedUrl
   private lazy val agentClientLookupHost: String = servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendHost)
 
+  override lazy val agentClientLookupUrl: String = {
+    agentClientLookupHost + servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendHome)
+  }
+
   override lazy val agentClientLookupStartUrl: String => String = uri =>
     if(features.stubAgentClientLookup()) {
       testOnly.controllers.routes.StubAgentClientLookupController.show(uri).url
@@ -124,6 +130,11 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override lazy val changeClientUrl: String = agentClientLookupHost +
     servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
+
+  //BTA
+  override lazy val btaHomeUrl: String =
+    servicesConfig.getString(ConfigKeys.btaHost) +
+    servicesConfig.getString(ConfigKeys.btaHome)
 
   //Accessibility statement
   private lazy val accessibilityReportHost: String = servicesConfig.getString(ConfigKeys.accessibilityReportHost)

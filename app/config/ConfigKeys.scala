@@ -42,8 +42,12 @@ object ConfigKeys {
   val governmentGatewayHost: String = "government-gateway.host"
 
   val vatAgentClientLookupFrontendHost: String = "vat-agent-client-lookup-frontend.host"
+  val vatAgentClientLookupFrontendHome: String = "vat-agent-client-lookup-frontend.homeUrl"
   val vatAgentClientLookupFrontendStartUrl: String = "vat-agent-client-lookup-frontend.startUrl"
   val vatAgentClientLookupFrontendUnauthorisedUrl: String = "vat-agent-client-lookup-frontend.unauthorisedUrl"
+
+  val btaHost: String = "business-tax-account.host"
+  val btaHome: String = "business-tax-account.homeUrl"
 
   val govUkGuidanceMtdVat: String = "gov-uk.mtdVat"
   val govUkGuidanceAgentServices: String = "gov-uk.agentServices"
