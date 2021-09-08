@@ -30,75 +30,76 @@
 @(form: Form[ReturnDatesModel], current: ReturnPeriod)(implicit user : User[_], messages: Messages, appConfig: AppConfig)
 
 @formHint = @{
-    if(current.id.equals("Annually")){
-      messages("return_frequency.currentAnnual")
-    } else {
-      messages("return_frequency.current") + " " +
-      messages(s"return_frequency.${current.id}") + messages("common.fullStop")
-    }
+  if(current.id.equals("Annually")){
+    messages("return_frequency.currentAnnual")
+  } else {
+    messages("return_frequency.current") + " " +
+    messages(s"return_frequency.${current.id}") + messages("common.fullStop")
+  }
 }
 
 @availableOptions = @{Seq(Jan, Feb, Mar, Monthly).filterNot(_ == current)}
 
-@conditionalRevealHtml(value: String) = {
-    <p class="govuk-hint">
-        @(current, value) match {
-            case (Monthly, _) | (_, "Monthly") => {@messages("return_frequency.changeAtEndOfMonth")}
-            case _ => {@messages("return_frequency.changeAtEndOfQuarter")}
-        }
-    </p>
+@hintHtml(value: String) = {
+  <p class="govuk-hint govuk-!-margin-0">
+    @(current, value) match {
+      case (Monthly, _) | (_, "Monthly") => {@messages("return_frequency.changeAtEndOfMonth")}
+      case _ => {@messages("return_frequency.changeAtEndOfQuarter")}
+    }
+  </p>
 }
 
 @backLink= {
   @govukBackLink(BackLink(
-  href = appConfig.manageVatUrl,
-  content = Text(messages("base.back"))
+    href = appConfig.manageVatUrl,
+    content = Text(messages("base.back"))
   ))
 }
 
 @mainTemplate(
   backLinkContent = Some(backLink),
   pageTitle =
-    if(form.errors.nonEmpty) messages("common.error.prefixTitle",
-    messages("return_frequency.title")) else messages("return_frequency.title"),
+    if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title"))
+    else messages("return_frequency.title"),
   user = Some(user)) {
 
   @if(form.hasErrors) {
     @govukErrorSummary(ErrorSummary(
-        title = Text(messages("common.errorSummary.heading")),
-        errorList = form.errors.map { error =>
-          ErrorLink(
-            href = Some("#period-option"),
-            content = Text(messages(error.message))
-            )
-        }
+      title = Text(messages("common.errorSummary.heading")),
+      errorList = form.errors.map { error =>
+        ErrorLink(
+          href = Some("#period-option"),
+          content = Text(messages(error.message))
+          )
+      }
     ))
   }
 
-@formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
+  @formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
     @govukRadios(Radios(
-        idPrefix = Some(form("period-option").id),
-        name = "period-option",
-        hint = Some(Hint(content = Text(formHint))),
-        fieldset = Some(Fieldset(
-            legend = Some(Legend(
-                content = Text(messages("return_frequency.title")),
-                isPageHeading = true,
-                classes = "govuk-fieldset__legend--l"
-            ))
-        )),
-
-        items = availableOptions.map { option =>
-          RadioItem(
-            content = Text(messages(s"return_frequency.${option.id}")),
-            value = Some(option.id),
-            conditionalHtml = Some(conditionalRevealHtml(option.id)),
-            checked = form("period-option").value.contains(option.id)
-            )
-        },
-        errorMessage = form("period-option").error.map { err =>
-          ErrorMessage(content = Text(messages(err.message, err.args: _*)))
-        }
+      idPrefix = Some(form("period-option").id),
+      name = "period-option",
+      hint = Some(Hint(content = Text(formHint))),
+      fieldset = Some(Fieldset(
+        legend = Some(Legend(
+          content = Text(messages("return_frequency.title")),
+          isPageHeading = true,
+          classes = "govuk-fieldset__legend--l"
+        ))
+      )),
+      items = availableOptions.map { option =>
+        RadioItem(
+          content = Text(messages(s"return_frequency.${option.id}")),
+          value = Some(option.id),
+          hint = Some(Hint(
+            content = HtmlContent(hintHtml(option.id))
+          )),
+          checked = form("period-option").value.contains(option.id)
+        )
+      },
+      errorMessage = form("period-option").error.map { err =>
+        ErrorMessage(content = Text(messages(err.message, err.args: _*)))
+      }
     ))
 
     @govukButton(Button(

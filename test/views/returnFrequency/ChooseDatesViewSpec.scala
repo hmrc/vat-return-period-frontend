@@ -52,16 +52,16 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option1Jan + viewMessages.fullStop
     }
 
-    "have the correct options return dates of" in {
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1)") shouldBe viewMessages.option2Feb
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3)") shouldBe viewMessages.option3Mar
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5)") shouldBe viewMessages.option4Monthly
+    "have the correct options for return dates of" in {
+      elementText(".govuk-radios > div:nth-child(1) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios > div:nth-child(2) > label") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios > div:nth-child(3) > label") shouldBe viewMessages.option4Monthly
     }
 
     "have the correct hint text of" in {
-      elementText("#conditional-period-option") shouldBe viewMessages.changeEndOfQuarter
-      elementText("#conditional-period-option-2") shouldBe viewMessages.changeEndOfQuarter
-      elementText("#conditional-period-option-3") shouldBe viewMessages.changeEndOfMonth
+      elementText(".govuk-radios__item:nth-child(1) > div > p") shouldBe viewMessages.changeEndOfQuarter
+      elementText(".govuk-radios__item:nth-child(2) > div > p") shouldBe viewMessages.changeEndOfQuarter
+      elementText(".govuk-radios__item:nth-child(3) > div > p") shouldBe viewMessages.changeEndOfMonth
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -97,16 +97,16 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option4Monthly + viewMessages.fullStop
     }
 
-    "have the correct options return dates of" in {
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3) > label") shouldBe viewMessages.option2Feb
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5) > label") shouldBe viewMessages.option3Mar
+    "have the correct options for return dates of" in {
+      elementText(".govuk-radios > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios > div:nth-child(2) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios > div:nth-child(3) > label") shouldBe viewMessages.option3Mar
     }
 
     "have the correct hint text of" in {
-      elementText("#conditional-period-option > p") shouldBe viewMessages.changeEndOfMonth
-      elementText("#conditional-period-option-2 > p") shouldBe viewMessages.changeEndOfMonth
-      elementText("#conditional-period-option-3 > p") shouldBe viewMessages.changeEndOfMonth
+      elementText(".govuk-radios__item:nth-child(1) > div > p") shouldBe viewMessages.changeEndOfMonth
+      elementText(".govuk-radios__item:nth-child(2) > div > p") shouldBe viewMessages.changeEndOfMonth
+      elementText(".govuk-radios__item:nth-child(3) > div > p") shouldBe viewMessages.changeEndOfMonth
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -142,11 +142,11 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#period-option-hint") shouldBe viewMessages.annually
     }
 
-    "have the correct options return dates of" in {
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3) > label") shouldBe viewMessages.option2Feb
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5) > label") shouldBe viewMessages.option3Mar
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(7) > label") shouldBe viewMessages.option4Monthly
+    "have the correct options for return dates of" in {
+      elementText(".govuk-radios > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios > div:nth-child(2) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios > div:nth-child(3) > label") shouldBe viewMessages.option3Mar
+      elementText(".govuk-radios > div:nth-child(4) > label") shouldBe viewMessages.option4Monthly
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
@@ -182,10 +182,10 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
       elementText("#period-option-hint") shouldBe viewMessages.ChoosePage.question + viewMessages.option4Monthly + viewMessages.fullStop
     }
 
-    "have the correct options return dates of" in {
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(1)") shouldBe viewMessages.option1Jan
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(3)") shouldBe viewMessages.option2Feb
-      elementText(".govuk-radios.govuk-radios--conditional > div:nth-child(5)") shouldBe viewMessages.option3Mar
+    "have the correct options for return dates of" in {
+      elementText(".govuk-radios > div:nth-child(1) > label") shouldBe viewMessages.option1Jan
+      elementText(".govuk-radios > div:nth-child(2) > label") shouldBe viewMessages.option2Feb
+      elementText(".govuk-radios > div:nth-child(3) > label") shouldBe viewMessages.option3Mar
     }
   }
 }
