@@ -24,8 +24,8 @@ object ReturnFrequencyMessages extends BaseMessages {
   val option4Monthly = "Monthly"
   val fullStop = "."
   val annually = "You currently submit returns annually. If you select a new VAT Return date, you will leave the Annual Accounting scheme."
-  val changeEndOfMonth = "We’ll change your dates at the end of this month"
-  val changeEndOfQuarter = "We’ll change your dates at the end of this quarter"
+  val changeEndOfMonth = "We’ll change your dates at the end of this month."
+  val changeEndOfQuarter = "We’ll change your dates at the end of this quarter."
 
   object ChoosePage {
     val title: String = "What are the new VAT Return dates?" + titleSuffix

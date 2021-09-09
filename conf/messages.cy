@@ -61,8 +61,8 @@ return_frequency.January = Ionawr, Ebrill, Gorffennaf a Hydref
 return_frequency.February = Chwefror, Mai, Awst a Thachwedd
 return_frequency.March = Mawrth, Mehefin, Medi a Rhagfyr
 return_frequency.Monthly = Bob mis
-return_frequency.changeAtEndOfQuarter = Byddwn yn newid eich dyddiadau ar ddiwedd y chwarter presennol
-return_frequency.changeAtEndOfMonth = Byddwn yn newid eich dyddiadau ar ddiwedd y mis hwn
+return_frequency.changeAtEndOfQuarter = Byddwn yn newid eich dyddiadau ar ddiwedd y chwarter presennol.
+return_frequency.changeAtEndOfMonth = Byddwn yn newid eich dyddiadau ar ddiwedd y mis hwn.
 
 confirm_return_frequency.changeLink = Newid y dyddiadau ar gyfer Ffurflenni TAW
 
