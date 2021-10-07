@@ -26,7 +26,7 @@ class MainTemplateSpec extends ViewBaseSpec {
   val injectedView: MainTemplate = injector.instanceOf[MainTemplate]
 
   object Selectors {
-    val serviceNameSelector = ".govuk-header__link--service-name"
+    val serviceNameSelector = ".hmrc-header__service-name"
   }
 
   "The MainTemplate" when {
