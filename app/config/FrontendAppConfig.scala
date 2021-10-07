@@ -52,6 +52,7 @@ trait AppConfig {
   val contactPreferenceURL: String
   val gtmContainer: String
   val contactFormServiceIdentifier: String
+  val vatDetailsUrl: String
 }
 
 @Singleton
@@ -130,6 +131,10 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override lazy val changeClientUrl: String = agentClientLookupHost +
     servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl)
+
+  //VAT Summary
+  private lazy val vatSummaryBase: String = servicesConfig.getString(ConfigKeys.vatSummaryBase)
+  override lazy val vatDetailsUrl: String = vatSummaryBase + servicesConfig.getString(ConfigKeys.vatDetailsUrl)
 
   //BTA
   override lazy val btaHomeUrl: String =

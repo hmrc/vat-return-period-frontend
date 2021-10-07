@@ -46,6 +46,9 @@ object ConfigKeys {
   val vatAgentClientLookupFrontendStartUrl: String = "vat-agent-client-lookup-frontend.startUrl"
   val vatAgentClientLookupFrontendUnauthorisedUrl: String = "vat-agent-client-lookup-frontend.unauthorisedUrl"
 
+  val vatSummaryBase: String = "vat-summary-frontend.host"
+  val vatDetailsUrl: String = "vat-summary-frontend.detailsUrl"
+
   val btaHost: String = "business-tax-account.host"
   val btaHome: String = "business-tax-account.homeUrl"
 

@@ -56,7 +56,7 @@ class MainTemplateSpec extends ViewBaseSpec {
       }
 
       "have the correct header URL" in {
-        element(Selectors.serviceNameSelector).attr("href") shouldBe mockAppConfig.btaHomeUrl
+        element(Selectors.serviceNameSelector).attr("href") shouldBe mockAppConfig.vatDetailsUrl
       }
 
     }
