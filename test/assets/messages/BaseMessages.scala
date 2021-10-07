@@ -24,7 +24,7 @@ trait BaseMessages {
   val errorHeading = "There is a problem"
   val finish = "Finish"
 
-  val titleSuffix = " - Business tax account - GOV.UK"
+  val titleSuffix = " - Manage your VAT account - GOV.UK"
   val agentTitleSuffix = " - Your client’s VAT details - GOV.UK"
   val mtdfvTitleSuffix = " - VAT - GOV.UK"
 

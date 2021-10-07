@@ -79,7 +79,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
 
         s"have the correct page title" in {
-          Jsoup.parse(contentAsString(result)).title shouldBe "You already have a change pending - Business tax account - GOV.UK"
+          Jsoup.parse(contentAsString(result)).title shouldBe "You already have a change pending - Manage your VAT account - GOV.UK"
         }
 
         "add the current return frequency to the session" in {
@@ -151,7 +151,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-              Jsoup.parse(contentAsString(result)).title() shouldBe "You already have a change pending - Business tax account - GOV.UK"
+              Jsoup.parse(contentAsString(result)).title() shouldBe "You already have a change pending - Manage your VAT account - GOV.UK"
             }
           }
 

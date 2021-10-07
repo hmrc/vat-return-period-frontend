@@ -52,7 +52,7 @@ class MainTemplateSpec extends ViewBaseSpec {
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       "display the correct dynamic service name" in {
-        elementText(Selectors.serviceNameSelector) shouldBe "Business tax account"
+        elementText(Selectors.serviceNameSelector) shouldBe "Manage your VAT account"
       }
 
       "have the correct header URL" in {
