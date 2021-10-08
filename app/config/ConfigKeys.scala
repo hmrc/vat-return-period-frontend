@@ -27,8 +27,7 @@ object ConfigKeys {
 
   val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
 
-  val accessibilityReportUrl: String = "accessibilityReport.url"
-  val accessibilityReportHost: String = "accessibilityReport.host"
+  val accessibilityReportUrl: String = "vat-summary-frontend.accessibilityUrl"
 
   val signInBaseUrl: String = "signIn.url"
   val signInContinueBaseUrl: String = "signIn.continueBaseUrl"
@@ -48,9 +47,6 @@ object ConfigKeys {
 
   val vatSummaryBase: String = "vat-summary-frontend.host"
   val vatDetailsUrl: String = "vat-summary-frontend.detailsUrl"
-
-  val btaHost: String = "business-tax-account.host"
-  val btaHome: String = "business-tax-account.homeUrl"
 
   val govUkGuidanceMtdVat: String = "gov-uk.mtdVat"
   val govUkGuidanceAgentServices: String = "gov-uk.agentServices"

@@ -40,7 +40,6 @@ trait AppConfig {
   val agentClientLookupStartUrl: String => String
   val agentClientUnauthorisedUrl: String => String
   val agentClientLookupUrl: String
-  val btaHomeUrl: String
   val changeClientUrl: String
   val govUkGuidanceMtdVat: String
   val govUkGuidanceAgentServices: String
@@ -136,14 +135,8 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   private lazy val vatSummaryBase: String = servicesConfig.getString(ConfigKeys.vatSummaryBase)
   override lazy val vatDetailsUrl: String = vatSummaryBase + servicesConfig.getString(ConfigKeys.vatDetailsUrl)
 
-  //BTA
-  override lazy val btaHomeUrl: String =
-    servicesConfig.getString(ConfigKeys.btaHost) +
-    servicesConfig.getString(ConfigKeys.btaHome)
-
   //Accessibility statement
-  private lazy val accessibilityReportHost: String = servicesConfig.getString(ConfigKeys.accessibilityReportHost)
-  override lazy val accessibilityReportUrl: String = accessibilityReportHost +
+  override lazy val accessibilityReportUrl: String = vatSummaryBase +
     servicesConfig.getString(ConfigKeys.accessibilityReportUrl)
 
   //Features
