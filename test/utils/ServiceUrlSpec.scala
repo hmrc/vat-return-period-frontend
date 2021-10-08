@@ -22,7 +22,7 @@ class ServiceUrlSpec extends BaseSpec {
 
   lazy val serviceUrl: ServiceUrl = injector.instanceOf[ServiceUrl]
   lazy val agentUrl: String = "/client-vat-account"
-  lazy val principalUrl: String = "/business-account"
+  lazy val principalUrl: String = "vat-details-url"
 
   "The ServiceUrl utility" should {
 

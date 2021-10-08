@@ -26,7 +26,7 @@ class MainTemplateSpec extends ViewBaseSpec {
   val injectedView: MainTemplate = injector.instanceOf[MainTemplate]
 
   object Selectors {
-    val serviceNameSelector = ".govuk-header__link--service-name"
+    val serviceNameSelector = ".hmrc-header__service-name"
   }
 
   "The MainTemplate" when {
@@ -52,11 +52,11 @@ class MainTemplateSpec extends ViewBaseSpec {
       lazy implicit val document: Document = Jsoup.parse(view.body)
 
       "display the correct dynamic service name" in {
-        elementText(Selectors.serviceNameSelector) shouldBe "Business tax account"
+        elementText(Selectors.serviceNameSelector) shouldBe "Manage your VAT account"
       }
 
       "have the correct header URL" in {
-        element(Selectors.serviceNameSelector).attr("href") shouldBe mockAppConfig.btaHomeUrl
+        element(Selectors.serviceNameSelector).attr("href") shouldBe mockAppConfig.vatDetailsUrl
       }
 
     }

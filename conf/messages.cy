@@ -1,4 +1,3 @@
-common.service-name = Cyfrif Treth Busnes
 common.fullStop = .
 common.pageTitle = {0} - {1} - GOV.UK
 common.finish = Gorffen
@@ -17,7 +16,7 @@ featureSwitch.submit = Cyflwyno
 common.error.prefixTitle = Gwall: {0}
 error.summary.title = Mae problem wedi codi
 
-navTitle.nonAgent = Cyfrif Treth Busnes
+navTitle.nonAgent = Rheoli eich cyfrif TAW
 navTitle.agent = Manylion TAW eich cleient
 navTitle.vat = TAW
 

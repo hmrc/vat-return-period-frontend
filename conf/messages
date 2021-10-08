@@ -1,4 +1,3 @@
-common.service-name = Business tax account
 common.fullStop = .
 common.pageTitle = {0} - {1} - GOV.UK
 common.finish = Finish
@@ -19,7 +18,7 @@ error.boolean = Please give an answer
 error.required = Please enter a value
 error.summary.title = There is a problem
 
-navTitle.nonAgent = Business tax account
+navTitle.nonAgent = Manage your VAT account
 navTitle.agent = Your client’s VAT details
 navTitle.vat = VAT
 
