@@ -91,7 +91,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
                   Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url)
                 )
                 Redirect(
-                  controllers.returnFrequency.routes.ConfirmationController.show(if (user.isAgent) "agent" else "non-agent")
+                  controllers.returnFrequency.routes.ConfirmationController.show()
                 ).removingFromSession(SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY)
               case Left(ServerSideError("409", _)) =>
                 logger.warn("[ConfirmVatDatesController][updateReturnFrequency] Stagger update already in progress. " +

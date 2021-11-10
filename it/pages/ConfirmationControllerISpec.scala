@@ -30,7 +30,7 @@ class ConfirmationControllerISpec extends BasePageISpec{
 
     "the user is a Principle Entity and not an Agent" when {
 
-      def show(sessionVrn: Option[String] = None): WSResponse = get(s"$path/non-agent", formatSessionVrn(sessionVrn))
+      def show(sessionVrn: Option[String] = None): WSResponse = get(path, formatSessionVrn(sessionVrn))
 
       "authorised" should {
         "render the return frequency confirmation page" in {
@@ -67,7 +67,7 @@ class ConfirmationControllerISpec extends BasePageISpec{
 
     "the user is an Agent" when {
 
-      def show(sessionVrn: Option[String] = None): WSResponse = get(s"$path/agent", formatSessionVrn(sessionVrn))
+      def show(sessionVrn: Option[String] = None): WSResponse = get(path, formatSessionVrn(sessionVrn))
 
       "a valid VRN is being stored" should {
 
