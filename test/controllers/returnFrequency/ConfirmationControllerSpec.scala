@@ -53,7 +53,7 @@ class ConfirmationControllerSpec extends BaseSpec
           lazy val result = {
             mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
             mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
-            TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
+            TestChangeReturnFrequencyConfirmation.show(agentUser)
           }
 
           "return 200" in {
@@ -75,7 +75,7 @@ class ConfirmationControllerSpec extends BaseSpec
           lazy val result = {
             mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(agentServicesEnrolment))
             mockCustomerDetailsError()
-            TestChangeReturnFrequencyConfirmation.show("agent")(agentUser)
+            TestChangeReturnFrequencyConfirmation.show(agentUser)
           }
 
           "return 200" in {
@@ -102,7 +102,7 @@ class ConfirmationControllerSpec extends BaseSpec
               lazy val result = {
                 mockAuthorise(mtdVatAuthorisedResponse)
                 mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
-                TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+                TestChangeReturnFrequencyConfirmation.show(fakeRequest)
               }
 
               "return 200" in {
@@ -120,7 +120,7 @@ class ConfirmationControllerSpec extends BaseSpec
               lazy val result = {
                 mockAuthorise(mtdVatAuthorisedResponse)
                 mockCustomerDetailsError()
-                TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(fakeRequest)
+                TestChangeReturnFrequencyConfirmation.show(fakeRequest)
               }
 
               "return 200" in {
@@ -140,11 +140,11 @@ class ConfirmationControllerSpec extends BaseSpec
 
         "return 403 (Forbidden)" in {
           mockAuthorise(mtdVatAuthorisedResponse)
-          lazy val result = TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix)(insolventRequest)
+          lazy val result = TestChangeReturnFrequencyConfirmation.show(insolventRequest)
           status(result) shouldBe Status.FORBIDDEN
         }
       }
 
-    authControllerChecks(TestChangeReturnFrequencyConfirmation.show(user.redirectSuffix), fakeRequest)
+    authControllerChecks(TestChangeReturnFrequencyConfirmation.show, fakeRequest)
   }
 }

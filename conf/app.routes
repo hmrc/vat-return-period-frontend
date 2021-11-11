@@ -12,7 +12,7 @@ POST        /change-vat-return-dates                  controllers.returnFrequenc
 GET         /confirm-vat-return-dates                 controllers.returnFrequency.ConfirmVatDatesController.show
 POST        /confirm-vat-return-dates                 controllers.returnFrequency.ConfirmVatDatesController.submit
 
-GET         /confirmation-vat-return-dates/:userType  controllers.returnFrequency.ConfirmationController.show(userType: String)
+GET         /confirmation-vat-return-dates            controllers.returnFrequency.ConfirmationController.show
 
 GET         /change-client-vat-number                 controllers.ChangeClientController.changeClient
 
