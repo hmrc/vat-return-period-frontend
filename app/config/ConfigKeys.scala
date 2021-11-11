@@ -54,6 +54,9 @@ object ConfigKeys {
   val manageVatUrl: String = "manage-vat-subscription-frontend.url"
   val manageVatHost: String = "manage-vat-subscription-frontend.host"
 
+  val businessTaxAccountHost: String = "business-tax-account.host"
+  val businessTaxAccountUrl: String = "business-tax-account.homeUrl"
+
   val gtmContainer: String = "tracking-consent-frontend.gtm.container"
 
 }
