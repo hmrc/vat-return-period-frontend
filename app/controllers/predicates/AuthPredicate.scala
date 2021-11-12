@@ -20,6 +20,7 @@ import common.{EnrolmentKeys, SessionKeys}
 import common.EnrolmentKeys._
 import common.SessionKeys._
 import config.{AppConfig, ServiceErrorHandler}
+
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import play.api.i18n.I18nSupport
@@ -31,7 +32,7 @@ import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals._
 import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import utils.LoggerUtil
-import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent}
+import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent, UserInsolventError}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,7 +43,8 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
                               implicit val appConfig: AppConfig,
                               val mcc: MessagesControllerComponents,
                               unauthorisedAgentView: UnauthorisedAgent,
-                              unauthorisedNonAgentView: UnauthorisedNonAgent) extends FrontendController(mcc)
+                              unauthorisedNonAgentView: UnauthorisedNonAgent,
+                              userInsolvent: UserInsolventError) extends FrontendController(mcc)
   with I18nSupport
   with ActionBuilder[User, AnyContent]
   with ActionFunction[Request, User]
@@ -87,12 +89,12 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
       case Some(vrn) =>
         val user = User(vrn)
         request.session.get(SessionKeys.insolventWithoutAccessKey) match {
-          case Some("true") => Future.successful(Forbidden(unauthorisedNonAgentView()))
+          case Some("true") => Future.successful(Forbidden(userInsolvent()(user, request2Messages, appConfig)))
           case Some("false") => block(user)
           case _ => customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).flatMap {
             case Right(details) if details.customerDetails.isInsolventWithoutAccess =>
               logger.debug("[AuthPredicate][authoriseAsNonAgent] - User is insolvent and not continuing to trade")
-              Future.successful(Forbidden(unauthorisedNonAgentView()).addingToSession(SessionKeys.insolventWithoutAccessKey -> "true"))
+              Future.successful(Forbidden(userInsolvent()(user, request2Messages, appConfig)).addingToSession(SessionKeys.insolventWithoutAccessKey -> "true"))
             case Right(_) =>
               logger.debug("[AuthPredicate][authoriseAsNonAgent] - Authenticated as principle")
               block(user).map(result => result.addingToSession(SessionKeys.insolventWithoutAccessKey -> "false"))

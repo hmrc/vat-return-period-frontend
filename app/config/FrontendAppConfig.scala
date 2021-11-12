@@ -52,6 +52,7 @@ trait AppConfig {
   val gtmContainer: String
   val contactFormServiceIdentifier: String
   val vatDetailsUrl: String
+  val btaHomeUrl: String
 }
 
 @Singleton
@@ -150,6 +151,10 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
     "english" -> Lang("en"),
     "cymraeg" -> Lang("cy")
   )
+
+  //Business-Tax-Account
+  override lazy val btaHomeUrl: String = servicesConfig.getString(ConfigKeys.businessTaxAccountHost) +
+    servicesConfig.getString(ConfigKeys.businessTaxAccountUrl)
 
   override val routeToSwitchLanguage: String => Call = (lang: String) =>
     controllers.routes.LanguageController.switchToLanguage(lang)

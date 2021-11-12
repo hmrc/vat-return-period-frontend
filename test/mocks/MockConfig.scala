@@ -54,4 +54,5 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val vatSubscriptionDynamicStubURL: String = ""
   override val contactPreferenceURL: String = ""
   override val vatDetailsUrl: String = "vat-details-url"
+  override val btaHomeUrl: String = "bta-home"
 }
