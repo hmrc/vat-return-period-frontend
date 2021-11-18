@@ -60,11 +60,10 @@ class AuthPredicateSpec extends MockAuth {
 
           "agent does not have HMRC-AS-AGENT enrolment" should {
 
-            val authResponse = Future.successful(new ~(Some(Agent), otherEnrolment))
             lazy val result = target()(FakeRequest().withSession("CLIENT_VRN" -> "999999999"))
 
             "return 403" in {
-              mockAuthorise(authResponse)
+              mockAuthoriseAsAgent(agentAuthorisedResponse, Future.successful(unauthorisedEnrolment))
 
               status(result) shouldBe Status.FORBIDDEN
             }
