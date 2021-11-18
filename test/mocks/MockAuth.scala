@@ -103,8 +103,9 @@ trait MockAuth extends BaseSpec with MockCustomerCircumstanceDetailsService {
   )
 
   val agentServicesEnrolment: Enrolments = createEnrolment("HMRC-AS-AGENT", "AgentReferenceNumber", "XAIT1234567", Some("mtd-vat-auth"))
+  val unauthorisedEnrolment: Enrolments = createEnrolment("", "AgentReferenceNumber", "XAIT1234567", Some("mtd-vat-auth"))
   val mtdVatEnrolment: Enrolments = createEnrolment("HMRC-MTD-VAT", "VRN", "999999999")
-  val otherEnrolment: Enrolments = createEnrolment("OTHER-ENROLMENT", "BLAH", "12345")
+  val otherEnrolment: Enrolments = createEnrolment("", "BLAH", "12345")
   val mtdVatAuthorisedResponse: Future[~[Option[AffinityGroup], Enrolments]] = Future.successful(new ~(Some(Individual), mtdVatEnrolment))
   val agentAuthorisedResponse: Future[~[Option[AffinityGroup], Enrolments]] = Future.successful(new ~(Some(Agent), agentServicesEnrolment))
   val agentServicesEnrolmentWithoutDelegatedAuth: Enrolments = createEnrolment("HMRC-AS-AGENT", "AgentReferenceNumber", "XAIT1234567", None)

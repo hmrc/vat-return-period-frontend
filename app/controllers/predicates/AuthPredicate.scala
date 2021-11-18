@@ -20,7 +20,6 @@ import common.{EnrolmentKeys, SessionKeys}
 import common.EnrolmentKeys._
 import common.SessionKeys._
 import config.{AppConfig, ServiceErrorHandler}
-
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import play.api.i18n.I18nSupport
@@ -33,7 +32,6 @@ import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import utils.LoggerUtil
 import views.html.errors.{UnauthorisedAgent, UnauthorisedNonAgent, UserInsolventError}
-
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton

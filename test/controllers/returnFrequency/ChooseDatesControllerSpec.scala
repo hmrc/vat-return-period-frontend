@@ -36,7 +36,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
   val chooseDatesView: ChooseDates = injector.instanceOf[ChooseDates]
 
-  object TestChooseDatesController extends ChooseDatesController(
+  object TestChooseDatesController extends ChooseDatesController (
     mockAuthPredicate,
     mockInFlightReturnPeriodPredicate,
     mockInFlightAnnualAccountingPredicate,
@@ -200,12 +200,15 @@ class ChooseDatesControllerSpec extends BaseSpec
 
         "an error is returned from Customer Details" should {
 
-          lazy val result = TestChooseDatesController.show(fakeRequest)
+          lazy val request = FakeRequest("GET", "/").withFormUrlEncodedBody(("period-option", ""))
+            .withSession(insolventWithoutAccessKey -> "false")
+          lazy val result = TestChooseDatesController.show(request.withSession(
+            SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
+            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+          )
 
-          "return ISE (500)" in {
+          "return Internal Server Error (500)" in {
             mockAuthorise(mtdVatAuthorisedResponse)
-            mockCustomerDetailsError()
-
             status(result) shouldBe Status.INTERNAL_SERVER_ERROR
             messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }

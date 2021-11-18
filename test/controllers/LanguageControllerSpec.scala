@@ -17,55 +17,71 @@
 package controllers
 
 import base.BaseSpec
-import play.api.http.Status.SEE_OTHER
-import play.api.mvc.AnyContentAsEmpty
+import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
 class   LanguageControllerSpec extends BaseSpec {
 
-  lazy val controller = new LanguageController(mockAppConfig, mcc)
+  val controller = new LanguageController(mockAppConfig, mcc)
 
-  lazy val emptyFakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest()
-  lazy val fRequest: FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest("get", "aurl").withHeaders(REFERER -> "thisIsMyNextLocation")
+  "Calling the .switchToLanguage action" when {
 
-  "switchToLanguage" should {
-    "correctly change the language session property" when {
-      "English is passed in" in {
-        lazy val result = controller.switchToLanguage("english")(fRequest)
+    "providing the parameter 'english'" should {
 
-        status(result) shouldBe SEE_OTHER
-        cookies(result).get(messagesApi.langCookieName).get.value shouldBe "en"
-        redirectLocation(result) shouldBe Some("thisIsMyNextLocation")
+      val result = controller.switchToLanguage("english")(fakeRequest)
+
+      "return a Redirect status (303)" in {
+        status(result) shouldBe Status.SEE_OTHER
       }
-      "Welsh is passed in" in {
-        lazy val result = controller.switchToLanguage("cymraeg")(fRequest)
 
-        status(result) shouldBe SEE_OTHER
+      "use the English language" in {
+        cookies(result).get(messagesApi.langCookieName).get.value shouldBe "en"
+      }
+
+      "have the correct redirect location" in {
+        redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/change-vat-return-dates")
+      }
+    }
+
+    "providing the parameter 'cymraeg" should {
+
+      val result = controller.switchToLanguage("cymraeg")(fakeRequest)
+
+      "return a Redirect status (303)" in {
+        status(result) shouldBe Status.SEE_OTHER
+      }
+
+      "use the Welsh language" in {
         cookies(result).get(messagesApi.langCookieName).get.value shouldBe "cy"
-        redirectLocation(result) shouldBe Some("thisIsMyNextLocation")
+      }
+
+      "have the correct redirect location" in {
+        redirectLocation(result) shouldBe Some("/vat-through-software/account/returns/change-vat-return-dates")
       }
     }
-    "remain on the same language" when {
-      "an invalid language is requested" in {
-        lazy val result = controller.switchToLanguage("dovahtongue")(fRequest)
 
-        status(result) shouldBe SEE_OTHER
+    "providing an unsupported language parameter" should {
+
+      controller.switchToLanguage("english")(FakeRequest())
+      lazy val result = controller.switchToLanguage("fakeLanguage")(fakeRequest)
+
+      "return a Redirect status (303)" in {
+        status(result) shouldBe Status.SEE_OTHER
+      }
+
+      "keep the current language" in {
         cookies(result).get(messagesApi.langCookieName).get.value shouldBe "en"
-        redirectLocation(result) shouldBe Some("thisIsMyNextLocation")
       }
     }
-    "redirect to the fallback url" when {
-      "one is not provided" in {
-        lazy val result = controller.switchToLanguage("english")(emptyFakeRequest)
+  }
 
-        val expectedResponse = controllers.returnFrequency.routes.ChooseDatesController.show().url
+  "Calling .langToCall" should {
 
-        status(result) shouldBe SEE_OTHER
-        cookies(result).get(messagesApi.langCookieName).get.value shouldBe "en"
-        redirectLocation(result) shouldBe Some(expectedResponse)
-      }
+    val result = controller.langToCall("en")
+
+    "return the correct app config route with language supplied as parameter" in {
+      result shouldBe controllers.routes.LanguageController.switchToLanguage("en")
     }
   }
 }
