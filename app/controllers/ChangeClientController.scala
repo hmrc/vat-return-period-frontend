@@ -22,7 +22,6 @@ import controllers.predicates.AuthPredicate
 import javax.inject.Inject
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-
 import scala.concurrent.Future
 
 class ChangeClientController @Inject()(val authenticate: AuthPredicate,
@@ -33,7 +32,8 @@ class ChangeClientController @Inject()(val authenticate: AuthPredicate,
     implicit user =>
       Future.successful(
         Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl)).removingFromSession(SessionKeys.CLIENT_VRN,
-          SessionKeys.NEW_RETURN_FREQUENCY, SessionKeys.CURRENT_RETURN_FREQUENCY, SessionKeys.ANNUAL_ACCOUNTING_PENDING)
+          SessionKeys.OLD_RETURN_FREQUENCY, SessionKeys.OLD_CURRENT_RETURN_FREQUENCY, SessionKeys.ANNUAL_ACCOUNTING_PENDING,
+          SessionKeys.mtdVatvcReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
       )
   }
 }

@@ -17,10 +17,14 @@
 package common
 
 object SessionKeys {
-  val CURRENT_RETURN_FREQUENCY: String = "CURRENT_RETURN_FREQUENCY"
   val ANNUAL_ACCOUNTING_PENDING: String = "CURRENT_ANNUAL_ACCOUNTING"
-  val NEW_RETURN_FREQUENCY: String = "RETURN_FREQUENCY"
   val CLIENT_VRN: String = "CLIENT_VRN"
   val verifiedAgentEmail: String = "verifiedAgentEmail"
   val insolventWithoutAccessKey: String = "insolventWithoutAccess"
+
+  val OLD_CURRENT_RETURN_FREQUENCY: String = "CURRENT_RETURN_FREQUENCY"
+  val OLD_RETURN_FREQUENCY: String = "RETURN_FREQUENCY"
+
+  val mtdVatvcReturnFrequency: String = "mtdVatvcReturnFrequency"
+  val mtdVatvcCurrentReturnFrequency: String = "mtdVatvcCurrentReturnFrequency"
 }
