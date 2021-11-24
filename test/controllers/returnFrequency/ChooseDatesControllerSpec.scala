@@ -69,7 +69,8 @@ class ChooseDatesControllerSpec extends BaseSpec
       "user has an in-flight annual accounting change" should {
 
         lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
-          SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan)
+          SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+          SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan)
         )
 
         "return OK (200)" in {
@@ -104,7 +105,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the current return frequency to the session" in {
-            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
+            session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
+            session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe Some(returnPeriodMonthly)
           }
         }
 
@@ -113,7 +115,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           "a value for new return frequency is not in session" should {
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
@@ -135,8 +138,10 @@ class ChooseDatesControllerSpec extends BaseSpec
           "a value for annual accounting is in session" should {
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-              SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
+              SessionKeys.OLD_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "true")
             )
 
@@ -158,8 +163,10 @@ class ChooseDatesControllerSpec extends BaseSpec
           "a value for new return frequency is in session" should {
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
-              SessionKeys.NEW_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
+              SessionKeys.OLD_RETURN_FREQUENCY -> returnPeriodMar,
+              SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
@@ -203,7 +210,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val request = FakeRequest("GET", "/").withFormUrlEncodedBody(("period-option", ""))
             .withSession(insolventWithoutAccessKey -> "false")
           lazy val result = TestChooseDatesController.show(request.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
+            SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "invalid",
+            SessionKeys.mtdVatvcCurrentReturnFrequency -> "invalid",
             SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
@@ -266,7 +274,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the current return frequency to the session" in {
-            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
+            session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
+            session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe Some(returnPeriodMonthly)
           }
         }
 
@@ -275,7 +284,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", "January"))
             .withSession(insolventWithoutAccessKey -> "false")
           lazy val result = TestChooseDatesController.submit(request.withSession(
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+            SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+            SessionKeys.mtdVatvcCurrentReturnFrequency-> returnPeriodJan,
             SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
           )
 
@@ -289,7 +299,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the new return frequency to the session" in {
-            session(result).get(SessionKeys.NEW_RETURN_FREQUENCY) shouldBe Some(returnPeriodJan)
+            session(result).get(SessionKeys.OLD_RETURN_FREQUENCY) shouldBe Some(returnPeriodJan)
+            session(result).get(SessionKeys.mtdVatvcReturnFrequency) shouldBe Some(returnPeriodJan)
           }
         }
 
@@ -300,7 +311,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
               .withSession(insolventWithoutAccessKey -> "false")
             lazy val result = TestChooseDatesController.submit(request.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> "invalid",
+              SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "invalid",
+              SessionKeys.mtdVatvcCurrentReturnFrequency -> "invalid",
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 
@@ -316,7 +328,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val request = FakeRequest("POST", "/").withFormUrlEncodedBody(("period-option", ""))
               .withSession(insolventWithoutAccessKey -> "false")
             lazy val result = TestChooseDatesController.submit(request.withSession(
-              SessionKeys.CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
+              SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
               SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
             )
 

@@ -31,8 +31,10 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
   val path = "/confirm-vat-return-dates"
   val sessionWithReturnFrequency: Map[String, String] = Map(
     SessionKeys.CLIENT_VRN -> "999999999",
-    SessionKeys.NEW_RETURN_FREQUENCY -> "January",
-    SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly",
+    SessionKeys.OLD_RETURN_FREQUENCY -> "January",
+    SessionKeys.mtdVatvcReturnFrequency -> "January",
+    SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "Monthly",
+    SessionKeys.mtdVatvcCurrentReturnFrequency -> "Monthly",
     SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false",
     SessionKeys.insolventWithoutAccessKey -> "false"
   )

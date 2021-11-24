@@ -44,8 +44,10 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
 
           lazy val request = FakeRequest().withSession(
             SessionKeys.CLIENT_VRN -> vrn,
-            SessionKeys.NEW_RETURN_FREQUENCY -> "Jan",
-            SessionKeys.CURRENT_RETURN_FREQUENCY -> "Monthly"
+            SessionKeys.OLD_RETURN_FREQUENCY -> "Jan",
+            SessionKeys.mtdVatvcReturnFrequency -> "Jan",
+            SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "Monthly",
+            SessionKeys.mtdVatvcCurrentReturnFrequency -> "Monthly"
           )
 
           lazy val result = TestConfirmClientVrnControllerSpec.changeClient(request)
@@ -65,11 +67,13 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
           }
 
           "have removed the ReturnFrequency from session" in {
-            session(result).get(SessionKeys.NEW_RETURN_FREQUENCY) shouldBe None
+            session(result).get(SessionKeys.OLD_RETURN_FREQUENCY) shouldBe None
+            session(result).get(SessionKeys.mtdVatvcReturnFrequency) shouldBe None
           }
 
           "have removed the CurrentReturnFrequency from session" in {
-            session(result).get(SessionKeys.CURRENT_RETURN_FREQUENCY) shouldBe None
+            session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe None
+            session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe None
           }
         }
       }

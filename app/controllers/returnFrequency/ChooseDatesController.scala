@@ -42,8 +42,8 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
 
-    val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
-    val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.NEW_RETURN_FREQUENCY) match {
+    val currentReturnFrequency: String = user.session.get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY).get
+    val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.OLD_RETURN_FREQUENCY) match {
       case Some(value) => datesForm.fill(ReturnDatesModel(value))
       case _ => datesForm
     }
@@ -55,14 +55,15 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
 
   val submit: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
 
-    val currentReturnFrequency: String = user.session.get(SessionKeys.CURRENT_RETURN_FREQUENCY).get
+    val currentReturnFrequency: String = user.session.get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY).get
     datesForm.bindFromRequest().fold(
       errors =>
         ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError)(returnFrequency =>
           BadRequest(chooseDatesView(errors, returnFrequency))
         ),
       success =>
-        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.NEW_RETURN_FREQUENCY -> success.current)
+        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.OLD_RETURN_FREQUENCY -> success.current,
+          SessionKeys.mtdVatvcReturnFrequency -> success.current)
     )
   }
 }
