@@ -84,7 +84,7 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
 
         "add the current return frequency to the session" in {
-          session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("true")
+          session(result).get(SessionKeys.mtdVatvcCurrentAnnualAccounting) shouldBe Some("true")
         }
       }
 
@@ -117,7 +117,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
-              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+              SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
             "return OK (200)" in {
@@ -142,7 +142,7 @@ class ChooseDatesControllerSpec extends BaseSpec
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
               SessionKeys.OLD_RETURN_FREQUENCY -> returnPeriodMar,
               SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
-              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "true")
+              SessionKeys.mtdVatvcCurrentAnnualAccounting -> "true")
             )
 
             "return OK (200)" in {
@@ -167,7 +167,7 @@ class ChooseDatesControllerSpec extends BaseSpec
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
               SessionKeys.OLD_RETURN_FREQUENCY -> returnPeriodMar,
               SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
-              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+              SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
             "return OK (200)" in {
@@ -212,7 +212,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.show(request.withSession(
             SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "invalid",
             SessionKeys.mtdVatvcCurrentReturnFrequency -> "invalid",
-            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
           )
 
           "return Internal Server Error (500)" in {
@@ -286,7 +286,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           lazy val result = TestChooseDatesController.submit(request.withSession(
             SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
             SessionKeys.mtdVatvcCurrentReturnFrequency-> returnPeriodJan,
-            SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+            SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
           )
 
           "return 303" in {
@@ -313,7 +313,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "invalid",
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "invalid",
-              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+              SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
             "return Internal Server Error (500)" in {
@@ -330,7 +330,7 @@ class ChooseDatesControllerSpec extends BaseSpec
             lazy val result = TestChooseDatesController.submit(request.withSession(
               SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> returnPeriodJan,
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
-              SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false")
+              SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
             "return Bad Request (400)" in {

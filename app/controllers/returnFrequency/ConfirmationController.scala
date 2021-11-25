@@ -37,7 +37,7 @@ class ConfirmationController @Inject()(authenticate: AuthPredicate,
                                        ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
 
   val show: Action[AnyContent] = authenticate.async { implicit user =>
-    val agentEmailFromSession = user.session.get(SessionKeys.verifiedAgentEmail)
+    val agentEmailFromSession = user.session.get(SessionKeys.mtdVatvcVerifiedAgentEmail)
     customerCircumstanceDetailsService.getCustomerCircumstanceDetails(user.vrn).map {
       case Right(details) =>
         Ok(confirmationView(

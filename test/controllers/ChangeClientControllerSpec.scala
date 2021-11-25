@@ -43,7 +43,7 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
         "a Clients VRN is held in Session" should {
 
           lazy val request = FakeRequest().withSession(
-            SessionKeys.CLIENT_VRN -> vrn,
+            SessionKeys.mtdVatvcClientVrn -> vrn,
             SessionKeys.OLD_RETURN_FREQUENCY -> "Jan",
             SessionKeys.mtdVatvcReturnFrequency -> "Jan",
             SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "Monthly",
@@ -63,7 +63,7 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
           }
 
           "have removed the Clients VRN from session" in {
-            session(result).get(SessionKeys.CLIENT_VRN) shouldBe None
+            session(result).get(SessionKeys.mtdVatvcClientVrn) shouldBe None
           }
 
           "have removed the ReturnFrequency from session" in {

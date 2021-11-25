@@ -115,7 +115,7 @@ class AuthPredicate @Inject()(authService: EnrolmentsAuthService,
         .withIdentifier(vatIdentifierId, vrn)
         .withDelegatedAuthRule(mtdVatDelegatedAuthRule)
 
-    request.session.get(CLIENT_VRN) match {
+    request.session.get(mtdVatvcClientVrn) match {
       case Some(vrn) =>
         authService
           .authorised(agentDelegatedAuthorityRule(vrn))

@@ -17,9 +17,9 @@
 package common
 
 object SessionKeys {
-  val ANNUAL_ACCOUNTING_PENDING: String = "CURRENT_ANNUAL_ACCOUNTING"
-  val CLIENT_VRN: String = "CLIENT_VRN"
-  val verifiedAgentEmail: String = "verifiedAgentEmail"
+  val mtdVatvcCurrentAnnualAccounting: String = "mtdVatvcCurrentAnnualAccounting"
+  val mtdVatvcClientVrn: String = "mtdVatvcClientVrn"
+  val mtdVatvcVerifiedAgentEmail: String = "mtdVatvcVerifiedAgentEmail"
   val insolventWithoutAccessKey: String = "insolventWithoutAccess"
 
   val OLD_CURRENT_RETURN_FREQUENCY: String = "CURRENT_RETURN_FREQUENCY"

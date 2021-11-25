@@ -33,7 +33,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
     "user has CURRENT_ANNUAL_ACCOUNTING in session of false" should {
 
       lazy val fakeRequest = FakeRequest().withSession(
-        SessionKeys.ANNUAL_ACCOUNTING_PENDING -> "false"
+        SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false"
       )
 
       lazy val result = {
@@ -104,7 +104,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("false")
+              session(result).get(SessionKeys.mtdVatvcCurrentAnnualAccounting) shouldBe Some("false")
             }
           }
         }
@@ -125,7 +125,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
           }
 
           "add the current annual accounting value to the session" in {
-            session(result).get(SessionKeys.ANNUAL_ACCOUNTING_PENDING) shouldBe Some("false")
+            session(result).get(SessionKeys.mtdVatvcCurrentAnnualAccounting) shouldBe Some("false")
           }
         }
       }
