@@ -49,7 +49,7 @@ trait BaseSpec extends AnyWordSpecLike with Matchers with GuiceOneAppPerSuite wi
 
   implicit lazy val fakeRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("", "").withSession(insolventWithoutAccessKey -> "false")
   lazy val fakeRequestWithClientsVRN: FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest().withSession(SessionKeys.CLIENT_VRN -> vrn, insolventWithoutAccessKey -> "false")
+    FakeRequest().withSession(SessionKeys.mtdVatvcClientVrn -> vrn, insolventWithoutAccessKey -> "false")
   lazy val insolventRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest().withSession(SessionKeys.insolventWithoutAccessKey -> "true")
 

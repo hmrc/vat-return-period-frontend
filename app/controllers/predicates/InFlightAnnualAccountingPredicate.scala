@@ -16,7 +16,7 @@
 
 package controllers.predicates
 
-import common.SessionKeys.ANNUAL_ACCOUNTING_PENDING
+import common.SessionKeys.mtdVatvcCurrentAnnualAccounting
 import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.Inject
 import models.auth.User
@@ -45,7 +45,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     implicit val user: User[A] = request
 
-    user.session.get(ANNUAL_ACCOUNTING_PENDING) match {
+    user.session.get(mtdVatvcCurrentAnnualAccounting) match {
       case Some("true") => Future.successful(Left(Ok(preventLeaveAnnualAccountingView())))
       case Some("false") => Future.successful(Right(user))
       case _ => getCustomerCircumstanceDetails
@@ -59,10 +59,10 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
       case Right(circumstanceDetails) =>
         if (getAnnualAccounting(circumstanceDetails.changeIndicators)) {
           Left(Ok(preventLeaveAnnualAccountingView())
-            .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "true"))
+            .addingToSession(mtdVatvcCurrentAnnualAccounting -> "true"))
         } else {
           Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-            .addingToSession(ANNUAL_ACCOUNTING_PENDING -> "false"))
+            .addingToSession(mtdVatvcCurrentAnnualAccounting -> "false"))
         }
       case Left(error) =>
         logger.warn(s"[InFlightAnnualAccountingPredicate][refine] - The call to the GetCustomerInfo API failed. Error: ${error.message}")

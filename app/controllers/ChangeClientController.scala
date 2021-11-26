@@ -31,8 +31,8 @@ class ChangeClientController @Inject()(val authenticate: AuthPredicate,
   def changeClient: Action[AnyContent] = authenticate.async {
     implicit user =>
       Future.successful(
-        Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl)).removingFromSession(SessionKeys.CLIENT_VRN,
-          SessionKeys.OLD_RETURN_FREQUENCY, SessionKeys.OLD_CURRENT_RETURN_FREQUENCY, SessionKeys.ANNUAL_ACCOUNTING_PENDING,
+        Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl)).removingFromSession(SessionKeys.mtdVatvcClientVrn,
+          SessionKeys.OLD_RETURN_FREQUENCY, SessionKeys.OLD_CURRENT_RETURN_FREQUENCY, SessionKeys.mtdVatvcCurrentAnnualAccounting,
           SessionKeys.mtdVatvcReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
       )
   }

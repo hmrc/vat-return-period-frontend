@@ -24,6 +24,6 @@ trait BasePageISpec extends BaseISpec with CustomMatchers {
 
   val titleSuffixOther = " - VAT - GOV.UK"
 
-  def formatSessionVrn: Option[String] => Map[String, String] = _.fold(Map.empty[String, String])(x => Map(SessionKeys.CLIENT_VRN -> x))
+  def formatSessionVrn: Option[String] => Map[String, String] = _.fold(Map.empty[String, String])(x => Map(SessionKeys.mtdVatvcClientVrn -> x))
 
 }
