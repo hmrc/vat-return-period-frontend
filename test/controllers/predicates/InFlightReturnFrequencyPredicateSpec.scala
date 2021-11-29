@@ -31,10 +31,9 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
   "The InFlightReturnFrequencyPredicate" when {
 
-    "user has OLD_CURRENT_RETURN_FREQUENCY in session" should {
+    "user has mtdVatvcCurrentReturnFrequency in session" should {
 
       lazy val fakeRequest = FakeRequest().withSession(
-        SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "Monthly",
         SessionKeys.mtdVatvcCurrentReturnFrequency -> "Monthly"
       )
 
@@ -47,7 +46,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
       }
     }
 
-    "user has no OLD_CURRENT_RETURN_FREQUENCY in session" when {
+    "user has no mtdVatvcCurrentReturnFrequency in session" when {
 
       "getCustomerCircumstanceDetails call fails" should {
 
@@ -114,7 +113,6 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
               session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe Some(returnPeriodMonthly)
             }
           }
@@ -138,7 +136,6 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
             }
 
             "add the current return frequency to the session" in {
-              session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe Some(returnPeriodMonthly)
               session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe Some(returnPeriodMonthly)
             }
           }

@@ -23,7 +23,6 @@ import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.BearerTokenExpired
-
 import scala.concurrent.Future
 
 class ChangeClientControllerSpec extends BaseSpec with MockAuth {
@@ -44,9 +43,7 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
 
           lazy val request = FakeRequest().withSession(
             SessionKeys.mtdVatvcClientVrn -> vrn,
-            SessionKeys.OLD_RETURN_FREQUENCY -> "Jan",
             SessionKeys.mtdVatvcReturnFrequency -> "Jan",
-            SessionKeys.OLD_CURRENT_RETURN_FREQUENCY -> "Monthly",
             SessionKeys.mtdVatvcCurrentReturnFrequency -> "Monthly"
           )
 
@@ -67,12 +64,10 @@ class ChangeClientControllerSpec extends BaseSpec with MockAuth {
           }
 
           "have removed the ReturnFrequency from session" in {
-            session(result).get(SessionKeys.OLD_RETURN_FREQUENCY) shouldBe None
             session(result).get(SessionKeys.mtdVatvcReturnFrequency) shouldBe None
           }
 
           "have removed the CurrentReturnFrequency from session" in {
-            session(result).get(SessionKeys.OLD_CURRENT_RETURN_FREQUENCY) shouldBe None
             session(result).get(SessionKeys.mtdVatvcCurrentReturnFrequency) shouldBe None
           }
         }

@@ -16,7 +16,7 @@
 
 package controllers.predicates
 
-import common.SessionKeys.{OLD_CURRENT_RETURN_FREQUENCY, mtdVatvcCurrentReturnFrequency, mtdVatvcReturnFrequency}
+import common.SessionKeys.mtdVatvcCurrentReturnFrequency
 import config.{AppConfig, ServiceErrorHandler}
 import javax.inject.Inject
 import models.auth.User
@@ -45,7 +45,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
     implicit val hc: HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
     implicit val user: User[A] = request
 
-    user.session.get(OLD_CURRENT_RETURN_FREQUENCY) match {
+    user.session.get(mtdVatvcCurrentReturnFrequency) match {
       case Some(_) => Future.successful(Right(user))
       case None => getCustomerCircumstanceDetails
     }
@@ -60,7 +60,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
         circumstanceDetails.returnPeriod match {
           case Some(returnPeriod) =>
             Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
-              .addingToSession(OLD_CURRENT_RETURN_FREQUENCY -> returnPeriod.id, mtdVatvcCurrentReturnFrequency -> returnPeriod.id))
+              .addingToSession(mtdVatvcCurrentReturnFrequency -> returnPeriod.id))
           case None =>
             logger.warn("[InFlightReturnFrequencyPredicate][refine] - No return frequency returned from GetCustomerInfo")
             Left(Redirect(appConfig.manageVatUrl))
