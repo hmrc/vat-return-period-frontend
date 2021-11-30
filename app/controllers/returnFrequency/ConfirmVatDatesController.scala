@@ -51,7 +51,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
   val show: Action[AnyContent] = (authenticate andThen
                                   pendingReturnFrequency andThen
                                   pendingAnnualAccountChange) { implicit user =>
-    (user.session.get(SessionKeys.mtdVatvcReturnFrequency), user.session.get(SessionKeys.mtdVatvcCurrentReturnFrequency)) match {
+    (user.session.get(SessionKeys.mtdVatvcNewReturnFrequency), user.session.get(SessionKeys.mtdVatvcCurrentReturnFrequency)) match {
       case (Some(newFrequency), Some(currentFrequency)) =>
         (ReturnPeriod(newFrequency), ReturnPeriod(currentFrequency)) match {
           case (Some(nf), Some(cf)) =>
@@ -59,7 +59,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
           case _ => serviceErrorHandler.showInternalServerError
         }
       case _ =>
-        logger.info("[ConfirmVatDatesController][show] No mtdVatvcReturnFrequency found in session. " +
+        logger.info("[ConfirmVatDatesController][show] No mtdVatvcNewReturnFrequency found in session. " +
           "Redirecting to Choose Dates page")
         Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
     }
@@ -67,11 +67,11 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
 
   val submit: Action[AnyContent] = authenticate.async { implicit user =>
 
-    (user.session.get(SessionKeys.mtdVatvcCurrentReturnFrequency), user.session.get(SessionKeys.mtdVatvcReturnFrequency)) match {
+    (user.session.get(SessionKeys.mtdVatvcCurrentReturnFrequency), user.session.get(SessionKeys.mtdVatvcNewReturnFrequency)) match {
       case (Some(currentFrequency), Some(newFrequency)) =>
         updateReturnFrequency(ReturnPeriod(currentFrequency), ReturnPeriod(newFrequency))
       case (_, _) =>
-        logger.info("[ConfirmVatDatesController][submit] No mtdVatvcReturnFrequency and/or " +
+        logger.info("[ConfirmVatDatesController][submit] No mtdVatvcNewReturnFrequency and/or " +
           "mtdVatvcCurrentReturnFrequency found in session. Redirecting to Choose Dates page")
         Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url))
     }
@@ -92,7 +92,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
                 )
                 Redirect(
                   controllers.returnFrequency.routes.ConfirmationController.show()
-                ).removingFromSession(SessionKeys.mtdVatvcReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
+                ).removingFromSession(SessionKeys.mtdVatvcNewReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
               case Left(ServerSideError("409", _)) =>
                 logger.warn("[ConfirmVatDatesController][updateReturnFrequency] Stagger update already in progress. " +
                   "Redirecting user to manage VAT overview")
@@ -105,7 +105,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
         }
       case _ =>
         logger.warn("[ConfirmVatDatesController][updateReturnFrequency] " +
-          "mtdVatvcReturnFrequency and/or mtdVatvcCurrentReturnFrequency session keys are not valid")
+          "mtdVatvcNewReturnFrequency and/or mtdVatvcCurrentReturnFrequency session keys are not valid")
         Future.successful(serviceErrorHandler.showInternalServerError)
     }
   }

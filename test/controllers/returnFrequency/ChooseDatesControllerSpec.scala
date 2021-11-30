@@ -136,7 +136,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
-              SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
+              SessionKeys.mtdVatvcNewReturnFrequency -> returnPeriodMar,
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "true")
             )
 
@@ -159,7 +159,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             lazy val result = TestChooseDatesController.show(fakeRequest.withSession(
               SessionKeys.mtdVatvcCurrentReturnFrequency -> returnPeriodJan,
-              SessionKeys.mtdVatvcReturnFrequency -> returnPeriodMar,
+              SessionKeys.mtdVatvcNewReturnFrequency -> returnPeriodMar,
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
@@ -289,7 +289,7 @@ class ChooseDatesControllerSpec extends BaseSpec
           }
 
           "add the new return frequency to the session" in {
-            session(result).get(SessionKeys.mtdVatvcReturnFrequency) shouldBe Some(returnPeriodJan)
+            session(result).get(SessionKeys.mtdVatvcNewReturnFrequency) shouldBe Some(returnPeriodJan)
           }
         }
 

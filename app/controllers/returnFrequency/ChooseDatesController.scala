@@ -43,7 +43,7 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
 
     val currentReturnFrequency: String = user.session.get(SessionKeys.mtdVatvcCurrentReturnFrequency).get
-    val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.mtdVatvcReturnFrequency) match {
+    val form: Form[ReturnDatesModel] = user.session.get(SessionKeys.mtdVatvcNewReturnFrequency) match {
       case Some(value) => datesForm.fill(ReturnDatesModel(value))
       case _ => datesForm
     }
@@ -62,7 +62,7 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
           BadRequest(chooseDatesView(errors, returnFrequency))
         ),
       success =>
-        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.mtdVatvcReturnFrequency -> success.current)
+        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.mtdVatvcNewReturnFrequency -> success.current)
     )
   }
 }

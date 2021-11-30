@@ -32,7 +32,7 @@ class ChangeClientController @Inject()(val authenticate: AuthPredicate,
     implicit user =>
       Future.successful(
         Redirect(appConfig.agentClientLookupStartUrl(appConfig.manageVatUrl)).removingFromSession(SessionKeys.mtdVatvcClientVrn,
-          SessionKeys.mtdVatvcCurrentAnnualAccounting, SessionKeys.mtdVatvcReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
+          SessionKeys.mtdVatvcCurrentAnnualAccounting, SessionKeys.mtdVatvcNewReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
       )
   }
 }

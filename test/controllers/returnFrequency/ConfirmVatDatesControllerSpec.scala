@@ -60,7 +60,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
 
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "March",
-              SessionKeys.mtdVatvcReturnFrequency -> "January",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "January",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false"
               )
             )
@@ -85,7 +85,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "value is invalid" should {
             lazy val result = TestConfirmVatDatesController.show(fakeRequest.withSession(
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "March",
-              SessionKeys.mtdVatvcReturnFrequency -> "Not valid",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "Not valid",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
 
@@ -181,7 +181,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "updateReturnFrequency returns an unexpected error" should {
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-              SessionKeys.mtdVatvcReturnFrequency -> "Monthly",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "Monthly",
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "January",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
@@ -199,7 +199,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "updateReturnFrequency returns a 409 error (stagger change already in progress)" should {
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-              SessionKeys.mtdVatvcReturnFrequency -> "Monthly",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "Monthly",
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "January",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
@@ -219,7 +219,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "updateReturnFrequency returns success" should {
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-              SessionKeys.mtdVatvcReturnFrequency -> "January",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "January",
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "Monthly",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
@@ -241,7 +241,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           "getCustomerCircumstanceDetails returns an unexpected error" should {
 
             lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-              SessionKeys.mtdVatvcReturnFrequency -> "Monthly",
+              SessionKeys.mtdVatvcNewReturnFrequency -> "Monthly",
               SessionKeys.mtdVatvcCurrentReturnFrequency -> "January",
               SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
             )
@@ -259,7 +259,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "new return frequency is not in session" should {
 
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
-            SessionKeys.mtdVatvcReturnFrequency -> "January",
+            SessionKeys.mtdVatvcNewReturnFrequency -> "January",
             SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
           )
 
@@ -276,7 +276,7 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
         "session value is invalid" should {
           lazy val result = TestConfirmVatDatesController.submit(fakeRequest.withSession(
             SessionKeys.mtdVatvcCurrentReturnFrequency -> "March",
-            SessionKeys.mtdVatvcReturnFrequency -> "Not valid",
+            SessionKeys.mtdVatvcNewReturnFrequency -> "Not valid",
             SessionKeys.mtdVatvcCurrentAnnualAccounting -> "false")
           )
 

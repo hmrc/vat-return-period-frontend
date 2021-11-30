@@ -21,6 +21,6 @@ object SessionKeys {
   val mtdVatvcClientVrn: String = "mtdVatvcClientVrn"
   val mtdVatvcVerifiedAgentEmail: String = "mtdVatvcVerifiedAgentEmail"
   val insolventWithoutAccessKey: String = "insolventWithoutAccess"
-  val mtdVatvcReturnFrequency: String = "mtdVatvcReturnFrequency"
+  val mtdVatvcNewReturnFrequency: String = "mtdVatvcNewReturnFrequency"
   val mtdVatvcCurrentReturnFrequency: String = "mtdVatvcCurrentReturnFrequency"
 }
