@@ -27,8 +27,6 @@ object ConfigKeys {
 
   val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
 
-  val accessibilityReportUrl: String = "vat-summary-frontend.accessibilityUrl"
-
   val signInBaseUrl: String = "signIn.url"
   val signInContinueBaseUrl: String = "signIn.continueBaseUrl"
   val signInContinueUrl: String = "signIn.continueUrl"

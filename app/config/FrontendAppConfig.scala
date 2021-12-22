@@ -30,7 +30,6 @@ trait AppConfig {
   val betaFeedbackUrl: String
   val betaFeedbackUnauthenticatedUrl: String
   val features: Features
-  val accessibilityReportUrl: String
   val signInUrl: String
   val timeoutPeriod: Int
   val timeoutCountdown: Int
@@ -135,10 +134,6 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   //VAT Summary
   private lazy val vatSummaryBase: String = servicesConfig.getString(ConfigKeys.vatSummaryBase)
   override lazy val vatDetailsUrl: String = vatSummaryBase + servicesConfig.getString(ConfigKeys.vatDetailsUrl)
-
-  //Accessibility statement
-  override lazy val accessibilityReportUrl: String = vatSummaryBase +
-    servicesConfig.getString(ConfigKeys.accessibilityReportUrl)
 
   //Features
   override val features: Features = new Features
