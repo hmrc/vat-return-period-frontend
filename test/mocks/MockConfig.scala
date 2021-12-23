@@ -28,7 +28,6 @@ class MockConfig(implicit val runModeConfiguration: Configuration) extends AppCo
   override val reportAProblemNonJSUrl: String = ""
   override val betaFeedbackUrl: String = "feedback-url"
   override val betaFeedbackUnauthenticatedUrl: String = ""
-  override val accessibilityReportUrl : String = "/vat-through-software/accessibility-statement"
   override val contactFormServiceIdentifier = ""
   override val features: Features = new Features()
   override val signInUrl: String = "sign-in-url"
