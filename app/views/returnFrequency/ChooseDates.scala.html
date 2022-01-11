@@ -75,7 +75,7 @@
     ))
   }
 
-  @formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit()) {
+  @formWithCSRF(action = controllers.returnFrequency.routes.ChooseDatesController.submit) {
     @govukRadios(Radios(
       idPrefix = Some(form("period-option").id),
       name = "period-option",

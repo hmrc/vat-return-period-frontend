@@ -61,7 +61,7 @@ class InFlightAnnualAccountingPredicate @Inject()(customerCircumstancesService: 
           Left(Ok(preventLeaveAnnualAccountingView())
             .addingToSession(mtdVatvcCurrentAnnualAccounting -> "true"))
         } else {
-          Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show.url)
             .addingToSession(mtdVatvcCurrentAnnualAccounting -> "false"))
         }
       case Left(error) =>

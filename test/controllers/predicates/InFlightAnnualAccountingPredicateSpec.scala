@@ -99,8 +99,8 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
               status(result) shouldBe SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
             }
 
             "add the current return frequency to the session" in {
@@ -120,8 +120,8 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
             status(result) shouldBe SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
           }
 
           "add the current annual accounting value to the session" in {

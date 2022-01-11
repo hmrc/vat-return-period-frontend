@@ -61,7 +61,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
       case _ =>
         logger.info("[ConfirmVatDatesController][show] No mtdVatvcNewReturnFrequency found in session. " +
           "Redirecting to Choose Dates page")
-        Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+        Redirect(controllers.returnFrequency.routes.ChooseDatesController.show.url)
     }
   }
 
@@ -73,7 +73,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
       case (_, _) =>
         logger.info("[ConfirmVatDatesController][submit] No mtdVatvcNewReturnFrequency and/or " +
           "mtdVatvcCurrentReturnFrequency found in session. Redirecting to Choose Dates page")
-        Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url))
+        Future.successful(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show.url))
     }
   }
 
@@ -88,10 +88,10 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
               case Right(_) =>
                 auditService.extendedAudit(
                   UpdateReturnFrequencyAuditModel(user, currentPeriod, newPeriod, details.partyType),
-                  Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url)
+                  Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit.url)
                 )
                 Redirect(
-                  controllers.returnFrequency.routes.ConfirmationController.show()
+                  controllers.returnFrequency.routes.ConfirmationController.show
                 ).removingFromSession(SessionKeys.mtdVatvcNewReturnFrequency, SessionKeys.mtdVatvcCurrentReturnFrequency)
               case Left(ServerSideError("409", _)) =>
                 logger.warn("[ConfirmVatDatesController][updateReturnFrequency] Stagger update already in progress. " +

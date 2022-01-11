@@ -108,8 +108,8 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
               status(result) shouldBe SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
             }
 
             "add the current return frequency to the session" in {
@@ -131,8 +131,8 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
               status(result) shouldBe SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+              redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
             }
 
             "add the current return frequency to the session" in {
