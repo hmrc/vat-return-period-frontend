@@ -62,7 +62,7 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
           BadRequest(chooseDatesView(errors, returnFrequency))
         ),
       success =>
-        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show()).addingToSession(SessionKeys.mtdVatvcNewReturnFrequency -> success.current)
+        Redirect(controllers.returnFrequency.routes.ConfirmVatDatesController.show).addingToSession(SessionKeys.mtdVatvcNewReturnFrequency -> success.current)
     )
   }
 }

@@ -86,7 +86,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         }
 
         "has a URL back to the change dates page" in {
-          element(".govuk-summary-list__actions a").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show().url
+          element(".govuk-summary-list__actions a").attr("href") shouldBe controllers.returnFrequency.routes.ChooseDatesController.show.url
         }
       }
 
@@ -97,7 +97,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         }
 
         "posts data to the correct endpoint" in {
-          element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit().url
+          element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit.url
         }
       }
     }

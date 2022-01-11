@@ -59,7 +59,7 @@ class InFlightReturnFrequencyPredicate @Inject()(customerCircumstancesService: C
       case Right(circumstanceDetails) =>
         circumstanceDetails.returnPeriod match {
           case Some(returnPeriod) =>
-            Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+            Left(Redirect(controllers.returnFrequency.routes.ChooseDatesController.show.url)
               .addingToSession(mtdVatvcCurrentReturnFrequency -> returnPeriod.id))
           case None =>
             logger.warn("[InFlightReturnFrequencyPredicate][refine] - No return frequency returned from GetCustomerInfo")

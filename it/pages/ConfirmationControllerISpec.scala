@@ -99,7 +99,7 @@ class ConfirmationControllerISpec extends BasePageISpec{
 
           res should have(
             httpStatus(SEE_OTHER),
-            redirectURI(appConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show().url))
+            redirectURI(appConfig.agentClientLookupStartUrl(controllers.returnFrequency.routes.ChooseDatesController.show.url))
           )
         }
       }

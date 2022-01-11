@@ -42,7 +42,7 @@
         </dd>
 
         <dd class="govuk-summary-list__actions">
-            <a class= "govuk-link" href="@controllers.returnFrequency.routes.ChooseDatesController.show().url"
+            <a class= "govuk-link" href="@controllers.returnFrequency.routes.ChooseDatesController.show.url"
                aria-label='@messages("confirm_return_frequency.changeLink")'>
                 @messages("checkYourAnswers.change")
             </a>
@@ -58,7 +58,7 @@
         <li>@messages("confirm_return_frequency.annually.bullet2")</li>
     </ul>
 }
-    @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit()) {
+    @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit) {
         @govukButton(Button(
     content = Text(messages("common.continue"))
     ))

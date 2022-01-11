@@ -99,8 +99,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             status(result) shouldBe Status.SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
           }
 
           "add the current return frequency to the session" in {
@@ -261,8 +261,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             status(result) shouldBe Status.SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
           }
 
           "add the current return frequency to the session" in {
@@ -284,8 +284,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             status(result) shouldBe Status.SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ConfirmVatDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ConfirmVatDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ConfirmVatDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ConfirmVatDatesController.show.url)
           }
 
           "add the new return frequency to the session" in {

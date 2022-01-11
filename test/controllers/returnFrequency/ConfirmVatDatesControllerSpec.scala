@@ -114,8 +114,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             status(result) shouldBe Status.SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
           }
         }
 
@@ -152,8 +152,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           status(result) shouldBe Status.SEE_OTHER
         }
 
-        s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-          redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+        s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+          redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
         }
       }
     }
@@ -232,9 +232,9 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               status(result) shouldBe Status.SEE_OTHER
             }
 
-            s"redirect to ${controllers.returnFrequency.routes.ConfirmationController.show().url}" in {
+            s"redirect to ${controllers.returnFrequency.routes.ConfirmationController.show.url}" in {
               redirectLocation(result) shouldBe
-                Some(controllers.returnFrequency.routes.ConfirmationController.show().url)
+                Some(controllers.returnFrequency.routes.ConfirmationController.show.url)
             }
           }
 
@@ -268,8 +268,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
             status(result) shouldBe Status.SEE_OTHER
           }
 
-          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+          s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+            redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
           }
         }
 
@@ -326,8 +326,8 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
           status(result) shouldBe Status.SEE_OTHER
         }
 
-        s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show().url}" in {
-          redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show().url)
+        s"redirect to ${controllers.returnFrequency.routes.ChooseDatesController.show.url}" in {
+          redirectLocation(result) shouldBe Some(controllers.returnFrequency.routes.ChooseDatesController.show.url)
         }
       }
     }

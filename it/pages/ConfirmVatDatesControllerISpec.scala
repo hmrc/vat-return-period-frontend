@@ -96,7 +96,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
           res should have(
             httpStatus(SEE_OTHER),
-            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show().url)
+            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show.url)
           )
         }
       }
@@ -142,7 +142,7 @@ class ConfirmVatDatesControllerISpec extends BasePageISpec{
 
           res should have(
             httpStatus(SEE_OTHER),
-            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show().url)
+            redirectURI(controllers.returnFrequency.routes.ConfirmationController.show.url)
           )
         }
       }
