@@ -53,20 +53,20 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % "5.18.0",
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % "5.19.0",
   "uk.gov.hmrc"    %% "play-language"                 % "5.1.0-play-28",
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "1.26.0-play-28"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "2.0.0-play-28"
 )
 
 val test = Seq(
-  "org.scalatest"           %% "scalatest"                    % "3.1.4",
+  "org.scalatest"           %% "scalatest"                    % "3.2.10",
   "org.scalatestplus.play"  %% "scalatestplus-play"           % "5.1.0",
   "org.pegdown"             % "pegdown"                       % "1.6.0",
   "org.jsoup"               % "jsoup"                         % "1.13.1",
   "com.typesafe.play"       %% "play-test"                    % PlayVersion.current,
   "org.scalamock"           %% "scalamock-scalatest-support"  % "3.6.0",
   "com.github.tomakehurst"  % "wiremock-jre8"                 % "2.26.3",
-  "com.vladsch.flexmark"    % "flexmark-all"                  % "0.36.8"
+  "com.vladsch.flexmark"    % "flexmark-all"                  % "0.62.2"
 ).map(_ % s"$Test, $IntegrationTest")
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
@@ -94,10 +94,9 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Keys.fork in Test := true,
     javaOptions in Test += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.12.14",
+    scalaVersion := "2.12.15",
     libraryDependencies ++= appDependencies,
-    retrieveManaged := true,
-    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false)
+    retrieveManaged := true
   )
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
