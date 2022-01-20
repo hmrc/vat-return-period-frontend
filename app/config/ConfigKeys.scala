@@ -22,6 +22,7 @@ object ConfigKeys {
   val googleAnalyticsHost: String = "google-analytics.host"
 
   val contactFrontendService: String = "contact-frontend.host"
+  val contactFrontendIdentifier: String = "contact-frontend.serviceId"
   val appName: String = "appName"
   val platformHost: String = "platform.host"
 

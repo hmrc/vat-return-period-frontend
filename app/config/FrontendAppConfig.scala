@@ -49,7 +49,6 @@ trait AppConfig {
   val vatSubscriptionDynamicStubURL: String
   val contactPreferenceURL: String
   val gtmContainer: String
-  val contactFormServiceIdentifier: String
   val vatDetailsUrl: String
   val btaHomeUrl: String
 }
@@ -68,7 +67,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   // Contact frontend
   private lazy val contactHost = servicesConfig.getString(ConfigKeys.contactFrontendService)
-  lazy val contactFormServiceIdentifier = "VATC"
+  private lazy val contactFormServiceIdentifier = servicesConfig.getString(ConfigKeys.contactFrontendIdentifier)
 
   // Feedback
   lazy val reportAProblemPartialUrl: String = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
