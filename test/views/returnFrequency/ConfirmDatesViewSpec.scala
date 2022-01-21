@@ -99,6 +99,10 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         "posts data to the correct endpoint" in {
           element("form").attr("action") shouldBe controllers.returnFrequency.routes.ConfirmVatDatesController.submit.url
         }
+
+        "has the prevent double click attribute" in {
+          element(".govuk-button").hasAttr("data-prevent-double-click") shouldBe true
+        }
       }
     }
     "user comes from annual accounting" should {
