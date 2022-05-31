@@ -69,6 +69,8 @@ trait BaseISpec extends AnyWordSpecLike
 
   lazy val vrn = "999999999"
 
+  def authSession: Map[String, String] = Map("authToken"-> "mock-bearer-token")
+
   override def beforeAll(): Unit = {
     super.beforeAll()
     startServer()
@@ -116,11 +118,11 @@ trait BaseISpec extends AnyWordSpecLike
   }
 
   def get(path: String, additionalCookies: Map[String, String] = Map.empty): WSResponse = await(
-    buildRequest(path, additionalCookies).get()
+    buildRequest(path, additionalCookies ++ authSession).get()
   )
 
   def postJSValueBody(path: String, additionalCookies: Map[String, String] = Map.empty)(body: JsValue): WSResponse = await(
-    buildRequest(path, additionalCookies).post(body)
+    buildRequest(path, additionalCookies ++ authSession).post(body)
   )
 
   def buildRequest(path: String, additionalCookies: Map[String, String] = Map.empty): WSRequest =
