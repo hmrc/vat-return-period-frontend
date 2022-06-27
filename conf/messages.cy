@@ -5,26 +5,20 @@ common.confirmAndContinue = Cadarnhau ac yn eich blaen
 common.errorSummary.heading = Mae problem wedi codi
 common.continue = Yn eich blaen
 common.error = Gwall:
+common.error.prefixTitle = Gwall: {0}
 
 base.back = Yn ôl
 base.signOut = Allgofnodi
-
-featureSwitch.title = Feature switches
-featureSwitch.heading = Nodweddion
-featureSwitch.submit = Cyflwyno
-
-common.error.prefixTitle = Gwall: {0}
-error.summary.title = Mae problem wedi codi
 
 navTitle.nonAgent = Rheoli eich cyfrif TAW
 navTitle.agent = Manylion TAW eich cleient
 navTitle.vat = TAW
 
-standardError.title = Mae problem gyda’r gwasanaeth – TAW – GOV.UK
+standardError.title = Mae problem gyda’r gwasanaeth
 standardError.heading = Mae’n ddrwg gennym – mae problem gyda’r gwasanaeth
 standardError.message = Rhowch gynnig arall arni yn nes ymlaen.
 
-notFound.title = Heb ddod o hyd i’r dudalen – TAW – GOV.UK
+notFound.title = Heb ddod o hyd i’r dudalen
 notFound.heading = Ni ellir dod o hyd i’r dudalen hon
 notFound.message = Gwiriwch eich bod wedi nodi’r cyfeiriad gwe cywir.
 
@@ -45,10 +39,7 @@ preventLeavingAnnualAccounting.h1 = Mae gennych newid ar y gweill yn barod
 preventLeavingAnnualAccounting.p1 = Gwnaethoch gais yn ddiweddar i newid eich cynllun cyfrifyddu blynyddol.
 preventLeavingAnnualAccounting.p2 = Tan y bydd hyn wedi digwydd, ni allwch newid y dyddiadau ar gyfer cyflwyno Ffurflenni TAW.
 
-common.agent.changeClient.youCan = Gallwch
-common.agent.changeClient.link = newid manylion cleient arall
 common.agent.yourClient = eich cleient
-common.agent.confirmationLetter = Byddwn yn anfon llythyr o gadarnhad i gyfeiriad yr asiantaeth sydd wedi’i gofrestru gyda CThEM cyn pen 15 diwrnod gwaith.
 common.agent.updateClient1 = Byddwn yn cysylltu â
 common.agent.updateClient2 = gyda diweddariad.
 common.agent.backToClient = Yn ôl i fanylion y cleient
@@ -57,7 +48,6 @@ common.agent.backToClient = Yn ôl i fanylion y cleient
 chooseDatesForm.frequency.missing = Dewiswch y dyddiadau newydd ar gyfer Ffurflenni TAW
 
 return_frequency.title = Beth yw’r dyddiadau newydd ar gyfer Ffurflenni TAW?
-return_frequency.heading = Beth yw’r dyddiadau newydd ar gyfer Ffurflenni TAW?
 return_frequency.current = Ar hyn o bryd, y dyddiadau ar gyfer Ffurflenni TAW yw
 return_frequency.currentAnnual = Ar hyn o bryd, rydych yn cyflwyno Ffurflenni TAW yn flynyddol. Os dewiswch ddyddiad newydd ar gyfer cyflwyno Ffurflenni TAW, byddwch yn gadael y Cynllun Cyfrifyddu Blynyddol.
 return_frequency.January = Ionawr, Ebrill, Gorffennaf a Hydref
@@ -76,8 +66,6 @@ confirm_return_frequency.annually.bullet2 = bydd yn rhaid i chi aros 12 mis cyn 
 received_frequency.title = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
 received_frequency.heading = Rydych wedi gofyn am newid dyddiadau’r Ffurflenni TAW
 received_frequency.subheading = Yr hyn sy’n digwydd nesaf
-received_frequency.agent.p1-1 = Byddwn yn anfon e-bost at
-received_frequency.agent.p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a yw’r cais wedi’i dderbyn ai peidio.
 received_frequency.agent.bulkPaper-p1-1 = Byddwn yn anfon e-bost i
 received_frequency.agent.bulkPaper-p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a allwn dderbyn eich cais ai peidio.
 received_frequency.newDates = Bydd y dyddiadau newydd ar gyfer Ffurflenni TAW ond yn dangos ar y cyfrif pan fyddant yn newid. Tan hynny, byddwn yn parhau i ddangos y dyddiadau cyflwyno presennol.
