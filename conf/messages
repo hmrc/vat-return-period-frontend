@@ -5,18 +5,10 @@ common.confirmAndContinue = Confirm and continue
 common.errorSummary.heading = There is a problem
 common.continue = Continue
 common.error = Error:
+common.error.prefixTitle = Error: {0}
 
 base.back = Back
 base.signOut = Sign out
-
-featureSwitch.title = Feature switches
-featureSwitch.heading = Features
-featureSwitch.submit = Submit
-
-common.error.prefixTitle = Error: {0}
-error.boolean = Please give an answer
-error.required = Please enter a value
-error.summary.title = There is a problem
 
 navTitle.nonAgent = Manage your VAT account
 navTitle.agent = Your client’s VAT details
@@ -43,18 +35,11 @@ insolventError.title = Sorry, you cannot access this service
 insolventError.message = Your business has been declared insolvent.
 insolventError.buttonText = Go to your business tax account
 
-session_expired.title = For your security, this service has been reset
-session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
-
 preventLeavingAnnualAccounting.h1 = You already have a change pending
 preventLeavingAnnualAccounting.p1 = You recently requested to change your annual accounting scheme.
 preventLeavingAnnualAccounting.p2 = Until this has happened, you cannot change the VAT Return dates.
 
-common.agent.changeClient.youCan = You can
-common.agent.changeClient.link = change another client’s details
 common.agent.yourClient = your client
-common.agent.confirmationLetter = We will send a confirmation letter to the agency address registered with HMRC within 15 working days.
 common.agent.updateClient1 = We’ll contact
 common.agent.updateClient2 = with an update.
 common.agent.backToClient = Back to client’s details
@@ -63,7 +48,6 @@ common.agent.backToClient = Back to client’s details
 chooseDatesForm.frequency.missing = Choose the new VAT Return dates
 
 return_frequency.title = What are the new VAT Return dates?
-return_frequency.heading = What are the new VAT Return dates?
 return_frequency.current = The VAT Return dates are currently
 return_frequency.currentAnnual = You currently submit returns annually. If you select a new VAT Return date, you will leave the Annual Accounting scheme.
 return_frequency.January = January, April, July and October
@@ -82,8 +66,6 @@ confirm_return_frequency.annually.bullet2 = have to wait 12 months before you ca
 received_frequency.title = You have asked to change the VAT Return dates
 received_frequency.heading = You have asked to change the VAT Return dates
 received_frequency.subheading = What happens next
-received_frequency.agent.p1-1 = We will send an email to
-received_frequency.agent.p1-2 = within 2 working days telling you whether or not the request has been accepted.
 received_frequency.agent.bulkPaper-p1-1 = We’ll send an email to
 received_frequency.agent.bulkPaper-p1-2 = within 2 working days telling you whether we can accept your request.
 received_frequency.newDates = The new VAT Return dates will only show on the account when they change. Until then, we will continue to show the current submission dates.
