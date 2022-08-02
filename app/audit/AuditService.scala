@@ -20,7 +20,6 @@ import audit.models.ExtendedAuditModel
 import config.FrontendAppConfig
 import javax.inject.{Inject, Singleton}
 import play.api.http.HeaderNames
-import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.AuditExtensions
 import uk.gov.hmrc.play.audit.http.connector.AuditResult.{Disabled, Failure, Success}
@@ -33,26 +32,21 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class AuditService @Inject()(appConfig: FrontendAppConfig, auditConnector: AuditConnector) extends LoggerUtil {
 
-  implicit val extendedDataEventWrites: Writes[ExtendedDataEvent] = Json.writes[ExtendedDataEvent]
-
   val referrer: HeaderCarrier => String = _.extraHeaders.find(_._1 == HeaderNames.REFERER).map(_._2).getOrElse("-")
 
   def extendedAudit(auditModel: ExtendedAuditModel, path: Option[String] = None)(implicit hc: HeaderCarrier, ec: ExecutionContext): Unit = {
     val extendedDataEvent = toExtendedDataEvent(appConfig.appName, auditModel, path.fold(referrer(hc))(x => x))
-    logger.debug(s"Splunk Audit Event:\n\n${Json.toJson(extendedDataEvent)}")
+    logger.debug(s"Splunk Audit Event:\n\n$extendedDataEvent")
     handleAuditResult(auditConnector.sendExtendedEvent(extendedDataEvent))
   }
 
   def toExtendedDataEvent(appName: String, auditModel: ExtendedAuditModel, path: String)(implicit hc: HeaderCarrier): ExtendedDataEvent = {
 
-    val details: JsValue =
-      Json.toJson(AuditExtensions.auditHeaderCarrier(hc).toAuditDetails()).as[JsObject].deepMerge(auditModel.detail.as[JsObject])
-
     ExtendedDataEvent(
       auditSource = appName,
       auditType = auditModel.auditType,
       tags = AuditExtensions.auditHeaderCarrier(hc).toAuditTags(auditModel.transactionName, path),
-      detail = details
+      detail = auditModel.detail
     )
   }
 

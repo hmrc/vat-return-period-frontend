@@ -53,8 +53,8 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % "5.24.0",
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "3.21.0-play-28"
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % "6.4.0",
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "3.22.0-play-28"
 )
 
 val test = Seq(
@@ -93,7 +93,7 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Keys.fork in Test := true,
     javaOptions in Test += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.12.15",
+    scalaVersion := "2.12.16",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true
   )
