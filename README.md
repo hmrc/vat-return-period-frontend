@@ -1,7 +1,9 @@
 
 # VAT Return Period Frontend
 
-This is a placeholder README.md for a new repository.
+## Summary
+
+This service provides end users with a mechanism to update the VAT return periods.
 
 # Testing
 
