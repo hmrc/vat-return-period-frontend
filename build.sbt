@@ -25,7 +25,8 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
-val bootstrapPlayVersion = "7.4.0"
+
+val bootstrapPlayVersion = "7.8.0"
 
 RoutesKeys.routesImport := Seq.empty
 
@@ -55,7 +56,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "3.28.0-play-28"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "3.32.0-play-28"
 )
 
 val test = Seq(
