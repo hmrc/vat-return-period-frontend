@@ -24,7 +24,6 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 import uk.gov.hmrc.play.audit.http.connector.AuditResult.Success
 import uk.gov.hmrc.play.audit.model.ExtendedDataEvent
-
 import scala.concurrent.{ExecutionContext, Future}
 
 class AuditingServiceSpec extends BaseSpec {
@@ -61,7 +60,7 @@ class AuditingServiceSpec extends BaseSpec {
         val testModel = new TestExtendedAuditModel("foo", "bar")
         val testPath = "/test/path"
 
-        setupSendExtendedEvent()
+        setupSendExtendedEvent()()
 
         mockAuditService.extendedAudit(testModel, Some(testPath))
       }

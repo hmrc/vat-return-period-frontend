@@ -26,6 +26,7 @@ import org.jsoup.Jsoup
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import assets.ReturnPeriodTestConstants.returnPeriodMonthly
+import play.api.mvc.Results._
 
 class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCircumstanceDetailsService {
 
@@ -52,7 +53,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
         lazy val result = {
           mockCustomerDetailsError()
-          mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
+          mockInFlightReturnPeriodPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
         }
 
         "return 500" in {
@@ -67,7 +68,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsModelMax)
-            mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
+            mockInFlightReturnPeriodPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
           }
 
           "return 303" in {
@@ -85,7 +86,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsModelMin)
-              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
             }
 
             "return 303" in {
@@ -101,7 +102,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
-              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
             }
 
             "return 303" in {
@@ -124,7 +125,7 @@ class InFlightReturnFrequencyPredicateSpec extends MockAuth with MockCustomerCir
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
-              mockInFlightReturnPeriodPredicate.refine(user).map(_.left.get)
+              mockInFlightReturnPeriodPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
             }
 
             "return 303" in {

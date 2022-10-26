@@ -62,7 +62,7 @@ val compile = Seq(
 val test = Seq(
   "uk.gov.hmrc"             %% "bootstrap-test-play-28"       % bootstrapPlayVersion,
   "com.typesafe.play"       %% "play-test"                    % PlayVersion.current,
-  "org.scalamock"           %% "scalamock-scalatest-support"  % "3.6.0"
+  "org.scalamock"           %% "scalamock"                    % "5.2.0"
 ).map(_ % s"$Test, $IntegrationTest")
 
 def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
@@ -90,7 +90,7 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Test / Keys.fork := true,
     Test / javaOptions += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.12.16",
+    scalaVersion := "2.13.8",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true
   )
