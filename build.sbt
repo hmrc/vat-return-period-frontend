@@ -26,7 +26,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapPlayVersion = "7.8.0"
+val bootstrapPlayVersion = "7.11.0"
 
 RoutesKeys.routesImport := Seq.empty
 
@@ -61,7 +61,6 @@ val compile = Seq(
 
 val test = Seq(
   "uk.gov.hmrc"             %% "bootstrap-test-play-28"       % bootstrapPlayVersion,
-  "com.typesafe.play"       %% "play-test"                    % PlayVersion.current,
   "org.scalamock"           %% "scalamock"                    % "5.2.0"
 ).map(_ % s"$Test, $IntegrationTest")
 
