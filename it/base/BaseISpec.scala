@@ -87,7 +87,7 @@ trait BaseISpec extends AnyWordSpecLike
     def agent: Agent = new Agent()
   }
 
-  def given: PreconditionBuilder = new PreconditionBuilder
+  def `given`: PreconditionBuilder = new PreconditionBuilder
 
   class User()(implicit builder: PreconditionBuilder) {
     def isAuthenticated: PreconditionBuilder = {

@@ -23,6 +23,7 @@ import mocks.MockAuth
 import mocks.services.MockCustomerCircumstanceDetailsService
 import models.auth.User
 import org.jsoup.Jsoup
+import play.api.mvc.Results._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
@@ -51,7 +52,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
         lazy val result = {
           mockCustomerDetailsError()
-          mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
+          mockInFlightAnnualAccountingPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
         }
 
         "return 500" in {
@@ -66,7 +67,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsModelMaxAA)
-            mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
+            mockInFlightAnnualAccountingPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
           }
 
           "return 200" in {
@@ -80,7 +81,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsModelMinAA)
-              mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
+              mockInFlightAnnualAccountingPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
             }
 
             "return 200" in {
@@ -92,7 +93,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
             lazy val result = {
               mockCustomerDetailsSuccess(circumstanceDetailsNoPending)
-              mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
+              mockInFlightAnnualAccountingPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
             }
 
             "return 303" in {
@@ -113,7 +114,7 @@ class InFlightAnnualAccountingPredicateSpec extends MockAuth with MockCustomerCi
 
           lazy val result = {
             mockCustomerDetailsSuccess(circumstanceDetailsNoChangeIndicator)
-            mockInFlightAnnualAccountingPredicate.refine(user).map(_.left.get)
+            mockInFlightAnnualAccountingPredicate.refine(user).map(_.swap.getOrElse(BadRequest))
           }
 
           "return 303" in {
