@@ -60,7 +60,7 @@
   @form(action = controllers.returnFrequency.routes.ConfirmVatDatesController.submit) {
     @govukButton(Button(
       content = Text(messages("common.continue")),
-      preventDoubleClick = true
+      preventDoubleClick = Some(true)
     ))
   }
 }
