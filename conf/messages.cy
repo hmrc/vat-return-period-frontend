@@ -70,8 +70,8 @@ received_frequency.agent.bulkPaper-p1-1 = Byddwn yn anfon e-bost i
 received_frequency.agent.bulkPaper-p1-2 = cyn pen 2 ddiwrnod gwaith i roi gwybod i chi a allwn dderbyn eich cais ai peidio.
 received_frequency.newDates = Bydd y dyddiadau newydd ar gyfer Ffurflenni TAW ond yn dangos ar y cyfrif pan fyddant yn newid. Tan hynny, byddwn yn parhau i ddangos y dyddiadau cyflwyno presennol.
 
-contact_preference.email = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith gyda diweddariad, neu gallwch wirio’ch negeseuon diogel oddi wrth CThEM.
-contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith i roi diweddariad, wedi’i ddilyn gan lythyr i’ch prif fan busnes. Gallwch hefyd fynd i’ch negeseuon diogel CThEM i weld a yw’ch cais wedi’i dderbyn.
+contact_preference.email = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith gyda diweddariad, neu gallwch wirio’ch negeseuon diogel oddi wrth CThEF.
+contact_preference.digital = Byddwn yn anfon e-bost atoch cyn pen 2 ddiwrnod gwaith i roi diweddariad, wedi’i ddilyn gan lythyr i’ch prif fan busnes. Gallwch hefyd fynd i’ch negeseuon diogel CThEF i weld a yw’ch cais wedi’i dderbyn.
 contact_preference.paper = Byddwn yn anfon llythyr i’ch prif fan busnes i roi diweddariad cyn pen 15 diwrnod gwaith.
 contact_preference.contactPrefError = Byddwn yn anfon diweddariad atoch cyn pen 15 diwrnod gwaith.
 

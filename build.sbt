@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import play.core.PlayVersion
 import play.sbt.routes.RoutesKeys
 import sbt.Tests.{Group, SubProcess}
 import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
@@ -56,7 +55,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "5.4.0-play-28"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "6.3.0-play-28"
 )
 
 val test = Seq(
