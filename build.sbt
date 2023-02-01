@@ -17,7 +17,6 @@
 import play.sbt.routes.RoutesKeys
 import sbt.Tests.{Group, SubProcess}
 import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin.publishingSettings
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
@@ -25,7 +24,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapPlayVersion = "7.12.0"
+val bootstrapPlayVersion = "7.13.0"
 
 RoutesKeys.routesImport := Seq.empty
 
@@ -82,7 +81,6 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(coverageSettings: _*)
   .settings(playSettings: _*)
   .settings(scalaSettings: _*)
-  .settings(publishingSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(majorVersion := 0)
   .settings(
