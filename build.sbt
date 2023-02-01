@@ -24,7 +24,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapPlayVersion = "7.12.0"
+val bootstrapPlayVersion = "7.13.0"
 
 RoutesKeys.routesImport := Seq.empty
 
