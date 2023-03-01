@@ -19,13 +19,13 @@ package connectors
 import assets.BaseTestConstants.{agentEmail, errorModel}
 import assets.CircumstanceDetailsTestConstants._
 import base.BaseSpec
-import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import mocks.MockHttp
 import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 import scala.concurrent.Future
-import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
@@ -53,7 +53,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
     "calling the .getCustomerCircumstanceDetails method" when {
 
-      def result: Future[HttpGetResult[CircumstanceDetails]] = TestVatSubscriptionConnector.getCustomerCircumstanceDetails(vrn)
+      def result: Future[HttpResult[CircumstanceDetails]] = TestVatSubscriptionConnector.getCustomerCircumstanceDetails(vrn)
 
       "a successful response is returned" should {
 
@@ -73,7 +73,7 @@ class VatSubscriptionConnectorSpec extends BaseSpec with MockHttp {
 
     "calling the .updateReturnFrequency method" when {
 
-      def result: Future[HttpPutResult[SubscriptionUpdateResponseModel]] =
+      def result: Future[HttpResult[SubscriptionUpdateResponseModel]] =
         TestVatSubscriptionConnector.updateReturnFrequency("999999999", UpdateReturnPeriod(Jan.id, Some(agentEmail)))
 
       "provided with a correct subscription update model" should {

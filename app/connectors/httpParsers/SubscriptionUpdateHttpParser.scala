@@ -16,7 +16,7 @@
 
 package connectors.httpParsers
 
-import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
 import models.returnFrequency.SubscriptionUpdateResponseModel
 import utils.LoggerUtil
@@ -27,9 +27,9 @@ import scala.util.{Failure, Success, Try}
 
 object SubscriptionUpdateHttpParser extends LoggerUtil {
 
-  implicit object SubscriptionUpdateReads extends HttpReads[HttpPutResult[SubscriptionUpdateResponseModel]] {
+  implicit object SubscriptionUpdateReads extends HttpReads[HttpResult[SubscriptionUpdateResponseModel]] {
 
-    override def read(method: String, url: String, response: HttpResponse): HttpPutResult[SubscriptionUpdateResponseModel] = {
+    override def read(method: String, url: String, response: HttpResponse): HttpResult[SubscriptionUpdateResponseModel] = {
 
       response.status match {
         case Status.OK => Try {
