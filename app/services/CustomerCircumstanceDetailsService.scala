@@ -17,7 +17,7 @@
 package services
 
 import connectors.VatSubscriptionConnector
-import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import javax.inject.{Inject, Singleton}
 import models.circumstanceInfo.CircumstanceDetails
 import uk.gov.hmrc.http.HeaderCarrier
@@ -28,6 +28,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class CustomerCircumstanceDetailsService @Inject()(val subscriptionConnector: VatSubscriptionConnector) {
 
   def getCustomerCircumstanceDetails(vrn: String)
-                                    (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[CircumstanceDetails]] =
+                                    (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpResult[CircumstanceDetails]] =
     subscriptionConnector.getCustomerCircumstanceDetails(vrn)
 }

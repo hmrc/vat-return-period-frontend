@@ -17,14 +17,14 @@
 package services
 
 import base.BaseSpec
-import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import mocks.connectors.MockSubscriptionConnector
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel}
 import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 class ReturnFrequencyServiceSpec extends BaseSpec with MockSubscriptionConnector {
 
-  def setup(subscriptionResponse: HttpPutResult[SubscriptionUpdateResponseModel]): ReturnFrequencyService = {
+  def setup(subscriptionResponse: HttpResult[SubscriptionUpdateResponseModel]): ReturnFrequencyService = {
 
     setupMockUpdateReturnFrequency(subscriptionResponse)
     new ReturnFrequencyService(mockSubscriptionConnector)

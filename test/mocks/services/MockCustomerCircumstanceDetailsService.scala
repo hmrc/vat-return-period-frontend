@@ -17,7 +17,7 @@
 package mocks.services
 
 import assets.BaseTestConstants._
-import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.circumstanceInfo.CircumstanceDetails
 import models.errors.ServerSideError
 import org.scalamock.scalatest.MockFactory
@@ -31,7 +31,7 @@ trait MockCustomerCircumstanceDetailsService extends AnyWordSpecLike with MockFa
 
   val mockCustomerDetailsService: CustomerCircumstanceDetailsService = mock[CustomerCircumstanceDetailsService]
 
-  def setupMockCustomerDetails(vrn: String)(response: HttpGetResult[CircumstanceDetails]): Unit = {
+  def setupMockCustomerDetails(vrn: String)(response: HttpResult[CircumstanceDetails]): Unit = {
     (mockCustomerDetailsService.getCustomerCircumstanceDetails(_: String)(_: HeaderCarrier, _: ExecutionContext))
       .expects(*, *, *)
       .returns(Future.successful(response))

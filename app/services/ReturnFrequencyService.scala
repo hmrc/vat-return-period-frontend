@@ -18,7 +18,7 @@ package services
 
 import common.SessionKeys
 import connectors.VatSubscriptionConnector
-import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import javax.inject.{Inject, Singleton}
 import models.auth.User
 import models.returnFrequency.{ReturnPeriod, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
@@ -31,7 +31,7 @@ class ReturnFrequencyService @Inject()(subscriptionConnector: VatSubscriptionCon
 
   def updateReturnFrequency(vrn: String, frequency: ReturnPeriod)
                            (implicit headerCarrier: HeaderCarrier, ec: ExecutionContext, user: User[_])
-  : Future[HttpPutResult[SubscriptionUpdateResponseModel]] = {
+  : Future[HttpResult[SubscriptionUpdateResponseModel]] = {
 
     val updateReturnPeriod = UpdateReturnPeriod(frequency.internalId, user.session.get(SessionKeys.mtdVatvcVerifiedAgentEmail))
     subscriptionConnector.updateReturnFrequency(vrn, updateReturnPeriod)

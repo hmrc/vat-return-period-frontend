@@ -17,15 +17,15 @@
 package connectors
 
 import base.BaseISpec
-import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.circumstanceInfo.CircumstanceDetails
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
 import models.returnFrequency.{Jan, SubscriptionUpdateResponseModel, UpdateReturnPeriod}
 import play.api.http.Status._
 import play.api.libs.json.{JsObject, Json}
+import play.api.test.Helpers.{await, defaultAwaitTimeout}
 import stubs.VatSubscriptionStub._
 import uk.gov.hmrc.http.HeaderCarrier
-import play.api.test.Helpers.{await, defaultAwaitTimeout}
 
 class VatSubscriptionConnectorISpec extends BaseISpec {
 
@@ -45,7 +45,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
             stubGet(s"/vat-subscription/$vrn/full-information", circumstanceDetailsJsonMax.toString(), OK)
 
-            val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
+            val result: HttpResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
             result shouldBe Right(circumstanceDetailsModelMax)
           }
         }
@@ -58,7 +58,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
             stubGet(s"/vat-subscription/$vrn/full-information", invalidJson.toString(), OK)
 
-            val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
+            val result: HttpResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
             result shouldBe Left(UnexpectedJsonFormat)
           }
         }
@@ -70,7 +70,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
           stubGet(s"/vat-subscription/$vrn/full-information", "", SERVICE_UNAVAILABLE)
 
-          val result: HttpGetResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
+          val result: HttpResult[CircumstanceDetails] = await(connector.getCustomerCircumstanceDetails(vrn))
           result shouldBe Left(ServerSideError("503", "Received downstream error when retrieving customer details."))
         }
       }
@@ -92,7 +92,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
             stubPut(s"/vat-subscription/$vrn/return-period", expectedResponseJson.toString, OK)
 
-            val result: HttpPutResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
+            val result: HttpResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
             result shouldBe Right(expectedResponse)
           }
 
@@ -106,7 +106,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
             stubPut(s"/vat-subscription/$vrn/return-period", invalidJson.toString(), OK)
 
-            val result: HttpPutResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
+            val result: HttpResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
             result shouldBe Left(UnexpectedJsonFormat)
 
           }
@@ -119,7 +119,7 @@ class VatSubscriptionConnectorISpec extends BaseISpec {
 
           stubPut(s"/vat-subscription/$vrn/return-period", "", SERVICE_UNAVAILABLE)
 
-          val result: HttpPutResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
+          val result: HttpResult[SubscriptionUpdateResponseModel] = await(connector.updateReturnFrequency(vrn, updatedReturnPeriod))
           result shouldBe Left(ServerSideError("503", "Received downstream error when retrieving subscription update response."))
         }
       }

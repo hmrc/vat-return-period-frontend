@@ -16,7 +16,7 @@
 
 package mocks.services
 
-import connectors.httpParsers.ResponseHttpParsers.HttpPutResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.auth.User
 import models.errors.ServerSideError
 import models.returnFrequency.{ReturnPeriod, SubscriptionUpdateResponseModel}
@@ -31,7 +31,7 @@ trait MockReturnFrequencyService extends AnyWordSpecLike with MockFactory {
 
   val mockReturnFrequencyService: ReturnFrequencyService = mock[ReturnFrequencyService]
 
-  def setupMockReturnFrequencyService[A](response: HttpPutResult[SubscriptionUpdateResponseModel]): Unit  = {
+  def setupMockReturnFrequencyService[A](response: HttpResult[SubscriptionUpdateResponseModel]): Unit  = {
     (mockReturnFrequencyService.updateReturnFrequency(_: String, _: ReturnPeriod)(_: HeaderCarrier, _: ExecutionContext, _: User[A]))
       .expects(*, *, *, *, *)
       .returns(Future.successful(response))

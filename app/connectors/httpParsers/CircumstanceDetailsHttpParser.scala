@@ -16,7 +16,7 @@
 
 package connectors.httpParsers
 
-import connectors.httpParsers.ResponseHttpParsers.HttpGetResult
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.circumstanceInfo.CircumstanceDetails
 import models.errors.{ServerSideError, UnexpectedJsonFormat}
 import utils.LoggerUtil
@@ -27,9 +27,9 @@ import scala.util.{Failure, Success, Try}
 
 object CircumstanceDetailsHttpParser extends LoggerUtil {
 
-  implicit object CircumstanceDetailsReads extends HttpReads[HttpGetResult[CircumstanceDetails]] {
+  implicit object CircumstanceDetailsReads extends HttpReads[HttpResult[CircumstanceDetails]] {
 
-    override def read(method: String, url: String, response: HttpResponse): HttpGetResult[CircumstanceDetails] = {
+    override def read(method: String, url: String, response: HttpResponse): HttpResult[CircumstanceDetails] = {
 
       response.status match {
         case Status.OK => Try {

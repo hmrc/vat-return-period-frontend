@@ -19,12 +19,11 @@ package connectors
 import com.google.inject.{Inject, Singleton}
 import config.AppConfig
 import connectors.httpParsers.CircumstanceDetailsHttpParser.CircumstanceDetailsReads
-import connectors.httpParsers.ResponseHttpParsers.{HttpGetResult, HttpPutResult}
+import connectors.httpParsers.ResponseHttpParsers.HttpResult
 import models.circumstanceInfo.CircumstanceDetails
 import models.returnFrequency.{SubscriptionUpdateResponseModel, UpdateReturnPeriod}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import utils.LoggerUtil
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,19 +35,19 @@ class VatSubscriptionConnector @Inject()(val http: HttpClient,
 
   private[connectors] def updateReturnPeriodUrl(vrn: String) = config.vatSubscriptionBaseURL + s"/vat-subscription/$vrn/return-period"
 
-  def getCustomerCircumstanceDetails(id: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpGetResult[CircumstanceDetails]] = {
+  def getCustomerCircumstanceDetails(id: String)(implicit headerCarrier: HeaderCarrier, ec: ExecutionContext): Future[HttpResult[CircumstanceDetails]] = {
     val url = getCustomerDetailsUrl(id)
     logger.debug(s"[CustomerDetailsConnector][getCustomerDetails]: Calling getCustomerDetails with URL - $url")
     http.GET(url)(CircumstanceDetailsReads, headerCarrier, ec)
   }
 
   def updateReturnFrequency(vrn: String, frequency: UpdateReturnPeriod)
-                           (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpPutResult[SubscriptionUpdateResponseModel]] = {
+                           (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResult[SubscriptionUpdateResponseModel]] = {
 
     import connectors.httpParsers.SubscriptionUpdateHttpParser.SubscriptionUpdateReads
 
     val url = updateReturnPeriodUrl(vrn)
-    http.PUT[UpdateReturnPeriod, HttpPutResult[SubscriptionUpdateResponseModel]](url, frequency)
+    http.PUT[UpdateReturnPeriod, HttpResult[SubscriptionUpdateResponseModel]](url, frequency)
   }
 
 }
