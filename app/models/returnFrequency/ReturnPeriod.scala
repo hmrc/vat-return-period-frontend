@@ -67,7 +67,7 @@ object ReturnPeriod extends LoggerUtil {
     case Monthly.id => Some(Monthly)
     case Annually.id => Some(Annually)
     case unknown =>
-      logger.warn(s"[ConfirmVatDatesController].[getReturnFrequency] Session contains invalid frequency: $unknown")
+      logger.warn(s"[ConfirmVatDatesController][getReturnFrequency] Session contains invalid frequency: $unknown")
       None
   }
 
@@ -80,6 +80,10 @@ object ReturnPeriod extends LoggerUtil {
       case Mar.internalId => Mar
       case Monthly.internalId => Monthly
       case other if validAnnualPeriodKeys.contains(other) => Annually
+      case other =>
+        val errorMessage = s"Stagger code $other is not supported"
+        logger.warn(s"[ReturnPeriod][reads] - $errorMessage")
+        throw JsResultException(Seq((__ \ "stdReturnPeriod") -> Seq(JsonValidationError(errorMessage))))
     }
   } yield value
 

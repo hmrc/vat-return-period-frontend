@@ -24,7 +24,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapPlayVersion = "7.13.0"
+val bootstrapPlayVersion = "7.14.0"
 
 RoutesKeys.routesImport := Seq.empty
 
@@ -54,7 +54,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "6.3.0-play-28"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "6.8.0-play-28"
 )
 
 val test = Seq(
@@ -88,7 +88,8 @@ lazy val microservice: Project = Project(appName, file("."))
     Test / javaOptions += "-Dlogger.resource=logback-test.xml",
     scalaVersion := "2.13.8",
     libraryDependencies ++= appDependencies,
-    retrieveManaged := true
+    retrieveManaged := true,
+    scalacOptions ++= Seq("-Wconf:cat=unused-imports&site=.*views.html.*:s")
   )
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
