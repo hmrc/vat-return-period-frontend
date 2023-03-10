@@ -19,6 +19,7 @@ package models.returnFrequency
 import assets.ReturnPeriodTestConstants._
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.{JsResultException, Json}
 
 class ReturnPeriodSpec extends AnyWordSpecLike with Matchers {
 
@@ -73,6 +74,7 @@ class ReturnPeriodSpec extends AnyWordSpecLike with Matchers {
   }
 
   "ReturnPeriod Reads" should {
+
     "parse the json correctly for MA types" in {
       returnPeriodMAJson.as[ReturnPeriod] shouldBe Jan
     }
@@ -93,6 +95,10 @@ class ReturnPeriodSpec extends AnyWordSpecLike with Matchers {
       for((_, json) <- allAnnualKeysAsJson) {
         json.as[ReturnPeriod] shouldBe Annually
       }
+    }
+
+    "fail to parse an unsupported stagger code" in {
+      intercept[JsResultException](Json.obj("stdReturnPeriod" -> "XX").as[ReturnPeriod])
     }
   }
 }
