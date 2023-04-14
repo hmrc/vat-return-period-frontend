@@ -19,10 +19,12 @@ package controllers.returnFrequency
 import assets.CircumstanceDetailsTestConstants._
 import assets.messages.{AuthMessages, ReturnFrequencyMessages}
 import audit.mocks.MockAuditingService
+import audit.models.UpdateReturnFrequencyAuditModel
 import base.BaseSpec
 import common.SessionKeys
 import mocks.MockAuth
 import mocks.services.{MockCustomerCircumstanceDetailsService, MockReturnFrequencyService}
+import models.returnFrequency.{Jan, Monthly}
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.Helpers._
@@ -228,7 +230,10 @@ class ConfirmVatDatesControllerSpec extends BaseSpec
               mockAuthorise(mtdVatAuthorisedResponse)
               setupMockReturnFrequencyServiceWithSuccess()
               setupMockCustomerDetails(vrn)(Right(circumstanceDetailsNoPending))
-              setupAuditExtendedEvent()
+              setupAndVerifyAuditEvent(
+                UpdateReturnFrequencyAuditModel(user, Monthly, Jan, Some(partyType)),
+                Some(routes.ConfirmationController.show.url)
+              )
               status(result) shouldBe Status.SEE_OTHER
             }
 

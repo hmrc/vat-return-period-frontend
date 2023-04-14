@@ -88,7 +88,7 @@ class ConfirmVatDatesController @Inject()(authenticate: AuthPredicate,
               case Right(_) =>
                 auditService.extendedAudit(
                   UpdateReturnFrequencyAuditModel(user, currentPeriod, newPeriod, details.partyType),
-                  Some(controllers.returnFrequency.routes.ConfirmVatDatesController.submit.url)
+                  Some(routes.ConfirmationController.show.url)
                 )
                 Redirect(
                   controllers.returnFrequency.routes.ConfirmationController.show
