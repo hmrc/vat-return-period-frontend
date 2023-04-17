@@ -22,9 +22,8 @@ import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
 val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
-lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
-val bootstrapPlayVersion = "7.14.0"
+val bootstrapPlayVersion = "7.15.0"
 
 RoutesKeys.routesImport := Seq.empty
 
@@ -54,7 +53,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "6.8.0-play-28"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "7.3.0-play-28"
 )
 
 val test = Seq(
@@ -79,7 +78,6 @@ lazy val microservice: Project = Project(appName, file("."))
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(PlayKeys.playDefaultPort := 9167)
   .settings(coverageSettings: _*)
-  .settings(playSettings: _*)
   .settings(scalaSettings: _*)
   .settings(defaultSettings(): _*)
   .settings(majorVersion := 0)

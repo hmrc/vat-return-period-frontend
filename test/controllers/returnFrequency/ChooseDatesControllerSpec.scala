@@ -19,22 +19,24 @@ package controllers.returnFrequency
 import assets.CircumstanceDetailsTestConstants._
 import assets.ReturnPeriodTestConstants._
 import assets.messages.{AuthMessages, ReturnFrequencyMessages}
+import audit.mocks.MockAuditingService
+import audit.models.StartJourneyAuditModel
 import base.BaseSpec
 import common.SessionKeys
 import common.SessionKeys.insolventWithoutAccessKey
 import mocks.MockAuth
 import mocks.services.MockCustomerCircumstanceDetailsService
+import models.returnFrequency.Jan
 import org.jsoup.Jsoup
 import play.api.http.Status
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.returnFrequency.ChooseDates
 
-class ChooseDatesControllerSpec extends BaseSpec
-  with MockCustomerCircumstanceDetailsService
-  with MockAuth {
+class ChooseDatesControllerSpec extends BaseSpec with MockCustomerCircumstanceDetailsService
+  with MockAuth with MockAuditingService {
 
-  val chooseDatesView: ChooseDates = injector.instanceOf[ChooseDates]
+  implicit val chooseDatesView: ChooseDates = injector.instanceOf[ChooseDates]
 
   object TestChooseDatesController extends ChooseDatesController (
     mockAuthPredicate,
@@ -43,8 +45,7 @@ class ChooseDatesControllerSpec extends BaseSpec
     mockCustomerDetailsService,
     errorHandler,
     mcc,
-    mockAppConfig,
-    chooseDatesView
+    mockAuditService
   )
 
   "ChooseDatesController 'show' method" when {
@@ -79,7 +80,8 @@ class ChooseDatesControllerSpec extends BaseSpec
         }
 
         s"have the correct page title" in {
-          Jsoup.parse(contentAsString(result)).title shouldBe "You already have a change pending - Manage your VAT account - GOV.UK"
+          Jsoup.parse(contentAsString(result)).title shouldBe
+            "You already have a change pending - Manage your VAT account - GOV.UK"
         }
 
         "add the current return frequency to the session" in {
@@ -119,6 +121,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             "return OK (200)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
+              setupAndVerifyAuditEvent(StartJourneyAuditModel(user, Jan), Some(routes.ChooseDatesController.show.url))
               status(result) shouldBe Status.OK
             }
 
@@ -151,7 +154,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             }
 
             s"have the title ${ReturnFrequencyMessages.ChoosePage.title}" in {
-              Jsoup.parse(contentAsString(result)).title() shouldBe "You already have a change pending - Manage your VAT account - GOV.UK"
+              Jsoup.parse(contentAsString(result)).title() shouldBe
+                "You already have a change pending - Manage your VAT account - GOV.UK"
             }
           }
 
@@ -165,6 +169,7 @@ class ChooseDatesControllerSpec extends BaseSpec
 
             "return OK (200)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
+              setupAndVerifyAuditEvent(StartJourneyAuditModel(user, Jan), Some(routes.ChooseDatesController.show.url))
               status(result) shouldBe Status.OK
             }
 
@@ -210,7 +215,8 @@ class ChooseDatesControllerSpec extends BaseSpec
           "return Internal Server Error (500)" in {
             mockAuthorise(mtdVatAuthorisedResponse)
             status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-            messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+            messages(Jsoup.parse(contentAsString(result)).title) shouldBe
+              AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
           }
         }
       }
@@ -307,7 +313,8 @@ class ChooseDatesControllerSpec extends BaseSpec
             "return Internal Server Error (500)" in {
               mockAuthorise(mtdVatAuthorisedResponse)
               status(result) shouldBe Status.INTERNAL_SERVER_ERROR
-              messages(Jsoup.parse(contentAsString(result)).title) shouldBe AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
+              messages(Jsoup.parse(contentAsString(result)).title) shouldBe
+                AuthMessages.problemWithServiceTitle + AuthMessages.mtdfvTitleSuffix
             }
           }
 

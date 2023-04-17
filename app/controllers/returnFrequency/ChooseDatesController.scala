@@ -16,10 +16,13 @@
 
 package controllers.returnFrequency
 
+import audit.AuditService
+import audit.models.StartJourneyAuditModel
 import common.SessionKeys
 import config.{AppConfig, ServiceErrorHandler}
 import controllers.predicates.{AuthPredicate, InFlightAnnualAccountingPredicate, InFlightReturnFrequencyPredicate}
 import forms.ChooseDatesForm.datesForm
+
 import javax.inject.{Inject, Singleton}
 import models.returnFrequency.{ReturnDatesModel, ReturnPeriod}
 import play.api.data.Form
@@ -29,15 +32,19 @@ import services.CustomerCircumstanceDetailsService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.returnFrequency.ChooseDates
 
+import scala.concurrent.ExecutionContext
+
 @Singleton
-class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
-                                      val pendingReturnFrequency: InFlightReturnFrequencyPredicate,
-                                      val pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
-                                      val customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
-                                      val serviceErrorHandler: ServiceErrorHandler,
-                                      val mcc: MessagesControllerComponents,
-                                      implicit val appConfig: AppConfig,
-                                      chooseDatesView: ChooseDates) extends FrontendController(mcc) with I18nSupport {
+class ChooseDatesController @Inject()(authenticate: AuthPredicate,
+                                      pendingReturnFrequency: InFlightReturnFrequencyPredicate,
+                                      pendingAnnualAccountChange: InFlightAnnualAccountingPredicate,
+                                      customerCircumstanceDetailsService: CustomerCircumstanceDetailsService,
+                                      serviceErrorHandler: ServiceErrorHandler,
+                                      mcc: MessagesControllerComponents,
+                                      auditService: AuditService)
+                                     (implicit appConfig: AppConfig,
+                                      chooseDatesView: ChooseDates,
+                                      ec: ExecutionContext) extends FrontendController(mcc) with I18nSupport {
 
 
   val show: Action[AnyContent] = (authenticate andThen pendingReturnFrequency andThen pendingAnnualAccountChange) { implicit user =>
@@ -49,6 +56,8 @@ class ChooseDatesController @Inject()(val authenticate: AuthPredicate,
     }
 
     ReturnPeriod(currentReturnFrequency).fold(serviceErrorHandler.showInternalServerError) { returnFrequency =>
+      val auditModel = StartJourneyAuditModel(user, returnFrequency)
+      auditService.extendedAudit(auditModel, Some(routes.ChooseDatesController.show.url))
       Ok(chooseDatesView(form, returnFrequency))
     }
   }
