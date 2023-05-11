@@ -36,8 +36,8 @@ object ReturnFrequencyMessages extends BaseMessages {
   }
 
   object ConfirmPage {
-    val title: String = "Check your answers" + titleSuffix
-    val heading = "Check your answers"
+    val title: String = "Check your answer" + titleSuffix
+    val heading = "Check your answer"
     val heading2 = "VAT business details"
     val newDates = "VAT Return dates"
     val changeLink = "Change"
