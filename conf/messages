@@ -75,7 +75,7 @@ contact_preference.digital = We will send you an email within 2 working days wit
 contact_preference.paper = We will send a letter to your principal place of business with an update within 15 working days.
 contact_preference.contactPrefError = We will send you an update within 15 working days.
 
-checkYourAnswers.title = Check your answers
+checkYourAnswers.title = Check your answer
 checkYourAnswers.vatBusinessDetails = VAT business details
 checkYourAnswers.change = Change
 checkYourAnswers.newDates = VAT Return dates
