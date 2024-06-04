@@ -18,12 +18,15 @@ package testOnly.controllers
 
 import common.SessionKeys
 import config.AppConfig
+
 import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import testOnly.forms.StubAgentClientLookupForm
 import testOnly.views.html.{StubAgentClientLookup, StubAgentClientUnauth}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.binders.{RedirectUrl, UnsafePermitAll}
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl._
 
 class StubAgentClientLookupController @Inject()(val mcc: MessagesControllerComponents,
                                                 implicit val appConfig: AppConfig,
@@ -31,12 +34,12 @@ class StubAgentClientLookupController @Inject()(val mcc: MessagesControllerCompo
                                                 stubAgentClientUnauthView: StubAgentClientUnauth)
   extends FrontendController(mcc) with I18nSupport {
 
-  def show(redirectUrl: String): Action[AnyContent] = Action { implicit request =>
-    Ok(stubAgentClientLookupView(StubAgentClientLookupForm.form, redirectUrl))
+  def show(redirectUrl: RedirectUrl): Action[AnyContent] = Action { implicit request =>
+    Ok(stubAgentClientLookupView(StubAgentClientLookupForm.form, redirectUrl.get(UnsafePermitAll).url))
   }
 
-  def unauth(redirectUrl: String): Action[AnyContent] = Action { implicit request =>
-    Ok(stubAgentClientUnauthView(redirectUrl))
+  def unauth(redirectUrl: RedirectUrl): Action[AnyContent] = Action { implicit request =>
+    Ok(stubAgentClientUnauthView(redirectUrl.get(UnsafePermitAll).url))
       .removingFromSession(SessionKeys.mtdVatvcClientVrn)
   }
 
