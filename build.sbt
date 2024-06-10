@@ -15,7 +15,6 @@
  */
 
 import play.sbt.routes.RoutesKeys
-import sbt.Tests.{Group, SubProcess}
 import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
@@ -23,9 +22,7 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 
-val bootstrapPlayVersion = "7.15.0"
-
-RoutesKeys.routesImport := Seq.empty
+val bootstrapPlayVersion = "8.6.0"
 
 lazy val coverageSettings: Seq[Setting[_]] = {
   import scoverage.ScoverageKeys
@@ -52,26 +49,20 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 
 val compile = Seq(
   play.sbt.PlayImport.ws,
-  "uk.gov.hmrc"    %% "bootstrap-frontend-play-28"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc"            % "7.7.0-play-28"
+  "uk.gov.hmrc"    %% "bootstrap-frontend-play-30"    % bootstrapPlayVersion,
+  "uk.gov.hmrc"    %% "play-frontend-hmrc-play-30"    % "9.11.0"
 )
 
 val test = Seq(
-  "uk.gov.hmrc"             %% "bootstrap-test-play-28"       % bootstrapPlayVersion,
+  "uk.gov.hmrc"             %% "bootstrap-test-play-30"       % bootstrapPlayVersion,
   "org.scalamock"           %% "scalamock"                    % "5.2.0"
 ).map(_ % s"$Test, $IntegrationTest")
-
-def oneForkedJvmPerTest(tests: Seq[TestDefinition]): Seq[Group] = tests map {
-  test =>
-    Group(test.name, Seq(test), SubProcess(
-      ForkOptions().withRunJVMOptions(Vector("-Dtest.name=" + test.name, "-Dlogger.resource=logback-test.xml"))
-    ))
-}
 
 TwirlKeys.templateImports ++= Seq(
   "uk.gov.hmrc.govukfrontend.views.html.components._",
   "uk.gov.hmrc.hmrcfrontend.views.html.components._"
 )
+
 
 lazy val microservice: Project = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins: _*)
@@ -84,10 +75,14 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(
     Test / Keys.fork := true,
     Test / javaOptions += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.12",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
-    scalacOptions ++= Seq("-Wconf:cat=unused-imports&site=.*views.html.*:s")
+    scalacOptions ++= Seq(
+      "-Wconf:cat=unused-imports&site=.*views.html.*:s",
+      "-Wconf:cat=unused-imports&src=routes/.*:s"
+    ),
+    RoutesKeys.routesImport += "uk.gov.hmrc.play.bootstrap.binders.RedirectUrl"
   )
   .configs(IntegrationTest)
   .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
@@ -95,7 +90,6 @@ lazy val microservice: Project = Project(appName, file("."))
     IntegrationTest / Keys.fork := false,
     IntegrationTest / unmanagedSourceDirectories := (IntegrationTest / baseDirectory)(base => Seq(base / "it")).value,
     addTestReportOption(IntegrationTest, "int-test-reports"),
-    IntegrationTest / testGrouping := oneForkedJvmPerTest((IntegrationTest / definedTests).value),
     IntegrationTest / parallelExecution := false,
     IntegrationTest / resourceDirectory := baseDirectory.value / "it" / "resources"
   )

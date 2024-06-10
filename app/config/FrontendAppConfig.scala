@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,15 @@
 package config
 
 import config.features.Features
+
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.Lang
 import play.api.mvc.Call
 import play.api.{Configuration, Environment, Mode}
-import uk.gov.hmrc.play.bootstrap.binders.SafeRedirectUrl
+import uk.gov.hmrc.play.bootstrap.binders.{RedirectUrl, SafeRedirectUrl}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+
+import java.net.URLEncoder
 
 trait AppConfig {
   val reportAProblemPartialUrl: String
@@ -73,7 +76,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
   lazy val reportAProblemPartialUrl: String = s"$contactHost/contact/problem_reports_ajax?service=$contactFormServiceIdentifier"
   lazy val reportAProblemNonJSUrl: String = s"$contactHost/contact/problem_reports_nonjs?service=$contactFormServiceIdentifier"
   override lazy val betaFeedbackUrl: String = s"$contactHost/contact/beta-feedback?service=$contactFormServiceIdentifier" +
-    s"&backUrl=${SafeRedirectUrl(manageVatUrl).encodedUrl}"
+    s"&backUrl=${URLEncoder.encode(manageVatUrl, "UTF-8")}"
 
   override lazy val betaFeedbackUnauthenticatedUrl = s"$contactHost/contact/beta-feedback-unauthenticated"
 
@@ -111,7 +114,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override lazy val agentClientLookupStartUrl: String => String = uri =>
     if(features.stubAgentClientLookup()) {
-      testOnly.controllers.routes.StubAgentClientLookupController.show(uri).url
+      testOnly.controllers.routes.StubAgentClientLookupController.show(RedirectUrl(uri)).url
     } else {
       agentClientLookupHost +
         servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendStartUrl) +
@@ -120,7 +123,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override lazy val agentClientUnauthorisedUrl: String => String = uri =>
     if(features.stubAgentClientLookup()) {
-      testOnly.controllers.routes.StubAgentClientLookupController.unauth(uri).url
+      testOnly.controllers.routes.StubAgentClientLookupController.unauth(RedirectUrl(uri)).url
     } else {
       agentClientLookupHost +
         servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendUnauthorisedUrl) +
