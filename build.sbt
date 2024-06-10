@@ -15,7 +15,8 @@
  */
 
 import play.sbt.routes.RoutesKeys
-import uk.gov.hmrc.DefaultBuildSettings.{addTestReportOption, defaultSettings, scalaSettings}
+import uk.gov.hmrc.DefaultBuildSettings
+import uk.gov.hmrc.DefaultBuildSettings.{defaultSettings, scalaSettings}
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appDependencies: Seq[ModuleID] = compile ++ test
@@ -56,13 +57,15 @@ val compile = Seq(
 val test = Seq(
   "uk.gov.hmrc"             %% "bootstrap-test-play-30"       % bootstrapPlayVersion,
   "org.scalamock"           %% "scalamock"                    % "5.2.0"
-).map(_ % s"$Test, $IntegrationTest")
+).map(_ % s"$Test")
 
 TwirlKeys.templateImports ++= Seq(
   "uk.gov.hmrc.govukfrontend.views.html.components._",
   "uk.gov.hmrc.hmrcfrontend.views.html.components._"
 )
 
+ThisBuild / majorVersion := 0
+ThisBuild / scalaVersion := "2.13.12"
 
 lazy val microservice: Project = Project(appName, file("."))
   .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins: _*)
@@ -71,11 +74,9 @@ lazy val microservice: Project = Project(appName, file("."))
   .settings(coverageSettings: _*)
   .settings(scalaSettings: _*)
   .settings(defaultSettings(): _*)
-  .settings(majorVersion := 0)
   .settings(
     Test / Keys.fork := true,
     Test / javaOptions += "-Dlogger.resource=logback-test.xml",
-    scalaVersion := "2.13.12",
     libraryDependencies ++= appDependencies,
     retrieveManaged := true,
     scalacOptions ++= Seq(
@@ -84,12 +85,8 @@ lazy val microservice: Project = Project(appName, file("."))
     ),
     RoutesKeys.routesImport += "uk.gov.hmrc.play.bootstrap.binders.RedirectUrl"
   )
-  .configs(IntegrationTest)
-  .settings(inConfig(IntegrationTest)(Defaults.itSettings): _*)
-  .settings(
-    IntegrationTest / Keys.fork := false,
-    IntegrationTest / unmanagedSourceDirectories := (IntegrationTest / baseDirectory)(base => Seq(base / "it")).value,
-    addTestReportOption(IntegrationTest, "int-test-reports"),
-    IntegrationTest / parallelExecution := false,
-    IntegrationTest / resourceDirectory := baseDirectory.value / "it" / "resources"
-  )
+
+lazy val it = project
+  .enablePlugins(PlayScala)
+  .dependsOn(microservice % "test->test")
+  .settings(DefaultBuildSettings.itSettings())

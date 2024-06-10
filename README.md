@@ -7,7 +7,7 @@ This service provides end users with a mechanism to update the VAT return period
 
 # Testing
 
-`sbt clean coverage test it:test coverageReport`
+`sbt clean coverage test it/test coverageReport`
 
 ## Running the service
 
