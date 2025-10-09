@@ -24,6 +24,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 
 val bootstrapPlayVersion = "8.6.0"
+val playFrontendHmrcVersion = "12.11.0"
 
 lazy val coverageSettings: Seq[Setting[_]] = {
   import scoverage.ScoverageKeys
@@ -51,7 +52,7 @@ lazy val coverageSettings: Seq[Setting[_]] = {
 val compile = Seq(
   play.sbt.PlayImport.ws,
   "uk.gov.hmrc"    %% "bootstrap-frontend-play-30"    % bootstrapPlayVersion,
-  "uk.gov.hmrc"    %% "play-frontend-hmrc-play-30"    % "9.11.0"
+  "uk.gov.hmrc"    %% "play-frontend-hmrc-play-30"    % playFrontendHmrcVersion
 )
 
 val test = Seq(
