@@ -18,4 +18,4 @@ GET         /change-client-vat-number                 controllers.ChangeClientCo
 
 GET         /language/:lang                           controllers.LanguageController.switchToLanguage(lang: String)
 
-->         /hmrc-frontend             hmrcfrontend.Routes
+->          /hmrc-frontend                            hmrcfrontend.Routes
