@@ -22,7 +22,8 @@ import javax.inject.{Inject, Singleton}
 import play.api.i18n.Lang
 import play.api.mvc.Call
 import play.api.{Configuration, Environment, Mode}
-import uk.gov.hmrc.play.bootstrap.binders.{RedirectUrl, SafeRedirectUrl}
+import uk.gov.hmrc.play.bootstrap.binders.RedirectUrl.idFunctor
+import uk.gov.hmrc.play.bootstrap.binders.{OnlyRelative, RedirectUrl}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import java.net.URLEncoder
@@ -105,7 +106,7 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
     s"$governmentGatewayHost/bas-gateway/sign-out-without-state?continue=${exitSurveyUrl(identifier)}"
 
   // Agent Client Lookup
-  private lazy val agentClientLookupRedirectUrl: String => String = uri => SafeRedirectUrl(platformHost + uri).encodedUrl
+  private lazy val agentClientLookupRedirectUrl: String => String = uri => RedirectUrl(platformHost + uri).get(OnlyRelative).encodedUrl
   private lazy val agentClientLookupHost: String = servicesConfig.getString(ConfigKeys.vatAgentClientLookupFrontendHost)
 
   override lazy val agentClientLookupUrl: String = {

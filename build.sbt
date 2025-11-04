@@ -23,10 +23,10 @@ lazy val appDependencies: Seq[ModuleID] = compile ++ test
 val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 
-val bootstrapPlayVersion = "8.6.0"
-val playFrontendHmrcVersion = "12.11.0"
+val bootstrapPlayVersion = "10.4.0"
+val playFrontendHmrcVersion = "12.20.0"
 
-lazy val coverageSettings: Seq[Setting[_]] = {
+lazy val coverageSettings: Seq[Setting[?]] = {
   import scoverage.ScoverageKeys
 
   val excludedPackages = Seq(
@@ -57,7 +57,7 @@ val compile = Seq(
 
 val test = Seq(
   "uk.gov.hmrc"             %% "bootstrap-test-play-30"       % bootstrapPlayVersion,
-  "org.scalamock"           %% "scalamock"                    % "5.2.0"
+  "org.scalamock"           %% "scalamock"                    % "7.5.1"
 ).map(_ % s"$Test")
 
 TwirlKeys.templateImports ++= Seq(
@@ -66,15 +66,15 @@ TwirlKeys.templateImports ++= Seq(
 )
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "2.13.17"
 
 lazy val microservice: Project = Project(appName, file("."))
-  .enablePlugins(Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins: _*)
+  .enablePlugins((Seq(play.sbt.PlayScala, SbtDistributablesPlugin) ++ plugins) *)
   .disablePlugins(JUnitXmlReportPlugin)
   .settings(PlayKeys.playDefaultPort := 9167)
-  .settings(coverageSettings: _*)
-  .settings(scalaSettings: _*)
-  .settings(defaultSettings(): _*)
+  .settings(coverageSettings *)
+  .settings(scalaSettings *)
+  .settings(defaultSettings() *)
   .settings(
     Test / Keys.fork := true,
     Test / javaOptions += "-Dlogger.resource=logback-test.xml",
