@@ -18,14 +18,16 @@ package config
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import play.api.test.DefaultAwaitTimeout
+import play.api.test.Helpers.await
 import views.ViewBaseSpec
 import views.html.templates.ErrorTemplate
 
-class ServiceErrorHandlerSpec extends ViewBaseSpec {
+class ServiceErrorHandlerSpec extends ViewBaseSpec with DefaultAwaitTimeout{
 
   val errorTemplate: ErrorTemplate = injector.instanceOf[ErrorTemplate]
 
-  val service: ServiceErrorHandler = new ServiceErrorHandler(messagesApi, mockAppConfig, errorTemplate)
+  val service: ServiceErrorHandler = new ServiceErrorHandler(messagesApi, mockAppConfig, ec, errorTemplate)
 
   object Selectors {
     val pageHeading = "h1"
@@ -34,7 +36,7 @@ class ServiceErrorHandlerSpec extends ViewBaseSpec {
 
   "The not found template" should {
 
-    lazy val view = service.notFoundTemplate
+    lazy val view = await(service.notFoundTemplate)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "display the correct title" in {
@@ -52,7 +54,7 @@ class ServiceErrorHandlerSpec extends ViewBaseSpec {
 
   "The internal server error template" should {
 
-    lazy val view = service.internalServerErrorTemplate
+    lazy val view = await(service.internalServerErrorTemplate)
     lazy implicit val document: Document = Jsoup.parse(view.body)
 
     "display the correct title" in {

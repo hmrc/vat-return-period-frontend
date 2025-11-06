@@ -19,11 +19,12 @@ package audit.mocks
 import audit.AuditService
 import audit.models.ExtendedAuditModel
 import org.scalamock.scalatest.MockFactory
+import org.scalatest.wordspec.AnyWordSpecLike
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext
 
-trait MockAuditingService extends MockFactory {
+trait MockAuditingService extends AnyWordSpecLike with MockFactory {
 
   val mockAuditService: AuditService = mock[AuditService]
 

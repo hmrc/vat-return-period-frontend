@@ -18,11 +18,11 @@ package utils
 
 import config.AppConfig
 import models.auth.User
-import play.api.mvc.Request
+import play.api.mvc.RequestHeader
 
 class ServiceUrl {
 
-  def generateUrl(implicit request: Request[_], appConfig: AppConfig): Option[String] = request match {
+  def generateUrl(implicit request: RequestHeader, appConfig: AppConfig): Option[String] = request match {
     case user: User[_] => if (user.isAgent) { Some(appConfig.agentClientLookupUrl) }
                           else { Some(appConfig.vatDetailsUrl) }
     case _ => None
