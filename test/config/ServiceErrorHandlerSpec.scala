@@ -31,7 +31,7 @@ class ServiceErrorHandlerSpec extends ViewBaseSpec with DefaultAwaitTimeout{
 
   object Selectors {
     val pageHeading = "h1"
-    val message = "#content > p:nth-child(2)"
+    val message = "p"
   }
 
   "The not found template" should {

@@ -14,13 +14,21 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.hmrcfrontend.views.html.components._
 @import models.auth.User
 
-@this(mainTemplate: MainTemplate, govukButton: GovukButton)
+@this(mainTemplate: MainTemplate,
+      hmrcUserResearchBanner : HmrcUserResearchBanner,
+      govukButton: GovukButton)
 
 @()(implicit user: User[_], messages: Messages, appConfig: config.AppConfig)
 
 @mainTemplate(pageTitle = messages("insolventError.title"), feedbackOnSignOut = false, user = Some(user)) {
+
+    @hmrcUserResearchBanner(UserResearchBanner(
+        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
+    ))
+
     <h1 class="govuk-heading-l" id="insolvent-without-access-heading">@messages("insolventError.title")</h1>
 
     <p class="govuk-body" id="insolvent-without-access-body">@messages("insolventError.message")</p>

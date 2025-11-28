@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.hmrcfrontend.views.html.components._
 @import models.returnFrequency.ReturnDatesModel
 @import models.returnFrequency._
 @import models.auth.User
@@ -22,6 +23,7 @@
 
 @this(mainTemplate: MainTemplate,
       govukBackLink: GovukBackLink,
+      hmrcUserResearchBanner : HmrcUserResearchBanner,
       govukRadios: GovukRadios,
       govukErrorSummary: GovukErrorSummary,
       govukButton: GovukButton,
@@ -62,6 +64,10 @@
     if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title"))
     else messages("return_frequency.title"),
   user = Some(user)) {
+
+    @hmrcUserResearchBanner(UserResearchBanner(
+        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
+    ))
 
   @if(form.hasErrors) {
     @govukErrorSummary(ErrorSummary(

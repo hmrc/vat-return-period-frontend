@@ -48,7 +48,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.digiPrefWithEmail}'" in {
@@ -100,7 +100,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       }
 
       s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-        elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+        elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
       }
 
       s"have the correct p1 of '${viewMessages.ReceivedPage.paperPref}'" in {
@@ -141,7 +141,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       }
 
       s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-        elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+        elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
       }
 
       s"have the correct p1 of '${viewMessages.ReceivedPage.contactPrefError}'" in {
@@ -191,7 +191,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
@@ -284,7 +284,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText("h2") shouldBe viewMessages.ReceivedPage.h2
+          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
