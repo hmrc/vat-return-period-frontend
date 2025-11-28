@@ -33,7 +33,7 @@ class UnauthorisedNonAgentViewSpec extends ViewBaseSpec {
       val pageHeading = "#content h1"
       val instructions = "#content p"
       val instructionsLink = "#content p > a"
-      val button = ".govuk-button"
+      val button = "a[role=\"button\"]"
     }
 
     lazy val view = unauthorisedNonAgentView()(fakeRequest, messages, mockAppConfig)

@@ -43,7 +43,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       }
 
       s"display the correct h2 page heading of '${viewMessages.ConfirmPage.heading2}'" in {
-        elementText("h2") shouldBe viewMessages.ConfirmPage.heading2
+        elementText(".govuk-heading-m") shouldBe viewMessages.ConfirmPage.heading2
       }
 
       s"display VAT return dates message" when {
@@ -93,7 +93,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
       "have a continue button" which {
 
         s"has the text '${viewMessages.continue}'" in {
-          elementText(".govuk-button") shouldBe viewMessages.continue
+          elementText("button[type=\"submit\"]") shouldBe viewMessages.continue
         }
 
         "posts data to the correct endpoint" in {
@@ -101,7 +101,7 @@ class ConfirmDatesViewSpec extends ViewBaseSpec {
         }
 
         "has the prevent double click attribute" in {
-          element(".govuk-button").hasAttr("data-prevent-double-click") shouldBe true
+          element("button[type=\"submit\"]").hasAttr("data-prevent-double-click") shouldBe true
         }
       }
     }

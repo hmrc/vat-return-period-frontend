@@ -14,15 +14,24 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.hmrcfrontend.views.html.components._
 @import models.returnFrequency.ReturnPeriod
 @import models.auth.User
 @import views.html.MainTemplate
 
-@this(mainTemplate: MainTemplate, form: FormWithCSRF, govukButton: GovukButton)
+@this(mainTemplate: MainTemplate,
+      hmrcUserResearchBanner : HmrcUserResearchBanner,
+      form: FormWithCSRF,
+      govukButton: GovukButton
+)
 
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 @mainTemplate(pageTitle = messages("checkYourAnswers.title"), user = Some(user)) {
+
+    @hmrcUserResearchBanner(UserResearchBanner(
+        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
+    ))
 
   <h1 class="govuk-heading-l">@messages("checkYourAnswers.title")</h1>
 
