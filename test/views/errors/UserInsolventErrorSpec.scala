@@ -31,7 +31,7 @@ class UserInsolventErrorSpec extends ViewBaseSpec {
     object Selectors {
       val pageHeading = "#insolvent-without-access-heading"
       val message = "#insolvent-without-access-body"
-      val button = "a[role=\"button\"]"
+      val button = "#main-content .govuk-button"
       val signOutLink = "#sign-out-link"
     }
 

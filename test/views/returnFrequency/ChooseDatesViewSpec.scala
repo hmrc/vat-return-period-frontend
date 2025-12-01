@@ -65,7 +65,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("button[type=\"submit\"]") shouldBe viewMessages.continue
+      elementText("#main-content .govuk-button") shouldBe viewMessages.continue
     }
 
     s"have a back link with the correct text and url '${viewMessages.back}'" in {
@@ -110,7 +110,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("button[type=\"submit\"]") shouldBe viewMessages.continue
+      elementText("#main-content .govuk-button") shouldBe viewMessages.continue
     }
 
     s"have the back link with correct text and url '${viewMessages.back}'" in {
@@ -150,7 +150,7 @@ class ChooseDatesViewSpec extends ViewBaseSpec {
     }
 
     s"have a continue button with the text '${viewMessages.continue}'" in {
-      elementText("button[type=\"submit\"]") shouldBe viewMessages.continue
+      elementText("#main-content .govuk-button") shouldBe viewMessages.continue
     }
 
     s"have the back link with correct text and url '${viewMessages.back}'" in {
