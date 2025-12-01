@@ -27,11 +27,8 @@
 
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(pageTitle = messages("checkYourAnswers.title"), user = Some(user)) {
 
-    @hmrcUserResearchBanner(UserResearchBanner(
-        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
-    ))
+@mainTemplate(pageTitle = messages("checkYourAnswers.title"), user = Some(user), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
 
   <h1 class="govuk-heading-l">@messages("checkYourAnswers.title")</h1>
 

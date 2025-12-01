@@ -55,6 +55,7 @@ trait AppConfig {
   val gtmContainer: String
   val vatDetailsUrl: String
   val btaHomeUrl: String
+  val urBannerUrl: String
 }
 
 @Singleton
@@ -159,4 +160,5 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override val gtmContainer: String = servicesConfig.getString(ConfigKeys.gtmContainer)
 
+  override val urBannerUrl: String = servicesConfig.getString(ConfigKeys.urBannerUrl)
 }

@@ -23,11 +23,7 @@
 
 @()(implicit user: User[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(pageTitle = messages("insolventError.title"), feedbackOnSignOut = false, user = Some(user)) {
-
-    @hmrcUserResearchBanner(UserResearchBanner(
-        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
-    ))
+@mainTemplate(pageTitle = messages("insolventError.title"), feedbackOnSignOut = false, user = Some(user), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
 
     <h1 class="govuk-heading-l" id="insolvent-without-access-heading">@messages("insolventError.title")</h1>
 

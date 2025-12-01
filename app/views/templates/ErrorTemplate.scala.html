@@ -21,10 +21,7 @@
 
 @(pageTitle: String, heading: String, message: String)(implicit request: RequestHeader, messages: Messages, appConfig: AppConfig)
 
-@mainTemplate(pageTitle = messages(pageTitle)) {
-    @hmrcUserResearchBanner(UserResearchBanner(
-        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
-    ))
+@mainTemplate(pageTitle = messages(pageTitle), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
 
  <h1 class="govuk-heading-xl">@messages(heading)</h1>
  <p class="govuk-body">@messages(message)</p>

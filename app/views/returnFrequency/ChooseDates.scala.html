@@ -63,11 +63,9 @@
   pageTitle =
     if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title"))
     else messages("return_frequency.title"),
-  user = Some(user)) {
-
-    @hmrcUserResearchBanner(UserResearchBanner(
-        url = "https://www.gov.uk/government/organisations/hm-revenue-customs"
-    ))
+  user = Some(user),
+    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))
+) {
 
   @if(form.hasErrors) {
     @govukErrorSummary(ErrorSummary(

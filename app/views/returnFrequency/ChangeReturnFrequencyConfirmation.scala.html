@@ -34,14 +34,13 @@
 
 
 @mainTemplate(
-  pageTitle = messages("received_frequency.title"),
-  user = Some(user)
-) {
-
-    @hmrcUserResearchBanner(UserResearchBanner(
-        url = "https://www.gov.uk/government/organisations/hm-revenue-customs",
+    pageTitle = messages("received_frequency.title"),
+    user = Some(user),
+    urBanner = Some(UserResearchBanner(
+        url = appConfig.urBannerUrl,
         hideCloseButton = true
     ))
+) {
 
   <div class="govuk-panel govuk-panel--confirmation">
       <h1 id="page-heading" class="govuk-panel__title">@messages("received_frequency.heading")</h1>

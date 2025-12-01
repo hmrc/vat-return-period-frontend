@@ -24,7 +24,7 @@ val appName = "vat-return-period-frontend"
 lazy val plugins: Seq[Plugins] = Seq.empty
 
 val bootstrapPlayVersion = "10.4.0"
-val playFrontendHmrcVersion = "12.20.0"
+val playFrontendHmrcVersion = "12.22.0"
 
 lazy val coverageSettings: Seq[Setting[?]] = {
   import scoverage.ScoverageKeys
