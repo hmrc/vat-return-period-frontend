@@ -48,7 +48,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
+          elementText("#main-content h2") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.digiPrefWithEmail}'" in {
@@ -66,11 +66,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct finish button" which {
 
           s"has the text '${viewMessages.finish}'" in {
-            elementText("a[role=\"button\"]") shouldBe viewMessages.finish
+            elementText("#main-content .govuk-button") shouldBe viewMessages.finish
           }
 
           "has link back to customer details page" in {
-            element("a[role=\"button\"]").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element("#main-content .govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
       }
@@ -100,7 +100,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       }
 
       s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-        elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
+        elementText("#main-content h2") shouldBe viewMessages.ReceivedPage.h2
       }
 
       s"have the correct p1 of '${viewMessages.ReceivedPage.paperPref}'" in {
@@ -118,11 +118,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "have the correct finish button" which {
 
         s"has the text '${viewMessages.finish}'" in {
-          elementText("a[role=\"button\"]") shouldBe viewMessages.finish
+          elementText("#main-content .govuk-button") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {
-          element("a[role=\"button\"]").attr("href") shouldBe mockAppConfig.manageVatUrl
+          element("#main-content .govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -141,7 +141,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       }
 
       s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-        elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
+        elementText("#main-content h2") shouldBe viewMessages.ReceivedPage.h2
       }
 
       s"have the correct p1 of '${viewMessages.ReceivedPage.contactPrefError}'" in {
@@ -159,11 +159,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
       "have the correct finish button" which {
 
         s"has the text '${viewMessages.backToClient}'" in {
-          elementText("a[role=\"button\"]") shouldBe viewMessages.finish
+          elementText("#main-content .govuk-button") shouldBe viewMessages.finish
         }
 
         "has link back to customer details page" in {
-          element("a[role=\"button\"]").attr("href") shouldBe mockAppConfig.manageVatUrl
+          element("#main-content .govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
         }
       }
     }
@@ -191,7 +191,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
+          elementText("#main-content h2") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
@@ -209,11 +209,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct back to client's details button" which {
 
           s"has the text '${viewMessages.backToClient}'" in {
-            elementText("a[role=\"button\"]") shouldBe viewMessages.backToClient
+            elementText("#main-content .govuk-button") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
-            element("a[role=\"button\"]").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element("#main-content .govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
 
@@ -284,7 +284,7 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         }
 
         s"have the correct h2 '${viewMessages.ReceivedPage.h2}'" in {
-          elementText(".govuk-heading-m") shouldBe viewMessages.ReceivedPage.h2
+          elementText("#main-content h2") shouldBe viewMessages.ReceivedPage.h2
         }
 
         s"have the correct p1 of '${viewMessages.ReceivedPage.p1AgentBulk}'" in {
@@ -302,11 +302,11 @@ class ChangeReturnFrequencyConfirmationViewSpec extends ViewBaseSpec {
         "have the correct f button" which {
 
           s"has the text '${viewMessages.backToClient}'" in {
-            elementText("a[role=\"button\"]") shouldBe viewMessages.backToClient
+            elementText("#main-content .govuk-button") shouldBe viewMessages.backToClient
           }
 
           "has link back to customer details page" in {
-            element("a[role=\"button\"]").attr("href") shouldBe mockAppConfig.manageVatUrl
+            element("#main-content .govuk-button").attr("href") shouldBe mockAppConfig.manageVatUrl
           }
         }
 
