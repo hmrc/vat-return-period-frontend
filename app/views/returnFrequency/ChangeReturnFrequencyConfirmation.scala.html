@@ -38,7 +38,8 @@
     user = Some(user),
     urBanner = Some(UserResearchBanner(
         url = appConfig.urBannerUrl,
-        hideCloseButton = true
+        hideCloseButton = true,
+        language = if(messages.lang.code == "en") En else Cy
     ))
 ) {
 
