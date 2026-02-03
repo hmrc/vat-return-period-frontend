@@ -27,6 +27,7 @@ object ConfigKeys {
   val platformHost: String = "platform.host"
 
   val stubAgentClientLookupFeature: String = "features.stubAgentClientLookup.enabled"
+  val showUserResearchBannerFeature: String = "features.showUserResearchBanner.enabled"
 
   val signInBaseUrl: String = "signIn.url"
   val signInContinueBaseUrl: String = "signIn.continueBaseUrl"
