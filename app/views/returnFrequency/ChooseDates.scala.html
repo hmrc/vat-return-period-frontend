@@ -63,7 +63,7 @@
     if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title"))
     else messages("return_frequency.title"),
   user = Some(user),
-    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))
+    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl, language = if(messages.lang.code == "en") En else Cy))
 ) {
 
   @if(form.hasErrors) {
