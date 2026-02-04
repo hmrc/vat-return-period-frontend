@@ -23,7 +23,8 @@
 
 @()(implicit user: User[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(pageTitle = messages("insolventError.title"), feedbackOnSignOut = false, user = Some(user), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
+@mainTemplate(pageTitle = messages("insolventError.title"), feedbackOnSignOut = false, user = Some(user),
+    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl, language = if(messages.lang.code == "en") En else Cy))) {
 
     <h1 class="govuk-heading-l" id="insolvent-without-access-heading">@messages("insolventError.title")</h1>
 

@@ -24,4 +24,5 @@ import play.api.Configuration
 class Features @Inject()(implicit config: Configuration) {
 
   val stubAgentClientLookup = new Feature(ConfigKeys.stubAgentClientLookupFeature)
+  val showUserResearchBanner = new Feature(ConfigKeys.showUserResearchBannerFeature)
 }

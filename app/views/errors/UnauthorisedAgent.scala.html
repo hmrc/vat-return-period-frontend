@@ -23,7 +23,8 @@
 
 @()(implicit request: Request[_], messages: Messages, appConfig: config.AppConfig)
 
-@mainTemplate(pageTitle = messages("unauthorised_agent.title"), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
+@mainTemplate(pageTitle = messages("unauthorised_agent.title"),
+    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl, language = if(messages.lang.code == "en") En else Cy))) {
 
     <h1 class="govuk-heading-l">@messages("unauthorised_agent.title")</h1>
 

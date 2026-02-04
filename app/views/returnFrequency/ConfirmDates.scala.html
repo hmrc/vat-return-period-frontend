@@ -27,7 +27,9 @@
 @(model: ReturnPeriod, leavingAnnualAccounting: Boolean)(implicit user : User[_], messages: Messages, appConfig: config.AppConfig)
 
 
-@mainTemplate(pageTitle = messages("checkYourAnswers.title"), user = Some(user), urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl))) {
+@mainTemplate(pageTitle = messages("checkYourAnswers.title"),
+    user = Some(user),
+    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl, language = if(messages.lang.code == "en") En else Cy))) {
 
   <h1 class="govuk-heading-l">@messages("checkYourAnswers.title")</h1>
 
