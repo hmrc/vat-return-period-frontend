@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,13 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.hmrcfrontend.views.html.components._
+@import uk.gov.hmrc.hmrcfrontend.views.html.components.*
 @import models.returnFrequency.ReturnDatesModel
-@import models.returnFrequency._
+@import models.returnFrequency.*
 @import models.auth.User
 @import views.html.MainTemplate
 @import config.AppConfig
+@import utils.UrBannerUtil
 
 @this(mainTemplate: MainTemplate,
       govukBackLink: GovukBackLink,
@@ -61,9 +62,9 @@
   backLinkContent = Some(backLink),
   pageTitle =
     if(form.errors.nonEmpty) messages("common.error.prefixTitle", messages("return_frequency.title"))
-    else messages("return_frequency.title"),
-  user = Some(user),
-    urBanner = Some(UserResearchBanner(url = appConfig.urBannerUrl, language = if(messages.lang.code == "en") En else Cy))
+      else messages("return_frequency.title"),
+    user = Some(user),
+    urBanner = UrBannerUtil.getUrBanner()
 ) {
 
   @if(form.hasErrors) {
