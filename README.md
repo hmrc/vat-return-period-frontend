@@ -9,6 +9,8 @@ This service provides end users with a mechanism to update the VAT return period
 
 `sbt clean coverage test it/test coverageReport`
 
+or
+`./run-all-tests.sh`
 ## Running the service
 
 In order to run this microservice, you must have SBT installed. You should then be able to start the application using:

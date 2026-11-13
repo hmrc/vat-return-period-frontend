@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,7 +56,6 @@ trait AppConfig {
   val vatDetailsUrl: String
   val btaHomeUrl: String
   val urBannerUrl: String
-  val isServiceNavigationEnabled: Boolean
 }
 
 @Singleton
@@ -163,5 +162,4 @@ class FrontendAppConfig @Inject()(environment: Environment, implicit val runMode
 
   override val urBannerUrl: String = servicesConfig.getString(ConfigKeys.urBannerUrl)
 
-  lazy val isServiceNavigationEnabled: Boolean = servicesConfig.getBoolean("play-frontend-hmrc.forceServiceNavigation")
 }
