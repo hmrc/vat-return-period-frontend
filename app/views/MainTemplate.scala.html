@@ -1,5 +1,5 @@
 @*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,6 @@
 @this(govukLayout: GovukLayout,
       govukHeader: GovukHeader,
       hmrcReportTechnicalIssueHelper: HmrcReportTechnicalIssueHelper,
-      hmrcLanguageSelect: HmrcLanguageSelect,
       hmrcTimeoutDialog: HmrcTimeoutDialog,
       hmrcStandardHeader: HmrcStandardHeader,
       hmrcStandardFooter: HmrcStandardFooter,
@@ -55,14 +54,6 @@
 }
 
 @beforeContentHtml = {
-  @if(!appConfig.isServiceNavigationEnabled){
-    @hmrcLanguageSelect(LanguageSelect(
-      language = if (messages.lang.language == "en") En else Cy,
-      languageLinks =
-        En -> appConfig.routeToSwitchLanguage("english").url,
-        Cy -> appConfig.routeToSwitchLanguage("cymraeg").url
-    ))
-  }
   @backLinkContent
 }
 
